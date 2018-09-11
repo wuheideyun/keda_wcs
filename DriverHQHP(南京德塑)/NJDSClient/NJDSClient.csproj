@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7715913B-92EE-49D9-B6A8-4D2F67000418}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NJDSClient</RootNamespace>
+    <AssemblyName>NJDSClient</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>启动图标.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="GfxAgvMapEx, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\GfxAgvMapEx.dll</HintPath>
+    </Reference>
+    <Reference Include="GfxCommonInterfaces">
+      <HintPath>..\..\..\..\JT_Brain2.0_模块化结构\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxCommonInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="GfxDataContract">
+      <HintPath>..\..\..\..\JT_Brain2.0_模块化结构\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxDataContract.dll</HintPath>
+    </Reference>
+    <Reference Include="GfxServiceContractAreaConfig">
+      <HintPath>..\..\..\..\JT_Brain2.0_模块化结构\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxServiceContractAreaConfig.dll</HintPath>
+    </Reference>
+    <Reference Include="GfxServiceContractClient">
+      <HintPath>..\..\..\..\JT_Brain2.0_模块化结构\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxServiceContractClient.dll</HintPath>
+    </Reference>
+    <Reference Include="GfxServiceContractClientDispatch">
+      <HintPath>..\..\..\..\JT_Brain2.0_模块化结构\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxServiceContractClientDispatch.dll</HintPath>
+    </Reference>
+    <Reference Include="GfxServiceContractDeviceConfig">
+      <HintPath>..\..\..\..\JT_Brain2.0_模块化结构\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxServiceContractDeviceConfig.dll</HintPath>
+    </Reference>
+    <Reference Include="GfxServiceContractDeviceDefine">
+      <HintPath>..\..\..\..\JT_Brain2.0_模块化结构\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxServiceContractDeviceDefine.dll</HintPath>
+    </Reference>
+    <Reference Include="GfxServiceContractDisOrder">
+      <HintPath>..\..\..\..\JT_Brain2.0_模块化结构\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxServiceContractDisOrder.dll</HintPath>
+    </Reference>
+    <Reference Include="GfxServiceContractExpress">
+      <HintPath>..\..\..\..\JT_Brain2.0_模块化结构\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxServiceContractExpress.dll</HintPath>
+    </Reference>
+    <Reference Include="GfxServiceContractHistoryRecord">
+      <HintPath>..\..\..\..\JT_Brain2.0_模块化结构\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxServiceContractHistoryRecord.dll</HintPath>
+    </Reference>
+    <Reference Include="GfxServiceContractPathConfig">
+      <HintPath>..\..\..\..\JT_Brain2.0_模块化结构\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxServiceContractPathConfig.dll</HintPath>
+    </Reference>
+    <Reference Include="GfxServiceContractPluginInterface">
+      <HintPath>..\..\..\..\JT_Brain2.0_模块化结构\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxServiceContractPluginInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="GfxServiceContractSensorPtyDefine">
+      <HintPath>..\..\..\..\JT_Brain2.0_模块化结构\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxServiceContractSensorPtyDefine.dll</HintPath>
+    </Reference>
+    <Reference Include="GfxServiceContractSensorTypeDefine">
+      <HintPath>..\..\..\..\JT_Brain2.0_模块化结构\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxServiceContractSensorTypeDefine.dll</HintPath>
+    </Reference>
+    <Reference Include="GfxServiceContractTaskExcute">
+      <HintPath>..\..\..\..\JT_Brain2.0_模块化结构\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxServiceContractTaskExcute.dll</HintPath>
+    </Reference>
+    <Reference Include="GfxServiceContractTaskRelate">
+      <HintPath>..\..\..\..\JT_Brain2.0_模块化结构\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxServiceContractTaskRelate.dll</HintPath>
+    </Reference>
+    <Reference Include="GfxServiceContractTemStop">
+      <HintPath>..\..\..\..\JT_Brain2.0_模块化结构\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxServiceContractTemStop.dll</HintPath>
+    </Reference>
+    <Reference Include="GfxServiceContractTrafficConfig">
+      <HintPath>..\..\..\..\JT_Brain2.0_模块化结构\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxServiceContractTrafficConfig.dll</HintPath>
+    </Reference>
+    <Reference Include="GfxServiceContractUser">
+      <HintPath>..\..\..\..\JT_Brain2.0_模块化结构\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxServiceContractUser.dll</HintPath>
+    </Reference>
+    <Reference Include="RCommonData">
+      <HintPath>..\..\..\..\JT_Brain2.0_模块化结构\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\RCommonData.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="APPConfig.cs" />
+    <Compile Include="AgvData.cs" />
+    <Compile Include="ClientForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClientForm.Designer.cs">
+      <DependentUpon>ClientForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LogForm.Designer.cs">
+      <DependentUpon>LogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ClientForm.resx">
+      <DependentUpon>ClientForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogForm.resx">
+      <DependentUpon>LogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\JTWcfHelper\JTWcfHelper.csproj">
+      <Project>{bc199de0-693c-4601-87f3-c34c15ba0368}</Project>
+      <Name>JTWcfHelper</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="启动图标.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

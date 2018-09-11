@@ -1,0 +1,1676 @@
+﻿using Gfx.GfxDataManagerServer;
+using Gfx.RCommData;
+using GfxAgvMapEx;
+using GfxCommonInterfaces;
+using GfxServiceContractClient;
+using GfxServiceContractClientDispatch;
+using GfxServiceContractTaskExcute;
+using JTWcfHelper;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+
+namespace KEDAClient
+{
+
+    public partial class KEDAForm : Form
+    {
+        /// <summary>
+        /// 登录状态
+        /// </summary>
+        private bool _isLogin = false;
+
+        /// <summary>
+        /// 服务端IP地址
+        /// </summary>
+        private string _severIp = "";
+
+        /// <summary>
+        ///  客户端标志
+        /// </summary>
+        private string _clientMark = "";
+
+        /// <summary>
+        /// 按钮宽度
+        /// </summary>
+        private int _btnWidth = 100;
+
+        /// <summary>
+        /// 按钮高度
+        /// </summary>
+        private int _btnHeight = 40;
+
+        /// <summary>
+        /// 横向间隔
+        /// </summary>
+        private int _xDis = 10;
+
+        /// <summary>
+        /// 纵向间隔
+        /// </summary>
+        private int _yDis = 10;
+
+        /// <summary>
+        /// 起始坐标
+        /// </summary>
+        private Point _startLoc = new Point(10, 20);
+
+        /// <summary>
+        /// 运行至区域2的特殊车辆
+        /// </summary>
+        private DeviceBackImf _devArea2 = null;
+
+        /// <summary>
+        ///  当前站点号
+        /// </summary>
+        public int _locTar = -1;
+
+        /// <summary>
+        /// 呼叫AGV
+        /// </summary>
+        private bool _isCalling = false;
+
+        /// <summary>
+        /// 呼叫任务
+        /// </summary>
+        TaskDispatch _callingTask = null;
+
+        /// <summary>
+        /// 当前被呼叫的AGV
+        /// </summary>
+        string _callingAGV = null;
+
+        /// <summary>
+        /// 当前的呼叫点
+        /// </summary>
+        string _callingSite = null;
+
+        /// <summary>
+        /// 站点集合
+        /// </summary>
+        private Dictionary<int, StationMember> _staDic = new Dictionary<int, StationMember>();
+
+        /// <summary>
+        /// 已经选择的站点集合（任务）
+        /// </summary>
+        private List<StationMember> _selectStation = new List<StationMember>();
+
+        /// <summary>
+        /// 站点个数
+        /// </summary>
+        private int _staCount = 100;
+
+        /// <summary>
+        /// 区域二待命点个数
+        /// </summary>
+        private int _waitCountAreaTwo = 3;
+
+        /// <summary>
+        /// 区域二待命点集合
+        /// </summary>
+        private List<AreaTwoWaitPointMember> _waitAreaTwoList = new List<AreaTwoWaitPointMember>();
+
+        /// <summary>
+        /// 已经选择的站点集合(车辆）
+        /// </summary>
+        private List<StationMember> _selectStation1 = new List<StationMember>();
+
+        
+
+        private readonly DeviceBackImf devid;
+
+        /// <summary>
+        /// 当前客户端的站点编号对应地标
+        /// </summary>
+        public int LocSite
+        {
+            get
+            {
+                StationMember loc = _staDic.Values.ToList().Find(c => { return c.StaTarget == _locTar; });
+
+                return loc != null ? loc.StaSite : -1;
+            }
+        }
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        public KEDAForm()
+        {
+            InitializeComponent();
+            InitPara();
+            InitStaMember();  // 初始化站点成员
+            InitBtnMember();
+
+            Alarm(); // 报警
+            Logger(); // 日志
+            Devices(); // 设备
+            Vehicles(); //车辆
+            TaskInform(); // 任务列表
+            toolStripLabelVersion.Text = "版本号：V14.1";  //版本号
+            timerFunc.Enabled = true;  // 系统时间
+            labelLogo.Text = APPConfig.LogoStr();  //公司名称
+            UpdateBtnMember();
+
+            this.WindowState = FormWindowState.Maximized;
+        }
+
+        /// <summary>
+        /// 报警
+        /// </summary>
+        private void Alarm()
+        {
+
+            // 创建列表头
+            listView1.Columns.Add("alarmID", 150, HorizontalAlignment.Left);
+            listView1.Columns.Add("eventname", 200, HorizontalAlignment.Left);
+            listView1.Columns.Add("Sourceid", 200, HorizontalAlignment.Left);
+            listView1.Columns.Add("Sourcetype", 200, HorizontalAlignment.Left);
+            listView1.Columns.Add("State", 200, HorizontalAlignment.Left);  // active` 、ackonwledged 、closed 、deleted
+            listView1.Columns.Add("Eventcount", 200, HorizontalAlignment.Left);
+            listView1.Columns.Add("starteventat", 200, HorizontalAlignment.Left);  //  报警第一次发生时间
+            listView1.Columns.Add("endeventat", 200, HorizontalAlignment.Left);  //  报警最后一次发生时间
+            // 若没有，无法显示数据 
+            listView1.View = System.Windows.Forms.View.Details;
+
+            ///添加数据项
+            ///UI暂时挂起，直到EndUpdate绘制控件，可提高加载速度
+            listView1.BeginUpdate();
+            ListViewItem item = new ListViewItem(" 报警id ");
+            item.SubItems.Add("报警名称");
+            item.SubItems.Add("报警源id");
+            item.SubItems.Add("报警源类型");
+            item.SubItems.Add("报警状态");
+            item.SubItems.Add("报警发生次数");
+            item.SubItems.Add("报警发生时间");
+            item.SubItems.Add("报警结束时间");
+
+
+            // 显示项
+            listView1.Items.Add(item);
+
+            // 结束数据处理
+            // UI界面一次性绘制
+            listView1.EndUpdate();
+
+        }
+
+        /// <summary>
+        /// 日志
+        /// </summary>
+
+        private void Logger()
+        {
+            // 创建列表头
+            listView3.Columns.Add("Event", 200, HorizontalAlignment.Left);
+            listView3.Columns.Add("Timestamp", 200, HorizontalAlignment.Left);
+            listView3.Columns.Add("Source",200, HorizontalAlignment.Left);
+            listView3.Columns.Add("Description", 200, HorizontalAlignment.Left);
+
+            // 若没有，无法显示数据 
+            listView3.View = System.Windows.Forms.View.Details;
+
+            ///添加数据项
+            ///UI暂时挂起，直到EndUpdate绘制控件，可提高加载速度
+            listView3.BeginUpdate();
+            ListViewItem item = new ListViewItem("事件");
+            item.SubItems.Add("时间");
+            item.SubItems.Add("来源");
+            item.SubItems.Add("描述");
+
+            // 显示项
+            listView3.Items.Add(item);
+
+            // 结束数据处理
+            // UI界面一次性绘制
+            listView3.EndUpdate();
+        }
+
+        /// <summary>
+        /// 设备
+        /// </summary>
+        private void Devices()
+        {
+
+            // 创建列表头
+            listView4.Columns.Add("Devsid", 150, HorizontalAlignment.Left);
+            listView4.Columns.Add("DevsName", 200, HorizontalAlignment.Left);
+            listView4.Columns.Add("DevsType", 200, HorizontalAlignment.Left); // 若宽度改为0，将会隐藏此列
+            listView4.Columns.Add("DevsDesc", 200, HorizontalAlignment.Left);  // 设备描述
+            listView4.Columns.Add("DevsState", 200, HorizontalAlignment.Left);  // 通讯状态
+            listView4.Columns.Add("CommMode", 200, HorizontalAlignment.Left);  // 通讯模式
+
+
+            // 若没有，无法显示数据 
+            listView4.View = System.Windows.Forms.View.Details;
+
+            ///添加数据项
+            ///UI暂时挂起，直到EndUpdate绘制控件，可提高加载速度
+            listView4.BeginUpdate();
+            ListViewItem item = new ListViewItem("设备id");
+            item.SubItems.Add("设备名称");
+            item.SubItems.Add("设备类型");
+            item.SubItems.Add("设备描述");
+            item.SubItems.Add("设备状态");
+            item.SubItems.Add("通讯模式");
+
+            // 显示项
+            listView4.Items.Add(item);
+
+            // 结束数据处理
+            // UI界面一次性绘制
+            listView4.EndUpdate();
+
+        }
+
+        /// <summary>
+        /// 车辆
+        /// </summary>
+        private void Vehicles()
+        {
+
+            // 创建列表头
+            listView5.Columns.Add("DevId", 200, HorizontalAlignment.Left);
+            listView5.Columns.Add("DevModel", 100, HorizontalAlignment.Left); // 设备型号
+            listView5.Columns.Add("DevStatue", 150, HorizontalAlignment.Left);// 若宽度改为0，将会隐藏此列
+            listView5.Columns.Add(".KeyValue", 150, HorizontalAlignment.Left);
+            listView5.Columns.Add("Payload", 120, HorizontalAlignment.Left);
+            listView5.Columns.Add("Current action", 200, HorizontalAlignment.Left); //新增或者提取AGV
+            listView5.Columns.Add("TO node", 120, HorizontalAlignment.Left);
+            listView5.Columns.Add("Timestamp", 150, HorizontalAlignment.Left);
+            listView5.Columns.Add("报警描述", 150, HorizontalAlignment.Left);
+            listView5.Columns.Add("报警时间", 150, HorizontalAlignment.Left);
+            // listView5.Columns.Add("State", 250, HorizontalAlignment.Left);
+
+            // 若没有，无法显示数据 
+            listView5.View = System.Windows.Forms.View.Details;
+
+            ///添加数据项
+            ///UI暂时挂起，直到EndUpdate绘制控件，可提高加载速度
+            GfxList<DeviceBackImf> devsList = JtWcfMainHelper.GetDevList();
+            for (int i = 0; i < devsList.Count; i++)
+            {
+                listView5.BeginUpdate();
+                ListViewItem item = new ListViewItem(devsList[i].DevId); // 设备id
+                item.SubItems.Add(devsList[i].DevModel); // 设备信息
+                item.SubItems.Add(devsList[i].DevStatue); // 设备状态
+                item.SubItems.Add(devsList[i].KeyValue); //关键值
+                item.SubItems.Add("货物1");
+                item.SubItems.Add("not inserted,Ready,Assigned to a mission ");
+                item.SubItems.Add("   ");
+                item.SubItems.Add("   ");
+                item.SubItems.Add("报警描述字段不清楚"); // 报警描述
+                item.SubItems.Add("报警时间字段不清楚"); // 报警时间
+                listView5.BeginUpdate();
+
+
+                // 显示项
+                listView5.Items.Add(item);
+            }
+            // 结束数据处理
+            // UI界面一次性绘制
+            listView5.EndUpdate();
+
+        }
+
+        /// <summary>
+        ///  获取所有任务信息
+        /// </summary>
+        private void TaskInform()
+        {
+            // 添加表头，即列名
+            listView6.Columns.Add("任务id", 200, HorizontalAlignment.Left);
+            listView6.Columns.Add("任务信息", 100, HorizontalAlignment.Left);
+            listView6.Columns.Add("任务状态", 150, HorizontalAlignment.Left);
+            listView6.Columns.Add("触发源", 150, HorizontalAlignment.Left);
+            listView6.Columns.Add("任务设备", 150, HorizontalAlignment.Left);
+            listView6.Columns.Add("任务路径", 150, HorizontalAlignment.Left);
+            listView6.Columns.Add("控制参数", 150, HorizontalAlignment.Left);
+            listView6.Columns.Add("指令信息", 150, HorizontalAlignment.Left);
+            listView6.Columns.Add("信息", 200, HorizontalAlignment.Left);
+            listView6.Columns.Add("触发时间", 200, HorizontalAlignment.Left);
+
+            // 若没有，无法显示数据 
+            listView6.View = System.Windows.Forms.View.Details;
+
+            ///添加数据项
+            ///UI暂时挂起，直到EndUpdate绘制控件，可提高加载速度
+            ///
+
+            GfxList<GfxServiceContractTaskExcute.TaskBackImf> taskList = JtWcfTaskHelper.GetAllTask();
+            for (int i = 0; i < taskList.Count; i++)
+            {
+                listView6.BeginUpdate();
+                ListViewItem item = new ListViewItem(taskList[i].DisGuid); // 任务id
+                item.SubItems.Add(taskList[i].TaskImf); // 任务信息
+                item.SubItems.Add(taskList[i].Statue.ToString()); // 任务状态
+                item.SubItems.Add(taskList[i].OrderSource); // 触发源
+                item.SubItems.Add(taskList[i].DisDevId); // 任务设备
+                item.SubItems.Add(taskList[i].PathMsg); // 任务路径
+                item.SubItems.Add(taskList[i].TaskCtrType.ToString()); // 控制参数，枚举类型
+                item.SubItems.Add(taskList[i].CurDisOrderMsg); // 指令信息
+                item.SubItems.Add(taskList[i].BackMsg); // 信息
+                item.SubItems.Add(taskList[i].TriggerTime.ToString()); // 触发时间
+
+                // 显示项
+                listView6.Items.Add(item);
+            }
+
+            // 结束数据处理
+            // UI界面一次性绘制
+            listView6.EndUpdate();
+
+        }
+
+
+        /// <summary>
+        /// 注销登录
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
+        private void 注销登录ToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            _isLogin = false;
+
+            MessageBox.Show("当前用户已注销成功！");
+        }
+
+        /// <summary>
+        /// 用户登录
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
+        private void 用户登录ToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            LogForm form = new LogForm();
+
+            form.ShowDialog();
+
+            _isLogin = form._isLogin;
+        }
+
+
+        /// <summary>
+        ///  初始化参数
+        /// </summary>
+        public void InitPara()
+        {
+            string Section = "ShowConfig";
+
+            int num = 0;
+
+            #region 按钮宽度
+            string key = "BtnWidth";
+
+            string read = ConfigHelper.IniReadValue(Section, key, 100);
+
+            if (string.IsNullOrEmpty(read))
+            {
+                read = _btnWidth.ToString();
+
+                ConfigHelper.IniWriteValue(Section, key, read);
+            }
+
+            if (Int32.TryParse(read, out num))
+            {
+                _btnWidth = num;
+            }
+            #endregion
+
+            #region 按钮高度
+            key = "BtnHeight";
+
+            read = ConfigHelper.IniReadValue(Section, key, 100);
+
+            if (string.IsNullOrEmpty(read))
+            {
+                read = _btnHeight.ToString();
+
+                ConfigHelper.IniWriteValue(Section, key, read);
+            }
+
+            if (Int32.TryParse(read, out num))
+            {
+                _btnHeight = num;
+            }
+            #endregion
+
+            #region 横向距离
+            key = "XDis";
+
+            read = ConfigHelper.IniReadValue(Section, key, 100);
+
+            if (string.IsNullOrEmpty(read))
+            {
+                read = _xDis.ToString();
+
+                ConfigHelper.IniWriteValue(Section, key, read);
+            }
+
+            if (Int32.TryParse(read, out num))
+            {
+                _xDis = num;
+            }
+            #endregion
+
+            #region 纵向距离
+            key = "YDis";
+
+            read = ConfigHelper.IniReadValue(Section, key, 100);
+
+            if (string.IsNullOrEmpty(read))
+            {
+                read = _yDis.ToString();
+
+                ConfigHelper.IniWriteValue(Section, key, read);
+            }
+
+            if (Int32.TryParse(read, out num))
+            {
+                _yDis = num;
+            }
+            #endregion
+
+            #region 起始坐标
+
+            int x = 0, y = 0;
+
+            key = "StartPoint_X";
+
+            read = ConfigHelper.IniReadValue(Section, key, 100);
+
+            if (string.IsNullOrEmpty(read))
+            {
+                read = x.ToString();
+
+                ConfigHelper.IniWriteValue(Section, key, read);
+            }
+
+            if (Int32.TryParse(read, out num))
+            {
+                x = num;
+            }
+
+
+            key = "StartPoint_Y";
+
+            read = ConfigHelper.IniReadValue(Section, key, 100);
+
+            if (string.IsNullOrEmpty(read))
+            {
+                read = y.ToString();
+
+                ConfigHelper.IniWriteValue(Section, key, read);
+            }
+
+            if (Int32.TryParse(read, out num))
+            {
+                y = num;
+            }
+
+            _startLoc = new Point(x, y);
+            #endregion
+
+
+            #region 客户端配置
+            Section = "CientConfig";
+
+            key = "LoctionSite";
+
+            read = ConfigHelper.IniReadValue(Section, key, 100);
+
+            if (string.IsNullOrEmpty(read))
+            {
+                read = "-1";
+
+                ConfigHelper.IniWriteValue(Section, key, read);
+            }
+
+            Int32.TryParse(read, out _locTar);
+
+            key = "SeverIP";
+
+            _severIp = ConfigHelper.IniReadValue(Section, key, 100);
+
+            if (string.IsNullOrEmpty(_severIp))
+            {
+                _severIp = "127.0.0.1";
+
+                ConfigHelper.IniWriteValue(Section, key, _severIp);
+            }
+            #endregion
+
+            JtWcfDispatchHelper.InitPara(_severIp, "", "");
+
+            JtWcfMainHelper.InitPara(_severIp, "", "");
+
+            JtWcfTaskHelper.InitPara(_severIp, "", "");
+
+            _clientMark = string.Format("科达研发院_客户端【{0}】", _locTar);
+
+            this.Text = string.Format("{0} IP:{1}", _clientMark, IPHelper.GetLocalIntranetIP());
+        }
+
+
+        /// <summary>
+        /// 初始化按钮
+        /// </summary>
+        private void InitBtnMember()
+        {
+            panelBtn.Controls.Clear();
+
+            int xNum = (panelBtn.Width - _startLoc.X) / (_xDis + _btnWidth);
+
+            foreach (var item in _staDic.Values)
+            {
+                Point point = GetIndexLoc(item.StaId - 1, xNum);
+
+
+                int x = point.X * (_xDis + _btnWidth) + _startLoc.X;
+
+                int y = point.Y * (_yDis + _btnHeight) + _startLoc.Y;
+
+                Button btn = new Button();
+
+                btn.Click += button_Click;
+
+                btn.Location = new Point(x, y);
+
+                btn.Width = _btnWidth;
+
+                btn.Height = _btnHeight;
+
+                btn.Tag = item;
+
+                btn.Text = item.Describ;
+
+                btn.BackColor = Control.DefaultBackColor;
+
+                panelBtn.Controls.Add(btn);
+
+            }
+
+            panelBtn1.Controls.Clear();
+
+            int x1Num = (panelBtn.Width - _startLoc.X) / (_xDis + _btnWidth);
+
+            foreach (var item in _staDic.Values)
+            {
+                Point point1 = GetIndexLoc(item.StaId - 1, x1Num);
+
+
+                int x = point1.X * (_xDis + _btnWidth) + _startLoc.X;
+
+                int y = point1.Y * (_yDis + _btnHeight) + _startLoc.Y;
+
+                Button btn1 = new Button();
+
+                btn1.Click += button_Click;
+
+                btn1.Location = new Point(x, y);
+
+                btn1.Width = _btnWidth;
+
+                btn1.Height = _btnHeight;
+
+                btn1.Tag = item;
+
+                btn1.Text = item.Describ;
+
+                btn1.BackColor = Control.DefaultBackColor;
+
+                panelBtn1.Controls.Add(btn1);
+
+            }
+        }
+
+        /// <summary>
+        ///  初始化站点成员
+        /// </summary>
+        private void InitStaMember()
+        {
+            string section = "StationConfigNum";
+
+            string keyPre = string.Format("站点个数");
+
+            string read = ConfigHelper.IniReadValue(section, keyPre, 100);
+
+            if (string.IsNullOrEmpty(read))
+            {
+                read = "100";
+
+                ConfigHelper.IniWriteValue(section, keyPre, read);
+            }
+
+            if (!Int32.TryParse(read, out _staCount))
+            {
+                _staCount = 100;
+            }
+
+            _staDic.Clear();
+
+            for (int i = 1; i <= _staCount; i++)
+            {
+                StationMember member = GetConfigMember(i);
+
+                if (member != null && !_staDic.ContainsKey(member.StaId))
+                {
+                    _staDic.Add(member.StaId, member);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取指定成员
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns></returns>
+        private StationMember GetConfigMember(int id)
+        {
+            int dibiao = 0, tar = 0, index = 0, backTar = 0;
+
+            string des = "";
+
+            string section = "StationConfig";
+
+            string keyPre = string.Format("STA_N0.{0}_", id);
+
+            #region 地标
+            string key = string.Format(string.Format("{0}{1}", keyPre, "地标"));
+
+            string read = ConfigHelper.IniReadValue(section, key, 100);
+
+            if (string.IsNullOrEmpty(read))
+            {
+                read = id.ToString();
+
+                ConfigHelper.IniWriteValue(section, key, read);
+            }
+
+            Int32.TryParse(read, out dibiao);
+            #endregion
+
+            #region 站点
+            key = string.Format(string.Format("{0}{1}", keyPre, "站点"));
+
+            read = ConfigHelper.IniReadValue(section, key, 100);
+
+            if (string.IsNullOrEmpty(read))
+            {
+                read = id.ToString();
+
+                ConfigHelper.IniWriteValue(section, key, read);
+            }
+
+            Int32.TryParse(read, out tar);
+            #endregion
+
+            #region 描述
+            key = string.Format(string.Format("{0}{1}", keyPre, "描述"));
+
+            read = ConfigHelper.IniReadValue(section, key, 100);
+
+            if (string.IsNullOrEmpty(read))
+            {
+                read = string.Format("站点{0}", id);
+
+                ConfigHelper.IniWriteValue(section, key, read);
+            }
+
+            des = read;
+            #endregion
+
+            #region 优先级
+            key = string.Format(string.Format("{0}{1}", keyPre, "优先级"));
+
+            read = ConfigHelper.IniReadValue(section, key, 100);
+
+            if (string.IsNullOrEmpty(read))
+            {
+                read = id.ToString(); ;
+
+                ConfigHelper.IniWriteValue(section, key, read);
+            }
+
+            Int32.TryParse(read, out index);
+            #endregion
+
+            #region 待命点
+            key = string.Format(string.Format("{0}{1}", keyPre, "叫车点地标"));
+
+            read = ConfigHelper.IniReadValue(section, key, 100);
+
+            if (string.IsNullOrEmpty(read))
+            {
+                read = "0,";
+
+                ConfigHelper.IniWriteValue(section, key, read);
+            }
+
+            List<int> wait = new List<int>();
+
+            string[] tokens = read.Split(',');
+
+            if (tokens != null)
+            {
+                int tempNum = 0;
+
+                for (int i = 0; i < tokens.Length; i++)
+                {
+                    if (Int32.TryParse(tokens[i], out tempNum))
+                    {
+                        if (!wait.Contains(tempNum) && tempNum != 0)
+                        {
+                            wait.Add(tempNum);
+                        }
+                    }
+                }
+            }
+            #endregion
+
+            #region 返回站点
+            key = string.Format(string.Format("{0}{1}", keyPre, "返回站点"));
+
+            read = ConfigHelper.IniReadValue(section, key, 100);
+
+            if (string.IsNullOrEmpty(read))
+            {
+                read = "0,";
+
+                ConfigHelper.IniWriteValue(section, key, read);
+            }
+
+            List<int> backTarList = new List<int>();
+
+            tokens = read.Split(',');
+
+            if (tokens != null)
+            {
+                int tempNum = 0;
+
+                for (int i = 0; i < tokens.Length; i++)
+                {
+                    if (Int32.TryParse(tokens[i], out tempNum))
+                    {
+                        if (!backTarList.Contains(tempNum) && tempNum != 0)
+                        {
+                            backTarList.Add(tempNum);
+                        }
+                    }
+                }
+            }
+            #endregion
+
+            return new StationMember(id, dibiao, tar, des, index, wait, backTarList);
+        }
+
+        private void button_Click(object sender, EventArgs e)
+        {
+            if (sender is Button)
+            {
+                Button btn = sender as Button;
+                StationMember sta = btn.Tag as StationMember;
+
+
+                if (sta != null)
+                {
+                    if (!_selectStation.Contains(sta))
+                    {
+                        _selectStation.Add(sta);
+
+                        btn.BackColor = Color.Red;
+                    }
+                    else
+                    {
+                        _selectStation.Remove(sta);
+
+                        btn.BackColor = Control.DefaultBackColor;
+                    }
+
+                    textBoxNextTars.Text = SelectStaStr();
+                   
+                    SetOutputMsg(string.Format("当前已选择{0}", textBoxNextTars.Text));
+                    
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取已选择站点(任务）
+        /// </summary>
+        /// <returns></returns>
+        private string SelectStaStr()
+        {
+            if (_selectStation == null || _selectStation.Count < 1) { return string.Empty; }
+
+            _selectStation = _selectStation.OrderBy(c => c.OrderIndex).ToList();
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (var item in _selectStation)
+            {
+                sb.Append(string.Format("{0},", item.StaTarget));
+            }
+
+            return sb.ToString();
+        }
+
+
+        /// <summary>
+        /// 获取逻辑位置
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="jiange"></param>
+        /// <returns></returns>
+        private Point GetIndexLoc(int id, int jiange)
+        {
+            if (jiange == 0) { return new Point(0, 0); }
+
+            int x = id % jiange;
+
+            int y = id / jiange;
+
+            return new Point(x, y);
+        }
+
+        /// <summary>
+        /// 自动模式和手动模式的目的地站点选择按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonManSend_Click(object sender, EventArgs e)
+        {
+            if (!_isLogin) { MessageBox.Show("请先登录后再操作！", "提示"); return; }
+
+            if (buttonManSend.Text != "自动模式")
+            {
+                buttonManSend.Text = "自动模式";
+
+                textBoxNextTars.ReadOnly = true;
+            }
+            else
+            {
+                buttonManSend.Text = "手动模式";
+
+                textBoxNextTars.ReadOnly = false;
+            }
+        }
+
+        /// <summary>
+        /// 输出系统信息（任务）
+        /// </summary>
+        /// <param name="msg"></param>
+        private void SetOutputMsg(string msg)
+        {
+            if (string.IsNullOrEmpty(msg)) { msg = "空消息"; }
+
+            if (listBoxOutput.Items.Count > 200)
+            {
+                listBoxOutput.Items.RemoveAt(0);
+            }
+
+            listBoxOutput.Items.Add(string.Format("【{0}】：{1}", DateTime.Now.TimeOfDay.ToString(), msg));
+
+            listBoxOutput.SelectedIndex = listBoxOutput.Items.Count - 1;
+        }
+
+        /// <summary>
+        /// 输出系统信息（车辆）
+        /// </summary>
+        /// <param name="msg"></param>
+        private void SetOutputMsg2(string msg)
+        {
+            if (string.IsNullOrEmpty(msg)) { msg = "空消息"; }
+
+            if (listBox1.Items.Count > 200)
+            {
+                listBox1.Items.RemoveAt(0);
+            }
+
+            listBox1.Items.Add(string.Format("【{0}】：{1}", DateTime.Now.TimeOfDay.ToString(), msg));
+
+            listBox1.SelectedIndex = listBox1.Items.Count - 1;
+        }
+
+        /// <summary>
+        /// 时钟
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timerFunc_Tick(object sender, EventArgs e)
+        {
+            timerFunc.Enabled = false;
+
+            try
+            {
+                UpdateShow();
+            }
+            catch { }
+
+            timerFunc.Enabled = true;
+        }
+
+        /// <summary>
+        /// 状态及时间的更新
+        /// </summary>
+        private void UpdateShow()
+        {
+            toolStripLabelConnect.Text = string.Format("服务端连接状态：{0}", JtWcfMainHelper.IsConnected ? "已连接" : "未连接");
+
+            toolStripLabelTime.Text = string.Format("当前时间：{0}", DateTime.Now.TimeOfDay.ToString());
+
+            toolStripLabelLogin.Text = string.Format("用户状态：{0}", _isLogin ? "已登录" : "未登录");
+        }
+
+        /// <summary>
+        /// 重置背景色
+        /// </summary>
+        private void ResetBackCorlor()
+        {
+            foreach (var item in panelBtn.Controls)
+            {
+                if (item is Button)
+                {
+                    Button btn = item as Button;
+
+                    if (btn != null && btn.BackColor != Control.DefaultBackColor)
+                    {
+                        btn.BackColor = Control.DefaultBackColor;
+                    }
+                }
+            }
+            _selectStation.Clear();  // 清除所有已选中站点
+        }
+
+        /// <summary>
+        /// 返回指定站点的位置
+        /// </summary>
+        /// <param name="tar"></param>
+        /// <returns></returns>
+        private StationMember GetRelateMember(int tar)
+        {
+            return _staDic.Values.ToList().Find(c => { return c.StaTarget == tar; });
+        }
+
+        private void KEDAForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        ///  刷新
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void 刷新ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            InitPara();
+
+            UpdateBtnMember();
+
+            InitStaMember();
+
+            InitBtnMember();
+
+            InitWaitPointAreaTwoMember();
+
+            _selectStation.Clear();
+        }
+
+
+        /// <summary>
+        /// 更新按钮
+        /// </summary>
+        private void UpdateBtnMember()
+        {
+            int xNum = (panelBtn.Width - _startLoc.X) / (_xDis + _btnWidth);
+
+            foreach (var item in panelBtn.Controls)
+            {
+                if (item is Button)
+                {
+                    Button btn = item as Button;
+
+                    if (btn != null && btn.Tag is StationMember)
+                    {
+                        int id = (btn.Tag as StationMember).StaId - 1;
+
+                        Point point = GetIndexLoc(id, xNum);
+
+                        int x = point.X * (_xDis + _btnWidth) + _startLoc.X;
+
+                        int y = point.Y * (_yDis + _btnHeight) + _startLoc.Y;
+
+                        btn.Location = new Point(x, y);
+
+                        btn.Width = _btnWidth;
+
+                        btn.Height = _btnHeight;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///  初始化区域二待命点成员
+        /// </summary>
+        private void InitWaitPointAreaTwoMember()
+        {
+            string section = "AreaTwoConfig";
+
+            string keyPre = string.Format("待名点个数");
+
+            string read = ConfigHelper.IniReadValue(section, keyPre, 100);
+
+            if (string.IsNullOrEmpty(read))
+            {
+                read = "3";
+
+                ConfigHelper.IniWriteValue(section, keyPre, read);
+            }
+
+            if (!Int32.TryParse(read, out _waitCountAreaTwo))
+            {
+                _waitCountAreaTwo = 3;
+            }
+
+            _waitAreaTwoList.Clear();
+
+            for (int i = 1; i <= _waitCountAreaTwo; i++)
+            {
+                AreaTwoWaitPointMember member = GetConfigArea2Member(i);
+
+                _waitAreaTwoList.Add(member);
+
+                _waitAreaTwoList = _waitAreaTwoList.OrderBy(c => c.OrderIndex).ToList();
+            }
+        }
+
+        /// <summary>
+        /// 返回指定成员
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns></returns>
+        private AreaTwoWaitPointMember GetConfigArea2Member(int id)
+        {
+            int dibiao = 0, tar = 0, index = 0;
+
+            string section = "AreaTwoConfig";
+
+            string keyPre = string.Format("STA_N0.{0}_", id);
+
+            #region 地标
+            string key = string.Format(string.Format("{0}{1}", keyPre, "地标"));
+
+            string read = ConfigHelper.IniReadValue(section, key, 100);
+
+            if (string.IsNullOrEmpty(read))
+            {
+                read = id.ToString();
+
+                ConfigHelper.IniWriteValue(section, key, read);
+            }
+
+            Int32.TryParse(read, out dibiao);
+            #endregion
+
+            #region 站点
+            key = string.Format(string.Format("{0}{1}", keyPre, "站点"));
+
+            read = ConfigHelper.IniReadValue(section, key, 100);
+
+            if (string.IsNullOrEmpty(read))
+            {
+                read = id.ToString();
+
+                ConfigHelper.IniWriteValue(section, key, read);
+            }
+
+            Int32.TryParse(read, out tar);
+            #endregion
+
+            #region 优先级
+            key = string.Format(string.Format("{0}{1}", keyPre, "优先级"));
+
+            read = ConfigHelper.IniReadValue(section, key, 100);
+
+            if (string.IsNullOrEmpty(read))
+            {
+                read = id.ToString(); ;
+
+                ConfigHelper.IniWriteValue(section, key, read);
+            }
+
+            Int32.TryParse(read, out index);
+            #endregion
+
+            return new AreaTwoWaitPointMember(id, dibiao, tar, index);
+        }
+
+        /// <summary>
+        /// 任务暂停
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pausemission_Click(object sender, EventArgs e)
+        {
+            if (_isLogin)
+            {
+                #region
+                if (pausemission.Text != "继续")
+                {
+                    JtWcfMainHelper.InitPara(_severIp, "", "");
+
+                    List<DispatchBackMember> result = JtWcfMainHelper.GetDispatchList();
+
+                    if (_devArea2 != null)
+                    {
+                        MessageBox.Show("当前站点派发任务未完成，是否暂停？", "提示");
+
+                        return;
+                    }
+
+                    if (result != null)
+                    {
+                        foreach (var item in result)
+                        {
+                            if (item.TaskImf == _clientMark)
+                            {
+                                MessageBox.Show("当前站点派发任务未完成，是否暂停？", "提示");
+
+                                return;
+                            }
+                        }
+                    }
+
+                    pausemission.Text = "继续";
+                }
+
+                else
+                {
+                    pausemission.Text = "暂停";
+
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("请先登录后再操作！", "提示");
+            }
+            #endregion
+        }
+
+
+        /// <summary>
+        /// 区域二待命点成员
+        /// </summary>
+        public class AreaTwoWaitPointMember
+        {
+            /// <summary>
+            /// 站点id
+            /// </summary>
+            private int _staId = -1;
+
+            /// <summary>
+            /// 站点地标
+            /// </summary>
+            private int _staSite = 0;
+
+            /// <summary>
+            /// 站点编号
+            /// </summary>
+            private int _staTarget = 0;
+
+            /// <summary>
+            /// 优先级
+            /// </summary>
+            private int _orderIndex = 0;
+
+            /// <summary>
+            /// 描述
+            /// </summary>
+            private string _describ = "暂无";
+
+            /// <summary>
+            /// 待命点集合
+            /// </summary>
+            private List<int> _waitList = new List<int>();
+
+            /// <summary>
+            /// 返回站点集合
+            /// </summary>
+            private List<int> _backTarList = new List<int>();
+
+            /// <summary>
+            /// 站点id
+            /// </summary>
+            public int StaId
+            {
+                get { return _staId; }
+                set { _staId = value; }
+            }
+
+            /// <summary>
+            /// 站点地标
+            /// </summary>
+            public int StaSite
+            {
+                get { return _staSite; }
+                set { _staSite = value; }
+            }
+
+            /// <summary>
+            /// 站点编号
+            /// </summary>
+            public int StaTarget
+            {
+                get { return _staTarget; }
+                set { _staTarget = value; }
+            }
+
+            /// <summary>
+            /// 优先级
+            /// </summary>
+            public int OrderIndex
+            {
+                get { return _orderIndex; }
+                set { _orderIndex = value; }
+            }
+
+            /// <summary>
+            /// 描述
+            /// </summary>
+            public string Describ
+            {
+                get { return _describ; }
+                set { _describ = value; }
+            }
+
+            /// <summary>
+            /// 待命点集合
+            /// </summary>
+            public List<int> WaitList
+            {
+                get { return _waitList; }
+                set { _waitList = value; }
+            }
+
+            /// <summary>
+            /// 返回站点集合
+            /// </summary>
+            public List<int> BackTarList
+            {
+                get { return _backTarList; }
+                set { _backTarList = value; }
+            }
+
+            /// <summary>
+            /// 构造函数
+            /// </summary>
+            /// <param name="id">id</param>
+            /// <param name="mark">地标</param>
+            /// <param name="tar">站点</param>
+            /// <param name="index">优先级</param>
+            public AreaTwoWaitPointMember(int id, int mark, int tar, int index)
+            {
+                _staId = id;
+
+                _staSite = mark;
+
+                _staTarget = tar;
+
+                _orderIndex = index;
+            }
+        }
+
+
+        /// <summary>
+        /// 站点成员
+        /// </summary>
+        public class StationMember
+        {
+            /// <summary>
+            /// 站点id
+            /// </summary>
+            private int _staId = -1;
+
+            /// <summary>
+            /// 站点地标
+            /// </summary>
+            private int _staSite = 0;
+
+            /// <summary>
+            /// 站点编号
+            /// </summary>
+            private int _staTarget = 0;
+
+            /// <summary>
+            /// 优先级
+            /// </summary>
+            private int _orderIndex = 0;
+
+            /// <summary>
+            /// 描述
+            /// </summary>
+            private string _describ = "暂无";
+
+            /// <summary>
+            /// 待命点集合
+            /// </summary>
+            private List<int> _waitList = new List<int>();
+
+            /// <summary>
+            /// 返回站点集合
+            /// </summary>
+            private List<int> _backTarList = new List<int>();
+
+            /// <summary>
+            /// 站点id
+            /// </summary>
+            public int StaId
+            {
+                get { return _staId; }
+                set { _staId = value; }
+            }
+
+            /// <summary>
+            /// 站点地标
+            /// </summary>
+            public int StaSite
+            {
+                get { return _staSite; }
+                set { _staSite = value; }
+            }
+
+            /// <summary>
+            /// 站点编号
+            /// </summary>
+            public int StaTarget
+            {
+                get { return _staTarget; }
+                set { _staTarget = value; }
+            }
+
+            /// <summary>
+            /// 优先级
+            /// </summary>
+            public int OrderIndex
+            {
+                get { return _orderIndex; }
+                set { _orderIndex = value; }
+            }
+
+            /// <summary>
+            /// 描述
+            /// </summary>
+            public string Describ
+            {
+                get { return _describ; }
+                set { _describ = value; }
+            }
+
+            /// <summary>
+            /// 待命点集合
+            /// </summary>
+            public List<int> WaitList
+            {
+                get { return _waitList; }
+                set { _waitList = value; }
+            }
+
+            /// <summary>
+            /// 返回站点集合
+            /// </summary>
+            public List<int> BackTarList
+            {
+                get { return _backTarList; }
+                set { _backTarList = value; }
+            }
+
+            /// <summary>
+            /// 构造函数
+            /// </summary>
+            /// <param name="id">id</param>
+            /// <param name="mark">地标</param>
+            /// <param name="tar">站点</param>
+            /// <param name="des">描述</param>
+            /// <param name="index">优先级</param>
+            /// <param name="waitList">待命点集合</param>      
+            /// <param name="backTar">返回站点</param> 
+            public StationMember(int id, int mark, int tar, string des, int index, List<int> waitList, List<int> backTar)
+            {
+                _staId = id;
+
+                _staSite = mark;
+
+                _staTarget = tar;
+
+                _describ = des;
+
+                _orderIndex = index;
+
+                if (waitList != null)
+                {
+                    _waitList = waitList;
+                }
+
+                if (backTar != null)
+                {
+                    _backTarList = backTar;
+                }
+            }
+
+        }
+        public static class APPConfig
+        {
+            static string _section = "WAITCOMBINECofing";
+            /// <summary>
+            /// 用户登录账号判断
+            /// </summary>
+            public static bool UserLogin(string user, string pass)
+            {
+                string sec = "UserConfig";
+
+                if (string.IsNullOrEmpty(user) || string.IsNullOrEmpty(pass)) { return false; }
+
+                string key = user;
+
+                string read = ConfigHelper.IniReadValue(sec, key, 100);
+
+                if (string.IsNullOrEmpty(read))
+                {
+                    read = "kdagv";
+
+                    ConfigHelper.IniWriteValue(sec, key, read);
+                }
+
+                return read == pass;
+            }
+
+
+            /// <summary>
+            /// 公司名称
+            /// </summary>
+            /// <returns></returns>
+            public static string LogoStr()
+            {
+                string key = string.Format("公司名称");
+
+                string read = ConfigHelper.IniReadValue(_section, key, 1000);
+
+                if (string.IsNullOrEmpty(read))
+                {
+                    read = "广东科达洁能股份有限公司";
+
+                    ConfigHelper.IniWriteValue(_section, key, read);
+                }
+
+                return read;
+            }
+        }
+
+      
+
+        /// <summary>
+        /// AGV 前进启动（车辆）
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void agvForwordMove_Click(object sender, EventArgs e)
+        {
+            JtWcfMainHelper.InitPara(_severIp, "", "");
+
+            if (JtWcfMainHelper.SendOrder(listView5.FocusedItem.Text, new CommonDeviceOrderObj("前进启动" + LocSite, 1, 1)))
+            {
+                MessageBox.Show(listView5.FocusedItem.Text, "提示");
+            }
+            else
+            {
+                MessageBox.Show("请尝试再操作一次", "提示");
+            }
+        }
+
+        /// <summary>
+        /// 指令类型下拉框
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //this.comboBox1.Items.Add(new object[] {( "发送站点"), "清除站点", "开启声音", "关闭声音", "速度", "心跳指令" });
+            this.comboBox1.Items.Add(JtWcfMainHelper.SendOrder(listView5.FocusedItem.Text, new CommonDeviceOrderObj("发送站点" + LocSite, 3,1)));
+            if (this.comboBox1.Text == "发送站点")
+            {
+                JtWcfMainHelper.SendOrder(listView5.FocusedItem.Text, new CommonDeviceOrderObj("发送站点" + LocSite, 3, 1));
+                MessageBox.Show("发送站点成功", "提示");
+                 SetOutputMsg2("发送站点成功");   
+            }
+            if (this.comboBox1.Text == "清除站点")
+            {
+                  MessageBox.Show("清除站点成功", "提示");
+                  SetOutputMsg2("清除站点成功");
+            }
+
+            if (this.comboBox1.Text == "开启声音")
+            {
+               
+                    MessageBox.Show("开启声音成功", "提示");
+                    SetOutputMsg2("开启声音成功");
+                
+            }
+            if (this.comboBox1.Text == "关闭声音")
+            {
+                
+                    MessageBox.Show("清除站点成功", "提示");
+                    SetOutputMsg2("清除站点成功");
+               
+            }
+            if (this.comboBox1.Text == "速度")
+            {
+                
+                    MessageBox.Show("更改速度成功", "提示");
+                    SetOutputMsg2("更改速度成功");
+                
+            }
+            if (this.comboBox1.Text == "心跳指令")
+            {
+               
+                    MessageBox.Show("心跳成功", "提示");
+                    SetOutputMsg2("心跳成功");           
+            }
+
+        }
+
+        /// <summary>
+        /// 指令发送
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonSend_Click(object sender, EventArgs e)
+        {
+
+
+            if (this.comboBox1.Text == "发送站点")
+            {
+                if(listView5.FocusedItem is null)
+                {
+                    MessageBox.Show("请选中需要操作的车辆", "提示");
+                    return;
+                }
+                else
+                {
+                    JtWcfMainHelper.SendOrder(listView5.FocusedItem.Text, new CommonDeviceOrderObj("发送站点" + LocSite, 3, Convert.ToInt32(textBox1.Text)));
+                    MessageBox.Show("确定发送参数？", "提示");
+                    SetOutputMsg2("发送站点成功");
+                }
+                
+            }
+
+
+            
+        }
+      
+
+        /// <summary>
+        /// AGV 后退启动
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void agvBackMove_Click(object sender, EventArgs e)
+        {
+            JtWcfMainHelper.InitPara(_severIp, "", "");
+
+            if (JtWcfMainHelper.SendOrder(listView5.FocusedItem.Text, new CommonDeviceOrderObj("后退" + LocSite, 1, 2)))
+            {
+                MessageBox.Show(listView5.FocusedItem.Text, "提示");
+            }
+            else
+            {
+                MessageBox.Show("请尝试再操作一次", "提示");
+            }
+        }
+
+        /// <summary>
+        /// AGV 停止
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void agvStop_Click(object sender, EventArgs e)
+        {
+            JtWcfMainHelper.InitPara(_severIp, "", "");
+
+            if (JtWcfMainHelper.SendOrder(listView5.FocusedItem.Text, new CommonDeviceOrderObj("停止" + LocSite, 2,1)))
+            {
+                MessageBox.Show(listView5.FocusedItem.Text, "提示");
+            }
+            else
+            {
+                MessageBox.Show("请尝试再操作一次", "提示");
+            }
+        }
+
+        /// <summary>
+        /// 指令参数输入为数字
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar != 8 && !Char.IsDigit(e.KeyChar))//如果不是输入数字就不让输入
+            {
+                MessageBox.Show("请输入数字！");
+                e.Handled = true;
+            }
+            
+        }
+    }
+}
