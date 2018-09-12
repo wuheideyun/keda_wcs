@@ -269,6 +269,7 @@ namespace KEDAClient
             ///添加数据项
             ///UI暂时挂起，直到EndUpdate绘制控件，可提高加载速度
             GfxList<DeviceBackImf> devsList = JtWcfMainHelper.GetDevList();
+            if(devsList is null) return;
             for (int i = 0; i < devsList.Count; i++)
             {
                 vehicleslist.BeginUpdate();
@@ -313,6 +314,7 @@ namespace KEDAClient
             ///
 
             GfxList<GfxServiceContractTaskExcute.TaskBackImf> taskList = JtWcfTaskHelper.GetAllTask();
+            if (taskList is null) return;
             for (int i = 0; i < taskList.Count; i++)
             {
                 taskInformlist.BeginUpdate();
