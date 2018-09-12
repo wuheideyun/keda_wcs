@@ -860,6 +860,7 @@ namespace KEDAClient
         private void buttonManSend_Click(object sender, EventArgs e)
         {
             if (!_isLogin) { MessageBox.Show("请先登录后再操作！", "提示"); return; }
+            //ddd
 
             if (buttonManSend.Text != "自动模式")
             {
