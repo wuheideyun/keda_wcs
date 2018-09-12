@@ -585,6 +585,7 @@
             this.agvBackMove.Text = "后退";
             this.agvBackMove.UseVisualStyleBackColor = true;
             this.agvBackMove.Click += new System.EventHandler(this.agvBackMove_Click);
+            this.agvBackMove.Enabled = false;
             // 
             // agvForwordMove
             // 
@@ -596,6 +597,7 @@
             this.agvForwordMove.Text = "前进";
             this.agvForwordMove.UseVisualStyleBackColor = true;
             this.agvForwordMove.Click += new System.EventHandler(this.agvForwordMove_Click);
+            this.agvForwordMove.Enabled = false;
             // 
             // buttonSend
             // 
@@ -692,6 +694,7 @@
             this.vehicleslist.Size = new System.Drawing.Size(673, 399);
             this.vehicleslist.TabIndex = 0;
             this.vehicleslist.UseCompatibleStateImageBehavior = false;
+            this.vehicleslist.SelectedIndexChanged += new System.EventHandler(this.vehicleslist_SelectedIndexChanged);
             // 
             // tabPage5
             // 
@@ -699,7 +702,7 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 26);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(750, 405);
+            this.tabPage5.Size = new System.Drawing.Size(669, 402);
             this.tabPage5.TabIndex = 1;
             this.tabPage5.Text = "配置站点";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -711,7 +714,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelBtn1.Location = new System.Drawing.Point(0, 0);
             this.panelBtn1.Name = "panelBtn1";
-            this.panelBtn1.Size = new System.Drawing.Size(750, 562);
+            this.panelBtn1.Size = new System.Drawing.Size(669, 559);
             this.panelBtn1.TabIndex = 0;
             // 
             // timerFunc
