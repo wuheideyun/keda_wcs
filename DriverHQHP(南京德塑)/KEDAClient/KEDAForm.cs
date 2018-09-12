@@ -72,25 +72,6 @@ namespace KEDAClient
         /// </summary>
         public int _locTar = -1;
 
-        /// <summary>
-        /// 呼叫AGV
-        /// </summary>
-        private bool _isCalling = false;
-
-        /// <summary>
-        /// 呼叫任务
-        /// </summary>
-        TaskDispatch _callingTask = null;
-
-        /// <summary>
-        /// 当前被呼叫的AGV
-        /// </summary>
-        string _callingAGV = null;
-
-        /// <summary>
-        /// 当前的呼叫点
-        /// </summary>
-        string _callingSite = null;
 
         /// <summary>
         /// 站点集合
@@ -122,7 +103,7 @@ namespace KEDAClient
         /// </summary>
         private List<StationMember> _selectStation1 = new List<StationMember>();
 
-        
+
 
         private readonly DeviceBackImf devid;
 
@@ -169,20 +150,20 @@ namespace KEDAClient
         {
 
             // 创建列表头
-            listView1.Columns.Add("alarmID", 150, HorizontalAlignment.Left);
-            listView1.Columns.Add("eventname", 200, HorizontalAlignment.Left);
-            listView1.Columns.Add("Sourceid", 200, HorizontalAlignment.Left);
-            listView1.Columns.Add("Sourcetype", 200, HorizontalAlignment.Left);
-            listView1.Columns.Add("State", 200, HorizontalAlignment.Left);  // active` 、ackonwledged 、closed 、deleted
-            listView1.Columns.Add("Eventcount", 200, HorizontalAlignment.Left);
-            listView1.Columns.Add("starteventat", 200, HorizontalAlignment.Left);  //  报警第一次发生时间
-            listView1.Columns.Add("endeventat", 200, HorizontalAlignment.Left);  //  报警最后一次发生时间
+            alarmlist.Columns.Add("alarmID", 150, HorizontalAlignment.Left);
+            alarmlist.Columns.Add("eventname", 200, HorizontalAlignment.Left);
+            alarmlist.Columns.Add("Sourceid", 200, HorizontalAlignment.Left);
+            alarmlist.Columns.Add("Sourcetype", 200, HorizontalAlignment.Left);
+            alarmlist.Columns.Add("State", 200, HorizontalAlignment.Left);  // active` 、ackonwledged 、closed 、deleted
+            alarmlist.Columns.Add("Eventcount", 200, HorizontalAlignment.Left);
+            alarmlist.Columns.Add("starteventat", 200, HorizontalAlignment.Left);  //  报警第一次发生时间
+            alarmlist.Columns.Add("endeventat", 200, HorizontalAlignment.Left);  //  报警最后一次发生时间
             // 若没有，无法显示数据 
-            listView1.View = System.Windows.Forms.View.Details;
+            alarmlist.View = System.Windows.Forms.View.Details;
 
             ///添加数据项
             ///UI暂时挂起，直到EndUpdate绘制控件，可提高加载速度
-            listView1.BeginUpdate();
+            alarmlist.BeginUpdate();
             ListViewItem item = new ListViewItem(" 报警id ");
             item.SubItems.Add("报警名称");
             item.SubItems.Add("报警源id");
@@ -194,11 +175,11 @@ namespace KEDAClient
 
 
             // 显示项
-            listView1.Items.Add(item);
+            alarmlist.Items.Add(item);
 
             // 结束数据处理
             // UI界面一次性绘制
-            listView1.EndUpdate();
+            alarmlist.EndUpdate();
 
         }
 
@@ -209,28 +190,28 @@ namespace KEDAClient
         private void Logger()
         {
             // 创建列表头
-            listView3.Columns.Add("Event", 200, HorizontalAlignment.Left);
-            listView3.Columns.Add("Timestamp", 200, HorizontalAlignment.Left);
-            listView3.Columns.Add("Source",200, HorizontalAlignment.Left);
-            listView3.Columns.Add("Description", 200, HorizontalAlignment.Left);
+            loggerlist.Columns.Add("Event", 200, HorizontalAlignment.Left);
+            loggerlist.Columns.Add("Timestamp", 200, HorizontalAlignment.Left);
+            loggerlist.Columns.Add("Source", 200, HorizontalAlignment.Left);
+            loggerlist.Columns.Add("Description", 200, HorizontalAlignment.Left);
 
             // 若没有，无法显示数据 
-            listView3.View = System.Windows.Forms.View.Details;
+            loggerlist.View = System.Windows.Forms.View.Details;
 
             ///添加数据项
             ///UI暂时挂起，直到EndUpdate绘制控件，可提高加载速度
-            listView3.BeginUpdate();
+            loggerlist.BeginUpdate();
             ListViewItem item = new ListViewItem("事件");
             item.SubItems.Add("时间");
             item.SubItems.Add("来源");
             item.SubItems.Add("描述");
 
             // 显示项
-            listView3.Items.Add(item);
+            loggerlist.Items.Add(item);
 
             // 结束数据处理
             // UI界面一次性绘制
-            listView3.EndUpdate();
+            loggerlist.EndUpdate();
         }
 
         /// <summary>
@@ -240,20 +221,20 @@ namespace KEDAClient
         {
 
             // 创建列表头
-            listView4.Columns.Add("Devsid", 150, HorizontalAlignment.Left);
-            listView4.Columns.Add("DevsName", 200, HorizontalAlignment.Left);
-            listView4.Columns.Add("DevsType", 200, HorizontalAlignment.Left); // 若宽度改为0，将会隐藏此列
-            listView4.Columns.Add("DevsDesc", 200, HorizontalAlignment.Left);  // 设备描述
-            listView4.Columns.Add("DevsState", 200, HorizontalAlignment.Left);  // 通讯状态
-            listView4.Columns.Add("CommMode", 200, HorizontalAlignment.Left);  // 通讯模式
+            deviceslist.Columns.Add("Devsid", 150, HorizontalAlignment.Left);
+            deviceslist.Columns.Add("DevsName", 200, HorizontalAlignment.Left);
+            deviceslist.Columns.Add("DevsType", 200, HorizontalAlignment.Left); // 若宽度改为0，将会隐藏此列
+            deviceslist.Columns.Add("DevsDesc", 200, HorizontalAlignment.Left);  // 设备描述
+            deviceslist.Columns.Add("DevsState", 200, HorizontalAlignment.Left);  // 通讯状态
+            deviceslist.Columns.Add("CommMode", 200, HorizontalAlignment.Left);  // 通讯模式
 
 
             // 若没有，无法显示数据 
-            listView4.View = System.Windows.Forms.View.Details;
+            deviceslist.View = System.Windows.Forms.View.Details;
 
             ///添加数据项
             ///UI暂时挂起，直到EndUpdate绘制控件，可提高加载速度
-            listView4.BeginUpdate();
+            deviceslist.BeginUpdate();
             ListViewItem item = new ListViewItem("设备id");
             item.SubItems.Add("设备名称");
             item.SubItems.Add("设备类型");
@@ -262,11 +243,11 @@ namespace KEDAClient
             item.SubItems.Add("通讯模式");
 
             // 显示项
-            listView4.Items.Add(item);
+            deviceslist.Items.Add(item);
 
             // 结束数据处理
             // UI界面一次性绘制
-            listView4.EndUpdate();
+            deviceslist.EndUpdate();
 
         }
 
@@ -277,46 +258,33 @@ namespace KEDAClient
         {
 
             // 创建列表头
-            listView5.Columns.Add("DevId", 200, HorizontalAlignment.Left);
-            listView5.Columns.Add("DevModel", 100, HorizontalAlignment.Left); // 设备型号
-            listView5.Columns.Add("DevStatue", 150, HorizontalAlignment.Left);// 若宽度改为0，将会隐藏此列
-            listView5.Columns.Add(".KeyValue", 150, HorizontalAlignment.Left);
-            listView5.Columns.Add("Payload", 120, HorizontalAlignment.Left);
-            listView5.Columns.Add("Current action", 200, HorizontalAlignment.Left); //新增或者提取AGV
-            listView5.Columns.Add("TO node", 120, HorizontalAlignment.Left);
-            listView5.Columns.Add("Timestamp", 150, HorizontalAlignment.Left);
-            listView5.Columns.Add("报警描述", 150, HorizontalAlignment.Left);
-            listView5.Columns.Add("报警时间", 150, HorizontalAlignment.Left);
-            // listView5.Columns.Add("State", 250, HorizontalAlignment.Left);
+            vehicleslist.Columns.Add("DevId", 200, HorizontalAlignment.Left);
+            vehicleslist.Columns.Add("DevModel", 100, HorizontalAlignment.Left); // 设备型号
+            vehicleslist.Columns.Add("DevStatue", 150, HorizontalAlignment.Left);// 若宽度改为0，将会隐藏此列
+            vehicleslist.Columns.Add("Timestamp", 150, HorizontalAlignment.Left);
 
             // 若没有，无法显示数据 
-            listView5.View = System.Windows.Forms.View.Details;
+            vehicleslist.View = System.Windows.Forms.View.Details;
 
             ///添加数据项
             ///UI暂时挂起，直到EndUpdate绘制控件，可提高加载速度
             GfxList<DeviceBackImf> devsList = JtWcfMainHelper.GetDevList();
             for (int i = 0; i < devsList.Count; i++)
             {
-                listView5.BeginUpdate();
+                vehicleslist.BeginUpdate();
                 ListViewItem item = new ListViewItem(devsList[i].DevId); // 设备id
                 item.SubItems.Add(devsList[i].DevModel); // 设备信息
-                item.SubItems.Add(devsList[i].DevStatue); // 设备状态
-                item.SubItems.Add(devsList[i].KeyValue); //关键值
-                item.SubItems.Add("货物1");
-                item.SubItems.Add("not inserted,Ready,Assigned to a mission ");
+                item.SubItems.Add(devsList[i].DevStatue); // 设备状态            
                 item.SubItems.Add("   ");
-                item.SubItems.Add("   ");
-                item.SubItems.Add("报警描述字段不清楚"); // 报警描述
-                item.SubItems.Add("报警时间字段不清楚"); // 报警时间
-                listView5.BeginUpdate();
+                vehicleslist.BeginUpdate();
 
 
                 // 显示项
-                listView5.Items.Add(item);
+                vehicleslist.Items.Add(item);
             }
             // 结束数据处理
             // UI界面一次性绘制
-            listView5.EndUpdate();
+            vehicleslist.EndUpdate();
 
         }
 
@@ -326,19 +294,19 @@ namespace KEDAClient
         private void TaskInform()
         {
             // 添加表头，即列名
-            listView6.Columns.Add("任务id", 200, HorizontalAlignment.Left);
-            listView6.Columns.Add("任务信息", 100, HorizontalAlignment.Left);
-            listView6.Columns.Add("任务状态", 150, HorizontalAlignment.Left);
-            listView6.Columns.Add("触发源", 150, HorizontalAlignment.Left);
-            listView6.Columns.Add("任务设备", 150, HorizontalAlignment.Left);
-            listView6.Columns.Add("任务路径", 150, HorizontalAlignment.Left);
-            listView6.Columns.Add("控制参数", 150, HorizontalAlignment.Left);
-            listView6.Columns.Add("指令信息", 150, HorizontalAlignment.Left);
-            listView6.Columns.Add("信息", 200, HorizontalAlignment.Left);
-            listView6.Columns.Add("触发时间", 200, HorizontalAlignment.Left);
+            taskInformlist.Columns.Add("任务id", 200, HorizontalAlignment.Left);
+            taskInformlist.Columns.Add("任务信息", 100, HorizontalAlignment.Left);
+            taskInformlist.Columns.Add("任务状态", 150, HorizontalAlignment.Left);
+            taskInformlist.Columns.Add("触发源", 150, HorizontalAlignment.Left);
+            taskInformlist.Columns.Add("任务设备", 150, HorizontalAlignment.Left);
+            taskInformlist.Columns.Add("任务路径", 150, HorizontalAlignment.Left);
+            taskInformlist.Columns.Add("控制参数", 150, HorizontalAlignment.Left);
+            taskInformlist.Columns.Add("指令信息", 150, HorizontalAlignment.Left);
+            taskInformlist.Columns.Add("信息", 200, HorizontalAlignment.Left);
+            taskInformlist.Columns.Add("触发时间", 200, HorizontalAlignment.Left);
 
             // 若没有，无法显示数据 
-            listView6.View = System.Windows.Forms.View.Details;
+            taskInformlist.View = System.Windows.Forms.View.Details;
 
             ///添加数据项
             ///UI暂时挂起，直到EndUpdate绘制控件，可提高加载速度
@@ -347,7 +315,7 @@ namespace KEDAClient
             GfxList<GfxServiceContractTaskExcute.TaskBackImf> taskList = JtWcfTaskHelper.GetAllTask();
             for (int i = 0; i < taskList.Count; i++)
             {
-                listView6.BeginUpdate();
+                taskInformlist.BeginUpdate();
                 ListViewItem item = new ListViewItem(taskList[i].DisGuid); // 任务id
                 item.SubItems.Add(taskList[i].TaskImf); // 任务信息
                 item.SubItems.Add(taskList[i].Statue.ToString()); // 任务状态
@@ -360,12 +328,12 @@ namespace KEDAClient
                 item.SubItems.Add(taskList[i].TriggerTime.ToString()); // 触发时间
 
                 // 显示项
-                listView6.Items.Add(item);
+                taskInformlist.Items.Add(item);
             }
 
             // 结束数据处理
             // UI界面一次性绘制
-            listView6.EndUpdate();
+            taskInformlist.EndUpdate();
 
         }
 
@@ -837,9 +805,9 @@ namespace KEDAClient
                     }
 
                     textBoxNextTars.Text = SelectStaStr();
-                   
+
                     SetOutputMsg(string.Format("当前已选择{0}", textBoxNextTars.Text));
-                    
+
                 }
             }
         }
@@ -1518,77 +1486,7 @@ namespace KEDAClient
             }
         }
 
-      
 
-        /// <summary>
-        /// AGV 前进启动（车辆）
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void agvForwordMove_Click(object sender, EventArgs e)
-        {
-            JtWcfMainHelper.InitPara(_severIp, "", "");
-
-            if (JtWcfMainHelper.SendOrder(listView5.FocusedItem.Text, new CommonDeviceOrderObj("前进启动" + LocSite, 1, 1)))
-            {
-                MessageBox.Show(listView5.FocusedItem.Text, "提示");
-            }
-            else
-            {
-                MessageBox.Show("请尝试再操作一次", "提示");
-            }
-        }
-
-        /// <summary>
-        /// 指令类型下拉框
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //this.comboBox1.Items.Add(new object[] {( "发送站点"), "清除站点", "开启声音", "关闭声音", "速度", "心跳指令" });
-            this.comboBox1.Items.Add(JtWcfMainHelper.SendOrder(listView5.FocusedItem.Text, new CommonDeviceOrderObj("发送站点" + LocSite, 3,1)));
-            if (this.comboBox1.Text == "发送站点")
-            {
-                JtWcfMainHelper.SendOrder(listView5.FocusedItem.Text, new CommonDeviceOrderObj("发送站点" + LocSite, 3, 1));
-                MessageBox.Show("发送站点成功", "提示");
-                 SetOutputMsg2("发送站点成功");   
-            }
-            if (this.comboBox1.Text == "清除站点")
-            {
-                  MessageBox.Show("清除站点成功", "提示");
-                  SetOutputMsg2("清除站点成功");
-            }
-
-            if (this.comboBox1.Text == "开启声音")
-            {
-               
-                    MessageBox.Show("开启声音成功", "提示");
-                    SetOutputMsg2("开启声音成功");
-                
-            }
-            if (this.comboBox1.Text == "关闭声音")
-            {
-                
-                    MessageBox.Show("清除站点成功", "提示");
-                    SetOutputMsg2("清除站点成功");
-               
-            }
-            if (this.comboBox1.Text == "速度")
-            {
-                
-                    MessageBox.Show("更改速度成功", "提示");
-                    SetOutputMsg2("更改速度成功");
-                
-            }
-            if (this.comboBox1.Text == "心跳指令")
-            {
-               
-                    MessageBox.Show("心跳成功", "提示");
-                    SetOutputMsg2("心跳成功");           
-            }
-
-        }
 
         /// <summary>
         /// 指令发送
@@ -1597,28 +1495,111 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void buttonSend_Click(object sender, EventArgs e)
         {
-
-
-            if (this.comboBox1.Text == "发送站点")
+            int order = 0;
+            if (GetSelectDevid())
             {
-                if(listView5.FocusedItem is null)
+                return;
+            }
+            else
+            {
+                switch (this.comboBox1.Text)
                 {
-                    MessageBox.Show("请选中需要操作的车辆", "提示");
-                    return;
+                    case "发送站点":
+                        order = 3;
+                        break;
+                    case "速度":
+                        order = 4;
+                        break;
+                    case "清除站点":
+                        order = 5;
+                        break;
+                    case "开启声音":
+                        order = 6;
+                        break;
+                    case "关闭声音":
+                        order = 7;
+                        break;
+                    case "心跳指令":
+                        order = 8;
+                        break;
+                    default:
+                        MessageBox.Show("指令类型不存在，请重试！", "提示");
+                        break;
+                }
+                JtWcfMainHelper.SendOrder(vehicleslist.FocusedItem.Text, new CommonDeviceOrderObj(this.comboBox1.Text, order, Convert.ToInt32(textBox1.Text)));
+                if (MessageBox.Show("确定发送指令参数？", "提示", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                {
+                    SetOutputMsg2("发送 " + this.comboBox1.Text + " 指令参数成功");
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// 构建停止函数
+        /// 使得前进、后退无法重复被操作
+        /// </summary>
+        public void StopAGV()
+        {
+            JtWcfMainHelper.InitPara(_severIp, "", "");
+
+            if (JtWcfMainHelper.SendOrder(vehicleslist.FocusedItem.Text, new CommonDeviceOrderObj("停止" + LocSite, 2, 1)))
+            {
+                MessageBox.Show(vehicleslist.FocusedItem.Text, "提示");
+                agvForwordMove.Enabled = true;
+                agvBackMove.Enabled = true;
+            }
+            else
+            {
+                MessageBox.Show("请尝试再操作一次", "提示");
+            }
+        }
+
+        /// <summary>
+        /// 选择某一AGV设备id
+        /// </summary>
+        public bool GetSelectDevid()
+        {
+            bool b = false;
+            if (vehicleslist.FocusedItem is null)
+            {
+                MessageBox.Show("请选中需要操作的车辆", "提示");
+                b = true;
+            }
+            else
+                b = false;
+            return b;
+        }
+
+        /// <summary>
+        /// AGV 前进启动（车辆）
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void agvForwordMove_Click(object sender, EventArgs e)
+        {
+            if (GetSelectDevid())
+            {
+                return;
+            }
+            else
+            {
+                if (!agvBackMove.Enabled)
+                {
+                    StopAGV();
+                }
+
+                if (JtWcfMainHelper.SendOrder(vehicleslist.FocusedItem.Text, new CommonDeviceOrderObj("前进启动" + LocSite, 1, 1)))
+                {
+                    MessageBox.Show(vehicleslist.FocusedItem.Text, "提示");
+                    agvForwordMove.Enabled = false;
                 }
                 else
                 {
-                    JtWcfMainHelper.SendOrder(listView5.FocusedItem.Text, new CommonDeviceOrderObj("发送站点" + LocSite, 3, Convert.ToInt32(textBox1.Text)));
-                    MessageBox.Show("确定发送参数？", "提示");
-                    SetOutputMsg2("发送站点成功");
+                    MessageBox.Show("请尝试再操作一次", "提示");
                 }
-                
             }
-
-
-            
         }
-      
 
         /// <summary>
         /// AGV 后退启动
@@ -1627,15 +1608,26 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void agvBackMove_Click(object sender, EventArgs e)
         {
-            JtWcfMainHelper.InitPara(_severIp, "", "");
-
-            if (JtWcfMainHelper.SendOrder(listView5.FocusedItem.Text, new CommonDeviceOrderObj("后退" + LocSite, 1, 2)))
+            if (GetSelectDevid())
             {
-                MessageBox.Show(listView5.FocusedItem.Text, "提示");
+                return;
             }
             else
             {
-                MessageBox.Show("请尝试再操作一次", "提示");
+                if (!agvForwordMove.Enabled)
+                {
+                    StopAGV();
+                }
+
+                if (JtWcfMainHelper.SendOrder(vehicleslist.FocusedItem.Text, new CommonDeviceOrderObj("后退" + LocSite, 1, 2)))
+                {
+                    MessageBox.Show(vehicleslist.FocusedItem.Text, "提示");
+                    agvBackMove.Enabled = false;
+                }
+                else
+                {
+                    MessageBox.Show("请尝试再操作一次", "提示");
+                }
             }
         }
 
@@ -1646,20 +1638,20 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void agvStop_Click(object sender, EventArgs e)
         {
-            JtWcfMainHelper.InitPara(_severIp, "", "");
-
-            if (JtWcfMainHelper.SendOrder(listView5.FocusedItem.Text, new CommonDeviceOrderObj("停止" + LocSite, 2,1)))
+            // 判断是否有前进、后退的小车在运行
+            if (agvBackMove.Enabled == false || agvForwordMove.Enabled == false)
             {
-                MessageBox.Show(listView5.FocusedItem.Text, "提示");
+                StopAGV();
             }
             else
             {
-                MessageBox.Show("请尝试再操作一次", "提示");
+                MessageBox.Show("当前没有运行的车辆！");
             }
+
         }
 
         /// <summary>
-        /// 指令参数输入为数字
+        /// 设置指令参数输入只为数字
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1670,7 +1662,7 @@ namespace KEDAClient
                 MessageBox.Show("请输入数字！");
                 e.Handled = true;
             }
-            
+
         }
     }
 }

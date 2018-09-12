@@ -57,17 +57,17 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panelBtn = new System.Windows.Forms.Panel();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.listView6 = new System.Windows.Forms.ListView();
+            this.taskInformlist = new System.Windows.Forms.ListView();
             this.buttonManSend = new System.Windows.Forms.Button();
             this.textBoxNextTars = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.alarms = new System.Windows.Forms.TabPage();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.alarmlist = new System.Windows.Forms.ListView();
             this.logger = new System.Windows.Forms.TabPage();
-            this.listView3 = new System.Windows.Forms.ListView();
+            this.loggerlist = new System.Windows.Forms.ListView();
             this.listView2 = new System.Windows.Forms.ListView();
             this.devices = new System.Windows.Forms.TabPage();
-            this.listView4 = new System.Windows.Forms.ListView();
+            this.deviceslist = new System.Windows.Forms.ListView();
             this.vehicles = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
@@ -82,7 +82,7 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.tabControl3 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.listView5 = new System.Windows.Forms.ListView();
+            this.vehicleslist = new System.Windows.Forms.ListView();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.panelBtn1 = new System.Windows.Forms.Panel();
             this.timerFunc = new System.Windows.Forms.Timer(this.components);
@@ -380,7 +380,7 @@
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.listView6);
+            this.tabPage3.Controls.Add(this.taskInformlist);
             this.tabPage3.Location = new System.Drawing.Point(4, 31);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
@@ -389,16 +389,16 @@
             this.tabPage3.Text = "所有任务信息";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // listView6
+            // taskInformlist
             // 
-            this.listView6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.taskInformlist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.listView6.Location = new System.Drawing.Point(0, 3);
-            this.listView6.Name = "listView6";
-            this.listView6.Size = new System.Drawing.Size(957, 186);
-            this.listView6.TabIndex = 0;
-            this.listView6.UseCompatibleStateImageBehavior = false;
+            this.taskInformlist.Location = new System.Drawing.Point(0, 3);
+            this.taskInformlist.Name = "taskInformlist";
+            this.taskInformlist.Size = new System.Drawing.Size(957, 186);
+            this.taskInformlist.TabIndex = 0;
+            this.taskInformlist.UseCompatibleStateImageBehavior = false;
             // 
             // buttonManSend
             // 
@@ -432,7 +432,7 @@
             // 
             // alarms
             // 
-            this.alarms.Controls.Add(this.listView1);
+            this.alarms.Controls.Add(this.alarmlist);
             this.alarms.Location = new System.Drawing.Point(4, 31);
             this.alarms.Name = "alarms";
             this.alarms.Padding = new System.Windows.Forms.Padding(3);
@@ -441,20 +441,20 @@
             this.alarms.Text = "报警";
             this.alarms.UseVisualStyleBackColor = true;
             // 
-            // listView1
+            // alarmlist
             // 
-            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.alarmlist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.listView1.Location = new System.Drawing.Point(3, 3);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(840, 411);
-            this.listView1.TabIndex = 0;
-            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.alarmlist.Location = new System.Drawing.Point(3, 3);
+            this.alarmlist.Name = "alarmlist";
+            this.alarmlist.Size = new System.Drawing.Size(840, 411);
+            this.alarmlist.TabIndex = 0;
+            this.alarmlist.UseCompatibleStateImageBehavior = false;
             // 
             // logger
             // 
-            this.logger.Controls.Add(this.listView3);
+            this.logger.Controls.Add(this.loggerlist);
             this.logger.Controls.Add(this.listView2);
             this.logger.Location = new System.Drawing.Point(4, 31);
             this.logger.Name = "logger";
@@ -463,16 +463,16 @@
             this.logger.Text = "日志";
             this.logger.UseVisualStyleBackColor = true;
             // 
-            // listView3
+            // loggerlist
             // 
-            this.listView3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.loggerlist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.listView3.Location = new System.Drawing.Point(-4, 0);
-            this.listView3.Name = "listView3";
-            this.listView3.Size = new System.Drawing.Size(835, 444);
-            this.listView3.TabIndex = 1;
-            this.listView3.UseCompatibleStateImageBehavior = false;
+            this.loggerlist.Location = new System.Drawing.Point(-4, 0);
+            this.loggerlist.Name = "loggerlist";
+            this.loggerlist.Size = new System.Drawing.Size(835, 444);
+            this.loggerlist.TabIndex = 1;
+            this.loggerlist.UseCompatibleStateImageBehavior = false;
             // 
             // listView2
             // 
@@ -484,7 +484,7 @@
             // 
             // devices
             // 
-            this.devices.Controls.Add(this.listView4);
+            this.devices.Controls.Add(this.deviceslist);
             this.devices.Location = new System.Drawing.Point(4, 31);
             this.devices.Name = "devices";
             this.devices.Size = new System.Drawing.Size(1003, 438);
@@ -492,16 +492,16 @@
             this.devices.Text = "设备";
             this.devices.UseVisualStyleBackColor = true;
             // 
-            // listView4
+            // deviceslist
             // 
-            this.listView4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.deviceslist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.listView4.Location = new System.Drawing.Point(-4, 0);
-            this.listView4.Name = "listView4";
-            this.listView4.Size = new System.Drawing.Size(643, 466);
-            this.listView4.TabIndex = 0;
-            this.listView4.UseCompatibleStateImageBehavior = false;
+            this.deviceslist.Location = new System.Drawing.Point(-4, 0);
+            this.deviceslist.Name = "deviceslist";
+            this.deviceslist.Size = new System.Drawing.Size(643, 466);
+            this.deviceslist.TabIndex = 0;
+            this.deviceslist.UseCompatibleStateImageBehavior = false;
             // 
             // vehicles
             // 
@@ -528,13 +528,14 @@
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.groupBox2.BackColor = System.Drawing.Color.WhiteSmoke;
             this.groupBox2.Controls.Add(this.listBox1);
             this.groupBox2.Font = new System.Drawing.Font("宋体", 12F);
-            this.groupBox2.Location = new System.Drawing.Point(781, 314);
-            this.groupBox2.MaximumSize = new System.Drawing.Size(250, 250);
+            this.groupBox2.Location = new System.Drawing.Point(713, 304);
+            this.groupBox2.MaximumSize = new System.Drawing.Size(500, 400);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(199, 117);
+            this.groupBox2.Size = new System.Drawing.Size(287, 127);
             this.groupBox2.TabIndex = 44;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "系统提示";
@@ -548,17 +549,17 @@
             this.listBox1.HorizontalScrollbar = true;
             this.listBox1.ItemHeight = 12;
             this.listBox1.Location = new System.Drawing.Point(6, 25);
-            this.listBox1.MaximumSize = new System.Drawing.Size(250, 250);
+            this.listBox1.MaximumSize = new System.Drawing.Size(500, 400);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(187, 76);
+            this.listBox1.Size = new System.Drawing.Size(275, 88);
             this.listBox1.TabIndex = 0;
             // 
             // button5
             // 
             this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button5.Location = new System.Drawing.Point(890, 259);
+            this.button5.Location = new System.Drawing.Point(849, 253);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(90, 35);
+            this.button5.Size = new System.Drawing.Size(106, 36);
             this.button5.TabIndex = 43;
             this.button5.Text = "充电";
             this.button5.UseVisualStyleBackColor = true;
@@ -566,9 +567,9 @@
             // agvStop
             // 
             this.agvStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.agvStop.Location = new System.Drawing.Point(781, 259);
+            this.agvStop.Location = new System.Drawing.Point(718, 253);
             this.agvStop.Name = "agvStop";
-            this.agvStop.Size = new System.Drawing.Size(88, 35);
+            this.agvStop.Size = new System.Drawing.Size(104, 36);
             this.agvStop.TabIndex = 42;
             this.agvStop.Text = "停止";
             this.agvStop.UseVisualStyleBackColor = true;
@@ -577,9 +578,9 @@
             // agvBackMove
             // 
             this.agvBackMove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.agvBackMove.Location = new System.Drawing.Point(890, 208);
+            this.agvBackMove.Location = new System.Drawing.Point(849, 202);
             this.agvBackMove.Name = "agvBackMove";
-            this.agvBackMove.Size = new System.Drawing.Size(90, 35);
+            this.agvBackMove.Size = new System.Drawing.Size(106, 36);
             this.agvBackMove.TabIndex = 41;
             this.agvBackMove.Text = "后退";
             this.agvBackMove.UseVisualStyleBackColor = true;
@@ -588,9 +589,9 @@
             // agvForwordMove
             // 
             this.agvForwordMove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.agvForwordMove.Location = new System.Drawing.Point(779, 208);
+            this.agvForwordMove.Location = new System.Drawing.Point(718, 202);
             this.agvForwordMove.Name = "agvForwordMove";
-            this.agvForwordMove.Size = new System.Drawing.Size(90, 35);
+            this.agvForwordMove.Size = new System.Drawing.Size(106, 36);
             this.agvForwordMove.TabIndex = 40;
             this.agvForwordMove.Text = "前进";
             this.agvForwordMove.UseVisualStyleBackColor = true;
@@ -600,7 +601,7 @@
             // 
             this.buttonSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonSend.Font = new System.Drawing.Font("宋体", 10F);
-            this.buttonSend.Location = new System.Drawing.Point(889, 161);
+            this.buttonSend.Location = new System.Drawing.Point(821, 155);
             this.buttonSend.Name = "buttonSend";
             this.buttonSend.Size = new System.Drawing.Size(75, 23);
             this.buttonSend.TabIndex = 39;
@@ -611,7 +612,7 @@
             // textBox1
             // 
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(804, 116);
+            this.textBox1.Location = new System.Drawing.Point(719, 110);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(160, 26);
             this.textBox1.TabIndex = 38;
@@ -622,7 +623,7 @@
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("宋体", 10F);
-            this.label4.Location = new System.Drawing.Point(801, 89);
+            this.label4.Location = new System.Drawing.Point(719, 93);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(77, 14);
             this.label4.TabIndex = 37;
@@ -633,7 +634,7 @@
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 10F);
-            this.label1.Location = new System.Drawing.Point(801, 26);
+            this.label1.Location = new System.Drawing.Point(719, 32);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(77, 14);
             this.label1.TabIndex = 36;
@@ -643,6 +644,7 @@
             // 
             this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox1.BackColor = System.Drawing.SystemColors.Menu;
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
             "发送站点",
@@ -651,7 +653,7 @@
             "开启声音",
             "关闭声音",
             "心跳指令"});
-            this.comboBox1.Location = new System.Drawing.Point(804, 49);
+            this.comboBox1.Location = new System.Drawing.Point(719, 55);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(160, 24);
             this.comboBox1.TabIndex = 35;
@@ -663,33 +665,33 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl3.Controls.Add(this.tabPage4);
             this.tabControl3.Controls.Add(this.tabPage5);
-            this.tabControl3.Location = new System.Drawing.Point(3, 0);
+            this.tabControl3.Location = new System.Drawing.Point(3, 3);
             this.tabControl3.Name = "tabControl3";
             this.tabControl3.SelectedIndex = 0;
-            this.tabControl3.Size = new System.Drawing.Size(758, 435);
+            this.tabControl3.Size = new System.Drawing.Size(677, 432);
             this.tabControl3.TabIndex = 32;
             // 
             // tabPage4
             // 
-            this.tabPage4.Controls.Add(this.listView5);
+            this.tabPage4.Controls.Add(this.vehicleslist);
             this.tabPage4.Location = new System.Drawing.Point(4, 26);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(750, 405);
+            this.tabPage4.Size = new System.Drawing.Size(669, 402);
             this.tabPage4.TabIndex = 0;
             this.tabPage4.Text = "AGV设备";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // listView5
+            // vehicleslist
             // 
-            this.listView5.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.vehicleslist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.listView5.Location = new System.Drawing.Point(-4, 0);
-            this.listView5.Name = "listView5";
-            this.listView5.Size = new System.Drawing.Size(758, 409);
-            this.listView5.TabIndex = 0;
-            this.listView5.UseCompatibleStateImageBehavior = false;
+            this.vehicleslist.Location = new System.Drawing.Point(-4, 3);
+            this.vehicleslist.Name = "vehicleslist";
+            this.vehicleslist.Size = new System.Drawing.Size(673, 399);
+            this.vehicleslist.TabIndex = 0;
+            this.vehicleslist.UseCompatibleStateImageBehavior = false;
             // 
             // tabPage5
             // 
@@ -787,17 +789,17 @@
         private System.Windows.Forms.Button buttonManSend;
         private System.Windows.Forms.TextBox textBoxNextTars;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView alarmlist;
         private System.Windows.Forms.ListView listView2;
-        private System.Windows.Forms.ListView listView3;
-        private System.Windows.Forms.ListView listView4;
-        private System.Windows.Forms.ListView listView5;
+        private System.Windows.Forms.ListView loggerlist;
+        private System.Windows.Forms.ListView deviceslist;
+        private System.Windows.Forms.ListView vehicleslist;
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Panel panelBtn;
         private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.ListView listView6;
+        private System.Windows.Forms.ListView taskInformlist;
         private System.Windows.Forms.Button endmission;
         private System.Windows.Forms.Button pausemission;
         private System.Windows.Forms.Button startmission;
