@@ -106,7 +106,7 @@ namespace KEDAClient
         /// <summary>
         /// 设备ID与自身状态对应关系(车辆）：状态值：stop、forwardmove、backmove
         /// </summary>
-        Dictionary<string, string> agvStatus = new Dictionary<string, string>(); 
+        Dictionary<string, string> agvStatus = new Dictionary<string, string>();
 
         private readonly DeviceBackImf devid;
 
@@ -259,39 +259,43 @@ namespace KEDAClient
         /// </summary>
         private void Vehicles()
         {
-
-            // 创建列表头
-            vehicleslist.Columns.Add("DevId", 200, HorizontalAlignment.Left);
-            vehicleslist.Columns.Add("DevModel", 100, HorizontalAlignment.Left); // 设备型号
-            vehicleslist.Columns.Add("DevStatue", 150, HorizontalAlignment.Left);// 若宽度改为0，将会隐藏此列
-            vehicleslist.Columns.Add("Timestamp", 150, HorizontalAlignment.Left);
-
-            // 若没有，无法显示数据 
-            vehicleslist.View = System.Windows.Forms.View.Details;
-
-            ///添加数据项
-            ///UI暂时挂起，直到EndUpdate绘制控件，可提高加载速度
             GfxList<DeviceBackImf> devsList = JtWcfMainHelper.GetDevList();
-            if(devsList is null) return;
-            for (int i = 0; i < devsList.Count; i++)
+            //vehicleslist.Clear();
+            if (devsList.Count > 0)
             {
-                vehicleslist.BeginUpdate();
-                ListViewItem item = new ListViewItem(devsList[i].DevId); // 设备id
-                item.SubItems.Add(devsList[i].DevModel); // 设备信息
-                item.SubItems.Add(devsList[i].DevStatue); // 设备状态            
-                item.SubItems.Add("   ");
-                vehicleslist.BeginUpdate();
+                // 创建列表头
+                vehicleslist.Columns.Add("DevId", 200, HorizontalAlignment.Left);
+                vehicleslist.Columns.Add("DevModel", 100, HorizontalAlignment.Left); // 设备型号
+                vehicleslist.Columns.Add("DevStatue", 150, HorizontalAlignment.Left);// 若宽度改为0，将会隐藏此列
+                vehicleslist.Columns.Add("Timestamp", 150, HorizontalAlignment.Left);
 
-                //记录车辆状态
-                agvStatus.Add(devsList[i].DevId, "stop");
+                // 若没有，无法显示数据 
+                vehicleslist.View = System.Windows.Forms.View.Details;
 
-                // 显示项
-                vehicleslist.Items.Add(item);
+                ///添加数据项
+                ///UI暂时挂起，直到EndUpdate绘制控件，可提高加载速度
+
+                if (devsList is null) return;
+                for (int i = 0; i < devsList.Count; i++)
+                {
+                    //vehicleslist.BeginUpdate();
+                    ListViewItem item = new ListViewItem(devsList[i].DevId); // 设备id
+                    item.SubItems.Add(devsList[i].DevModel); // 设备信息
+                    item.SubItems.Add(devsList[i].DevStatue); // 设备状态            
+                    item.SubItems.Add("   ");
+                    //vehicleslist.BeginUpdate();
+
+
+                    //初始化车辆状态
+                    agvStatus.Add(devsList[i].DevId, "stop");
+
+                    // 显示项
+                    vehicleslist.Items.Add(item);
+                }
+                // 结束数据处理
+                // UI界面一次性绘制
+                //vehicleslist.EndUpdate();
             }
-            // 结束数据处理
-            // UI界面一次性绘制
-            vehicleslist.EndUpdate();
-
         }
 
         /// <summary>
@@ -1678,7 +1682,7 @@ namespace KEDAClient
         private void vehicleslist_SelectedIndexChanged(object sender, EventArgs e)
         {
             string status = agvStatus[vehicleslist.FocusedItem.Text];
-            if(status == "forwardmove")
+            if (status == "forwardmove")
             {
                 agvForwordMove.Enabled = false;
                 agvBackMove.Enabled = true;
@@ -1694,5 +1698,33 @@ namespace KEDAClient
                 agvBackMove.Enabled = true;
             }
         }
+        private void RefreshListview()
+        {
+            GfxList<DeviceBackImf> devsList = JtWcfMainHelper.GetDevList();
+            vehicleslist.BeginUpdate();
+
+            for (int i = 0; i < devsList.Count; i++)             //只对第三列进行刷新
+            {
+                vehicleslist.Items[i].SubItems[2].Text = devsList[i].DevStatue;
+            }
+            vehicleslist.EndUpdate();
+        }
+
+        /// <summary>
+        /// 定时刷新车辆信息
+        /// </summary>
+        private void Statetimer_Tick(object sender, EventArgs e)
+        {
+            RefreshListview();
+        }
+
+        private void KEDAForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (MessageBox.Show("确定关闭客户端？", "提示", MessageBoxButtons.YesNo) != System.Windows.Forms.DialogResult.Yes)
+            {
+                e.Cancel = true;
+            }
+        }
+
     }
 }

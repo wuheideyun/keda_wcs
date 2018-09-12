@@ -86,6 +86,7 @@
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.panelBtn1 = new System.Windows.Forms.Panel();
             this.timerFunc = new System.Windows.Forms.Timer(this.components);
+            this.Statetimer = new System.Windows.Forms.Timer(this.components);
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -578,6 +579,7 @@
             // agvBackMove
             // 
             this.agvBackMove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.agvBackMove.Enabled = false;
             this.agvBackMove.Location = new System.Drawing.Point(849, 202);
             this.agvBackMove.Name = "agvBackMove";
             this.agvBackMove.Size = new System.Drawing.Size(106, 36);
@@ -585,11 +587,11 @@
             this.agvBackMove.Text = "后退";
             this.agvBackMove.UseVisualStyleBackColor = true;
             this.agvBackMove.Click += new System.EventHandler(this.agvBackMove_Click);
-            this.agvBackMove.Enabled = false;
             // 
             // agvForwordMove
             // 
             this.agvForwordMove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.agvForwordMove.Enabled = false;
             this.agvForwordMove.Location = new System.Drawing.Point(718, 202);
             this.agvForwordMove.Name = "agvForwordMove";
             this.agvForwordMove.Size = new System.Drawing.Size(106, 36);
@@ -597,7 +599,6 @@
             this.agvForwordMove.Text = "前进";
             this.agvForwordMove.UseVisualStyleBackColor = true;
             this.agvForwordMove.Click += new System.EventHandler(this.agvForwordMove_Click);
-            this.agvForwordMove.Enabled = false;
             // 
             // buttonSend
             // 
@@ -721,6 +722,12 @@
             // 
             this.timerFunc.Tick += new System.EventHandler(this.timerFunc_Tick);
             // 
+            // Statetimer
+            // 
+            this.Statetimer.Enabled = true;
+            this.Statetimer.Interval = 1000;
+            this.Statetimer.Tick += new System.EventHandler(this.Statetimer_Tick);
+            // 
             // KEDAForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -733,6 +740,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "KEDAForm";
             this.Text = "客户端信息表";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.KEDAForm_FormClosing);
             this.Load += new System.EventHandler(this.KEDAForm_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
@@ -821,5 +829,6 @@
         private System.Windows.Forms.Button agvForwordMove;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Timer Statetimer;
     }
 }
