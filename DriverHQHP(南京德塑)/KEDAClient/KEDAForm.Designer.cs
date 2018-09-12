@@ -558,17 +558,18 @@
             // charge
             // 
             this.charge.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.charge.Enabled = false;
             this.charge.Location = new System.Drawing.Point(849, 253);
             this.charge.Name = "charge";
             this.charge.Size = new System.Drawing.Size(106, 36);
             this.charge.TabIndex = 43;
             this.charge.Text = "充电";
             this.charge.UseVisualStyleBackColor = true;
-            this.charge.Enabled = false;
             // 
             // agvStop
             // 
             this.agvStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.agvStop.Enabled = false;
             this.agvStop.Location = new System.Drawing.Point(718, 253);
             this.agvStop.Name = "agvStop";
             this.agvStop.Size = new System.Drawing.Size(104, 36);
@@ -576,7 +577,6 @@
             this.agvStop.Text = "停止";
             this.agvStop.UseVisualStyleBackColor = true;
             this.agvStop.Click += new System.EventHandler(this.agvStop_Click);
-            this.agvStop.Enabled = false;
             // 
             // agvBackMove
             // 
@@ -605,6 +605,7 @@
             // buttonSend
             // 
             this.buttonSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonSend.Enabled = false;
             this.buttonSend.Font = new System.Drawing.Font("宋体", 10F);
             this.buttonSend.Location = new System.Drawing.Point(821, 155);
             this.buttonSend.Name = "buttonSend";
@@ -613,7 +614,6 @@
             this.buttonSend.Text = "发送";
             this.buttonSend.UseVisualStyleBackColor = true;
             this.buttonSend.Click += new System.EventHandler(this.buttonSend_Click);
-            this.buttonSend.Enabled = false;
             // 
             // textBox1
             // 

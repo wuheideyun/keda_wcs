@@ -280,7 +280,8 @@ namespace KEDAClient
                     //vehicleslist.BeginUpdate();
                     ListViewItem item = new ListViewItem(devsList[i].DevId); // 设备id
                     item.SubItems.Add(devsList[i].DevModel); // 设备信息
-                    item.SubItems.Add(devsList[i].DevStatue); // 设备状态            
+                    item.SubItems.Add(devsList[i].DevStatue); // 设备状态
+                    //item.SubItems.Add("True"); // 设备状态,测试用，停掉Statetimer才能改变
                     item.SubItems.Add("   ");
                     //vehicleslist.BeginUpdate();
                     //初始化车辆状态
@@ -1504,7 +1505,7 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void buttonSend_Click(object sender, EventArgs e)
         {
-            if(textBox1.Text == "")
+            if (textBox1.Text == "")
             {
                 MessageBox.Show("请输入指令参数！", "提示");
                 return;
@@ -1685,7 +1686,7 @@ namespace KEDAClient
         {
             string status = agvStatus[vehicleslist.FocusedItem.Text];
 
-            if(vehicleslist.FocusedItem.SubItems[2].Text == "True")
+            if (vehicleslist.FocusedItem.SubItems[2].Text == "True")
             {
                 if (status == "forwardmove")
                 {
