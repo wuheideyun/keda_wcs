@@ -1563,15 +1563,12 @@ namespace KEDAClient
         /// </summary>
         public bool GetSelectDevid()
         {
-            bool b = false;
             if (vehicleslist.FocusedItem is null)
             {
                 MessageBox.Show("请选中需要操作的车辆", "提示");
-                b = true;
+                return true;
             }
-            else
-                b = false;
-            return b;
+            return false;
         }
 
         /// <summary>
