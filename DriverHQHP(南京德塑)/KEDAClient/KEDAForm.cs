@@ -103,7 +103,10 @@ namespace KEDAClient
         /// </summary>
         private List<StationMember> _selectStation1 = new List<StationMember>();
 
-
+        /// <summary>
+        /// 设备ID与自身状态对应关系(车辆）：状态值：stop、forwardmove、backmove
+        /// </summary>
+        Dictionary<string, string> agvStatus = new Dictionary<string, string>(); 
 
         private readonly DeviceBackImf devid;
 
@@ -279,6 +282,8 @@ namespace KEDAClient
                 item.SubItems.Add("   ");
                 vehicleslist.BeginUpdate();
 
+                //记录车辆状态
+                agvStatus.Add(devsList[i].DevId, "stop");
 
                 // 显示项
                 vehicleslist.Items.Add(item);
@@ -1548,7 +1553,7 @@ namespace KEDAClient
 
             if (JtWcfMainHelper.SendOrder(vehicleslist.FocusedItem.Text, new CommonDeviceOrderObj("停止" + LocSite, 2, 1)))
             {
-                MessageBox.Show(vehicleslist.FocusedItem.Text, "提示");
+                //MessageBox.Show(vehicleslist.FocusedItem.Text, "提示");
                 agvForwordMove.Enabled = true;
                 agvBackMove.Enabled = true;
             }
@@ -1591,7 +1596,9 @@ namespace KEDAClient
 
                 if (JtWcfMainHelper.SendOrder(vehicleslist.FocusedItem.Text, new CommonDeviceOrderObj("前进启动" + LocSite, 1, 1)))
                 {
-                    MessageBox.Show(vehicleslist.FocusedItem.Text, "提示");
+                    //记录agv状态
+                    agvStatus[vehicleslist.FocusedItem.Text] = "forwardmove";
+                    //MessageBox.Show(vehicleslist.FocusedItem.Text, "提示");
                     agvForwordMove.Enabled = false;
                 }
                 else
@@ -1618,10 +1625,11 @@ namespace KEDAClient
                 {
                     StopAGV();
                 }
-
                 if (JtWcfMainHelper.SendOrder(vehicleslist.FocusedItem.Text, new CommonDeviceOrderObj("后退" + LocSite, 1, 2)))
                 {
-                    MessageBox.Show(vehicleslist.FocusedItem.Text, "提示");
+                    //记录agv状态
+                    agvStatus[vehicleslist.FocusedItem.Text] = "backmove";
+                    //MessageBox.Show(vehicleslist.FocusedItem.Text, "提示");
                     agvBackMove.Enabled = false;
                 }
                 else
@@ -1642,6 +1650,8 @@ namespace KEDAClient
             if (agvBackMove.Enabled == false || agvForwordMove.Enabled == false)
             {
                 StopAGV();
+                //记录agv状态
+                agvStatus[vehicleslist.FocusedItem.Text] = "stop";
             }
             else
             {
@@ -1663,6 +1673,26 @@ namespace KEDAClient
                 e.Handled = true;
             }
 
+        }
+
+        private void vehicleslist_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string status = agvStatus[vehicleslist.FocusedItem.Text];
+            if(status == "forwardmove")
+            {
+                agvForwordMove.Enabled = false;
+                agvBackMove.Enabled = true;
+            }
+            else if (status == "backmove")
+            {
+                agvForwordMove.Enabled = true;
+                agvBackMove.Enabled = false;
+            }
+            else if (status == "stop")
+            {
+                agvForwordMove.Enabled = true;
+                agvBackMove.Enabled = true;
+            }
         }
     }
 }
