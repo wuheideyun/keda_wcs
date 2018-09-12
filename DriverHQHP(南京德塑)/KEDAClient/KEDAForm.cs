@@ -279,10 +279,11 @@ namespace KEDAClient
                 ListViewItem item = new ListViewItem(devsList[i].DevId); // 设备id
                 item.SubItems.Add(devsList[i].DevModel); // 设备信息
                 item.SubItems.Add(devsList[i].DevStatue); // 设备状态            
+                //item.SubItems.Add("True"); // 设备状态            
                 item.SubItems.Add("   ");
                 vehicleslist.BeginUpdate();
 
-                //记录车辆状态
+                //记录车辆初始状态
                 agvStatus.Add(devsList[i].DevId, "stop");
 
                 // 显示项
