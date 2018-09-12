@@ -71,7 +71,7 @@
             this.vehicles = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.button5 = new System.Windows.Forms.Button();
+            this.charge = new System.Windows.Forms.Button();
             this.agvStop = new System.Windows.Forms.Button();
             this.agvBackMove = new System.Windows.Forms.Button();
             this.agvForwordMove = new System.Windows.Forms.Button();
@@ -506,7 +506,7 @@
             // vehicles
             // 
             this.vehicles.Controls.Add(this.groupBox2);
-            this.vehicles.Controls.Add(this.button5);
+            this.vehicles.Controls.Add(this.charge);
             this.vehicles.Controls.Add(this.agvStop);
             this.vehicles.Controls.Add(this.agvBackMove);
             this.vehicles.Controls.Add(this.agvForwordMove);
@@ -554,15 +554,16 @@
             this.listBox1.Size = new System.Drawing.Size(275, 88);
             this.listBox1.TabIndex = 0;
             // 
-            // button5
+            // charge
             // 
-            this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button5.Location = new System.Drawing.Point(849, 253);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(106, 36);
-            this.button5.TabIndex = 43;
-            this.button5.Text = "充电";
-            this.button5.UseVisualStyleBackColor = true;
+            this.charge.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.charge.Location = new System.Drawing.Point(849, 253);
+            this.charge.Name = "charge";
+            this.charge.Size = new System.Drawing.Size(106, 36);
+            this.charge.TabIndex = 43;
+            this.charge.Text = "充电";
+            this.charge.UseVisualStyleBackColor = true;
+            this.charge.Enabled = false;
             // 
             // agvStop
             // 
@@ -574,6 +575,7 @@
             this.agvStop.Text = "停止";
             this.agvStop.UseVisualStyleBackColor = true;
             this.agvStop.Click += new System.EventHandler(this.agvStop_Click);
+            this.agvStop.Enabled = false;
             // 
             // agvBackMove
             // 
@@ -815,7 +817,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button buttonSend;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button charge;
         private System.Windows.Forms.Button agvStop;
         private System.Windows.Forms.Button agvBackMove;
         private System.Windows.Forms.Button agvForwordMove;

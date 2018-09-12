@@ -1678,20 +1678,36 @@ namespace KEDAClient
         private void vehicleslist_SelectedIndexChanged(object sender, EventArgs e)
         {
             string status = agvStatus[vehicleslist.FocusedItem.Text];
-            if(status == "forwardmove")
+            if(vehicleslist.FocusedItem.SubItems[2].Text == "True")
+            {
+                if (status == "forwardmove")
+                {
+                    agvForwordMove.Enabled = false;
+                    agvBackMove.Enabled = true;
+                    agvStop.Enabled = true;
+                    charge.Enabled = true;
+                }
+                else if (status == "backmove")
+                {
+                    agvForwordMove.Enabled = true;
+                    agvBackMove.Enabled = false;
+                    agvStop.Enabled = true;
+                    charge.Enabled = true;
+                }
+                else if (status == "stop")
+                {
+                    agvForwordMove.Enabled = true;
+                    agvBackMove.Enabled = true;
+                    agvStop.Enabled = true;
+                    charge.Enabled = true;
+                }
+            }
+            else if (vehicleslist.FocusedItem.SubItems[2].Text == "False")
             {
                 agvForwordMove.Enabled = false;
-                agvBackMove.Enabled = true;
-            }
-            else if (status == "backmove")
-            {
-                agvForwordMove.Enabled = true;
                 agvBackMove.Enabled = false;
-            }
-            else if (status == "stop")
-            {
-                agvForwordMove.Enabled = true;
-                agvBackMove.Enabled = true;
+                agvStop.Enabled = false;
+                charge.Enabled = false;
             }
         }
     }
