@@ -1503,6 +1503,11 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void buttonSend_Click(object sender, EventArgs e)
         {
+            if(textBox1.Text == "")
+            {
+                MessageBox.Show("请输入指令参数！", "提示");
+                return;
+            }
             int order = 0;
             if (GetSelectDevid())
             {
@@ -1532,7 +1537,7 @@ namespace KEDAClient
                         break;
                     default:
                         MessageBox.Show("指令类型不存在，请重试！", "提示");
-                        break;
+                        return;
                 }
                 JtWcfMainHelper.SendOrder(vehicleslist.FocusedItem.Text, new CommonDeviceOrderObj(this.comboBox1.Text, order, Convert.ToInt32(textBox1.Text)));
                 if (MessageBox.Show("确定发送指令参数？", "提示", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
@@ -1685,22 +1690,21 @@ namespace KEDAClient
                     agvForwordMove.Enabled = false;
                     agvBackMove.Enabled = true;
                     agvStop.Enabled = true;
-                    charge.Enabled = true;
                 }
                 else if (status == "backmove")
                 {
                     agvForwordMove.Enabled = true;
                     agvBackMove.Enabled = false;
                     agvStop.Enabled = true;
-                    charge.Enabled = true;
                 }
                 else if (status == "stop")
                 {
                     agvForwordMove.Enabled = true;
                     agvBackMove.Enabled = true;
                     agvStop.Enabled = true;
-                    charge.Enabled = true;
                 }
+                charge.Enabled = true;
+                buttonSend.Enabled = true;
             }
             else if (vehicleslist.FocusedItem.SubItems[2].Text == "False")
             {
@@ -1708,6 +1712,7 @@ namespace KEDAClient
                 agvBackMove.Enabled = false;
                 agvStop.Enabled = false;
                 charge.Enabled = false;
+                buttonSend.Enabled = false;
             }
         }
     }
