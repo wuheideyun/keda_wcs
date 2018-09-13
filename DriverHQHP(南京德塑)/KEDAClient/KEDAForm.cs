@@ -103,7 +103,10 @@ namespace KEDAClient
         /// </summary>
         private List<StationMember> _selectStation1 = new List<StationMember>();
 
-
+        /// <summary>
+        /// 设备ID与自身状态对应关系(车辆）：状态值：stop、forwardmove、backmove
+        /// </summary>
+        Dictionary<string, string> agvStatus = new Dictionary<string, string>();
 
         private readonly DeviceBackImf devid;
 
@@ -256,37 +259,41 @@ namespace KEDAClient
         /// </summary>
         private void Vehicles()
         {
-
-            // 创建列表头
-            vehicleslist.Columns.Add("DevId", 200, HorizontalAlignment.Left);
-            vehicleslist.Columns.Add("DevModel", 100, HorizontalAlignment.Left); // 设备型号
-            vehicleslist.Columns.Add("DevStatue", 150, HorizontalAlignment.Left);// 若宽度改为0，将会隐藏此列
-            vehicleslist.Columns.Add("Timestamp", 150, HorizontalAlignment.Left);
-
-            // 若没有，无法显示数据 
-            vehicleslist.View = System.Windows.Forms.View.Details;
-
-            ///添加数据项
-            ///UI暂时挂起，直到EndUpdate绘制控件，可提高加载速度
             GfxList<DeviceBackImf> devsList = JtWcfMainHelper.GetDevList();
-            if(devsList is null) return;
-            for (int i = 0; i < devsList.Count; i++)
+            //vehicleslist.Clear();
+            if (devsList.Count > 0)
             {
-                vehicleslist.BeginUpdate();
-                ListViewItem item = new ListViewItem(devsList[i].DevId); // 设备id
-                item.SubItems.Add(devsList[i].DevModel); // 设备信息
-                item.SubItems.Add(devsList[i].DevStatue); // 设备状态            
-                item.SubItems.Add("   ");
-                vehicleslist.BeginUpdate();
+                // 创建列表头
+                vehicleslist.Columns.Add("DevId", 200, HorizontalAlignment.Left);
+                vehicleslist.Columns.Add("DevModel", 100, HorizontalAlignment.Left); // 设备型号
+                vehicleslist.Columns.Add("DevStatue", 150, HorizontalAlignment.Left);// 若宽度改为0，将会隐藏此列
+                vehicleslist.Columns.Add("Timestamp", 150, HorizontalAlignment.Left);
 
+                // 若没有，无法显示数据 
+                vehicleslist.View = System.Windows.Forms.View.Details;
 
-                // 显示项
-                vehicleslist.Items.Add(item);
+                ///添加数据项
+                ///UI暂时挂起，直到EndUpdate绘制控件，可提高加载速度
+                if (devsList is null) return;
+                for (int i = 0; i < devsList.Count; i++)
+                {
+                    //vehicleslist.BeginUpdate();
+                    ListViewItem item = new ListViewItem(devsList[i].DevId); // 设备id
+                    item.SubItems.Add(devsList[i].DevModel); // 设备信息
+                    item.SubItems.Add(devsList[i].DevStatue); // 设备状态
+                    //item.SubItems.Add("True"); // 设备状态,测试用，停掉Statetimer才能改变
+                    item.SubItems.Add("   ");
+                    //vehicleslist.BeginUpdate();
+                    //初始化车辆状态
+                    agvStatus.Add(devsList[i].DevId, "stop");
+
+                    // 显示项
+                    vehicleslist.Items.Add(item);
+                }
+                // 结束数据处理
+                // UI界面一次性绘制
+                //vehicleslist.EndUpdate();
             }
-            // 结束数据处理
-            // UI界面一次性绘制
-            vehicleslist.EndUpdate();
-
         }
 
         /// <summary>
@@ -1498,6 +1505,11 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void buttonSend_Click(object sender, EventArgs e)
         {
+            if (textBox1.Text == "")
+            {
+                MessageBox.Show("请输入指令参数！", "提示");
+                return;
+            }
             int order = 0;
             if (GetSelectDevid())
             {
@@ -1527,7 +1539,7 @@ namespace KEDAClient
                         break;
                     default:
                         MessageBox.Show("指令类型不存在，请重试！", "提示");
-                        break;
+                        return;
                 }
                 JtWcfMainHelper.SendOrder(vehicleslist.FocusedItem.Text, new CommonDeviceOrderObj(this.comboBox1.Text, order, Convert.ToInt32(textBox1.Text)));
                 if (MessageBox.Show("确定发送指令参数？", "提示", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
@@ -1548,7 +1560,7 @@ namespace KEDAClient
 
             if (JtWcfMainHelper.SendOrder(vehicleslist.FocusedItem.Text, new CommonDeviceOrderObj("停止" + LocSite, 2, 1)))
             {
-                MessageBox.Show(vehicleslist.FocusedItem.Text, "提示");
+                //MessageBox.Show(vehicleslist.FocusedItem.Text, "提示");
                 agvForwordMove.Enabled = true;
                 agvBackMove.Enabled = true;
             }
@@ -1591,7 +1603,9 @@ namespace KEDAClient
 
                 if (JtWcfMainHelper.SendOrder(vehicleslist.FocusedItem.Text, new CommonDeviceOrderObj("前进启动" + LocSite, 1, 1)))
                 {
-                    MessageBox.Show(vehicleslist.FocusedItem.Text, "提示");
+                    //记录agv状态
+                    agvStatus[vehicleslist.FocusedItem.Text] = "forwardmove";
+                    //MessageBox.Show(vehicleslist.FocusedItem.Text, "提示");
                     agvForwordMove.Enabled = false;
                 }
                 else
@@ -1618,10 +1632,11 @@ namespace KEDAClient
                 {
                     StopAGV();
                 }
-
                 if (JtWcfMainHelper.SendOrder(vehicleslist.FocusedItem.Text, new CommonDeviceOrderObj("后退" + LocSite, 1, 2)))
                 {
-                    MessageBox.Show(vehicleslist.FocusedItem.Text, "提示");
+                    //记录agv状态
+                    agvStatus[vehicleslist.FocusedItem.Text] = "backmove";
+                    //MessageBox.Show(vehicleslist.FocusedItem.Text, "提示");
                     agvBackMove.Enabled = false;
                 }
                 else
@@ -1642,6 +1657,8 @@ namespace KEDAClient
             if (agvBackMove.Enabled == false || agvForwordMove.Enabled == false)
             {
                 StopAGV();
+                //记录agv状态
+                agvStatus[vehicleslist.FocusedItem.Text] = "stop";
             }
             else
             {
@@ -1664,5 +1681,70 @@ namespace KEDAClient
             }
 
         }
+
+        private void vehicleslist_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string status = agvStatus[vehicleslist.FocusedItem.Text];
+
+            if (vehicleslist.FocusedItem.SubItems[2].Text == "True")
+            {
+                if (status == "forwardmove")
+                {
+                    agvForwordMove.Enabled = false;
+                    agvBackMove.Enabled = true;
+                    agvStop.Enabled = true;
+                }
+                else if (status == "backmove")
+                {
+                    agvForwordMove.Enabled = true;
+                    agvBackMove.Enabled = false;
+                    agvStop.Enabled = true;
+                }
+                else if (status == "stop")
+                {
+                    agvForwordMove.Enabled = true;
+                    agvBackMove.Enabled = true;
+                    agvStop.Enabled = true;
+                }
+                charge.Enabled = true;
+                buttonSend.Enabled = true;
+            }
+            else if (vehicleslist.FocusedItem.SubItems[2].Text == "False")
+            {
+                agvForwordMove.Enabled = false;
+                agvBackMove.Enabled = false;
+                agvStop.Enabled = false;
+                charge.Enabled = false;
+                buttonSend.Enabled = false;
+            }
+        }
+        private void RefreshListview()
+        {
+            GfxList<DeviceBackImf> devsList = JtWcfMainHelper.GetDevList();
+            vehicleslist.BeginUpdate();
+
+            for (int i = 0; i < devsList.Count; i++)             //只对第三列进行刷新
+            {
+                vehicleslist.Items[i].SubItems[2].Text = devsList[i].DevStatue;
+            }
+            vehicleslist.EndUpdate();
+        }
+
+        /// <summary>
+        /// 定时刷新车辆信息
+        /// </summary>
+        private void Statetimer_Tick(object sender, EventArgs e)
+        {
+            RefreshListview();
+        }
+
+        private void KEDAForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (MessageBox.Show("确定关闭客户端？", "提示", MessageBoxButtons.YesNo) != System.Windows.Forms.DialogResult.Yes)
+            {
+                e.Cancel = true;
+            }
+        }
+
     }
 }
