@@ -192,7 +192,7 @@ namespace KEDAClient
                         int[] a = new int[] { 8, 10, 12, 13, 14, 15, 16, 20 };
                         for (int i = 0; i < a.Length; i++)
                         {
-                            if (item1.SensorList[a[i]].RValue == "未知")
+                            if (item1.SensorList[a[i]].RValue == "0")
                             {
                                 ListViewItem item = new ListViewItem(item1.DevId);  // AGV设备ID
                                 item.SubItems.Add(item1.SensorList[a[i]].SensName); // 类型名称
@@ -1807,50 +1807,59 @@ namespace KEDAClient
         private void RefreshListview(ListView listv)
         {
             GfxList<DeviceBackImf> devsList = JtWcfMainHelper.GetDevList();
-            if (listv == vehicleslist)
+            foreach (var item in devsList)
             {
-                listv.BeginUpdate();
-
-                for (int i = 0; i < devsList.Count; i++)             //只对第三列进行刷新
+                if (item.DevStatue == "True")
                 {
-                    listv.Items[i].SubItems[2].Text = devsList[i].DevStatue;
-                }
-
-                listv.EndUpdate();
-            }
-            else if (listv == alarmlist)
-            {
-                listv.BeginUpdate();
-                int[] a = new int[] { 8, 10, 12, 13, 14, 15, 16, 20 };
-
-                foreach (var item1 in devsList)
-                {
-                    for (int i = 0; i < devsList.Count * a.Length; i++)
+                    if (listv == vehicleslist)
                     {
-                        for (int j = 0; j < a.Length; j++)
+                        listv.BeginUpdate();
+
+                        for (int i = 0; i < devsList.Count; i++)             //只对第三列进行刷新
                         {
-                            if (item1.SensorList[a[j]].RValue == "未知")
+                            listv.Items[i].SubItems[2].Text = devsList[i].DevStatue;
+                            listv.Items[i].SubItems[4].Text = devsList[i].SensorList[4].RValue;
+                        }
+
+                        listv.EndUpdate();
+                    }
+                    else if (listv == alarmlist)
+                    {
+                        listv.BeginUpdate();
+                        int[] a = new int[] { 8, 10, 12, 13, 14, 15, 16, 20 };
+
+
+                        for (int i = 0; i < devsList.Count; i++)
+                        {
+                            for (int j = 0; j < a.Length; j++)
                             {
-                                listv.Items[i].SubItems[3].Text = item1.SensorList[a[j]].RValue;
+                                if (item.SensorList[a[j]].RValue == "0")
+                                {
+                                    listv.Items[i].SubItems[3].Text = item.SensorList[a[j]].RValue;
+                                }
                             }
                         }
+
+                        listv.EndUpdate();
+                    }
+                    else if (listv == taskInformlist)
+                    {
+                        GfxList<GfxServiceContractTaskExcute.TaskBackImf> taskList = JtWcfTaskHelper.GetAllTask();
+                        listv.BeginUpdate();
+                        if (taskList is null) return;
+                        for (int i = 0; i < taskList.Count; i++)
+                        {
+                            listv.Items[i].SubItems[2].Text = taskList[i].Statue.ToString();// 任务状态
+                            listv.Items[i].SubItems[6].Text = taskList[i].TaskCtrType.ToString();// 控制参数
+                        }
+                        listv.EndUpdate();
                     }
                 }
-                listv.EndUpdate();
             }
-            else if (listv == taskInformlist)
-            {
-                GfxList<GfxServiceContractTaskExcute.TaskBackImf> taskList = JtWcfTaskHelper.GetAllTask();
-                listv.BeginUpdate();
-                if (taskList is null) return;
-                for (int i = 0; i < taskList.Count; i++)
-                {
-                    listv.Items[i].SubItems[2].Text = taskList[i].Statue.ToString();// 任务状态
-                    listv.Items[i].SubItems[6].Text = taskList[i].TaskCtrType.ToString();// 控制参数
-                }
-                listv.EndUpdate();
-            }
+
         }
+
+
         /// <summary>
         /// 定时刷新车辆信息
         /// </summary>
