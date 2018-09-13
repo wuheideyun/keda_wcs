@@ -163,7 +163,7 @@ namespace KEDAClient
         {
 
             // 创建列表头
-            alarmlist.Columns.Add("传感器ID", 150, HorizontalAlignment.Left);
+            alarmlist.Columns.Add("AGV设备ID", 150, HorizontalAlignment.Left);
             alarmlist.Columns.Add("类型名称", 200, HorizontalAlignment.Left);
             alarmlist.Columns.Add("通道编号", 200, HorizontalAlignment.Left);
             alarmlist.Columns.Add("实时值", 200, HorizontalAlignment.Left);
@@ -188,9 +188,9 @@ namespace KEDAClient
                 {
                     if (item1.DevId != null)
                     {
-                       
-                        int[] a = new int[]{8,10,12,13,14,15,16,20 };
-                        for (int i = 0; i <a.Length ; i++)
+
+                        int[] a = new int[] { 8, 10, 12, 13, 14, 15, 16, 20 };
+                        for (int i = 0; i < a.Length; i++)
                         {
                             if (item1.SensorList[a[i]].RValue == "未知")
                             {
@@ -1804,24 +1804,61 @@ namespace KEDAClient
                 buttonSend.Enabled = false;
             }
         }
-        private void RefreshListview()
+        private void RefreshListview(ListView listv)
         {
             GfxList<DeviceBackImf> devsList = JtWcfMainHelper.GetDevList();
-            vehicleslist.BeginUpdate();
-
-            for (int i = 0; i < devsList.Count; i++)             //只对第三列进行刷新
+            if (listv == vehicleslist)
             {
-                vehicleslist.Items[i].SubItems[2].Text = devsList[i].DevStatue;
-            }
-            vehicleslist.EndUpdate();
-        }
+                listv.BeginUpdate();
 
+                for (int i = 0; i < devsList.Count; i++)             //只对第三列进行刷新
+                {
+                    listv.Items[i].SubItems[2].Text = devsList[i].DevStatue;
+                }
+
+                listv.EndUpdate();
+            }
+            else if (listv == alarmlist)
+            {
+                listv.BeginUpdate();
+                int[] a = new int[] { 8, 10, 12, 13, 14, 15, 16, 20 };
+
+                foreach (var item1 in devsList)
+                {
+                    for (int i = 0; i < devsList.Count * a.Length; i++)
+                    {
+                        for (int j = 0; j < a.Length; j++)
+                        {
+                            if (item1.SensorList[a[j]].RValue == "未知")
+                            {
+                                listv.Items[i].SubItems[3].Text = item1.SensorList[a[j]].RValue;
+                            }
+                        }
+                    }
+                }
+                listv.EndUpdate();
+            }
+            else if (listv == taskInformlist)
+            {
+                GfxList<GfxServiceContractTaskExcute.TaskBackImf> taskList = JtWcfTaskHelper.GetAllTask();
+                listv.BeginUpdate();
+                if (taskList is null) return;
+                for (int i = 0; i < taskList.Count; i++)
+                {
+                    listv.Items[i].SubItems[2].Text = taskList[i].Statue.ToString();// 任务状态
+                    listv.Items[i].SubItems[6].Text = taskList[i].TaskCtrType.ToString();// 控制参数
+                }
+                listv.EndUpdate();
+            }
+        }
         /// <summary>
         /// 定时刷新车辆信息
         /// </summary>
         private void Statetimer_Tick(object sender, EventArgs e)
         {
-            RefreshListview();
+            RefreshListview(vehicleslist);
+            RefreshListview(alarmlist);
+            RefreshListview(taskInformlist);
         }
 
         private void KEDAForm_FormClosing(object sender, FormClosingEventArgs e)
