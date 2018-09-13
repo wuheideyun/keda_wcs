@@ -1369,7 +1369,7 @@ namespace NJDSClient
 
                 if (sta != null && sta.WaitList != null)
                 {
-                    foreach (var item in sta.WaitList)
+                    foreach (var item in sta.WaitList) 
                     {
                         task.StartSiteList.Add(item.ToString());
                     }

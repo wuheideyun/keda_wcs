@@ -71,7 +71,7 @@
             this.vehicles = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.button5 = new System.Windows.Forms.Button();
+            this.charge = new System.Windows.Forms.Button();
             this.agvStop = new System.Windows.Forms.Button();
             this.agvBackMove = new System.Windows.Forms.Button();
             this.agvForwordMove = new System.Windows.Forms.Button();
@@ -86,6 +86,7 @@
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.panelBtn1 = new System.Windows.Forms.Panel();
             this.timerFunc = new System.Windows.Forms.Timer(this.components);
+            this.Statetimer = new System.Windows.Forms.Timer(this.components);
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -206,10 +207,10 @@
             // labelLogo
             // 
             this.labelLogo.AutoSize = true;
-            this.labelLogo.Font = new System.Drawing.Font("华文楷体", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelLogo.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelLogo.Location = new System.Drawing.Point(316, 13);
             this.labelLogo.Name = "labelLogo";
-            this.labelLogo.Size = new System.Drawing.Size(399, 36);
+            this.labelLogo.Size = new System.Drawing.Size(401, 37);
             this.labelLogo.TabIndex = 0;
             this.labelLogo.Text = "广东科达洁能股份有限公司";
             // 
@@ -282,6 +283,7 @@
             this.endmission.TabIndex = 37;
             this.endmission.Text = "结束";
             this.endmission.UseVisualStyleBackColor = false;
+            this.endmission.Click += new System.EventHandler(this.endmission_Click);
             // 
             // pausemission
             // 
@@ -305,6 +307,7 @@
             this.startmission.TabIndex = 34;
             this.startmission.Text = "开始";
             this.startmission.UseVisualStyleBackColor = false;
+            this.startmission.Click += new System.EventHandler(this.startmission_Click);
             // 
             // groupBox1
             // 
@@ -332,9 +335,9 @@
             this.tabControl2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl2.Controls.Add(this.tabPage1);
-            this.tabControl2.Controls.Add(this.tabPage2);
             this.tabControl2.Controls.Add(this.tabPage3);
+            this.tabControl2.Controls.Add(this.tabPage2);
+            this.tabControl2.Controls.Add(this.tabPage1);
             this.tabControl2.Cursor = System.Windows.Forms.Cursors.Default;
             this.tabControl2.Font = new System.Drawing.Font("宋体", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tabControl2.Location = new System.Drawing.Point(20, 65);
@@ -399,6 +402,7 @@
             this.taskInformlist.Size = new System.Drawing.Size(957, 186);
             this.taskInformlist.TabIndex = 0;
             this.taskInformlist.UseCompatibleStateImageBehavior = false;
+           
             // 
             // buttonManSend
             // 
@@ -506,7 +510,7 @@
             // vehicles
             // 
             this.vehicles.Controls.Add(this.groupBox2);
-            this.vehicles.Controls.Add(this.button5);
+            this.vehicles.Controls.Add(this.charge);
             this.vehicles.Controls.Add(this.agvStop);
             this.vehicles.Controls.Add(this.agvBackMove);
             this.vehicles.Controls.Add(this.agvForwordMove);
@@ -554,19 +558,21 @@
             this.listBox1.Size = new System.Drawing.Size(275, 88);
             this.listBox1.TabIndex = 0;
             // 
-            // button5
+            // charge
             // 
-            this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button5.Location = new System.Drawing.Point(849, 253);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(106, 36);
-            this.button5.TabIndex = 43;
-            this.button5.Text = "充电";
-            this.button5.UseVisualStyleBackColor = true;
+            this.charge.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.charge.Enabled = false;
+            this.charge.Location = new System.Drawing.Point(849, 253);
+            this.charge.Name = "charge";
+            this.charge.Size = new System.Drawing.Size(106, 36);
+            this.charge.TabIndex = 43;
+            this.charge.Text = "充电";
+            this.charge.UseVisualStyleBackColor = true;
             // 
             // agvStop
             // 
             this.agvStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.agvStop.Enabled = false;
             this.agvStop.Location = new System.Drawing.Point(718, 253);
             this.agvStop.Name = "agvStop";
             this.agvStop.Size = new System.Drawing.Size(104, 36);
@@ -578,6 +584,7 @@
             // agvBackMove
             // 
             this.agvBackMove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.agvBackMove.Enabled = false;
             this.agvBackMove.Location = new System.Drawing.Point(849, 202);
             this.agvBackMove.Name = "agvBackMove";
             this.agvBackMove.Size = new System.Drawing.Size(106, 36);
@@ -589,6 +596,7 @@
             // agvForwordMove
             // 
             this.agvForwordMove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.agvForwordMove.Enabled = false;
             this.agvForwordMove.Location = new System.Drawing.Point(718, 202);
             this.agvForwordMove.Name = "agvForwordMove";
             this.agvForwordMove.Size = new System.Drawing.Size(106, 36);
@@ -600,6 +608,7 @@
             // buttonSend
             // 
             this.buttonSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonSend.Enabled = false;
             this.buttonSend.Font = new System.Drawing.Font("宋体", 10F);
             this.buttonSend.Location = new System.Drawing.Point(821, 155);
             this.buttonSend.Name = "buttonSend";
@@ -692,6 +701,7 @@
             this.vehicleslist.Size = new System.Drawing.Size(673, 399);
             this.vehicleslist.TabIndex = 0;
             this.vehicleslist.UseCompatibleStateImageBehavior = false;
+            this.vehicleslist.SelectedIndexChanged += new System.EventHandler(this.vehicleslist_SelectedIndexChanged);
             // 
             // tabPage5
             // 
@@ -699,7 +709,7 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 26);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(750, 405);
+            this.tabPage5.Size = new System.Drawing.Size(669, 402);
             this.tabPage5.TabIndex = 1;
             this.tabPage5.Text = "配置站点";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -711,12 +721,18 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelBtn1.Location = new System.Drawing.Point(0, 0);
             this.panelBtn1.Name = "panelBtn1";
-            this.panelBtn1.Size = new System.Drawing.Size(750, 562);
+            this.panelBtn1.Size = new System.Drawing.Size(669, 559);
             this.panelBtn1.TabIndex = 0;
             // 
             // timerFunc
             // 
             this.timerFunc.Tick += new System.EventHandler(this.timerFunc_Tick);
+            // 
+            // Statetimer
+            // 
+            this.Statetimer.Enabled = true;
+            this.Statetimer.Interval = 1000;
+            this.Statetimer.Tick += new System.EventHandler(this.Statetimer_Tick);
             // 
             // KEDAForm
             // 
@@ -730,6 +746,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "KEDAForm";
             this.Text = "客户端信息表";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.KEDAForm_FormClosing);
             this.Load += new System.EventHandler(this.KEDAForm_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
@@ -812,11 +829,12 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button buttonSend;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button charge;
         private System.Windows.Forms.Button agvStop;
         private System.Windows.Forms.Button agvBackMove;
         private System.Windows.Forms.Button agvForwordMove;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Timer Statetimer;
     }
 }
