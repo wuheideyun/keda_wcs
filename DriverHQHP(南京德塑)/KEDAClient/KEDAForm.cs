@@ -190,95 +190,21 @@ namespace KEDAClient
                 {
                     if (item1.DevId != null)
                     {
-                        // sens = item1.SensorList.Find(c => { return c.SenId == string.Format("{0}0002", item1.DevId); });
-
-   //                     sens = item1.SensorList.Find(c =>
-   //                     {
-   //                         return c.SenId == string.Format("{0}0009", item1.DevId) || c.SenId == string.Format("{0}0011", item1.DevId) ||
-   //c.SenId == string.Format("{0}0013", item1.DevId) || c.SenId == string.Format("{0}0014", item1.DevId)
-   //|| c.SenId == string.Format("{0}0015", item1.DevId) || c.SenId == string.Format("{0}0016", item1.DevId)
-   //|| c.SenId == string.Format("{0}0017", item1.DevId) || c.SenId == string.Format("{0}0021", item1.DevId);
-   //                     });
-
-                        if (item1.SensorList[8].RValue == "未知")
+                       
+                        int[] a = new int[]{8,10,12,13,14,15,16,20 };
+                        for (int i = 0; i <a.Length ; i++)
                         {
-                            ListViewItem item = new ListViewItem(item1.DevId);  // AGV设备ID
-                            item.SubItems.Add(item1.SensorList[8].SensName); // 类型名称
-                            item.SubItems.Add(item1.SensorList[8].ChannelId.ToString());  // 通道编号
-                            item.SubItems.Add(item1.SensorList[8].RValue);  // 实时值
-                            item.SubItems.Add(item1.SensorList[8].EValue); // 描述值                                 
-                            alarmlist.Items.Add(item);
+                            if (item1.SensorList[a[i]].RValue == "未知")
+                            {
+                                ListViewItem item = new ListViewItem(item1.DevId);  // AGV设备ID
+                                item.SubItems.Add(item1.SensorList[a[i]].SensName); // 类型名称
+                                item.SubItems.Add(item1.SensorList[a[i]].ChannelId.ToString());  // 通道编号
+                                item.SubItems.Add(item1.SensorList[a[i]].RValue);  // 实时值
+                                item.SubItems.Add(item1.SensorList[a[i]].EValue); // 描述值                                 
+                                alarmlist.Items.Add(item);
+                            }
                         }
-
-                        if (item1.SensorList[10].RValue == "未知")
-                        {
-                            ListViewItem item = new ListViewItem(item1.DevId);  // AGV设备ID
-                            item.SubItems.Add(item1.SensorList[10].SensName); // 类型名称
-                            item.SubItems.Add(item1.SensorList[10].ChannelId.ToString());  // 通道编号
-                            item.SubItems.Add(item1.SensorList[10].RValue);  // 实时值
-                            item.SubItems.Add(item1.SensorList[10].EValue); // 描述值                                 
-                            alarmlist.Items.Add(item);
-                        }
-
-                        if (item1.SensorList[12].RValue == "未知")
-                        {
-                            ListViewItem item = new ListViewItem(item1.DevId);  // AGV设备ID
-                            item.SubItems.Add(item1.SensorList[12].SensName); // 类型名称
-                            item.SubItems.Add(item1.SensorList[12].ChannelId.ToString());  // 通道编号
-                            item.SubItems.Add(item1.SensorList[12].RValue);  // 实时值
-                            item.SubItems.Add(item1.SensorList[12].EValue); // 描述值                                 
-                            alarmlist.Items.Add(item);
-                        }
-    
-                        if (item1.SensorList[13].RValue == "未知")
-                        {
-                            ListViewItem item = new ListViewItem(item1.DevId);  // AGV设备ID
-                            item.SubItems.Add(item1.SensorList[13].SensName); // 类型名称
-                            item.SubItems.Add(item1.SensorList[13].ChannelId.ToString());  // 通道编号
-                            item.SubItems.Add(item1.SensorList[13].RValue);  // 实时值
-                            item.SubItems.Add(item1.SensorList[13].EValue); // 描述值                                 
-                            alarmlist.Items.Add(item);
-                        }
-          
-                        if (item1.SensorList[14].RValue == "未知")
-                        {
-                            ListViewItem item = new ListViewItem(item1.DevId);  // AGV设备ID
-                            item.SubItems.Add(item1.SensorList[14].SensName); // 类型名称
-                            item.SubItems.Add(item1.SensorList[14].ChannelId.ToString());  // 通道编号
-                            item.SubItems.Add(item1.SensorList[14].RValue);  // 实时值
-                            item.SubItems.Add(item1.SensorList[14].EValue); // 描述值                                 
-                            alarmlist.Items.Add(item);
-                        }
-
-                        if (item1.SensorList[15].RValue == "未知")
-                        {
-                            ListViewItem item = new ListViewItem(item1.DevId);  // AGV设备ID
-                            item.SubItems.Add(item1.SensorList[15].SensName); // 类型名称
-                            item.SubItems.Add(item1.SensorList[15].ChannelId.ToString());  // 通道编号
-                            item.SubItems.Add(item1.SensorList[15].RValue);  // 实时值
-                            item.SubItems.Add(item1.SensorList[15].EValue); // 描述值                                 
-                            alarmlist.Items.Add(item);
-                        }
- 
-                        if (item1.SensorList[16].RValue == "未知")
-                        {
-                            ListViewItem item = new ListViewItem(item1.DevId);  // AGV设备ID
-                            item.SubItems.Add(item1.SensorList[16].SensName); // 类型名称
-                            item.SubItems.Add(item1.SensorList[16].ChannelId.ToString());  // 通道编号
-                            item.SubItems.Add(item1.SensorList[16].RValue);  // 实时值
-                            item.SubItems.Add(item1.SensorList[16].EValue); // 描述值                                 
-                            alarmlist.Items.Add(item);
-                        }
-
-                        if (item1.SensorList[20].RValue == "未知")
-                        {
-                            ListViewItem item = new ListViewItem(item1.DevId);  //AGV设备ID
-                            item.SubItems.Add(item1.SensorList[20].SensName); // 类型名称
-                            item.SubItems.Add(item1.SensorList[20].ChannelId.ToString());  // 通道编号
-                            item.SubItems.Add(item1.SensorList[20].RValue);  // 实时值
-                            item.SubItems.Add(item1.SensorList[20].EValue); // 描述值                                 
-                            alarmlist.Items.Add(item);
-                        }
+                        
 
 
                         // 先假定报警状态为 未知  字段，判断是否能获取到值
