@@ -103,10 +103,19 @@ namespace KEDAClient
         /// </summary>
         private List<StationMember> _selectStation1 = new List<StationMember>();
 
+
+
+
+        /// <summary>
+        /// 任务ID与自身状态对应关系：状态值：startmission、pausemission、endmission
+        /// </summary>
+        Dictionary<string, string> taskStatus = new Dictionary<string, string>();
+
         /// <summary>
         /// 设备ID与自身状态对应关系(车辆）：状态值：stop、forwardmove、backmove
         /// </summary>
         Dictionary<string, string> agvStatus = new Dictionary<string, string>();
+
 
         private readonly DeviceBackImf devid;
 
@@ -146,6 +155,7 @@ namespace KEDAClient
             this.WindowState = FormWindowState.Maximized;
         }
 
+
         /// <summary>
         /// 报警
         /// </summary>
@@ -153,32 +163,59 @@ namespace KEDAClient
         {
 
             // 创建列表头
-            alarmlist.Columns.Add("alarmID", 150, HorizontalAlignment.Left);
-            alarmlist.Columns.Add("eventname", 200, HorizontalAlignment.Left);
-            alarmlist.Columns.Add("Sourceid", 200, HorizontalAlignment.Left);
-            alarmlist.Columns.Add("Sourcetype", 200, HorizontalAlignment.Left);
-            alarmlist.Columns.Add("State", 200, HorizontalAlignment.Left);  // active` 、ackonwledged 、closed 、deleted
-            alarmlist.Columns.Add("Eventcount", 200, HorizontalAlignment.Left);
-            alarmlist.Columns.Add("starteventat", 200, HorizontalAlignment.Left);  //  报警第一次发生时间
-            alarmlist.Columns.Add("endeventat", 200, HorizontalAlignment.Left);  //  报警最后一次发生时间
+            alarmlist.Columns.Add("传感器ID", 150, HorizontalAlignment.Left);
+            alarmlist.Columns.Add("类型名称", 200, HorizontalAlignment.Left);
+            alarmlist.Columns.Add("通道编号", 200, HorizontalAlignment.Left);
+            alarmlist.Columns.Add("实时值", 200, HorizontalAlignment.Left);
+            alarmlist.Columns.Add("描述值", 200, HorizontalAlignment.Left);
+
             // 若没有，无法显示数据 
             alarmlist.View = System.Windows.Forms.View.Details;
 
             ///添加数据项
             ///UI暂时挂起，直到EndUpdate绘制控件，可提高加载速度
+
+            JtWcfMainHelper.InitPara(_severIp, "", "");
+
+            List<DeviceBackImf> devs = JtWcfMainHelper.GetDevList();
+
+            // 传感器
+            SensorBackImf sens = null;
+
             alarmlist.BeginUpdate();
-            ListViewItem item = new ListViewItem(" 报警id ");
-            item.SubItems.Add("报警名称");
-            item.SubItems.Add("报警源id");
-            item.SubItems.Add("报警源类型");
-            item.SubItems.Add("报警状态");
-            item.SubItems.Add("报警发生次数");
-            item.SubItems.Add("报警发生时间");
-            item.SubItems.Add("报警结束时间");
 
+            if (devs != null && devs.Count > 0)
+            {
+                foreach (var item1 in devs)
+                {
+                    if (item1.DevId != null)
+                    {
+                        // sens = item1.SensorList.Find(c => { return c.SenId == string.Format("{0}0002", item1.DevId); });
 
-            // 显示项
-            alarmlist.Items.Add(item);
+                        sens = item1.SensorList.Find(c => {
+                            return c.SenId == string.Format("{0}0009", item1.DevId) || c.SenId == string.Format("{0}0011", item1.DevId) ||
+c.SenId == string.Format("{0}0013", item1.DevId) || c.SenId == string.Format("{0}0014", item1.DevId)
+|| c.SenId == string.Format("{0}0015", item1.DevId) || c.SenId == string.Format("{0}0016", item1.DevId)
+|| c.SenId == string.Format("{0}0017", item1.DevId) || c.SenId == string.Format("{0}0021", item1.DevId);
+                        });
+
+                        // 先假定报警状态为 未知  字段，判断是否能获取到值
+                        if (sens.RValue == "未知")
+                        {
+                            ListViewItem item = new ListViewItem(sens.SenId);  // 传感器ID
+                            item.SubItems.Add(sens.SensName); // 类型名称
+                            item.SubItems.Add(sens.ChannelId.ToString());  // 通道编号
+                            item.SubItems.Add(sens.RValue);  // 实时值
+                            item.SubItems.Add(sens.EValue); // 描述值                                 
+                            alarmlist.Items.Add(item);
+                        }
+                        else
+                        {
+                            SetOutputMsg("没有异常信息！");
+                        }
+                    }
+                }
+            }
 
             // 结束数据处理
             // UI界面一次性绘制
@@ -259,6 +296,7 @@ namespace KEDAClient
         /// </summary>
         private void Vehicles()
         {
+
             GfxList<DeviceBackImf> devsList = JtWcfMainHelper.GetDevList();
             //vehicleslist.Clear();
             if (devsList.Count > 0)
@@ -267,25 +305,33 @@ namespace KEDAClient
                 vehicleslist.Columns.Add("DevId", 200, HorizontalAlignment.Left);
                 vehicleslist.Columns.Add("DevModel", 100, HorizontalAlignment.Left); // 设备型号
                 vehicleslist.Columns.Add("DevStatue", 150, HorizontalAlignment.Left);// 若宽度改为0，将会隐藏此列
+                vehicleslist.Columns.Add("RunStatueName", 150, HorizontalAlignment.Left); // 设备运行状态
+                vehicleslist.Columns.Add("RunStatueValue", 150, HorizontalAlignment.Left); // 设备运行状态实时值
                 vehicleslist.Columns.Add("Timestamp", 150, HorizontalAlignment.Left);
 
                 // 若没有，无法显示数据 
                 vehicleslist.View = System.Windows.Forms.View.Details;
 
+                // 传感器
+                SensorBackImf sens = null;
+
                 ///添加数据项
                 ///UI暂时挂起，直到EndUpdate绘制控件，可提高加载速度
                 if (devsList is null) return;
-                for (int i = 0; i < devsList.Count; i++)
+                foreach (var item1 in devsList)
                 {
+                    // 获取AGV 运行方向 的相关数据
+                    sens = item1.SensorList.Find(c => { return c.SenId == string.Format("{0}0005", item1.DevId); });
                     //vehicleslist.BeginUpdate();
-                    ListViewItem item = new ListViewItem(devsList[i].DevId); // 设备id
-                    item.SubItems.Add(devsList[i].DevModel); // 设备信息
-                    item.SubItems.Add(devsList[i].DevStatue); // 设备状态
-                    //item.SubItems.Add("True"); // 设备状态,测试用，停掉Statetimer才能改变
-                    item.SubItems.Add("   ");
+                    ListViewItem item = new ListViewItem(item1.DevId); // 设备id
+                    item.SubItems.Add(item1.DevModel); // 设备信息
+                    item.SubItems.Add(item1.DevStatue); // 设备状态 
+                    item.SubItems.Add(sens.SensName);
+                    item.SubItems.Add(sens.RValue);
+                    item.SubItems.Add("  ");
                     //vehicleslist.BeginUpdate();
                     //初始化车辆状态
-                    agvStatus.Add(devsList[i].DevId, "stop");
+                    agvStatus.Add(item1.DevId, "stop");
 
                     // 显示项
                     vehicleslist.Items.Add(item);
@@ -1134,59 +1180,6 @@ namespace KEDAClient
             return new AreaTwoWaitPointMember(id, dibiao, tar, index);
         }
 
-        /// <summary>
-        /// 任务暂停
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void pausemission_Click(object sender, EventArgs e)
-        {
-            if (_isLogin)
-            {
-                #region
-                if (pausemission.Text != "继续")
-                {
-                    JtWcfMainHelper.InitPara(_severIp, "", "");
-
-                    List<DispatchBackMember> result = JtWcfMainHelper.GetDispatchList();
-
-                    if (_devArea2 != null)
-                    {
-                        MessageBox.Show("当前站点派发任务未完成，是否暂停？", "提示");
-
-                        return;
-                    }
-
-                    if (result != null)
-                    {
-                        foreach (var item in result)
-                        {
-                            if (item.TaskImf == _clientMark)
-                            {
-                                MessageBox.Show("当前站点派发任务未完成，是否暂停？", "提示");
-
-                                return;
-                            }
-                        }
-                    }
-
-                    pausemission.Text = "继续";
-                }
-
-                else
-                {
-                    pausemission.Text = "暂停";
-
-                }
-
-            }
-            else
-            {
-                MessageBox.Show("请先登录后再操作！", "提示");
-            }
-            #endregion
-        }
-
 
         /// <summary>
         /// 区域二待命点成员
@@ -1682,6 +1675,109 @@ namespace KEDAClient
 
         }
 
+        /// <summary>
+        /// 开始 任务
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void startmission_Click(object sender, EventArgs e)
+        {
+            if (GetSelectTaskid())
+            {
+                return;
+            }
+            else
+            {
+                //记录任务执行状态
+                taskStatus[taskInformlist.FocusedItem.Text] = "taskstart";
+                SetOutputMsg("开始任务成功");
+                startmission.Enabled = false;
+            }
+        }
+
+
+        /// <summary>
+        /// 任务暂停
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pausemission_Click(object sender, EventArgs e)
+        {
+            if (GetSelectTaskid())
+            {
+                return;
+            }
+            else
+            {
+                //记录任务执行状态
+                taskStatus[taskInformlist.FocusedItem.Text] = "taskpause";
+                SetOutputMsg("暂停任务成功");
+                if (pausemission.Text != "继续")
+                {
+                    if (MessageBox.Show("当前站点派发任务未完成，是否暂停？", "提示", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        pausemission.Text = "继续";
+                    }
+                }
+                else
+                {
+                    pausemission.Text = "暂停";
+                    pausemission.Enabled = false;
+                }
+
+            }
+
+        }
+
+        /// <summary>
+        /// 任务结束
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void endmission_Click(object sender, EventArgs e)
+        {
+            // 判断是否有开始、暂停的任务正在执行
+            if (startmission.Enabled == false || pausemission.Enabled == false)
+            {
+                //记录任务执行状态
+                taskStatus[taskInformlist.FocusedItem.Text] = "taskend";
+                SetOutputMsg("停止任务成功");
+                StopTask();
+            }
+            else
+            {
+                MessageBox.Show("当前没有正在执行的任务！");
+            }
+        }
+
+
+        /// <summary>
+        /// 判断是否已选择某一任务id
+        /// </summary>
+        private bool GetSelectTaskid()
+        {
+            if (taskInformlist.FocusedItem is null)
+            {
+                MessageBox.Show("请选择需要执行的任务", "提示");
+                return true;
+            }
+            return false;
+        }
+
+        private void StopTask()
+        {
+            JtWcfMainHelper.InitPara(_severIp, "", "");
+
+            if (taskInformlist.FocusedItem.Text != null)
+            {
+                startmission.Enabled = true;
+                pausemission.Enabled = true;
+            }
+            else
+            {
+                MessageBox.Show("请尝试再操作一次", "提示");
+            }
+        }
         private void vehicleslist_SelectedIndexChanged(object sender, EventArgs e)
         {
             string status = agvStatus[vehicleslist.FocusedItem.Text];
@@ -1745,6 +1841,5 @@ namespace KEDAClient
                 e.Cancel = true;
             }
         }
-
     }
 }
