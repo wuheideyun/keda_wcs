@@ -179,8 +179,6 @@ namespace KEDAClient
 
             List<DeviceBackImf> devs = JtWcfMainHelper.GetDevList();
 
-            // 传感器
-            SensorBackImf sens = null;
 
             alarmlist.BeginUpdate();
 
@@ -204,23 +202,7 @@ namespace KEDAClient
                                 alarmlist.Items.Add(item);
                             }
                         }
-                        
 
-
-                        // 先假定报警状态为 未知  字段，判断是否能获取到值
-                        //if (sens.RValue == "未知")
-                        //{
-                        //    ListViewItem item = new ListViewItem(sens.SenId);  // 传感器ID
-                        //    item.SubItems.Add(sens.SensName); // 类型名称
-                        //    item.SubItems.Add(sens.ChannelId.ToString());  // 通道编号
-                        //    item.SubItems.Add(sens.RValue);  // 实时值
-                        //    item.SubItems.Add(sens.EValue); // 描述值                                 
-                        //    alarmlist.Items.Add(item);
-                        //}
-                        //else
-                        //{
-                        //    SetOutputMsg("没有异常信息！");
-                        //}
                     }
                 }
             }
