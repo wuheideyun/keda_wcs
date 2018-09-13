@@ -295,9 +295,8 @@ namespace KEDAClient
                 vehicleslist.Columns.Add("DevId", 200, HorizontalAlignment.Left);
                 vehicleslist.Columns.Add("DevModel", 100, HorizontalAlignment.Left); // 设备型号
                 vehicleslist.Columns.Add("DevStatue", 150, HorizontalAlignment.Left);// 若宽度改为0，将会隐藏此列
-                vehicleslist.Columns.Add("RunStatueName", 150, HorizontalAlignment.Left); // 设备运行状态
-                vehicleslist.Columns.Add("RunStatueValue", 150, HorizontalAlignment.Left); // 设备运行状态实时值
-                vehicleslist.Columns.Add("Timestamp", 150, HorizontalAlignment.Left);
+                vehicleslist.Columns.Add("RunStatue", 150, HorizontalAlignment.Left); // 运行状态：前进、后退、停止
+                vehicleslist.Columns.Add("Electricity", 150, HorizontalAlignment.Left); // 电量
 
                 // 若没有，无法显示数据 
                 vehicleslist.View = System.Windows.Forms.View.Details;
@@ -314,11 +313,21 @@ namespace KEDAClient
                     sens = item1.SensorList.Find(c => { return c.SenId == string.Format("{0}0005", item1.DevId); });
                     //vehicleslist.BeginUpdate();
                     ListViewItem item = new ListViewItem(item1.DevId); // 设备id
-                    item.SubItems.Add(item1.DevModel); // 设备信息
-                    item.SubItems.Add(item1.DevStatue); // 设备状态 
-                    item.SubItems.Add(sens.SensName);
-                    item.SubItems.Add(sens.RValue);
-                    item.SubItems.Add("  ");
+                    item.SubItems.Add(item1.DevModel); // 设备信息    
+                    item.SubItems.Add(item1.DevStatue); // 设备状态  
+                    if (sens.RValue=="0")
+                    {
+                        item.SubItems.Add("前进"); // 运行状态：前进、后退、停止
+                    }
+                    else if(sens.RValue == "1")
+                    {
+                        item.SubItems.Add("后退"); // 运行状态：前进、后退、停止
+                    }     
+                    else
+                    {
+                        item.SubItems.Add("停止");  // 运行状态：前进、后退、停止
+                    }
+                    item.SubItems.Add("电量的字段未找到。");
                     //vehicleslist.BeginUpdate();
                     //初始化车辆状态
                     agvStatus.Add(item1.DevId, "stop");
