@@ -53,11 +53,11 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.listBoxOutput = new System.Windows.Forms.ListBox();
             this.tabControl2 = new System.Windows.Forms.TabControl();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.currentTask = new System.Windows.Forms.TabPage();
             this.taskInformlist = new System.Windows.Forms.ListView();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.station = new System.Windows.Forms.TabPage();
             this.panelBtn = new System.Windows.Forms.Panel();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.map = new System.Windows.Forms.TabPage();
             this.buttonManSend = new System.Windows.Forms.Button();
             this.textBoxNextTars = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -69,6 +69,7 @@
             this.devices = new System.Windows.Forms.TabPage();
             this.deviceslist = new System.Windows.Forms.ListView();
             this.vehicles = new System.Windows.Forms.TabPage();
+            this.endcharge = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.charge = new System.Windows.Forms.Button();
@@ -87,7 +88,9 @@
             this.panelBtn1 = new System.Windows.Forms.Panel();
             this.timerFunc = new System.Windows.Forms.Timer(this.components);
             this.Statetimer = new System.Windows.Forms.Timer(this.components);
-            this.endcharge = new System.Windows.Forms.Button();
+            this.taskList = new System.Windows.Forms.TabPage();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.executeTask = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -96,8 +99,8 @@
             this.panel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabControl2.SuspendLayout();
-            this.tabPage3.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            this.currentTask.SuspendLayout();
+            this.station.SuspendLayout();
             this.alarms.SuspendLayout();
             this.logger.SuspendLayout();
             this.devices.SuspendLayout();
@@ -106,6 +109,7 @@
             this.tabControl3.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
+            this.taskList.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -260,9 +264,6 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.panel2.Controls.Add(this.endmission);
-            this.panel2.Controls.Add(this.pausemission);
-            this.panel2.Controls.Add(this.startmission);
             this.panel2.Controls.Add(this.groupBox1);
             this.panel2.Controls.Add(this.tabControl2);
             this.panel2.Controls.Add(this.buttonManSend);
@@ -278,9 +279,9 @@
             // 
             this.endmission.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.endmission.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.endmission.Location = new System.Drawing.Point(868, 337);
+            this.endmission.Location = new System.Drawing.Point(839, 13);
             this.endmission.Name = "endmission";
-            this.endmission.Size = new System.Drawing.Size(96, 75);
+            this.endmission.Size = new System.Drawing.Size(74, 51);
             this.endmission.TabIndex = 37;
             this.endmission.Text = "结束";
             this.endmission.UseVisualStyleBackColor = false;
@@ -290,9 +291,9 @@
             // 
             this.pausemission.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.pausemission.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.pausemission.Location = new System.Drawing.Point(704, 337);
+            this.pausemission.Location = new System.Drawing.Point(724, 91);
             this.pausemission.Name = "pausemission";
-            this.pausemission.Size = new System.Drawing.Size(96, 75);
+            this.pausemission.Size = new System.Drawing.Size(74, 51);
             this.pausemission.TabIndex = 35;
             this.pausemission.Text = "暂停";
             this.pausemission.UseVisualStyleBackColor = false;
@@ -302,9 +303,9 @@
             // 
             this.startmission.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.startmission.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.startmission.Location = new System.Drawing.Point(540, 337);
+            this.startmission.Location = new System.Drawing.Point(724, 13);
             this.startmission.Name = "startmission";
-            this.startmission.Size = new System.Drawing.Size(96, 75);
+            this.startmission.Size = new System.Drawing.Size(74, 51);
             this.startmission.TabIndex = 34;
             this.startmission.Text = "开始";
             this.startmission.UseVisualStyleBackColor = false;
@@ -326,7 +327,7 @@
             // 
             this.listBoxOutput.Font = new System.Drawing.Font("宋体", 10F);
             this.listBoxOutput.FormattingEnabled = true;
-            this.listBoxOutput.Location = new System.Drawing.Point(6, 20);
+            this.listBoxOutput.Location = new System.Drawing.Point(14, 25);
             this.listBoxOutput.Name = "listBoxOutput";
             this.listBoxOutput.Size = new System.Drawing.Size(345, 108);
             this.listBoxOutput.TabIndex = 9;
@@ -336,9 +337,10 @@
             this.tabControl2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl2.Controls.Add(this.tabPage3);
-            this.tabControl2.Controls.Add(this.tabPage2);
-            this.tabControl2.Controls.Add(this.tabPage1);
+            this.tabControl2.Controls.Add(this.currentTask);
+            this.tabControl2.Controls.Add(this.taskList);
+            this.tabControl2.Controls.Add(this.station);
+            this.tabControl2.Controls.Add(this.map);
             this.tabControl2.Cursor = System.Windows.Forms.Cursors.Default;
             this.tabControl2.Font = new System.Drawing.Font("宋体", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tabControl2.Location = new System.Drawing.Point(20, 65);
@@ -347,16 +349,19 @@
             this.tabControl2.Size = new System.Drawing.Size(965, 224);
             this.tabControl2.TabIndex = 27;
             // 
-            // tabPage3
+            // currentTask
             // 
-            this.tabPage3.Controls.Add(this.taskInformlist);
-            this.tabPage3.Location = new System.Drawing.Point(4, 31);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(957, 189);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "所有任务信息";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.currentTask.Controls.Add(this.endmission);
+            this.currentTask.Controls.Add(this.taskInformlist);
+            this.currentTask.Controls.Add(this.pausemission);
+            this.currentTask.Controls.Add(this.startmission);
+            this.currentTask.Location = new System.Drawing.Point(4, 31);
+            this.currentTask.Name = "currentTask";
+            this.currentTask.Padding = new System.Windows.Forms.Padding(3);
+            this.currentTask.Size = new System.Drawing.Size(957, 189);
+            this.currentTask.TabIndex = 2;
+            this.currentTask.Text = "当前任务";
+            this.currentTask.UseVisualStyleBackColor = true;
             // 
             // taskInformlist
             // 
@@ -365,21 +370,21 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.taskInformlist.Location = new System.Drawing.Point(0, 3);
             this.taskInformlist.Name = "taskInformlist";
-            this.taskInformlist.Size = new System.Drawing.Size(957, 186);
+            this.taskInformlist.Size = new System.Drawing.Size(708, 186);
             this.taskInformlist.TabIndex = 0;
             this.taskInformlist.UseCompatibleStateImageBehavior = false;
             // 
-            // tabPage2
+            // station
             // 
-            this.tabPage2.Controls.Add(this.panelBtn);
-            this.tabPage2.Font = new System.Drawing.Font("宋体", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tabPage2.Location = new System.Drawing.Point(4, 31);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(957, 189);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "配送站点";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.station.Controls.Add(this.panelBtn);
+            this.station.Font = new System.Drawing.Font("宋体", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.station.Location = new System.Drawing.Point(4, 31);
+            this.station.Name = "station";
+            this.station.Padding = new System.Windows.Forms.Padding(3);
+            this.station.Size = new System.Drawing.Size(957, 189);
+            this.station.TabIndex = 1;
+            this.station.Text = "配送站点";
+            this.station.UseVisualStyleBackColor = true;
             // 
             // panelBtn
             // 
@@ -393,16 +398,16 @@
             this.panelBtn.Size = new System.Drawing.Size(945, 177);
             this.panelBtn.TabIndex = 0;
             // 
-            // tabPage1
+            // map
             // 
-            this.tabPage1.Font = new System.Drawing.Font("宋体", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tabPage1.Location = new System.Drawing.Point(4, 31);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(957, 189);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "地图展示";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.map.Font = new System.Drawing.Font("宋体", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.map.Location = new System.Drawing.Point(4, 31);
+            this.map.Name = "map";
+            this.map.Padding = new System.Windows.Forms.Padding(3);
+            this.map.Size = new System.Drawing.Size(957, 189);
+            this.map.TabIndex = 0;
+            this.map.Text = "地图展示";
+            this.map.UseVisualStyleBackColor = true;
             // 
             // buttonManSend
             // 
@@ -528,6 +533,18 @@
             this.vehicles.TabIndex = 4;
             this.vehicles.Text = "车辆";
             this.vehicles.UseVisualStyleBackColor = true;
+            // 
+            // endcharge
+            // 
+            this.endcharge.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.endcharge.Enabled = false;
+            this.endcharge.Location = new System.Drawing.Point(853, 241);
+            this.endcharge.Name = "endcharge";
+            this.endcharge.Size = new System.Drawing.Size(106, 36);
+            this.endcharge.TabIndex = 45;
+            this.endcharge.Text = "充电完成";
+            this.endcharge.UseVisualStyleBackColor = true;
+            this.endcharge.Click += new System.EventHandler(this.endcharge_Click);
             // 
             // groupBox2
             // 
@@ -736,17 +753,33 @@
             this.Statetimer.Interval = 1000;
             this.Statetimer.Tick += new System.EventHandler(this.Statetimer_Tick);
             // 
-            // endcharge
+            // taskList
             // 
-            this.endcharge.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.endcharge.Location = new System.Drawing.Point(853, 241);
-            this.endcharge.Name = "endcharge";
-            this.endcharge.Size = new System.Drawing.Size(106, 36);
-            this.endcharge.TabIndex = 45;
-            this.endcharge.Text = "充电完成";
-            this.endcharge.UseVisualStyleBackColor = true;
-            this.endcharge.Click += new System.EventHandler(this.endcharge_Click);
-            this.endcharge.Enabled = false;
+            this.taskList.Controls.Add(this.executeTask);
+            this.taskList.Controls.Add(this.listView1);
+            this.taskList.Location = new System.Drawing.Point(4, 31);
+            this.taskList.Name = "taskList";
+            this.taskList.Size = new System.Drawing.Size(957, 189);
+            this.taskList.TabIndex = 3;
+            this.taskList.Text = "任务列表";
+            this.taskList.UseVisualStyleBackColor = true;
+            // 
+            // listView1
+            // 
+            this.listView1.Location = new System.Drawing.Point(3, 3);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(652, 183);
+            this.listView1.TabIndex = 0;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            // 
+            // executeTask
+            // 
+            this.executeTask.Location = new System.Drawing.Point(745, 83);
+            this.executeTask.Name = "executeTask";
+            this.executeTask.Size = new System.Drawing.Size(106, 41);
+            this.executeTask.TabIndex = 1;
+            this.executeTask.Text = "执行任务";
+            this.executeTask.UseVisualStyleBackColor = true;
             // 
             // KEDAForm
             // 
@@ -774,8 +807,8 @@
             this.panel2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.tabControl2.ResumeLayout(false);
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
+            this.currentTask.ResumeLayout(false);
+            this.station.ResumeLayout(false);
             this.alarms.ResumeLayout(false);
             this.logger.ResumeLayout(false);
             this.devices.ResumeLayout(false);
@@ -785,6 +818,7 @@
             this.tabControl3.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
+            this.taskList.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -826,10 +860,10 @@
         private System.Windows.Forms.ListView deviceslist;
         private System.Windows.Forms.ListView vehicleslist;
         private System.Windows.Forms.TabControl tabControl2;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage map;
+        private System.Windows.Forms.TabPage station;
         private System.Windows.Forms.Panel panelBtn;
-        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage currentTask;
         private System.Windows.Forms.ListView taskInformlist;
         private System.Windows.Forms.Button endmission;
         private System.Windows.Forms.Button pausemission;
@@ -851,5 +885,8 @@
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Timer Statetimer;
         private System.Windows.Forms.Button endcharge;
+        private System.Windows.Forms.TabPage taskList;
+        private System.Windows.Forms.Button executeTask;
+        private System.Windows.Forms.ListView listView1;
     }
 }
