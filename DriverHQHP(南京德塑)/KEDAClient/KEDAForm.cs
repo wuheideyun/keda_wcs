@@ -2026,12 +2026,7 @@ namespace KEDAClient
                     }
                     else
                     {
-                        string[] strArray = { executeTasklist.SelectedItems[0].SubItems[0].Text, executeTasklist.SelectedItems[0].SubItems[1].Text };
-
-                        if (strArray.Length == 2)
-                        {
-                            WcfClientHelper.CreateService<IUserOperation_TaskExcute>().StartTask(strArray[0], "MainTest");
-                        }
+                        WcfClientHelper.CreateService<IUserOperation_TaskExcute>().StartTask(executeTasklist.SelectedItems[0].SubItems[0].Text, "MainTest");
                     }
                 }
             }
