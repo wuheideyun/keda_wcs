@@ -53,11 +53,11 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.listBoxOutput = new System.Windows.Forms.ListBox();
             this.tabControl2 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.panelBtn = new System.Windows.Forms.Panel();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.taskInformlist = new System.Windows.Forms.ListView();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.panelBtn = new System.Windows.Forms.Panel();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.buttonManSend = new System.Windows.Forms.Button();
             this.textBoxNextTars = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -95,8 +95,8 @@
             this.panel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabControl2.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.alarms.SuspendLayout();
             this.logger.SuspendLayout();
             this.devices.SuspendLayout();
@@ -346,16 +346,27 @@
             this.tabControl2.Size = new System.Drawing.Size(965, 224);
             this.tabControl2.TabIndex = 27;
             // 
-            // tabPage1
+            // tabPage3
             // 
-            this.tabPage1.Font = new System.Drawing.Font("宋体", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tabPage1.Location = new System.Drawing.Point(4, 31);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(957, 189);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "地图展示";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabPage3.Controls.Add(this.taskInformlist);
+            this.tabPage3.Location = new System.Drawing.Point(4, 31);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(957, 189);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "所有任务信息";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // taskInformlist
+            // 
+            this.taskInformlist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.taskInformlist.Location = new System.Drawing.Point(0, 3);
+            this.taskInformlist.Name = "taskInformlist";
+            this.taskInformlist.Size = new System.Drawing.Size(957, 186);
+            this.taskInformlist.TabIndex = 0;
+            this.taskInformlist.UseCompatibleStateImageBehavior = false;
             // 
             // tabPage2
             // 
@@ -381,28 +392,16 @@
             this.panelBtn.Size = new System.Drawing.Size(945, 177);
             this.panelBtn.TabIndex = 0;
             // 
-            // tabPage3
+            // tabPage1
             // 
-            this.tabPage3.Controls.Add(this.taskInformlist);
-            this.tabPage3.Location = new System.Drawing.Point(4, 31);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(957, 189);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "所有任务信息";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // taskInformlist
-            // 
-            this.taskInformlist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.taskInformlist.Location = new System.Drawing.Point(0, 3);
-            this.taskInformlist.Name = "taskInformlist";
-            this.taskInformlist.Size = new System.Drawing.Size(957, 186);
-            this.taskInformlist.TabIndex = 0;
-            this.taskInformlist.UseCompatibleStateImageBehavior = false;
-           
+            this.tabPage1.Font = new System.Drawing.Font("宋体", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tabPage1.Location = new System.Drawing.Point(4, 31);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(957, 189);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "地图展示";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // buttonManSend
             // 
@@ -760,8 +759,8 @@
             this.panel2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.tabControl2.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.alarms.ResumeLayout(false);
             this.logger.ResumeLayout(false);
             this.devices.ResumeLayout(false);

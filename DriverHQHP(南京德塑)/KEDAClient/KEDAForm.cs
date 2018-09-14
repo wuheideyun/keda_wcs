@@ -288,56 +288,51 @@ namespace KEDAClient
         {
 
             GfxList<DeviceBackImf> devsList = JtWcfMainHelper.GetDevList();
-            //vehicleslist.Clear();
+
             if (devsList.Count > 0)
             {
                 // 创建列表头
-                vehicleslist.Columns.Add("DevId", 200, HorizontalAlignment.Left);
-                vehicleslist.Columns.Add("DevModel", 100, HorizontalAlignment.Left); // 设备型号
-                vehicleslist.Columns.Add("DevStatue", 150, HorizontalAlignment.Left);// 若宽度改为0，将会隐藏此列
-                vehicleslist.Columns.Add("RunStatue", 150, HorizontalAlignment.Left); // 运行状态：前进、后退、停止
-                vehicleslist.Columns.Add("Electricity", 150, HorizontalAlignment.Left); // 电量
+                vehicleslist.Columns.Add("车辆编号", 200, HorizontalAlignment.Left);
+                vehicleslist.Columns.Add("车辆型号", 100, HorizontalAlignment.Left); // 设备型号
+                vehicleslist.Columns.Add("车辆状态", 150, HorizontalAlignment.Left);
+                vehicleslist.Columns.Add("运行状态", 150, HorizontalAlignment.Left); // 运行状态：前进、后退、停止
+                vehicleslist.Columns.Add("电量", 150, HorizontalAlignment.Left); // 电量
+                vehicleslist.Columns.Add("充电状态", 150, HorizontalAlignment.Left); // 充电状态
 
                 // 若没有，无法显示数据 
                 vehicleslist.View = System.Windows.Forms.View.Details;
 
-                // 传感器
-                SensorBackImf sens = null;
-
                 ///添加数据项
                 ///UI暂时挂起，直到EndUpdate绘制控件，可提高加载速度
                 if (devsList is null) return;
+
                 foreach (var item1 in devsList)
                 {
-                    // 获取AGV 运行方向 的相关数据
-                    sens = item1.SensorList.Find(c => { return c.SenId == string.Format("{0}0005", item1.DevId); });
-                    //vehicleslist.BeginUpdate();
+                    // 运行状态 、电量、充电状态
+                    int[] sens = new int[] { 4, 6, 7 };
                     ListViewItem item = new ListViewItem(item1.DevId); // 设备id
-                    item.SubItems.Add(item1.DevModel); // 设备信息    
+                    item.SubItems.Add(item1.DevModel); // 设备型号   
                     item.SubItems.Add(item1.DevStatue); // 设备状态  
-                    if (sens.RValue=="0")
+                    if (item1.SensorList[sens[0]].RValue == "0")
                     {
                         item.SubItems.Add("前进"); // 运行状态：前进、后退、停止
                     }
-                    else if(sens.RValue == "1")
+                    else if (item1.SensorList[sens[0]].RValue == "1")
                     {
                         item.SubItems.Add("后退"); // 运行状态：前进、后退、停止
-                    }     
+                    }
                     else
                     {
                         item.SubItems.Add("停止");  // 运行状态：前进、后退、停止
                     }
-                    item.SubItems.Add("电量的字段未找到。");
-                    //vehicleslist.BeginUpdate();
-                    //初始化车辆状态
+                    item.SubItems.Add(item1.SensorList[sens[1]].RValue); // 电量
+                    item.SubItems.Add(item1.SensorList[sens[2]].RValue); // 充电状态
+                                                                         
                     agvStatus.Add(item1.DevId, "stop");
 
                     // 显示项
                     vehicleslist.Items.Add(item);
                 }
-                // 结束数据处理
-                // UI界面一次性绘制
-                //vehicleslist.EndUpdate();
             }
         }
 
