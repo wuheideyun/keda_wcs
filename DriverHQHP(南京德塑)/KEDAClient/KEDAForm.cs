@@ -141,12 +141,14 @@ namespace KEDAClient
             InitPara();
             InitStaMember();  // 初始化站点成员
             InitBtnMember();
+            comboBox1.SelectedIndex = 0;
 
             Alarm(); // 报警
             Logger(); // 日志
             Devices(); // 设备
             Vehicles(); //车辆
-            TaskInform(); // 任务列表
+            TaskInform(); // 当前任务
+            AllTaskList(); //任务列表
             toolStripLabelVersion.Text = "版本号：V14.1";  //版本号
             timerFunc.Enabled = true;  // 系统时间
             labelLogo.Text = APPConfig.LogoStr();  //公司名称
@@ -216,7 +218,6 @@ namespace KEDAClient
         /// <summary>
         /// 日志
         /// </summary>
-
         private void Logger()
         {
             // 创建列表头
@@ -286,7 +287,6 @@ namespace KEDAClient
         /// </summary>
         private void Vehicles()
         {
-
             GfxList<DeviceBackImf> devsList = JtWcfMainHelper.GetDevList();
 
             if (devsList.Count > 0)
@@ -327,7 +327,7 @@ namespace KEDAClient
                     }
                     item.SubItems.Add(item1.SensorList[sens[1]].RValue); // 电量
                     item.SubItems.Add(item1.SensorList[sens[2]].RValue); // 充电状态
-                                                                         
+
                     agvStatus.Add(item1.DevId, "stop");
 
                     // 显示项
@@ -337,7 +337,7 @@ namespace KEDAClient
         }
 
         /// <summary>
-        ///  获取所有任务信息
+        ///  获取当前任务信息
         /// </summary>
         private void TaskInform()
         {
@@ -385,8 +385,41 @@ namespace KEDAClient
             taskInformlist.EndUpdate();
 
         }
+        /// <summary>
+        ///  获取任务列表
+        /// </summary>
+        private void AllTaskList()
+        {
+            //添加表头，即列名
+            executeTasklist.Columns.Add("任务id", -2, HorizontalAlignment.Center);
+            executeTasklist.Columns.Add("任务名称", -2, HorizontalAlignment.Left);
+            executeTasklist.Columns.Add("任务描述", -2, HorizontalAlignment.Left);
+            executeTasklist.Columns.Add("是否自动清除", -2, HorizontalAlignment.Left);
+            executeTasklist.Columns.Add("优先级", -2, HorizontalAlignment.Left);
 
 
+            executeTasklist.View = System.Windows.Forms.View.Details;
+
+
+            JtWcfMainHelper.InitPara(_severIp, "", "");
+            GfxList<TaskRelationMember> memberlist = JtWcfTaskHelper.GetDefineTask();
+
+            if (memberlist is null) return;
+            for (int i = 0; i < memberlist.Count; i++)
+            {
+                executeTasklist.BeginUpdate();
+                ListViewItem item = new ListViewItem(memberlist[i].MemberId); // 任务id
+                item.SubItems.Add(memberlist[i].TaskRelatName);//任务名称
+                item.SubItems.Add(memberlist[i].TaskRelatDecirbe);//任务描述
+                item.SubItems.Add(memberlist[i].IsAotuRemove ? "True" : "False");
+                item.SubItems.Add(memberlist[i].Priority.ToString());
+                //memberlist[i]
+                // 显示项
+                executeTasklist.Items.Add(item);
+            }
+            executeTasklist.EndUpdate();
+
+        }
         /// <summary>
         /// 注销登录
         /// </summary>
@@ -1483,8 +1516,6 @@ namespace KEDAClient
             }
         }
 
-
-
         /// <summary>
         /// 指令发送
         /// </summary>
@@ -1667,23 +1698,22 @@ namespace KEDAClient
             }
 
             // 判断电量低于百分80
-            else  if(Convert.ToInt32(vehicleslist.FocusedItem.SubItems[4].Text) <80)
+            else if (Convert.ToInt32(vehicleslist.FocusedItem.SubItems[4].Text) < 80)
             {
-                if(JtWcfMainHelper.SendOrder(vehicleslist.FocusedItem.Text, new CommonDeviceOrderObj("前进" + LocSite, 1, 1)))
+                if (JtWcfMainHelper.SendOrder(vehicleslist.FocusedItem.Text, new CommonDeviceOrderObj("前进" + LocSite, 1, 1)))
                 {
-                   //记录agv状态
+                    //记录agv状态
                     agvStatus[vehicleslist.FocusedItem.Text] = "charge";
                     SetOutputMsg2("测试下充电按钮，AGV向前启动");
                     charge.Enabled = false;
-
                 }
                 else
                 {
                     MessageBox.Show("请尝试再操作一次", "提示");
-                }    
+                }
             }
         }
-       
+
         /// <summary>
         /// 充电完成
         /// </summary>
@@ -1701,8 +1731,7 @@ namespace KEDAClient
                 {
                     MessageBox.Show("该AGV没有正在充电！", "提示");
                 }
-                else 
-                if (JtWcfMainHelper.SendOrder(vehicleslist.FocusedItem.Text, new CommonDeviceOrderObj("后退" + LocSite, 1, 2)))
+                else if (JtWcfMainHelper.SendOrder(vehicleslist.FocusedItem.Text, new CommonDeviceOrderObj("后退" + LocSite, 1, 2)))
                 {
                     //记录agv状态
                     agvStatus[vehicleslist.FocusedItem.Text] = "endcharge";
@@ -1938,6 +1967,30 @@ namespace KEDAClient
             }
 
         }
+        /// <summary>
+        /// 刷新当前任务
+        /// </summary>
+        private void RefreshtaskInform()
+        {
+            GfxList<GfxServiceContractTaskExcute.TaskBackImf> taskList = JtWcfTaskHelper.GetAllTask();
+            if (taskList is null) return;
+            taskInformlist.Items.Clear();
+            for (int i = 0; i < taskList.Count; i++)
+            {
+                ListViewItem item = new ListViewItem(taskList[i].DisGuid); // 任务id
+                item.SubItems.Add(taskList[i].TaskImf); // 任务信息
+                item.SubItems.Add(taskList[i].Statue.ToString()); // 任务状态
+                item.SubItems.Add(taskList[i].OrderSource); // 触发源
+                item.SubItems.Add(taskList[i].DisDevId); // 任务设备
+                item.SubItems.Add(taskList[i].PathMsg); // 任务路径
+                item.SubItems.Add(taskList[i].TaskCtrType.ToString()); // 控制参数，枚举类型
+                item.SubItems.Add(taskList[i].CurDisOrderMsg); // 指令信息
+                item.SubItems.Add(taskList[i].BackMsg); // 信息
+                item.SubItems.Add(taskList[i].TriggerTime.ToString()); // 触发时间
+
+                taskInformlist.Items.Add(item);
+            }
+        }
 
 
         /// <summary>
@@ -1957,6 +2010,37 @@ namespace KEDAClient
                 e.Cancel = true;
             }
         }
+        /// <summary>
+        /// 执行任务
+        /// </summary>
+        private void executeTask_Click(object sender, EventArgs e)
+        {
+            GfxList<TaskRelationMember> memberlist = JtWcfTaskHelper.GetDefineTask();
+            try
+            {
+                if (memberlist != null)
+                {
+                    if (executeTasklist.SelectedItems == null)
+                    {
+                        MessageBox.Show("请选择相应的任务", "系统提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    }
+                    else
+                    {
+                        string[] strArray = { executeTasklist.SelectedItems[0].SubItems[0].Text, executeTasklist.SelectedItems[0].SubItems[1].Text };
 
+                        if (strArray.Length == 2)
+                        {
+                            WcfClientHelper.CreateService<IUserOperation_TaskExcute>().StartTask(strArray[0], "MainTest");
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("错误", "系统提示", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+            }
+
+            RefreshtaskInform();
+        }
     }
 }
