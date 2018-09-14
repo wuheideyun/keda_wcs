@@ -1665,11 +1665,54 @@ namespace KEDAClient
             {
                 return;
             }
-            else
-                if(Convert.ToInt32(vehicleslist.FocusedItem.SubItems[4].Text) <20)
+
+            // 判断电量低于百分80
+            else  if(Convert.ToInt32(vehicleslist.FocusedItem.SubItems[4].Text) <80)
             {
-                JtWcfMainHelper.SendOrder(vehicleslist.FocusedItem.Text, new CommonDeviceOrderObj("前进" + LocSite, 1, 1));
-                SetOutputMsg2("测试下充电按钮，AGV向前启动");
+                if(JtWcfMainHelper.SendOrder(vehicleslist.FocusedItem.Text, new CommonDeviceOrderObj("前进" + LocSite, 1, 1)))
+                {
+                   //记录agv状态
+                    agvStatus[vehicleslist.FocusedItem.Text] = "charge";
+                    SetOutputMsg2("测试下充电按钮，AGV向前启动");
+                    charge.Enabled = false;
+
+                }
+                else
+                {
+                    MessageBox.Show("请尝试再操作一次", "提示");
+                }    
+            }
+        }
+       
+        /// <summary>
+        /// 充电完成
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void endcharge_Click(object sender, EventArgs e)
+        {
+            if (GetSelectDevid())
+            {
+                return;
+            }
+            else
+            {
+                if (charge.Enabled)
+                {
+                    MessageBox.Show("该AGV没有正在充电！", "提示");
+                }
+                else 
+                if (JtWcfMainHelper.SendOrder(vehicleslist.FocusedItem.Text, new CommonDeviceOrderObj("后退" + LocSite, 1, 2)))
+                {
+                    //记录agv状态
+                    agvStatus[vehicleslist.FocusedItem.Text] = "endcharge";
+                    SetOutputMsg2("测试下结束充电按钮，AGV向后启动");
+                    endcharge.Enabled = false;
+                }
+                else
+                {
+                    MessageBox.Show("请尝试再操作一次", "提示");
+                }
             }
         }
 
@@ -1815,7 +1858,20 @@ namespace KEDAClient
                     agvBackMove.Enabled = true;
                     agvStop.Enabled = true;
                 }
+                else if (status == "charge")
+                {
+                    agvForwordMove.Enabled = false;
+                    agvBackMove.Enabled = false;
+                    agvStop.Enabled = false;
+                }
+                else if (status == "endcharge")
+                {
+                    agvForwordMove.Enabled = true;
+                    agvBackMove.Enabled = true;
+                    agvStop.Enabled = true;
+                }
                 charge.Enabled = true;
+                endcharge.Enabled = true;
                 buttonSend.Enabled = true;
             }
             else if (vehicleslist.FocusedItem.SubItems[2].Text == "False")
@@ -1824,6 +1880,7 @@ namespace KEDAClient
                 agvBackMove.Enabled = false;
                 agvStop.Enabled = false;
                 charge.Enabled = false;
+                endcharge.Enabled = false;
                 buttonSend.Enabled = false;
             }
         }

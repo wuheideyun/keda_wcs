@@ -87,6 +87,7 @@
             this.panelBtn1 = new System.Windows.Forms.Panel();
             this.timerFunc = new System.Windows.Forms.Timer(this.components);
             this.Statetimer = new System.Windows.Forms.Timer(this.components);
+            this.endcharge = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -508,6 +509,7 @@
             // 
             // vehicles
             // 
+            this.vehicles.Controls.Add(this.endcharge);
             this.vehicles.Controls.Add(this.groupBox2);
             this.vehicles.Controls.Add(this.charge);
             this.vehicles.Controls.Add(this.agvStop);
@@ -561,7 +563,7 @@
             // 
             this.charge.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.charge.Enabled = false;
-            this.charge.Location = new System.Drawing.Point(849, 253);
+            this.charge.Location = new System.Drawing.Point(722, 241);
             this.charge.Name = "charge";
             this.charge.Size = new System.Drawing.Size(106, 36);
             this.charge.TabIndex = 43;
@@ -573,7 +575,7 @@
             // 
             this.agvStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.agvStop.Enabled = false;
-            this.agvStop.Location = new System.Drawing.Point(718, 253);
+            this.agvStop.Location = new System.Drawing.Point(722, 199);
             this.agvStop.Name = "agvStop";
             this.agvStop.Size = new System.Drawing.Size(104, 36);
             this.agvStop.TabIndex = 42;
@@ -585,7 +587,7 @@
             // 
             this.agvBackMove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.agvBackMove.Enabled = false;
-            this.agvBackMove.Location = new System.Drawing.Point(849, 202);
+            this.agvBackMove.Location = new System.Drawing.Point(853, 157);
             this.agvBackMove.Name = "agvBackMove";
             this.agvBackMove.Size = new System.Drawing.Size(106, 36);
             this.agvBackMove.TabIndex = 41;
@@ -597,7 +599,7 @@
             // 
             this.agvForwordMove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.agvForwordMove.Enabled = false;
-            this.agvForwordMove.Location = new System.Drawing.Point(718, 202);
+            this.agvForwordMove.Location = new System.Drawing.Point(722, 157);
             this.agvForwordMove.Name = "agvForwordMove";
             this.agvForwordMove.Size = new System.Drawing.Size(106, 36);
             this.agvForwordMove.TabIndex = 40;
@@ -610,7 +612,7 @@
             this.buttonSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonSend.Enabled = false;
             this.buttonSend.Font = new System.Drawing.Font("宋体", 10F);
-            this.buttonSend.Location = new System.Drawing.Point(821, 155);
+            this.buttonSend.Location = new System.Drawing.Point(904, 113);
             this.buttonSend.Name = "buttonSend";
             this.buttonSend.Size = new System.Drawing.Size(75, 23);
             this.buttonSend.TabIndex = 39;
@@ -734,6 +736,18 @@
             this.Statetimer.Interval = 1000;
             this.Statetimer.Tick += new System.EventHandler(this.Statetimer_Tick);
             // 
+            // endcharge
+            // 
+            this.endcharge.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.endcharge.Location = new System.Drawing.Point(853, 241);
+            this.endcharge.Name = "endcharge";
+            this.endcharge.Size = new System.Drawing.Size(106, 36);
+            this.endcharge.TabIndex = 45;
+            this.endcharge.Text = "充电完成";
+            this.endcharge.UseVisualStyleBackColor = true;
+            this.endcharge.Click += new System.EventHandler(this.endcharge_Click);
+            this.endcharge.Enabled = false;
+            // 
             // KEDAForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -836,5 +850,6 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Timer Statetimer;
+        private System.Windows.Forms.Button endcharge;
     }
 }
