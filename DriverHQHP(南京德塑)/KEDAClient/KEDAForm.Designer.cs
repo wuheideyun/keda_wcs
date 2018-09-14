@@ -567,6 +567,7 @@
             this.charge.TabIndex = 43;
             this.charge.Text = "充电";
             this.charge.UseVisualStyleBackColor = true;
+            this.charge.Click += new System.EventHandler(this.charge_Click);
             // 
             // agvStop
             // 

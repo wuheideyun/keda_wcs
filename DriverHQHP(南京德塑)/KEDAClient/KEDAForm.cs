@@ -1655,6 +1655,25 @@ namespace KEDAClient
         }
 
         /// <summary>
+        /// 车辆充电
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void charge_Click(object sender, EventArgs e)
+        {
+            if (GetSelectDevid())
+            {
+                return;
+            }
+            else
+                if(Convert.ToInt32(vehicleslist.FocusedItem.SubItems[4].Text) <20)
+            {
+                JtWcfMainHelper.SendOrder(vehicleslist.FocusedItem.Text, new CommonDeviceOrderObj("前进" + LocSite, 1, 1));
+                SetOutputMsg2("测试下充电按钮，AGV向前启动");
+            }
+        }
+
+        /// <summary>
         /// 设置指令参数输入只为数字
         /// </summary>
         /// <param name="sender"></param>
@@ -1881,5 +1900,6 @@ namespace KEDAClient
                 e.Cancel = true;
             }
         }
+
     }
 }
