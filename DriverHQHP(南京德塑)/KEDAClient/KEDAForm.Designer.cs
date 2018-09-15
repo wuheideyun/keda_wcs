@@ -347,6 +347,7 @@
             this.taskInformlist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.taskInformlist.FullRowSelect = true;
             this.taskInformlist.GridLines = true;
             this.taskInformlist.Location = new System.Drawing.Point(3, 3);
             this.taskInformlist.Name = "taskInformlist";
@@ -371,6 +372,7 @@
             // 
             this.startmission.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.startmission.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.startmission.Enabled = false;
             this.startmission.Location = new System.Drawing.Point(746, 15);
             this.startmission.Name = "startmission";
             this.startmission.Size = new System.Drawing.Size(74, 51);
@@ -418,6 +420,7 @@
             this.executeTasklist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.executeTasklist.FullRowSelect = true;
             this.executeTasklist.GridLines = true;
             this.executeTasklist.Location = new System.Drawing.Point(3, 3);
             this.executeTasklist.Name = "executeTasklist";
@@ -506,6 +509,7 @@
             this.alarmlist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.alarmlist.FullRowSelect = true;
             this.alarmlist.GridLines = true;
             this.alarmlist.Location = new System.Drawing.Point(3, 3);
             this.alarmlist.Name = "alarmlist";
@@ -529,6 +533,7 @@
             this.loggerlist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.loggerlist.FullRowSelect = true;
             this.loggerlist.GridLines = true;
             this.loggerlist.Location = new System.Drawing.Point(-4, 0);
             this.loggerlist.Name = "loggerlist";
@@ -559,6 +564,7 @@
             this.deviceslist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.deviceslist.FullRowSelect = true;
             this.deviceslist.GridLines = true;
             this.deviceslist.Location = new System.Drawing.Point(-4, 0);
             this.deviceslist.Name = "deviceslist";
@@ -770,6 +776,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.vehicleslist.Font = new System.Drawing.Font("宋体", 16F);
+            this.vehicleslist.FullRowSelect = true;
             this.vehicleslist.GridLines = true;
             this.vehicleslist.Location = new System.Drawing.Point(-4, 3);
             this.vehicleslist.Name = "vehicleslist";
