@@ -1,0 +1,56 @@
+// 传感器
+SensorBackImf sens = null;
+
+// 获取传感器ID
+
+sens = item1.SensorList.Find(c => { return c.SenId == string.Format("{0}0002", item1.DevId); });
+
+
+运行方向：
+
+    当字段的值Rvalue = 0 时， 显示内容为 “前进”
+    当字段的值Rvalue = 1 时， 显示内容为 “后退”
+    
+
+待解决问题：
+
+    1. AGV的电量，客户端上获取的值与实际值不一样；
+    2.电量的值具体什么意思，为什么会出现204%？？？
+    3.站点/ 地标该如何定义；
+    4.若断开网络连接，无法刷新车辆或者任务的信息
+    5.告诉充电桩，AGV充电已经完成，充电头可收回，AGV退回待命区
+   （每次都只能排在待命区的第一辆AGV 才可进行充电，待命区的车还需要判断是否有充电完成的车辆）
+    6.备用车辆AGV的使用和停用（备用车为空车，所以当备用车处于卸货区时，是需要进行判断，不需要进行卸货）
+       调度系统需要知道AGV上是否有货物
+    7.异常的车辆，如何让它处于离线状态
+    8.车头方向是不变的
+    9.充电状态：字段代表的含义
+
+任务：
+    1.指定任务ID的执行状态：TaskBackImf GetTask(string taskid,string markMsg)  task中278行
+         unkonw  
+         err  
+         unready ：没有AGV小车或者说执行条件不满足 
+         wait  
+         fail 
+         doing  
+         suc（成功）  
+         cancl(取消) 
+    2.控制参数：CtrDispatch(string disGuid, DisOrderCtrTypeEnum oper)   main中458行
+
+         start   pause   stop
+
+
+    3.开启或暂停任务???  与 控制参数中的start   pause   stop 区别是什么？   main中472行
+          StartDispatch(DispatchOrderObj order, out string msg)
+
+    4.如何自定义一个任务 ：    
+          StartTaskTemp(string soure, OnceTaskMember task)          task中278行
+          是否是自己用代码实现？？？？
+    
+ 
+
+
+1.任务列表：任务列表数据获取、增加执行任务按钮
+2.根据工艺流程，整理出系统流程；
+3.配置定时任务，实时判断是否满足自定义条件、满足则触发自定义任务；
