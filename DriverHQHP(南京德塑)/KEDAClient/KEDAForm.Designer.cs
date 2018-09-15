@@ -51,10 +51,11 @@
             this.listBoxOutput = new System.Windows.Forms.ListBox();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.currentTask = new System.Windows.Forms.TabPage();
-            this.endmission = new System.Windows.Forms.Button();
+            this.panel3 = new System.Windows.Forms.Panel();
             this.taskInformlist = new System.Windows.Forms.ListView();
-            this.pausemission = new System.Windows.Forms.Button();
+            this.endmission = new System.Windows.Forms.Button();
             this.startmission = new System.Windows.Forms.Button();
+            this.pausemission = new System.Windows.Forms.Button();
             this.taskList = new System.Windows.Forms.TabPage();
             this.executeTask = new System.Windows.Forms.Button();
             this.executeTasklist = new System.Windows.Forms.ListView();
@@ -91,7 +92,6 @@
             this.panelBtn1 = new System.Windows.Forms.Panel();
             this.timerFunc = new System.Windows.Forms.Timer(this.components);
             this.Statetimer = new System.Windows.Forms.Timer(this.components);
-            this.panel3 = new System.Windows.Forms.Panel();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -101,6 +101,7 @@
             this.groupBox1.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.currentTask.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.taskList.SuspendLayout();
             this.station.SuspendLayout();
             this.alarms.SuspendLayout();
@@ -111,7 +112,6 @@
             this.tabControl3.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
-            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -326,17 +326,21 @@
             this.currentTask.Text = "当前任务";
             this.currentTask.UseVisualStyleBackColor = true;
             // 
-            // endmission
+            // panel3
             // 
-            this.endmission.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.endmission.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.endmission.Location = new System.Drawing.Point(861, 15);
-            this.endmission.Name = "endmission";
-            this.endmission.Size = new System.Drawing.Size(74, 51);
-            this.endmission.TabIndex = 37;
-            this.endmission.Text = "结束";
-            this.endmission.UseVisualStyleBackColor = false;
-            this.endmission.Click += new System.EventHandler(this.endmission_Click);
+            this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel3.AutoScroll = true;
+            this.panel3.AutoSize = true;
+            this.panel3.Controls.Add(this.taskInformlist);
+            this.panel3.Controls.Add(this.endmission);
+            this.panel3.Controls.Add(this.startmission);
+            this.panel3.Controls.Add(this.pausemission);
+            this.panel3.Location = new System.Drawing.Point(6, 3);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(948, 190);
+            this.panel3.TabIndex = 38;
             // 
             // taskInformlist
             // 
@@ -351,17 +355,17 @@
             this.taskInformlist.UseCompatibleStateImageBehavior = false;
             this.taskInformlist.View = System.Windows.Forms.View.Details;
             // 
-            // pausemission
+            // endmission
             // 
-            this.pausemission.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pausemission.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.pausemission.Location = new System.Drawing.Point(746, 93);
-            this.pausemission.Name = "pausemission";
-            this.pausemission.Size = new System.Drawing.Size(74, 51);
-            this.pausemission.TabIndex = 35;
-            this.pausemission.Text = "暂停";
-            this.pausemission.UseVisualStyleBackColor = false;
-            this.pausemission.Click += new System.EventHandler(this.pausemission_Click);
+            this.endmission.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.endmission.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.endmission.Location = new System.Drawing.Point(861, 15);
+            this.endmission.Name = "endmission";
+            this.endmission.Size = new System.Drawing.Size(74, 51);
+            this.endmission.TabIndex = 37;
+            this.endmission.Text = "结束";
+            this.endmission.UseVisualStyleBackColor = false;
+            this.endmission.Click += new System.EventHandler(this.endmission_Click);
             // 
             // startmission
             // 
@@ -374,6 +378,18 @@
             this.startmission.Text = "开始";
             this.startmission.UseVisualStyleBackColor = false;
             this.startmission.Click += new System.EventHandler(this.startmission_Click);
+            // 
+            // pausemission
+            // 
+            this.pausemission.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pausemission.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.pausemission.Location = new System.Drawing.Point(746, 93);
+            this.pausemission.Name = "pausemission";
+            this.pausemission.Size = new System.Drawing.Size(74, 51);
+            this.pausemission.TabIndex = 35;
+            this.pausemission.Text = "暂停";
+            this.pausemission.UseVisualStyleBackColor = false;
+            this.pausemission.Click += new System.EventHandler(this.pausemission_Click);
             // 
             // taskList
             // 
@@ -490,9 +506,10 @@
             this.alarmlist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.alarmlist.GridLines = true;
             this.alarmlist.Location = new System.Drawing.Point(3, 3);
             this.alarmlist.Name = "alarmlist";
-            this.alarmlist.Size = new System.Drawing.Size(840, 411);
+            this.alarmlist.Size = new System.Drawing.Size(1004, 435);
             this.alarmlist.TabIndex = 0;
             this.alarmlist.UseCompatibleStateImageBehavior = false;
             // 
@@ -512,9 +529,10 @@
             this.loggerlist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.loggerlist.GridLines = true;
             this.loggerlist.Location = new System.Drawing.Point(-4, 0);
             this.loggerlist.Name = "loggerlist";
-            this.loggerlist.Size = new System.Drawing.Size(835, 444);
+            this.loggerlist.Size = new System.Drawing.Size(1011, 438);
             this.loggerlist.TabIndex = 1;
             this.loggerlist.UseCompatibleStateImageBehavior = false;
             // 
@@ -541,9 +559,10 @@
             this.deviceslist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.deviceslist.GridLines = true;
             this.deviceslist.Location = new System.Drawing.Point(-4, 0);
             this.deviceslist.Name = "deviceslist";
-            this.deviceslist.Size = new System.Drawing.Size(643, 466);
+            this.deviceslist.Size = new System.Drawing.Size(1011, 442);
             this.deviceslist.TabIndex = 0;
             this.deviceslist.UseCompatibleStateImageBehavior = false;
             // 
@@ -750,6 +769,8 @@
             this.vehicleslist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.vehicleslist.Font = new System.Drawing.Font("宋体", 16F);
+            this.vehicleslist.GridLines = true;
             this.vehicleslist.Location = new System.Drawing.Point(-4, 3);
             this.vehicleslist.Name = "vehicleslist";
             this.vehicleslist.Size = new System.Drawing.Size(673, 399);
@@ -788,22 +809,6 @@
             this.Statetimer.Interval = 1000;
             this.Statetimer.Tick += new System.EventHandler(this.Statetimer_Tick);
             // 
-            // panel3
-            // 
-            this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel3.AutoScroll = true;
-            this.panel3.AutoSize = true;
-            this.panel3.Controls.Add(this.taskInformlist);
-            this.panel3.Controls.Add(this.endmission);
-            this.panel3.Controls.Add(this.startmission);
-            this.panel3.Controls.Add(this.pausemission);
-            this.panel3.Location = new System.Drawing.Point(6, 3);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(948, 190);
-            this.panel3.TabIndex = 38;
-            // 
             // KEDAForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -832,6 +837,7 @@
             this.tabControl2.ResumeLayout(false);
             this.currentTask.ResumeLayout(false);
             this.currentTask.PerformLayout();
+            this.panel3.ResumeLayout(false);
             this.taskList.ResumeLayout(false);
             this.station.ResumeLayout(false);
             this.alarms.ResumeLayout(false);
@@ -843,7 +849,6 @@
             this.tabControl3.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
-            this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

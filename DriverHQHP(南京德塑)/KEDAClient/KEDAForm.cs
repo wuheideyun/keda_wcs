@@ -308,25 +308,32 @@ namespace KEDAClient
 
                 foreach (var item1 in devsList)
                 {
-                    // 运行状态 、电量、充电状态
-                    int[] sens = new int[] { 4, 6, 7 };
+                    // 状态 、运行方向、电量、充电状态
+                    int[] sens = new int[] {0, 4, 6, 7 };
                     ListViewItem item = new ListViewItem(item1.DevId); // 设备id
                     item.SubItems.Add(item1.DevModel); // 设备型号   
                     item.SubItems.Add(item1.DevStatue); // 设备状态  
-                    if (item1.SensorList[sens[0]].RValue == "0")
+
+                    // 判断AGV是停止还是运行，1为运行、3为停止
+                    if(item1.SensorList[sens[0]].RValue=="1")
                     {
-                        item.SubItems.Add("前进"); // 运行状态：前进、后退、停止
-                    }
-                    else if (item1.SensorList[sens[0]].RValue == "1")
+                        if (item1.SensorList[sens[1]].RValue == "0")
+                        {
+                            item.SubItems.Add("前进"); // 运行状态：前进
+                        }
+
+                        //  item1.SensorList[sens[1]].RValue == "1"  后退
+                        else
+                        {
+                            item.SubItems.Add("后退"); // 运行状态：后退
+                        }
+                    }                  
+                    else 
                     {
-                        item.SubItems.Add("后退"); // 运行状态：前进、后退、停止
+                        item.SubItems.Add("停止");  // 运行状态：停止
                     }
-                    else
-                    {
-                        item.SubItems.Add("停止");  // 运行状态：前进、后退、停止
-                    }
-                    item.SubItems.Add(item1.SensorList[sens[1]].RValue); // 电量
-                    item.SubItems.Add(item1.SensorList[sens[2]].RValue); // 充电状态
+                    item.SubItems.Add(item1.SensorList[sens[2]].RValue); // 电量
+                    item.SubItems.Add(item1.SensorList[sens[3]].RValue); // 充电状态
 
                     agvStatus.Add(item1.DevId, "stop");
 
@@ -1796,18 +1803,20 @@ namespace KEDAClient
             {
                 //记录任务执行状态
                 taskStatus[taskInformlist.FocusedItem.Text] = "taskpause";
-                SetOutputMsg("暂停任务成功");
+               
                 if (pausemission.Text != "继续")
                 {
                     if (MessageBox.Show("当前站点派发任务未完成，是否暂停？", "提示", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
                     {
                         pausemission.Text = "继续";
+                        SetOutputMsg("暂停任务执行");
                     }
                 }
                 else
                 {
                     pausemission.Text = "暂停";
                     pausemission.Enabled = false;
+                    SetOutputMsg("继续执行任务");
                 }
 
             }
