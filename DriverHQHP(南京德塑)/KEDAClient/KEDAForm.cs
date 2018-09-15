@@ -194,7 +194,7 @@ namespace KEDAClient
                         int[] a = new int[] { 8, 10, 12, 13, 14, 15, 16, 20 };
                         for (int i = 0; i < a.Length; i++)
                         {
-                            if (item1.SensorList[a[i]].RValue == "0")
+                            if (item1.SensorList[a[i]].RValue == "1")
                             {
                                 ListViewItem item = new ListViewItem(item1.DevId);  // AGV设备ID
                                 item.SubItems.Add(item1.SensorList[a[i]].SensName); // 类型名称
@@ -1951,7 +1951,7 @@ namespace KEDAClient
                         {
                             for (int j = 0; j < a.Length; j++)
                             {
-                                if (item.SensorList[a[j]].RValue == "0")
+                                if (item.SensorList[a[j]].RValue == "1")
                                 {
                                     listv.Items[i].SubItems[3].Text = item.SensorList[a[j]].RValue;
                                 }
