@@ -383,7 +383,15 @@ namespace KEDAClient
                 item.SubItems.Add(item1.BackMsg); // 信息
                 item.SubItems.Add(item1.TriggerTime.ToString()); // 触发时间
 
-                taskStatus.Add(item1.DisGuid, "startmission");
+                if (taskStatus.ContainsKey(item1.DisGuid))
+                {
+                    taskStatus[item1.DisGuid] = "startmissioin";
+                }
+                else
+                {
+                    taskStatus.Add(item1.DisGuid, "startmission");
+                }
+                //taskStatus.Add(item1.DisGuid, "startmission");
                 // 显示项
                 taskInformlist.Items.Add(item);
             }
@@ -421,8 +429,9 @@ namespace KEDAClient
                 item.SubItems.Add(memberlist[i].TaskRelatDecirbe);//任务描述
                 item.SubItems.Add(memberlist[i].IsAotuRemove ? "True" : "False");
                 item.SubItems.Add(memberlist[i].Priority.ToString());
-                //memberlist[i]
+                
                 // 显示项
+
                 executeTasklist.Items.Add(item);
             }
             executeTasklist.EndUpdate();
@@ -2020,6 +2029,15 @@ namespace KEDAClient
                 item.SubItems.Add(taskList[i].BackMsg); // 信息
                 item.SubItems.Add(taskList[i].TriggerTime.ToString()); // 触发时间
 
+                if (taskStatus.ContainsKey(taskList[i].DisGuid))
+                {
+                    taskStatus[taskList[i].DisGuid] = "startmissioin";
+                }
+                else
+                {
+                    taskStatus.Add(taskList[i].DisGuid, "startmission");
+                }
+                // 显示项
                 taskInformlist.Items.Add(item);
             }
         }
