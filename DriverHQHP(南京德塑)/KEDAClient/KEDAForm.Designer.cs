@@ -355,6 +355,7 @@
             this.taskInformlist.TabIndex = 0;
             this.taskInformlist.UseCompatibleStateImageBehavior = false;
             this.taskInformlist.View = System.Windows.Forms.View.Details;
+            this.taskInformlist.SelectedIndexChanged += new System.EventHandler(this.taskInformlist_SelectedIndexChanged);
             // 
             // endmission
             // 

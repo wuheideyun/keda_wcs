@@ -309,13 +309,13 @@ namespace KEDAClient
                 foreach (var item1 in devsList)
                 {
                     // 状态 、运行方向、电量、充电状态
-                    int[] sens = new int[] {0, 4, 6, 7 };
+                    int[] sens = new int[] { 0, 4, 6, 7 };
                     ListViewItem item = new ListViewItem(item1.DevId); // 设备id
                     item.SubItems.Add(item1.DevModel); // 设备型号   
                     item.SubItems.Add(item1.DevStatue); // 设备状态  
 
                     // 判断AGV是停止还是运行，1为运行、3为停止
-                    if(item1.SensorList[sens[0]].RValue=="1")
+                    if (item1.SensorList[sens[0]].RValue == "1")
                     {
                         if (item1.SensorList[sens[1]].RValue == "0")
                         {
@@ -327,8 +327,8 @@ namespace KEDAClient
                         {
                             item.SubItems.Add("后退"); // 运行状态：后退
                         }
-                    }                  
-                    else 
+                    }
+                    else
                     {
                         item.SubItems.Add("停止");  // 运行状态：停止
                     }
@@ -369,20 +369,21 @@ namespace KEDAClient
 
             GfxList<GfxServiceContractTaskExcute.TaskBackImf> taskList = JtWcfTaskHelper.GetAllTask();
             if (taskList is null) return;
-            for (int i = 0; i < taskList.Count; i++)
+            foreach (var item1 in taskList)
             {
                 taskInformlist.BeginUpdate();
-                ListViewItem item = new ListViewItem(taskList[i].DisGuid); // 任务id
-                item.SubItems.Add(taskList[i].TaskImf); // 任务信息
-                item.SubItems.Add(taskList[i].Statue.ToString()); // 任务状态
-                item.SubItems.Add(taskList[i].OrderSource); // 触发源
-                item.SubItems.Add(taskList[i].DisDevId); // 任务设备
-                item.SubItems.Add(taskList[i].PathMsg); // 任务路径
-                item.SubItems.Add(taskList[i].TaskCtrType.ToString()); // 控制参数，枚举类型
-                item.SubItems.Add(taskList[i].CurDisOrderMsg); // 指令信息
-                item.SubItems.Add(taskList[i].BackMsg); // 信息
-                item.SubItems.Add(taskList[i].TriggerTime.ToString()); // 触发时间
+                ListViewItem item = new ListViewItem(item1.DisGuid); // 任务id
+                item.SubItems.Add(item1.TaskImf); // 任务信息
+                item.SubItems.Add(item1.Statue.ToString()); // 任务状态
+                item.SubItems.Add(item1.OrderSource); // 触发源
+                item.SubItems.Add(item1.DisDevId); // 任务设备
+                item.SubItems.Add(item1.PathMsg); // 任务路径
+                item.SubItems.Add(item1.TaskCtrType.ToString()); // 控制参数，枚举类型
+                item.SubItems.Add(item1.CurDisOrderMsg); // 指令信息
+                item.SubItems.Add(item1.BackMsg); // 信息
+                item.SubItems.Add(item1.TriggerTime.ToString()); // 触发时间
 
+                taskStatus.Add(item1.DisGuid, "startmission");
                 // 显示项
                 taskInformlist.Items.Add(item);
             }
@@ -1778,12 +1779,14 @@ namespace KEDAClient
             {
                 return;
             }
-            else
+            else if (!pausemission.Enabled)
             {
                 //记录任务执行状态
-                taskStatus[taskInformlist.FocusedItem.Text] = "taskstart";
-                SetOutputMsg("开始任务成功");
-                startmission.Enabled = false;
+                taskStatus[taskInformlist.FocusedItem.Text] = "startmission";
+                if (JtWcfTaskHelper.AdminCtrTask(taskInformlist.FocusedItem.SubItems[0].ToString(), DisOrderCtrTypeEnum.Start))
+                {
+                    SetOutputMsg("开始任务成功");
+                }
             }
         }
 
@@ -1795,32 +1798,33 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void pausemission_Click(object sender, EventArgs e)
         {
-            if (GetSelectTaskid())
+            GfxList<TaskBackImf> taskList = JtWcfTaskHelper.GetAllTask();
+            if (taskList != null && taskList.Count != 0)
             {
-                return;
-            }
-            else
-            {
-                //记录任务执行状态
-                taskStatus[taskInformlist.FocusedItem.Text] = "taskpause";
-               
-                if (pausemission.Text != "继续")
+                if (GetSelectTaskid())
                 {
-                    if (MessageBox.Show("当前站点派发任务未完成，是否暂停？", "提示", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
-                    {
-                        pausemission.Text = "继续";
-                        SetOutputMsg("暂停任务执行");
-                    }
+                    return;
                 }
                 else
                 {
-                    pausemission.Text = "暂停";
-                    pausemission.Enabled = false;
-                    SetOutputMsg("继续执行任务");
+                    // 任务执行状态： unkonw  err  unready wait fail  doing  suc cancl
+                    string taskrunstatus = taskInformlist.FocusedItem.SubItems[2].Text;
+                    if (taskrunstatus == "suc" || taskrunstatus == "cancl")
+                    {
+
+                        MessageBox.Show("该任务已执行成功或取消，无法暂停！", "提示");
+                    }
+                    else if (MessageBox.Show("当前站点派发任务未完成，是否暂停？", "提示", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        //记录任务执行状态
+                        taskStatus[taskInformlist.FocusedItem.Text] = "pausemission";
+                        if (JtWcfTaskHelper.AdminCtrTask(taskInformlist.FocusedItem.SubItems[0].ToString(), DisOrderCtrTypeEnum.Pause))
+                        {
+                            SetOutputMsg("任务暂停成功！");
+                        }
+                    }
                 }
-
             }
-
         }
 
         /// <summary>
@@ -1830,13 +1834,22 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void endmission_Click(object sender, EventArgs e)
         {
-            // 判断是否有开始、暂停的任务正在执行
-            if (startmission.Enabled == false || pausemission.Enabled == false)
+            GfxList<TaskBackImf> taskList = JtWcfTaskHelper.GetAllTask();
+            if (taskList != null && taskList.Count != 0)
             {
-                //记录任务执行状态
-                taskStatus[taskInformlist.FocusedItem.Text] = "taskend";
-                SetOutputMsg("停止任务成功");
-                StopTask();
+                if (GetSelectTaskid())
+                {
+                    return;
+                }
+                else
+                {
+                    //记录任务执行状态
+                    taskStatus[taskInformlist.FocusedItem.Text] = "endmission";
+                    if (JtWcfTaskHelper.AdminCtrTask(taskInformlist.FocusedItem.SubItems[0].ToString(), DisOrderCtrTypeEnum.Stop))
+                    {
+                        SetOutputMsg("结束任务成功");
+                    }
+                }
             }
             else
             {
@@ -1858,20 +1871,30 @@ namespace KEDAClient
             return false;
         }
 
-        private void StopTask()
-        {
-            JtWcfMainHelper.InitPara(_severIp, "", "");
 
-            if (taskInformlist.FocusedItem.Text != null)
+        private void taskInformlist_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string taskstatus = taskStatus[taskInformlist.FocusedItem.Text];
+            if (taskstatus == "pausemission")
             {
                 startmission.Enabled = true;
+                endmission.Enabled = true;
+                pausemission.Enabled = false;
+            }
+            else if (taskstatus == "startmission")
+            {
+                startmission.Enabled = false;
+                endmission.Enabled = true;
                 pausemission.Enabled = true;
             }
-            else
+            else if (taskstatus == "endmission")
             {
-                MessageBox.Show("请尝试再操作一次", "提示");
+                startmission.Enabled = false;
+                endmission.Enabled = true;
+                pausemission.Enabled = true;
             }
         }
+
         private void vehicleslist_SelectedIndexChanged(object sender, EventArgs e)
         {
             string status = agvStatus[vehicleslist.FocusedItem.Text];
@@ -2046,5 +2069,7 @@ namespace KEDAClient
 
             RefreshtaskInform();
         }
+
+
     }
 }
