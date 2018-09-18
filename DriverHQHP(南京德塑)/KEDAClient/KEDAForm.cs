@@ -188,12 +188,14 @@ namespace KEDAClient
             {
                 foreach (var item1 in devs)
                 {
-                    if (item1.DevId != null)
+
+                    if (item1.DevId != null && item1.DevType == "AGV")
                     {
 
                         int[] a = new int[] { 8, 10, 12, 13, 14, 15, 16, 20 };
                         for (int i = 0; i < a.Length; i++)
                         {
+
                             if (item1.SensorList[a[i]].RValue == "1")
                             {
                                 ListViewItem item = new ListViewItem(item1.DevId);  // AGV设备ID
@@ -308,37 +310,40 @@ namespace KEDAClient
 
                 foreach (var item1 in devsList)
                 {
-                    // 状态 、运行方向、电量、充电状态
-                    int[] sens = new int[] { 0, 4, 6, 7 };
-                    ListViewItem item = new ListViewItem(item1.DevId); // 设备id
-                    item.SubItems.Add(item1.DevModel); // 设备型号   
-                    item.SubItems.Add(item1.DevStatue); // 设备状态  
-
-                    // 判断AGV是停止还是运行，1为运行、3为停止
-                    if (item1.SensorList[sens[0]].RValue == "1")
+                    if (item1.DevType == "AGV")
                     {
-                        if (item1.SensorList[sens[1]].RValue == "0")
-                        {
-                            item.SubItems.Add("前进"); // 运行状态：前进
-                        }
+                        // 状态 、运行方向、电量、充电状态
+                        int[] sens = new int[] { 0, 4, 6, 7 };
+                        ListViewItem item = new ListViewItem(item1.DevId); // 设备id
+                        item.SubItems.Add(item1.DevModel); // 设备型号   
+                        item.SubItems.Add(item1.DevStatue); // 设备状态  
 
-                        //  item1.SensorList[sens[1]].RValue == "1"  后退
+                        // 判断AGV是停止还是运行，1为运行、3为停止
+                        if (item1.SensorList[sens[0]].RValue == "1")
+                        {
+                            if (item1.SensorList[sens[1]].RValue == "0")
+                            {
+                                item.SubItems.Add("前进"); // 运行状态：前进
+                            }
+
+                            //  item1.SensorList[sens[1]].RValue == "1"  后退
+                            else
+                            {
+                                item.SubItems.Add("后退"); // 运行状态：后退
+                            }
+                        }
                         else
                         {
-                            item.SubItems.Add("后退"); // 运行状态：后退
+                            item.SubItems.Add("停止");  // 运行状态：停止
                         }
-                    }
-                    else
-                    {
-                        item.SubItems.Add("停止");  // 运行状态：停止
-                    }
-                    item.SubItems.Add(item1.SensorList[sens[2]].RValue); // 电量
-                    item.SubItems.Add(item1.SensorList[sens[3]].RValue); // 充电状态
+                        item.SubItems.Add(item1.SensorList[sens[2]].RValue); // 电量
+                        item.SubItems.Add(item1.SensorList[sens[3]].RValue); // 充电状态
 
-                    agvStatus.Add(item1.DevId, "stop");
+                        agvStatus.Add(item1.DevId, "stop");
 
-                    // 显示项
-                    vehicleslist.Items.Add(item);
+                        // 显示项
+                        vehicleslist.Items.Add(item);
+                    }
                 }
             }
         }
@@ -429,7 +434,7 @@ namespace KEDAClient
                 item.SubItems.Add(memberlist[i].TaskRelatDecirbe);//任务描述
                 item.SubItems.Add(memberlist[i].IsAotuRemove ? "True" : "False");
                 item.SubItems.Add(memberlist[i].Priority.ToString());
-                
+
                 // 显示项
 
                 executeTasklist.Items.Add(item);
