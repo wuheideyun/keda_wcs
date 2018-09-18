@@ -71,7 +71,7 @@
             this.loggerlist = new System.Windows.Forms.ListView();
             this.listView2 = new System.Windows.Forms.ListView();
             this.devices = new System.Windows.Forms.TabPage();
-            this.deviceslist = new System.Windows.Forms.ListView();
+            this.otherdevlist = new System.Windows.Forms.ListView();
             this.vehicles = new System.Windows.Forms.TabPage();
             this.endcharge = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -552,7 +552,7 @@
             // 
             // devices
             // 
-            this.devices.Controls.Add(this.deviceslist);
+            this.devices.Controls.Add(this.otherdevlist);
             this.devices.Location = new System.Drawing.Point(4, 31);
             this.devices.Name = "devices";
             this.devices.Size = new System.Drawing.Size(1003, 438);
@@ -560,18 +560,18 @@
             this.devices.Text = "设备";
             this.devices.UseVisualStyleBackColor = true;
             // 
-            // deviceslist
+            // otherdevlist
             // 
-            this.deviceslist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.otherdevlist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.deviceslist.FullRowSelect = true;
-            this.deviceslist.GridLines = true;
-            this.deviceslist.Location = new System.Drawing.Point(-4, 0);
-            this.deviceslist.Name = "deviceslist";
-            this.deviceslist.Size = new System.Drawing.Size(1011, 442);
-            this.deviceslist.TabIndex = 0;
-            this.deviceslist.UseCompatibleStateImageBehavior = false;
+            this.otherdevlist.FullRowSelect = true;
+            this.otherdevlist.GridLines = true;
+            this.otherdevlist.Location = new System.Drawing.Point(-4, 0);
+            this.otherdevlist.Name = "otherdevlist";
+            this.otherdevlist.Size = new System.Drawing.Size(1011, 442);
+            this.otherdevlist.TabIndex = 0;
+            this.otherdevlist.UseCompatibleStateImageBehavior = false;
             // 
             // vehicles
             // 
@@ -895,7 +895,7 @@
         private System.Windows.Forms.ListView alarmlist;
         private System.Windows.Forms.ListView listView2;
         private System.Windows.Forms.ListView loggerlist;
-        private System.Windows.Forms.ListView deviceslist;
+        private System.Windows.Forms.ListView otherdevlist;
         private System.Windows.Forms.ListView vehicleslist;
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.TabPage map;

@@ -145,7 +145,7 @@ namespace KEDAClient
 
             Alarm(); // 报警
             Logger(); // 日志
-            Devices(); // 设备
+            Otherdev(); // 设备
             Vehicles(); //车辆
             TaskInform(); // 当前任务
             AllTaskList(); //任务列表
@@ -248,39 +248,48 @@ namespace KEDAClient
         }
 
         /// <summary>
-        /// 设备
+        /// 设备 PLC
         /// </summary>
-        private void Devices()
+        private void Otherdev()
         {
 
             // 创建列表头
-            deviceslist.Columns.Add("Devsid", 150, HorizontalAlignment.Left);
-            deviceslist.Columns.Add("DevsName", 200, HorizontalAlignment.Left);
-            deviceslist.Columns.Add("DevsType", 200, HorizontalAlignment.Left); // 若宽度改为0，将会隐藏此列
-            deviceslist.Columns.Add("DevsDesc", 200, HorizontalAlignment.Left);  // 设备描述
-            deviceslist.Columns.Add("DevsState", 200, HorizontalAlignment.Left);  // 通讯状态
-            deviceslist.Columns.Add("CommMode", 200, HorizontalAlignment.Left);  // 通讯模式
+            otherdevlist.Columns.Add("PLC的ID", 150, HorizontalAlignment.Left);
+            otherdevlist.Columns.Add("PLC的型号", 200, HorizontalAlignment.Left);
+            otherdevlist.Columns.Add("PLC的状态", 200, HorizontalAlignment.Left); 
+            otherdevlist.Columns.Add("货物状态", 200, HorizontalAlignment.Left);  
+            otherdevlist.Columns.Add("电机状态", 200, HorizontalAlignment.Left);  
+            otherdevlist.Columns.Add("故障状态", 200, HorizontalAlignment.Left);  
+            otherdevlist.Columns.Add("备用信息", 200, HorizontalAlignment.Left);
 
 
             // 若没有，无法显示数据 
-            deviceslist.View = System.Windows.Forms.View.Details;
+            otherdevlist.View = System.Windows.Forms.View.Details;
 
-            ///添加数据项
-            ///UI暂时挂起，直到EndUpdate绘制控件，可提高加载速度
-            deviceslist.BeginUpdate();
-            ListViewItem item = new ListViewItem("设备id");
-            item.SubItems.Add("设备名称");
-            item.SubItems.Add("设备类型");
-            item.SubItems.Add("设备描述");
-            item.SubItems.Add("设备状态");
-            item.SubItems.Add("通讯模式");
+            otherdevlist.BeginUpdate();
 
-            // 显示项
-            deviceslist.Items.Add(item);
+            GfxList<DeviceBackImf> devsList = JtWcfMainHelper.GetDevList();
+            if (devsList is null) return;
+
+            foreach (var item1 in devsList)
+            {
+                if (item1.DevType == "PLC")
+                {
+                    int[] sens = new int[] { 0, 1, 2, 3 };
+                    ListViewItem item = new ListViewItem(item1.DevId); // PLC的id
+                    item.SubItems.Add(item1.DevModel);  // PLC的型号
+                    item.SubItems.Add(item1.DevStatue);  // PLC的状态
+                    item.SubItems.Add(item1.SensorList[sens[0]].RValue); // 货物状态
+                    item.SubItems.Add(item1.SensorList[sens[1]].RValue);// 电机状态
+                    item.SubItems.Add(item1.SensorList[sens[2]].RValue); // 故障状态
+                    item.SubItems.Add(item1.SensorList[sens[3]].RValue); // 备用信息
+                    otherdevlist.Items.Add(item);
+                }                  
+            }
 
             // 结束数据处理
             // UI界面一次性绘制
-            deviceslist.EndUpdate();
+            otherdevlist.EndUpdate();
 
         }
 
@@ -1961,55 +1970,50 @@ namespace KEDAClient
         }
         private void RefreshListview(ListView listv)
         {
-            GfxList<DeviceBackImf> devsList = JtWcfMainHelper.GetDevList();
-            foreach (var item in devsList)
+            GfxList<DeviceBackImf> devsList = JtWcfMainHelper.GetDevList();          
+            for (int i = 0; i < devsList.Count; i++)
             {
-                if (item.DevStatue == "True")
+                if (devsList[i].DevType == "AGV")
                 {
-                    if (listv == vehicleslist)
+                    if (devsList[i].DevStatue == "True")
                     {
-                        listv.BeginUpdate();
-
-                        for (int i = 0; i < devsList.Count; i++)             //只对第三列进行刷新
+                        if (listv == vehicleslist)
                         {
+                            listv.BeginUpdate();
+
                             listv.Items[i].SubItems[2].Text = devsList[i].DevStatue;
                             listv.Items[i].SubItems[4].Text = devsList[i].SensorList[4].RValue;
+
+                            listv.EndUpdate();
                         }
-
-                        listv.EndUpdate();
-                    }
-                    else if (listv == alarmlist)
-                    {
-                        listv.BeginUpdate();
-                        int[] a = new int[] { 8, 10, 12, 13, 14, 15, 16, 20 };
-
-
-                        for (int i = 0; i < devsList.Count; i++)
+                        else if (listv == alarmlist)
                         {
+                            listv.BeginUpdate();
+                            int[] a = new int[] { 8, 10, 12, 13, 14, 15, 16, 20 };
+
                             for (int j = 0; j < a.Length; j++)
                             {
-                                if (item.SensorList[a[j]].RValue == "1")
+                                if (devsList[i].SensorList[a[j]].RValue == "1")
                                 {
-                                    listv.Items[i].SubItems[3].Text = item.SensorList[a[j]].RValue;
+                                    listv.Items[i].SubItems[3].Text = devsList[i].SensorList[a[j]].RValue;
                                 }
                             }
+                            listv.EndUpdate();
                         }
-
-                        listv.EndUpdate();
                     }
-                    else if (listv == taskInformlist)
-                    {
-                        GfxList<GfxServiceContractTaskExcute.TaskBackImf> taskList = JtWcfTaskHelper.GetAllTask();
-                        listv.BeginUpdate();
-                        if (taskList is null) return;
-                        for (int i = 0; i < taskList.Count; i++)
-                        {
-                            listv.Items[i].SubItems[2].Text = taskList[i].Statue.ToString();// 任务状态
-                            listv.Items[i].SubItems[6].Text = taskList[i].TaskCtrType.ToString();// 控制参数
-                        }
-                        listv.EndUpdate();
-                    }
+                }               
+            }
+            if (listv == taskInformlist)
+            {
+                GfxList<GfxServiceContractTaskExcute.TaskBackImf> taskList = JtWcfTaskHelper.GetAllTask();
+                listv.BeginUpdate();
+                if (taskList is null) return;
+                for (int i = 0; i < taskList.Count; i++)
+                {
+                    listv.Items[i].SubItems[2].Text = taskList[i].Statue.ToString();// 任务状态
+                    listv.Items[i].SubItems[6].Text = taskList[i].TaskCtrType.ToString();// 控制参数
                 }
+                listv.EndUpdate();
             }
 
         }
@@ -2054,6 +2058,7 @@ namespace KEDAClient
         private void Statetimer_Tick(object sender, EventArgs e)
         {
             RefreshListview(vehicleslist);
+            RefreshListview(otherdevlist);
             RefreshListview(alarmlist);
             RefreshListview(taskInformlist);
         }
