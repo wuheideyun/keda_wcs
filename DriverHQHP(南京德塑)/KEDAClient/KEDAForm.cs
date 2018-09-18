@@ -256,10 +256,10 @@ namespace KEDAClient
             // 创建列表头
             otherdevlist.Columns.Add("PLC的ID", 150, HorizontalAlignment.Left);
             otherdevlist.Columns.Add("PLC的型号", 200, HorizontalAlignment.Left);
-            otherdevlist.Columns.Add("PLC的状态", 200, HorizontalAlignment.Left); 
-            otherdevlist.Columns.Add("货物状态", 200, HorizontalAlignment.Left);  
-            otherdevlist.Columns.Add("电机状态", 200, HorizontalAlignment.Left);  
-            otherdevlist.Columns.Add("故障状态", 200, HorizontalAlignment.Left);  
+            otherdevlist.Columns.Add("PLC的状态", 200, HorizontalAlignment.Left);
+            otherdevlist.Columns.Add("货物状态", 200, HorizontalAlignment.Left);
+            otherdevlist.Columns.Add("电机状态", 200, HorizontalAlignment.Left);
+            otherdevlist.Columns.Add("故障状态", 200, HorizontalAlignment.Left);
             otherdevlist.Columns.Add("备用信息", 200, HorizontalAlignment.Left);
 
 
@@ -284,7 +284,7 @@ namespace KEDAClient
                     item.SubItems.Add(item1.SensorList[sens[2]].RValue); // 故障状态
                     item.SubItems.Add(item1.SensorList[sens[3]].RValue); // 备用信息
                     otherdevlist.Items.Add(item);
-                }                  
+                }
             }
 
             // 结束数据处理
@@ -1970,7 +1970,7 @@ namespace KEDAClient
         }
         private void RefreshListview(ListView listv)
         {
-            GfxList<DeviceBackImf> devsList = JtWcfMainHelper.GetDevList();          
+            GfxList<DeviceBackImf> devsList = JtWcfMainHelper.GetDevList();
             for (int i = 0; i < devsList.Count; i++)
             {
                 if (devsList[i].DevType == "AGV")
@@ -2001,7 +2001,7 @@ namespace KEDAClient
                             listv.EndUpdate();
                         }
                     }
-                }               
+                }
             }
             if (listv == taskInformlist)
             {
@@ -2010,8 +2010,8 @@ namespace KEDAClient
                 if (taskList is null) return;
                 for (int i = 0; i < taskList.Count; i++)
                 {
-                    listv.Items[i].SubItems[2].Text = taskList[i].Statue.ToString();// 任务状态
-                    listv.Items[i].SubItems[6].Text = taskList[i].TaskCtrType.ToString();// 控制参数
+                    listv.Items[0].SubItems[2].Text = taskList[i].Statue.ToString();// 任务状态
+                    listv.Items[0].SubItems[6].Text = taskList[i].TaskCtrType.ToString();// 控制参数
                 }
                 listv.EndUpdate();
             }
@@ -2061,6 +2061,7 @@ namespace KEDAClient
             RefreshListview(otherdevlist);
             RefreshListview(alarmlist);
             RefreshListview(taskInformlist);
+            RefreshtaskInform();
         }
 
         private void KEDAForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -2097,7 +2098,101 @@ namespace KEDAClient
 
             RefreshtaskInform();
         }
+        /// <summary>
+        /// 触发循环任务
+        /// </summary>
+        private void button1_Click(object sender, EventArgs e)
+        {
+            GfxList<TaskRelationMember> definetasklist = JtWcfTaskHelper.GetDefineTask();
+            GfxList<GfxServiceContractTaskExcute.TaskBackImf> taskList = JtWcfTaskHelper.GetAllTask();
+            if (definetasklist == null && definetasklist.Count <= 0)
+            {
+                MessageBox.Show("当前没有已定义的任务", "系统提示", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+            }
+            else
+            {
+                if (taskList.Count <= 0)
+                {
+                    if (executeTasklist.FocusedItem == null)
+                    {
+                        MessageBox.Show("请选择相应的任务", "系统提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    }
+                    else
+                    {
+                        WcfClientHelper.CreateService<IUserOperation_TaskExcute>().StartTask(executeTasklist.SelectedItems[0].SubItems[0].Text, "MainTest");
 
+                        timer1.Enabled = true;
+                    }
+                }
+                else
+                {
+                    if (taskList.Count == 1 && taskList[0].TaskImf == definetasklist[0].TaskRelatName)
+                    {
+                        WcfClientHelper.CreateService<IUserOperation_TaskExcute>().StartTask(executeTasklist.Items[1].SubItems[0].Text, "MainTest");
+                    }
+                    else if (taskList.Count == 1 && taskList[0].TaskImf == definetasklist[1].TaskRelatName)
+                    {
+                        WcfClientHelper.CreateService<IUserOperation_TaskExcute>().StartTask(executeTasklist.Items[0].SubItems[0].Text, "MainTest");
+                    }
+                    timer1.Enabled = true;
+                }
+            }
 
+            RefreshtaskInform();
+        }
+
+        /// <summary>
+        /// 结束循环任务
+        /// </summary>
+        private void button2_Click(object sender, EventArgs e)
+        {
+            JtWcfMainHelper.InitPara(_severIp, "", "");
+
+            GfxList<TaskBackImf> result = JtWcfTaskHelper.GetAllTask();
+            if (result != null)
+            {
+                foreach (var item in result)
+                {
+                    ResultTypeEnum s = JtWcfMainHelper.GetDipatchStatue(item.DisGuid);
+
+                    //JtWcfMainHelper.CtrDispatch(item.DisGuid, DisOrderCtrTypeEnum.Stop);
+                    JtWcfTaskHelper.AdminCtrTask(item.DisGuid, DisOrderCtrTypeEnum.Stop);
+                }
+
+                timer1.Enabled = false;
+            }
+        }
+        /// <summary>
+        /// 执行任务
+        /// </summary>
+        private void Refreshtask()
+        {
+            GfxList<TaskRelationMember> definetasklist = JtWcfTaskHelper.GetDefineTask();
+            GfxList<GfxServiceContractTaskExcute.TaskBackImf> taskList = JtWcfTaskHelper.GetAllTask();
+            if (taskList.Count == 1 && taskList[0].TaskImf == definetasklist[0].TaskRelatName)
+            {
+                WcfClientHelper.CreateService<IUserOperation_TaskExcute>().StartTask(executeTasklist.Items[1].SubItems[0].Text, "MainTest");
+            }
+            else if (taskList.Count == 1 && taskList[0].TaskImf == definetasklist[1].TaskRelatName)
+            {
+                WcfClientHelper.CreateService<IUserOperation_TaskExcute>().StartTask(executeTasklist.Items[0].SubItems[0].Text, "MainTest");
+            }
+        }
+
+        /// <summary>
+        /// 定时执行任务
+        /// </summary>
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            timerFunc.Enabled = false;
+
+            try
+            {
+                Refreshtask();
+            }
+            catch { }
+
+            timerFunc.Enabled = true;
+        }
     }
 }

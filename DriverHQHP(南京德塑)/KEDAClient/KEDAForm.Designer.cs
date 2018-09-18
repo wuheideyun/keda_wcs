@@ -57,6 +57,7 @@
             this.startmission = new System.Windows.Forms.Button();
             this.pausemission = new System.Windows.Forms.Button();
             this.taskList = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
             this.executeTask = new System.Windows.Forms.Button();
             this.executeTasklist = new System.Windows.Forms.ListView();
             this.station = new System.Windows.Forms.TabPage();
@@ -92,6 +93,8 @@
             this.panelBtn1 = new System.Windows.Forms.Panel();
             this.timerFunc = new System.Windows.Forms.Timer(this.components);
             this.Statetimer = new System.Windows.Forms.Timer(this.components);
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.button2 = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -396,6 +399,8 @@
             // 
             // taskList
             // 
+            this.taskList.Controls.Add(this.button2);
+            this.taskList.Controls.Add(this.button1);
             this.taskList.Controls.Add(this.executeTask);
             this.taskList.Controls.Add(this.executeTasklist);
             this.taskList.Location = new System.Drawing.Point(4, 31);
@@ -405,10 +410,21 @@
             this.taskList.Text = "任务列表";
             this.taskList.UseVisualStyleBackColor = true;
             // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Location = new System.Drawing.Point(747, 104);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(88, 37);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "开始";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // executeTask
             // 
             this.executeTask.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.executeTask.Location = new System.Drawing.Point(824, 83);
+            this.executeTask.Location = new System.Drawing.Point(808, 15);
             this.executeTask.Name = "executeTask";
             this.executeTask.Size = new System.Drawing.Size(106, 41);
             this.executeTask.TabIndex = 1;
@@ -817,6 +833,22 @@
             this.Statetimer.Interval = 1000;
             this.Statetimer.Tick += new System.EventHandler(this.Statetimer_Tick);
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // button2
+            // 
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.Location = new System.Drawing.Point(856, 104);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(88, 37);
+            this.button2.TabIndex = 3;
+            this.button2.Text = "停止";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // KEDAForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -927,5 +959,8 @@
         private System.Windows.Forms.Button executeTask;
         private System.Windows.Forms.ListView executeTasklist;
         private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }
