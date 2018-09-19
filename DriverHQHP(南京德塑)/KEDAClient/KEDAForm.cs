@@ -300,7 +300,7 @@ namespace KEDAClient
         {
             GfxList<DeviceBackImf> devsList = JtWcfMainHelper.GetDevList();
 
-            if (devsList.Count > 0)
+            if (devsList != null && devsList.Count > 0)
             {
                 // 创建列表头
                 vehicleslist.Columns.Add("车辆编号", 200, HorizontalAlignment.Left);
@@ -1970,25 +1970,25 @@ namespace KEDAClient
         }
         private void RefreshListview(ListView listv)
         {
-            GfxList<DeviceBackImf> devsList = JtWcfMainHelper.GetDevList();
-            for (int i = 0; i < devsList.Count; i++)
-            {
-                if (devsList[i].DevType == "AGV")
-                {
-                    if (devsList[i].DevStatue == "True")
-                    {
-                        if (listv == vehicleslist)
-                        {
-                            listv.BeginUpdate();
+            System.Diagnostics.Debug.WriteLine(listv.Name);
 
+            if (listv.Name.Equals("vehicleslist") || listv.Name.Equals("alarmlist"))
+            {
+                GfxList<DeviceBackImf> devsList = JtWcfMainHelper.GetDevList();
+                if (devsList is null) return;
+                for (int i = 0; i < devsList.Count; i++)
+                {
+                    if (devsList[i].DevType == "AGV" && devsList[i].DevStatue == "True")
+                    {
+                        listv.BeginUpdate();
+
+                        if (listv.Name.Equals("vehicleslist"))
+                        {
                             listv.Items[i].SubItems[2].Text = devsList[i].DevStatue;
                             listv.Items[i].SubItems[4].Text = devsList[i].SensorList[4].RValue;
-
-                            listv.EndUpdate();
                         }
-                        else if (listv == alarmlist)
+                        else if (listv.Name.Equals("alarmlist"))
                         {
-                            listv.BeginUpdate();
                             int[] a = new int[] { 8, 10, 12, 13, 14, 15, 16, 20 };
 
                             for (int j = 0; j < a.Length; j++)
@@ -1998,16 +1998,18 @@ namespace KEDAClient
                                     listv.Items[i].SubItems[3].Text = devsList[i].SensorList[a[j]].RValue;
                                 }
                             }
-                            listv.EndUpdate();
                         }
+
+                        listv.EndUpdate();
                     }
                 }
             }
-            if (listv == taskInformlist)
+        
+            if (listv.Name.Equals("taskInformlist"))
             {
                 GfxList<GfxServiceContractTaskExcute.TaskBackImf> taskList = JtWcfTaskHelper.GetAllTask();
-                listv.BeginUpdate();
                 if (taskList is null) return;
+                listv.BeginUpdate();
                 for (int i = 0; i < taskList.Count; i++)
                 {
                     listv.Items[0].SubItems[2].Text = taskList[i].Statue.ToString();// 任务状态
@@ -2057,11 +2059,28 @@ namespace KEDAClient
         /// </summary>
         private void Statetimer_Tick(object sender, EventArgs e)
         {
-            RefreshListview(vehicleslist);
-            RefreshListview(otherdevlist);
-            RefreshListview(alarmlist);
-            RefreshListview(taskInformlist);
-            RefreshtaskInform();
+            switch (tabControl1.SelectedIndex)
+            {
+                case 0://0 missions
+                    RefreshListview(taskInformlist);
+                    RefreshtaskInform();
+                    break;
+                case 1://1 alarms
+                    RefreshListview(alarmlist);
+                    break;
+                case 2://2 logger
+
+                    break;
+                case 3://3 devices
+
+                    break;
+                case 4://4 vehicles
+                    RefreshListview(vehicleslist);
+                    break;
+                default:
+                    RefreshListview(otherdevlist);
+                    break;
+            }
         }
 
         private void KEDAForm_FormClosing(object sender, FormClosingEventArgs e)
