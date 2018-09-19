@@ -1586,6 +1586,10 @@ namespace KEDAClient
                     case "心跳指令":
                         order = 8;
                         break;
+                    case "辊台":
+                        order = 11;
+                        break;
+
                     default:
                         MessageBox.Show("指令类型不存在，请重试！", "提示");
                         return;
@@ -1777,15 +1781,15 @@ namespace KEDAClient
         }
 
         /// <summary>
-        /// 设置指令参数输入只为数字
+        /// 设置指令参数输入只为数字或者逗号
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar != 8 && !Char.IsDigit(e.KeyChar))//如果不是输入数字就不让输入
+            if (e.KeyChar != 8 && !Char.IsDigit(e.KeyChar) && e.KeyChar != 44)//指令参数输入只为数字或者逗号
             {
-                MessageBox.Show("请输入数字！");
+                MessageBox.Show("只允许输入数字或者逗号！");
                 e.Handled = true;
             }
 
@@ -1806,7 +1810,7 @@ namespace KEDAClient
             {
                 //记录任务执行状态
                 taskStatus[taskInformlist.FocusedItem.Text] = "startmission";
-                if (JtWcfTaskHelper.AdminCtrTask(taskInformlist.FocusedItem.SubItems[0].ToString(), DisOrderCtrTypeEnum.Start))
+                if (JtWcfTaskHelper.AdminCtrTask(taskInformlist.FocusedItem.Text, DisOrderCtrTypeEnum.Start))
                 {
                     SetOutputMsg("开始任务成功");
                 }
@@ -1841,7 +1845,7 @@ namespace KEDAClient
                     {
                         //记录任务执行状态
                         taskStatus[taskInformlist.FocusedItem.Text] = "pausemission";
-                        if (JtWcfTaskHelper.AdminCtrTask(taskInformlist.FocusedItem.SubItems[0].ToString(), DisOrderCtrTypeEnum.Pause))
+                        if (JtWcfTaskHelper.AdminCtrTask(taskInformlist.FocusedItem.Text, DisOrderCtrTypeEnum.Pause))
                         {
                             SetOutputMsg("任务暂停成功！");
                         }
@@ -1868,7 +1872,7 @@ namespace KEDAClient
                 {
                     //记录任务执行状态
                     taskStatus[taskInformlist.FocusedItem.Text] = "endmission";
-                    if (JtWcfTaskHelper.AdminCtrTask(taskInformlist.FocusedItem.SubItems[0].ToString(), DisOrderCtrTypeEnum.Stop))
+                    if (JtWcfTaskHelper.AdminCtrTask(taskInformlist.FocusedItem.Text, DisOrderCtrTypeEnum.Stop))
                     {
                         SetOutputMsg("结束任务成功");
                     }
@@ -2004,19 +2008,20 @@ namespace KEDAClient
                     }
                 }
             }
+
         
-            if (listv.Name.Equals("taskInformlist"))
-            {
-                GfxList<GfxServiceContractTaskExcute.TaskBackImf> taskList = JtWcfTaskHelper.GetAllTask();
-                if (taskList is null) return;
-                listv.BeginUpdate();
-                for (int i = 0; i < taskList.Count; i++)
-                {
-                    listv.Items[0].SubItems[2].Text = taskList[i].Statue.ToString();// 任务状态
-                    listv.Items[0].SubItems[6].Text = taskList[i].TaskCtrType.ToString();// 控制参数
-                }
-                listv.EndUpdate();
-            }
+            //if (listv.Name.Equals("taskInformlist"))
+            //{
+            //    GfxList<GfxServiceContractTaskExcute.TaskBackImf> taskList = JtWcfTaskHelper.GetAllTask();
+            //    if (taskList is null) return;
+            //    listv.BeginUpdate();
+            //    for (int i = 0; i < taskList.Count; i++)
+            //    {
+            //        listv.Items[0].SubItems[2].Text = taskList[i].Statue.ToString();// 任务状态
+            //        listv.Items[0].SubItems[6].Text = taskList[i].TaskCtrType.ToString();// 控制参数
+            //    }
+            //    listv.EndUpdate();
+            //}
 
         }
         /// <summary>
@@ -2063,7 +2068,7 @@ namespace KEDAClient
             {
                 case 0://0 missions
                     RefreshListview(taskInformlist);
-                    RefreshtaskInform();
+                    //RefreshtaskInform();
                     break;
                 case 1://1 alarms
                     RefreshListview(alarmlist);
