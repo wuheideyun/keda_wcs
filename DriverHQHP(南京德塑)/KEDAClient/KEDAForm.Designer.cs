@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(KEDAForm));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabelConnect = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -57,6 +58,7 @@
             this.startmission = new System.Windows.Forms.Button();
             this.pausemission = new System.Windows.Forms.Button();
             this.taskList = new System.Windows.Forms.TabPage();
+            this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.executeTask = new System.Windows.Forms.Button();
             this.executeTasklist = new System.Windows.Forms.ListView();
@@ -94,7 +96,6 @@
             this.timerFunc = new System.Windows.Forms.Timer(this.components);
             this.Statetimer = new System.Windows.Forms.Timer(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.button2 = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -409,6 +410,17 @@
             this.taskList.TabIndex = 3;
             this.taskList.Text = "任务列表";
             this.taskList.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.Location = new System.Drawing.Point(856, 104);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(88, 37);
+            this.button2.TabIndex = 3;
+            this.button2.Text = "停止";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button1
             // 
@@ -838,17 +850,6 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // button2
-            // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(856, 104);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(88, 37);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "停止";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
             // KEDAForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -858,6 +859,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "KEDAForm";
             this.Text = "客户端信息表";

@@ -1992,7 +1992,7 @@ namespace KEDAClient
         }
         private void RefreshListview(ListView listv)
         {
-            System.Diagnostics.Debug.WriteLine(listv.Name);
+            //System.Diagnostics.Debug.WriteLine(listv.Name);
 
             if (listv.Name.Equals("vehicleslist") || listv.Name.Equals("alarmlist"))
             {
