@@ -1731,21 +1731,39 @@ namespace KEDAClient
             {
                 return;
             }
+            if (GetSelectDevid())
+            {
+                return;
+            }
 
             // 判断电量低于百分80
-            else if (Convert.ToInt32(vehicleslist.FocusedItem.SubItems[4].Text) < 80)
+            else //if (Convert.ToInt32(vehicleslist.FocusedItem.SubItems[4].Text) < 100)
             {
-                if (JtWcfMainHelper.SendOrder(vehicleslist.FocusedItem.Text, new CommonDeviceOrderObj("前进" + LocSite, 1, 1)))
+
+                OnceTaskMember task1 = new OnceTaskMember { };
+                // 是否自定义一个任务
+                task1.TaskRelatName = "充电";
+                task1.TaskRelatDecirbe = "AGV小车到达充电点充电";
+                task1.IsAotuRemove = true;
+                GfxList<DispatchOrderObj> dispatch = new GfxList<DispatchOrderObj> { };
+                DispatchOrderObj a = new DispatchOrderObj();
+
+                a.DisGuid = "123456789";
+                a.DisType = 1;
+                a.OrderSource = "WCS发起";
+                // a.DevList =new List<string> { "AGV00000001"};
+                a.EndSite = "51";
+                a.PathId = "PATH123";
+                a.StartSiteList = new List<string> { "61" };
+                dispatch.Add(a);
+
+                if (JtWcfTaskHelper.StartTaskTemp("MainTest", task1))
                 {
                     //记录agv状态
                     agvStatus[vehicleslist.FocusedItem.Text] = "charge";
-                    SetOutputMsg2("测试下充电按钮，AGV向前启动");
+                    SetOutputMsg2("AGV充电");
                     charge.Enabled = false;
-                }
-                else
-                {
-                    MessageBox.Show("请尝试再操作一次", "提示");
-                }
+                }           
             }
         }
 
