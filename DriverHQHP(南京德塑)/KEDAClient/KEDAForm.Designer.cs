@@ -57,6 +57,7 @@
             this.startmission = new System.Windows.Forms.Button();
             this.pausemission = new System.Windows.Forms.Button();
             this.taskList = new System.Windows.Forms.TabPage();
+            this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.executeTask = new System.Windows.Forms.Button();
             this.executeTasklist = new System.Windows.Forms.ListView();
@@ -94,7 +95,6 @@
             this.timerFunc = new System.Windows.Forms.Timer(this.components);
             this.Statetimer = new System.Windows.Forms.Timer(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.button2 = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -409,6 +409,17 @@
             this.taskList.TabIndex = 3;
             this.taskList.Text = "任务列表";
             this.taskList.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.Location = new System.Drawing.Point(856, 104);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(88, 37);
+            this.button2.TabIndex = 3;
+            this.button2.Text = "停止";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button1
             // 
@@ -757,7 +768,8 @@
             "清除站点",
             "开启声音",
             "关闭声音",
-            "心跳指令"});
+            "心跳指令",
+            "辊台"});
             this.comboBox1.Location = new System.Drawing.Point(719, 55);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(160, 24);
@@ -837,17 +849,6 @@
             // 
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // button2
-            // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(856, 104);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(88, 37);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "停止";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // KEDAForm
             // 
