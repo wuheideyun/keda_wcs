@@ -93,6 +93,72 @@ namespace KEDAClient
         /// </summary>
         private int _waitCountAreaTwo = 3;
 
+
+        /// <summary>
+        ///  窑尾装载站点
+        /// </summary>
+        private string _loadgoodsSta = "1";
+
+        /// <summary>
+        ///  窑头卸载站点
+        /// </summary>
+        private string _unloadgoodsSta = "2";
+
+        /// <summary>
+        ///  装载等待区站点
+        /// </summary>
+        private string _loadWaitSta = "5";
+
+        /// <summary>
+        ///  卸载等待区站点
+        /// </summary>
+        private string _unloadWaitSta = "6";
+
+        /// <summary>
+        ///  窑尾装载站点是否有AGV
+        /// </summary>
+        private bool _loadStaHasAGV = false;    
+
+        /// <summary>
+        ///  窑头卸载站点是否有有货状态AGV
+        /// </summary>
+        private bool _unloadStaHasAGV = false;
+
+        /// <summary>
+        ///  窑尾装载辊台上是否有货
+        /// </summary>
+        private bool _loadStaHasGoods = false;
+
+        /// <summary>
+        ///  窑头卸载辊台上是否有货
+        /// </summary>
+        private bool _unloadStaHasGoods = false;
+
+        /// <summary>
+        ///  AGV上是否有货
+        /// </summary>
+        private bool _AGVHasGoods = false;
+
+        /// <summary>
+        ///  卸货后的AGV上是否有货
+        /// </summary>
+        private bool _AGVGoodsStatue = false;
+
+        /// <summary>
+        ///  窑尾装载等待区是否有空闲AGV
+        /// </summary>
+        private bool _HasFreeAGV = false;
+
+        /// <summary>
+        ///  窑头卸载等待区是否有卸货AGV
+        /// </summary>
+        private bool _HasUnloadAGV = false;
+
+        /// <summary>
+        ///  窑头卸载点辊台是否转动
+        /// </summary>
+        private bool _isRorate = false;
+
         /// <summary>
         /// 区域二待命点集合
         /// </summary>
@@ -121,6 +187,92 @@ namespace KEDAClient
 
         //用于查询数据库数据的线程
         private Thread queryDataThread;
+
+        /// <summary>
+        /// 线程1：判断窑尾是否有货
+        /// </summary>
+        Thread thread1;
+
+        /// <summary>
+        /// 线程2：判断装载等待位是否有空闲AGV
+        /// </summary>
+        Thread thread2;
+
+        /// <summary>
+        /// 线程3：AGV从窑尾装载等待位到窑尾装载点
+        /// </summary>
+        Thread thread3;
+
+        /// <summary>
+        /// 线程4：判断窑尾装载点是否有AGV
+        /// </summary>
+        Thread thread4;
+
+        /// <summary>
+        /// 线程5：WCS给线边辊台发送下料、电机正转指令
+        /// </summary>
+        Thread thread5;
+
+        /// <summary>
+        /// 线程6：判断窑尾装载点的AGV上是否有货
+        /// </summary>
+        Thread thread6;
+
+        /// <summary>
+        /// 线程7：WCS给线边辊台发送下料料、电机停止指令，接货完成
+        /// </summary>
+        Thread thread7;
+
+        /// <summary>
+        /// 线程8：AGV从窑尾装载点到窑头卸载等待区域
+        /// </summary>
+        Thread thread8;
+
+        /// <summary>
+        /// 线程9：判断卸载等待区域是否有准备卸货的AGV
+        /// </summary>
+        Thread thread9;
+
+        /// <summary>
+        /// 线程10：判断窑头卸载辊台上是否有货
+        /// </summary>
+        Thread thread10;
+
+        /// <summary>
+        /// 线程11：WCS给AGV下发任务：从卸载等待位到窑头卸载点
+        /// </summary>
+        Thread thread11;
+
+        /// <summary>
+        /// 线程12：窑头卸载点是否有有货状态的AGV
+        /// </summary>
+        Thread thread12;
+
+        /// <summary>
+        /// 线程13：WCS给线边辊台发送上料、电机正转指令
+        /// </summary>
+        Thread thread13;
+
+        /// <summary>
+        /// 线程14：同时，启动AGV的车载辊台转动，开始卸货
+        /// </summary>
+        Thread thread14;
+
+        /// <summary>
+        /// 线程15：判断执行卸货任务后的AGV，货物状态是否为无货
+        /// </summary>
+        Thread thread15;
+
+        /// <summary>
+        /// 线程16：AGV上无货，WCS给线边辊台发送上料、电机停止的指令
+        /// </summary>
+        Thread thread16;
+
+        /// <summary>
+        /// 线程17：同时，AGV从窑头卸载点到窑尾装载等待区
+        /// </summary>
+        Thread thread17;
+
 
         //全局的列表数据变量
         GfxList<DeviceBackImf> devsList;                    // = JtWcfMainHelper.GetDevList();
@@ -175,6 +327,74 @@ namespace KEDAClient
             queryDataThread.IsBackground = true;
             queryDataThread.Start();
 
+
+            thread1 = new Thread(LoadStaHasGoods);
+            thread1.IsBackground = true;
+            thread1.Start();
+
+            thread2 = new Thread(HasFreeAGV);
+            thread2.IsBackground = true;
+            thread2.Start();
+
+            thread3 = new Thread(SendAGVtoLoadSta);
+            thread3.IsBackground = true;
+            thread3.Start();
+
+            thread4 = new Thread(LoadStaHasAGV);
+            thread4.IsBackground = true;
+            thread4.Start();
+
+            thread5 = new Thread(LoadLineRollerTable);
+            thread5.IsBackground = true;
+            thread5.Start();
+
+            thread6 = new Thread(AGVHasGoods);
+            thread6.IsBackground = true;
+            thread6.Start();
+
+            thread7 = new Thread(LoadLineRollerTableStop);
+            thread7.IsBackground = true;
+            thread7.Start();
+
+            thread8 = new Thread(SendAGVtoUnloadWaitSta);
+            thread8.IsBackground = true;
+            thread8.Start();
+
+            thread9 = new Thread(UnloadWaitStaHasAGV);
+            thread9.IsBackground = true;
+            thread9.Start();
+
+            thread10 = new Thread(UnloadStaHasGoods);
+            thread10.IsBackground = true;
+            thread10.Start();
+
+            thread11 = new Thread(SendAGVtoUnloadSta);
+            thread11.IsBackground = true;
+            thread11.Start();
+
+            thread12 = new Thread(UnloadStaHasAGV);
+            thread12.IsBackground = true;
+            thread12.Start();
+
+            thread13 = new Thread(UnloadLineRollerTable);
+            thread13.IsBackground = true;
+            thread13.Start();
+
+            thread14 = new Thread(ReadyToUnload);
+            thread14.IsBackground = true;
+            thread14.Start();
+
+            thread15 = new Thread(AGVGoodsStatue);
+            thread15.IsBackground = true;
+            thread15.Start();
+
+            thread16 = new Thread(UnloadLineRollerTableStop);
+            thread16.IsBackground = true;
+            thread16.Start();
+
+            thread17 = new Thread(SendAGVtoLoadWaitSta);
+            thread17.IsBackground = true;
+            thread17.Start();
         }
 
 
@@ -2372,5 +2592,499 @@ namespace KEDAClient
             }
         }
 
+        /// <summary>
+        /// 判断窑尾是否有货
+        /// </summary>
+        private void LoadStaHasGoods()
+        {
+            // 判断窑尾是否有货           
+            if (devsList != null && devsList.Count != 0)
+            {
+                foreach (var dev in devsList)
+                {
+                    // PLC 在线，且货物状态为1
+                    if (dev.DevType == "PLC" && dev.DevStatue == "True" && dev.SensorList[0].RValue == "1")
+                    {
+                        _loadStaHasGoods = true;
+                    }
+                    else
+                    {
+                        _loadStaHasGoods = false;
+                    }
+                }
+            }
+            else
+            {
+                _loadStaHasGoods = false;
+                //SetOutputMsg("当前设备列表为空，请检查！");
+            }
+        }
+
+
+        /// <summary>
+        /// 判断装载等待位是否有空闲的AGV
+        /// </summary>
+        private void HasFreeAGV()
+        {
+            if (_loadStaHasGoods)
+            {              
+                if (devsList != null && devsList.Count != 0)
+                {
+                    foreach (var dev in devsList)
+                    {
+                        // 只有位于等待区首位置的在线、空闲、未充电的AGV 才能执行任务
+                        if (dev.DevType == "AGV" && dev.DevStatue == "True" && dev.SensorList[1].RValue == _loadWaitSta && dev.SensorList[9].RValue == "true" && dev.SensorList[7].RValue == "0")
+                        {
+                            _HasFreeAGV = true;
+                        }
+                        else
+                        {
+                            _HasFreeAGV = false;
+                        }
+                    }
+                }
+                else
+                {
+                    _HasFreeAGV = false;
+                    //SetOutputMsg("当前设备列表为空，请检查！");
+                }
+            }
+        }
+
+        /// <summary>
+        /// AGV从当前窑尾装载等待位到窑尾装载点
+        /// </summary>
+        private void SendAGVtoLoadSta()
+        {
+            if (_HasFreeAGV)
+            {
+                // 自定义一个任务：AGV从当前等待位到窑尾装载点
+                OnceTaskMember task = new OnceTaskMember();
+
+                ////任务ID
+                //task.DisGuid = "装货";
+
+                //任务名称
+                task.TaskRelatName = "AGV从当前等待位到窑尾装载点";
+
+                //任务完成是否自动清除
+                task.IsAotuRemove = false;
+
+                //任务中一个调度节点
+                DispatchOrderObj dis = new DispatchOrderObj();
+
+                //调度的终点（地标）：窑尾装载点
+                dis.EndSite = _loadgoodsSta;
+
+                task.DisOrderList.Add(dis);
+
+                JtWcfTaskHelper.StartTaskTemp("AGV去窑尾接货", task);
+
+
+            }
+            else
+            {
+                //SetOutputMsg("当前装载待命区没有空闲AGV！");
+            }
+        }
+
+        /// <summary>
+        /// 判断窑尾装载点是否有AGV
+        /// </summary>
+        private void LoadStaHasAGV()
+        {
+            while (true)
+            {
+                if (devsList != null && devsList.Count != 0)
+                {
+                    foreach (var dev in devsList)
+                    {
+                        //  窑尾装载点有没有AGV,若有直接跳出遍历
+                        if (dev.DevType == "AGV" && dev.SensorList[1].RValue == _loadgoodsSta)
+                        {
+                            _loadStaHasAGV = true;
+                            break;
+                        }
+                        else
+                        {
+                            _loadStaHasAGV = false;
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///WCS给线边辊台发送下料、电机正转的指令
+        /// </summary>
+        private void LoadLineRollerTable()
+        {
+            while (true)
+            {
+                if (_loadStaHasAGV)
+                {                   
+                    if (devsList != null && devsList.Count != 0)
+                    {
+                        foreach (var dev in devsList)
+                        {
+                            // 装载点有AGV，线边辊台准备出料
+                            if (dev.DevType == "PLC" && dev.DevStatue == "True")
+                            {
+                                // 线边辊台下料正转  Order1: 2,1
+                                JtWcfMainHelper.SendOrder(dev.DevId, new CommonDeviceOrderObj("线边辊台下料 正转" + LocSite, 1, 2, 1));
+                            }
+                        }
+                    }
+                    //else
+                    //{
+                    //    SetOutputMsg("当前设备列表为空，请检查！");
+                    //}
+                }
+                //else
+                //{
+                //    SetOutputMsg("窑尾装载点没有AGV! ");
+                //}
+            }
+
+        }
+
+        /// <summary>
+        ///判断AGV上是否有货
+        /// </summary>
+        /// <returns></returns>
+        private void AGVHasGoods()
+        {
+            if (devsList != null && devsList.Count != 0)
+            {
+                foreach (var dev in devsList)
+                {
+                    //  判断处于装载位的AGV上是否有货,若有直接跳出遍历
+                    if (dev.DevType == "AGV" && dev.SensorList[1].RValue == _loadgoodsSta && dev.SensorList[35].RValue == "1")
+                    {
+                        _AGVHasGoods = true;
+                        break;
+                    }
+                    else
+                    {
+                        _AGVHasGoods = false;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///WCS给线边辊台发送下料、电机停止的指令
+        /// </summary>
+        private void LoadLineRollerTableStop()
+        {
+            if (_AGVHasGoods)
+            {
+                if (devsList != null && devsList.Count != 0)
+                {
+                    foreach (var dev in devsList)
+                    {
+                        // 装载点有AGV，线边辊台准备出料
+                        if (dev.DevType == "PLC" && dev.DevStatue == "True")
+                        {
+                            // 线边辊台上料正转  Order1: 1,3
+                            JtWcfMainHelper.SendOrder(dev.DevId, new CommonDeviceOrderObj("线边辊台下料 停止" + LocSite, 1, 2, 3));
+                            //SetOutputMsg("AGV完成此次上料！");
+                        }
+                    }
+                }
+                //else
+                //{
+                //    SetOutputMsg("当前设备列表为空，请检查！");
+                //}
+            }
+            //else
+            //{
+            //    SetOutputMsg("AGV上货物状态显示没货，请检查! ");
+            //}
+        }
+
+        /// <summary>
+        /// 同时，AGV从窑尾装载点到窑头卸载等待区
+        /// </summary>
+        private void SendAGVtoUnloadWaitSta()
+        {
+
+            // 自定义一个任务：AGV从窑尾装载点到窑头卸载等待区
+            OnceTaskMember task = new OnceTaskMember();
+
+            ////任务ID
+            //task.DisGuid = "去窑头卸载等待区";
+
+            //任务名称
+            task.TaskRelatName = "AGV从窑尾装载点到窑头卸载等待区";
+
+            //任务完成是否自动清除
+            task.IsAotuRemove = false;
+
+            //任务中一个调度节点
+            DispatchOrderObj dis = new DispatchOrderObj();
+
+            //调度的终点（地标）：窑尾装载点
+            dis.EndSite = _unloadWaitSta;
+
+            task.DisOrderList.Add(dis);
+
+            JtWcfTaskHelper.StartTaskTemp("窑头卸载等待区", task);
+        }
+
+        /// <summary>
+        /// 判断窑头卸载等待位是否有准备卸货的AGV
+        /// </summary>      
+        private void UnloadWaitStaHasAGV()
+        {
+            if (devsList != null && devsList.Count != 0)
+            {
+                foreach (var dev in devsList)
+                {
+                    //  窑头卸载等待点有没有准备卸货的 AGV,若有直接跳出遍历
+                    if (dev.DevType == "AGV" && dev.SensorList[1].RValue == _unloadWaitSta && dev.SensorList[35].RValue == "1")
+                    {
+                        _HasUnloadAGV = true;
+                        break;
+                    }
+                    else
+                    {
+                        _HasUnloadAGV = false;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 判断窑头卸载辊台上是否有货
+        /// </summary>
+        private void UnloadStaHasGoods()
+        {
+            if (_HasUnloadAGV)
+            {
+                //判断窑头卸载辊台上是否有货
+                if (devsList != null && devsList.Count != 0)
+                {
+                    foreach (var dev in devsList)
+                    {
+                        // PLC 在线，且货物状态为1
+                        if (dev.DevType == "PLC" && dev.DevStatue == "True" && dev.SensorList[0].RValue == "1")
+                        {
+                            _unloadStaHasGoods = true;
+                        }
+                        else
+                        {
+                            _unloadStaHasGoods = false;
+                        }
+                    }
+                }
+                else
+                {
+                    _unloadStaHasGoods = false;
+                    //SetOutputMsg("当前设备列表为空，请检查！");
+                }
+            }
+        }
+
+        /// <summary>
+        /// WCS给AGV下发任务：从卸载等待位到窑头卸载点
+        /// </summary>
+        private void SendAGVtoUnloadSta()
+        {
+            if (!_unloadStaHasGoods)
+            {
+                // 自定义一个任务：AGV从卸载等待位到窑头卸载点
+                OnceTaskMember task = new OnceTaskMember();
+
+                ////任务ID
+                //task.DisGuid = "去窑头卸载点";
+
+                //任务名称
+                task.TaskRelatName = "AGV从卸载等待位到窑头卸载点";
+
+                //任务完成是否自动清除
+                task.IsAotuRemove = false;
+
+                //任务中一个调度节点
+                DispatchOrderObj dis = new DispatchOrderObj();
+
+                //调度的终点（地标）：窑头卸载点
+                dis.EndSite = _unloadgoodsSta;
+
+                task.DisOrderList.Add(dis);
+
+                JtWcfTaskHelper.StartTaskTemp("去窑头卸载点", task);
+            }
+        }
+
+        /// <summary>
+        /// 窑头卸载点是否有有货状态的AGV
+        /// </summary>
+        private void UnloadStaHasAGV()
+        {
+            if (devsList != null && devsList.Count != 0)
+            {
+                foreach (var dev in devsList)
+                {
+                    //  窑尾装载点有没有有货状态的AGV,若有直接跳出遍历
+                    if (dev.DevType == "AGV" && dev.SensorList[1].RValue == _unloadgoodsSta && dev.SensorList[35].RValue == "1")
+                    {
+                        _unloadStaHasAGV = true;
+                        break;
+                    }
+                    else
+                    {
+                        _unloadStaHasAGV = false;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///WCS给线边辊台发送上料、电机正转的指令
+        /// </summary>
+        private void UnloadLineRollerTable()
+        {
+            if (_unloadStaHasAGV)
+            {
+                if (devsList != null && devsList.Count != 0)
+                {
+                    foreach (var dev in devsList)
+                    {
+                        // 装载点有有货的AGV，线边辊台准备接货
+                        if (dev.DevType == "PLC" && dev.DevStatue == "True")
+                        {
+                            // 线边辊台上料 正转  Order1: 1,1
+                            JtWcfMainHelper.SendOrder(dev.DevId, new CommonDeviceOrderObj("线边辊台上料 停止" + LocSite, 1, 1, 1));
+                            // 判断线边辊台电机是否正在转动
+                            if (dev.SensorList[1].RValue == "1")
+                            {
+                                _isRorate = true;
+                            }
+                            else
+                            {
+                                _isRorate = false;
+                            }
+                        }
+                    }
+                }
+                //else
+                //{
+                //    SetOutputMsg("当前设备列表为空，请检查！");
+                //}
+            }
+            //else
+            //{
+            //    SetOutputMsg("窑头卸载点没有AGV! ");
+            //}
+        }
+
+        /// <summary>
+        /// 启动车载辊台转动卸货
+        /// </summary>
+        private void ReadyToUnload()
+        {
+            if (_isRorate)
+            {
+                if (devsList != null && devsList.Count != 0)
+                {
+                    foreach (var dev in devsList)
+                    {
+                        // 启动窑头卸载点的AGV 车载辊台转动卸货
+                        if (dev.DevType == "AGV" && dev.DevStatue == "True" && dev.SensorList[1].RValue == _unloadgoodsSta && dev.SensorList[9].RValue == "true" && dev.SensorList[35].RValue == "1")
+                        {
+                            JtWcfMainHelper.SendOrder(dev.DevId, new CommonDeviceOrderObj("车载辊台下料 正转" + LocSite, 1, 2, 1));
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    SetOutputMsg("当前设备列表为空，请检查！");
+                }
+            }
+        }
+
+        /// <summary>
+        ///  判断执行卸货任务后的AGV，货物状态是否为无货
+        /// </summary>
+        private void AGVGoodsStatue()
+        {
+            if (devsList != null && devsList.Count != 0)
+            {
+                foreach (var dev in devsList)
+                {
+                    // 判断AGV上的货物状态是否为无货
+                    if (dev.SensorList[35].RValue == "0")
+                    {
+                        _AGVGoodsStatue = false;
+                    }
+                    else
+                    {
+                        _AGVGoodsStatue = true;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///WCS给线边辊台发送上料、电机停止的指令
+        /// </summary>
+        private void UnloadLineRollerTableStop()
+        {
+            if (!_AGVGoodsStatue)
+            {
+                if (devsList != null && devsList.Count != 0)
+                {
+                    foreach (var dev in devsList)
+                    {
+                        // 装载点有AGV，线边辊台准备出料
+                        if (dev.DevType == "PLC" && dev.DevStatue == "True")
+                        {
+                            // 线边辊台上料  停止  Order1: 1,3
+                            JtWcfMainHelper.SendOrder(dev.DevId, new CommonDeviceOrderObj("线边辊台上料 停止" + LocSite, 1, 1, 3));
+                            SetOutputMsg("AGV完成此次上料！");
+                        }
+                    }
+                }
+                else
+                {
+                    SetOutputMsg("当前设备列表为空，请检查！");
+                }
+            }
+            //else
+            //{
+            //    SetOutputMsg("AGV上货物状态显示没货，请检查! ");
+            //}
+        }
+
+        /// <summary>
+        /// 同时，AGV从窑头卸载点到窑尾装载等待区
+        /// </summary>
+        private void SendAGVtoLoadWaitSta()
+        {
+
+            // 自定义一个任务：AGV从窑头卸载点到窑尾装载等待区
+            OnceTaskMember task = new OnceTaskMember();
+
+            ////任务ID
+            //task.DisGuid = "去窑尾装载等待区";
+
+            //任务名称
+            task.TaskRelatName = "AGV从窑头卸载点到窑尾装载等待区";
+
+            //任务完成是否自动清除
+            task.IsAotuRemove = false;
+
+            //任务中一个调度节点
+            DispatchOrderObj dis = new DispatchOrderObj();
+
+            //调度的终点（地标）：窑尾装载等待区
+            dis.EndSite = _loadWaitSta;
+
+            task.DisOrderList.Add(dis);
+
+            JtWcfTaskHelper.StartTaskTemp("窑尾装载等待区", task);
+        }
     }
 }
