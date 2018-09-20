@@ -13,6 +13,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -119,6 +120,21 @@ namespace KEDAClient
 
         private readonly DeviceBackImf devid;
 
+        //用于查询数据库数据的线程
+        private Thread queryDataThread;
+
+        //全局的列表数据变量
+        GfxList<DeviceBackImf> devsList;                    // = JtWcfMainHelper.GetDevList();
+        GfxList<GfxServiceContractTaskExcute.TaskBackImf> tasksList;// = JtWcfTaskHelper.GetAllTask();
+        GfxList<TaskRelationMember> definetasklist;// = JtWcfTaskHelper.GetDefineTask();
+        //Ok为true的时候代表 查询到了相应的数据然后可以进行更新
+        //xxFirst代表第一次展示数据
+        Boolean devFirst = true, devOk = false,
+            taskFirst = true, taskOk = false;
+
+        //保存当前tab的位置
+        private int tabControl1SelectIndex = 0;
+
         /// <summary>
         /// 当前客户端的站点编号对应地标
         /// </summary>
@@ -155,6 +171,11 @@ namespace KEDAClient
             UpdateBtnMember();
 
             this.WindowState = FormWindowState.Maximized;
+
+            queryDataThread = new Thread(queryDataThreadFunc);
+            queryDataThread.IsBackground = true;
+            queryDataThread.Start();
+
         }
 
 
@@ -173,48 +194,45 @@ namespace KEDAClient
 
             // 若没有，无法显示数据 
             alarmlist.View = System.Windows.Forms.View.Details;
+        }
 
+        /// <summary>
+        /// 报警数据展示
+        /// </summary>
+        private void AlarmDataDisplay()
+        {
             ///添加数据项
             ///UI暂时挂起，直到EndUpdate绘制控件，可提高加载速度
 
-            JtWcfMainHelper.InitPara(_severIp, "", "");
-
-            List<DeviceBackImf> devs = JtWcfMainHelper.GetDevList();
-
-
-            alarmlist.BeginUpdate();
-
-            if (devs != null && devs.Count > 0)
+            //List<DeviceBackImf> devs = JtWcfMainHelper.GetDevList();
+            if (devsList is null)
             {
-                foreach (var item1 in devs)
+                alarmlist.Clear();
+                return;
+            }
+            alarmlist.BeginUpdate();
+            foreach (var item1 in devsList)
+            {
+                if (item1.DevId != null && item1.DevType == "AGV")
                 {
-
-                    if (item1.DevId != null && item1.DevType == "AGV")
+                    int[] a = new int[] { 8, 10, 12, 13, 14, 15, 16, 20 };
+                    for (int i = 0; i < a.Length; i++)
                     {
-
-                        int[] a = new int[] { 8, 10, 12, 13, 14, 15, 16, 20 };
-                        for (int i = 0; i < a.Length; i++)
+                        if (item1.SensorList[a[i]].RValue == "1")
                         {
-
-                            if (item1.SensorList[a[i]].RValue == "1")
-                            {
-                                ListViewItem item = new ListViewItem(item1.DevId);  // AGV设备ID
-                                item.SubItems.Add(item1.SensorList[a[i]].SensName); // 类型名称
-                                item.SubItems.Add(item1.SensorList[a[i]].ChannelId.ToString());  // 通道编号
-                                item.SubItems.Add(item1.SensorList[a[i]].RValue);  // 实时值
-                                item.SubItems.Add(item1.SensorList[a[i]].EValue); // 描述值                                 
-                                alarmlist.Items.Add(item);
-                            }
+                            ListViewItem item = new ListViewItem(item1.DevId);  // AGV设备ID
+                            item.SubItems.Add(item1.SensorList[a[i]].SensName); // 类型名称
+                            item.SubItems.Add(item1.SensorList[a[i]].ChannelId.ToString());  // 通道编号
+                            item.SubItems.Add(item1.SensorList[a[i]].RValue);  // 实时值
+                            item.SubItems.Add(item1.SensorList[a[i]].EValue); // 描述值                                 
+                            alarmlist.Items.Add(item);
                         }
-
                     }
                 }
             }
-
             // 结束数据处理
             // UI界面一次性绘制
             alarmlist.EndUpdate();
-
         }
 
         /// <summary>
@@ -266,11 +284,19 @@ namespace KEDAClient
             // 若没有，无法显示数据 
             otherdevlist.View = System.Windows.Forms.View.Details;
 
+        }
+        /// <summary>
+        /// 设备 PLC 数据展示
+        /// </summary>
+        private void OtherdevDisplay()
+        {
+            //GfxList<DeviceBackImf> devsList = JtWcfMainHelper.GetDevList();
+            if (devsList is null)
+            {
+                otherdevlist.Clear();
+                return;
+            }
             otherdevlist.BeginUpdate();
-
-            GfxList<DeviceBackImf> devsList = JtWcfMainHelper.GetDevList();
-            if (devsList is null) return;
-
             foreach (var item1 in devsList)
             {
                 if (item1.DevType == "PLC")
@@ -298,63 +324,69 @@ namespace KEDAClient
         /// </summary>
         private void Vehicles()
         {
-            GfxList<DeviceBackImf> devsList = JtWcfMainHelper.GetDevList();
+            // 创建列表头
+            vehicleslist.Columns.Add("车辆编号", 200, HorizontalAlignment.Left);
+            vehicleslist.Columns.Add("车辆型号", 100, HorizontalAlignment.Left); // 设备型号
+            vehicleslist.Columns.Add("车辆状态", 150, HorizontalAlignment.Left);
+            vehicleslist.Columns.Add("运行状态", 150, HorizontalAlignment.Left); // 运行状态：前进、后退、停止
+            vehicleslist.Columns.Add("电量", 150, HorizontalAlignment.Left); // 电量
+            vehicleslist.Columns.Add("充电状态", 150, HorizontalAlignment.Left); // 充电状态
 
-            if (devsList != null && devsList.Count > 0)
+            // 若没有，无法显示数据 
+            vehicleslist.View = System.Windows.Forms.View.Details;
+        }
+
+        private void VehiclesDisplay()
+        {
+            //GfxList<DeviceBackImf> devsList = JtWcfMainHelper.GetDevList();
+
+            ///添加数据项
+            ///UI暂时挂起，直到EndUpdate绘制控件，可提高加载速度
+            if (devsList is null)
             {
-                // 创建列表头
-                vehicleslist.Columns.Add("车辆编号", 200, HorizontalAlignment.Left);
-                vehicleslist.Columns.Add("车辆型号", 100, HorizontalAlignment.Left); // 设备型号
-                vehicleslist.Columns.Add("车辆状态", 150, HorizontalAlignment.Left);
-                vehicleslist.Columns.Add("运行状态", 150, HorizontalAlignment.Left); // 运行状态：前进、后退、停止
-                vehicleslist.Columns.Add("电量", 150, HorizontalAlignment.Left); // 电量
-                vehicleslist.Columns.Add("充电状态", 150, HorizontalAlignment.Left); // 充电状态
+                vehicleslist.Clear();
+                return;
+            }
 
-                // 若没有，无法显示数据 
-                vehicleslist.View = System.Windows.Forms.View.Details;
-
-                ///添加数据项
-                ///UI暂时挂起，直到EndUpdate绘制控件，可提高加载速度
-                if (devsList is null) return;
-
-                foreach (var item1 in devsList)
+            vehicleslist.BeginUpdate();
+            foreach (var item1 in devsList)
+            {
+                if (item1.DevType == "AGV")
                 {
-                    if (item1.DevType == "AGV")
+                    // 状态 、运行方向、电量、充电状态
+                    int[] sens = new int[] { 0, 4, 6, 7 };
+                    ListViewItem item = new ListViewItem(item1.DevId); // 设备id
+                    item.SubItems.Add(item1.DevModel); // 设备型号   
+                    item.SubItems.Add(item1.DevStatue); // 设备状态  
+
+                    // 判断AGV是停止还是运行，1为运行、3为停止
+                    if (item1.SensorList[sens[0]].RValue == "1")
                     {
-                        // 状态 、运行方向、电量、充电状态
-                        int[] sens = new int[] { 0, 4, 6, 7 };
-                        ListViewItem item = new ListViewItem(item1.DevId); // 设备id
-                        item.SubItems.Add(item1.DevModel); // 设备型号   
-                        item.SubItems.Add(item1.DevStatue); // 设备状态  
-
-                        // 判断AGV是停止还是运行，1为运行、3为停止
-                        if (item1.SensorList[sens[0]].RValue == "1")
+                        if (item1.SensorList[sens[1]].RValue == "0")
                         {
-                            if (item1.SensorList[sens[1]].RValue == "0")
-                            {
-                                item.SubItems.Add("前进"); // 运行状态：前进
-                            }
-
-                            //  item1.SensorList[sens[1]].RValue == "1"  后退
-                            else
-                            {
-                                item.SubItems.Add("后退"); // 运行状态：后退
-                            }
+                            item.SubItems.Add("前进"); // 运行状态：前进
                         }
+
+                        //  item1.SensorList[sens[1]].RValue == "1"  后退
                         else
                         {
-                            item.SubItems.Add("停止");  // 运行状态：停止
+                            item.SubItems.Add("后退"); // 运行状态：后退
                         }
-                        item.SubItems.Add(item1.SensorList[sens[2]].RValue); // 电量
-                        item.SubItems.Add(item1.SensorList[sens[3]].RValue); // 充电状态
-
-                        agvStatus.Add(item1.DevId, "stop");
-
-                        // 显示项
-                        vehicleslist.Items.Add(item);
                     }
+                    else
+                    {
+                        item.SubItems.Add("停止");  // 运行状态：停止
+                    }
+                    item.SubItems.Add(item1.SensorList[sens[2]].RValue); // 电量
+                    item.SubItems.Add(item1.SensorList[sens[3]].RValue); // 充电状态
+
+                    agvStatus.Add(item1.DevId, "stop");
+
+                    // 显示项
+                    vehicleslist.Items.Add(item);
                 }
             }
+            vehicleslist.EndUpdate();
         }
 
         /// <summary>
@@ -376,16 +408,22 @@ namespace KEDAClient
 
             // 若没有，无法显示数据 
             taskInformlist.View = System.Windows.Forms.View.Details;
+        }
 
+        /// <summary>
+        ///  获取当前任务信息展示
+        /// </summary>
+        private void TaskInformDisplay()
+        {
             ///添加数据项
             ///UI暂时挂起，直到EndUpdate绘制控件，可提高加载速度
             ///
 
-            GfxList<GfxServiceContractTaskExcute.TaskBackImf> taskList = JtWcfTaskHelper.GetAllTask();
-            if (taskList is null) return;
-            foreach (var item1 in taskList)
+            //GfxList<GfxServiceContractTaskExcute.TaskBackImf> tasksList = JtWcfTaskHelper.GetAllTask();
+            if (tasksList is null) return;
+            taskInformlist.BeginUpdate();
+            foreach (var item1 in tasksList)
             {
-                taskInformlist.BeginUpdate();
                 ListViewItem item = new ListViewItem(item1.DisGuid); // 任务id
                 item.SubItems.Add(item1.TaskImf); // 任务信息
                 item.SubItems.Add(item1.Statue.ToString()); // 任务状态
@@ -413,7 +451,6 @@ namespace KEDAClient
             // 结束数据处理
             // UI界面一次性绘制
             taskInformlist.EndUpdate();
-
         }
         /// <summary>
         ///  获取任务列表
@@ -429,20 +466,28 @@ namespace KEDAClient
 
 
             executeTasklist.View = System.Windows.Forms.View.Details;
+        }
 
+        /// <summary>
+        ///  获取任务列表信息展示
+        /// </summary>
+        private void AllTaskListDisplay()
+        {
+            //GfxList<TaskRelationMember> definetasklist = JtWcfTaskHelper.GetDefineTask();
 
-            JtWcfMainHelper.InitPara(_severIp, "", "");
-            GfxList<TaskRelationMember> memberlist = JtWcfTaskHelper.GetDefineTask();
-
-            if (memberlist is null) return;
-            for (int i = 0; i < memberlist.Count; i++)
+            if (definetasklist is null)
             {
-                executeTasklist.BeginUpdate();
-                ListViewItem item = new ListViewItem(memberlist[i].MemberId); // 任务id
-                item.SubItems.Add(memberlist[i].TaskRelatName);//任务名称
-                item.SubItems.Add(memberlist[i].TaskRelatDecirbe);//任务描述
-                item.SubItems.Add(memberlist[i].IsAotuRemove ? "True" : "False");
-                item.SubItems.Add(memberlist[i].Priority.ToString());
+                executeTasklist.Clear();
+                return;
+            }
+            executeTasklist.BeginUpdate();
+            for (int i = 0; i < definetasklist.Count; i++)
+            {
+                ListViewItem item = new ListViewItem(definetasklist[i].MemberId); // 任务id
+                item.SubItems.Add(definetasklist[i].TaskRelatName);//任务名称
+                item.SubItems.Add(definetasklist[i].TaskRelatDecirbe);//任务描述
+                item.SubItems.Add(definetasklist[i].IsAotuRemove ? "True" : "False");
+                item.SubItems.Add(definetasklist[i].Priority.ToString());
 
                 // 显示项
 
@@ -1843,8 +1888,8 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void pausemission_Click(object sender, EventArgs e)
         {
-            GfxList<TaskBackImf> taskList = JtWcfTaskHelper.GetAllTask();
-            if (taskList != null && taskList.Count != 0)
+            //GfxList<TaskBackImf> taskList = JtWcfTaskHelper.GetAllTask();
+            if (tasksList != null && tasksList.Count != 0)
             {
                 if (GetSelectTaskid())
                 {
@@ -1879,8 +1924,8 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void endmission_Click(object sender, EventArgs e)
         {
-            GfxList<TaskBackImf> taskList = JtWcfTaskHelper.GetAllTask();
-            if (taskList != null && taskList.Count != 0)
+            //GfxList<TaskBackImf> taskList = JtWcfTaskHelper.GetAllTask();
+            if (tasksList != null && tasksList.Count != 0)
             {
                 if (GetSelectTaskid())
                 {
@@ -1998,16 +2043,18 @@ namespace KEDAClient
             {
                 GfxList<DeviceBackImf> devsList = JtWcfMainHelper.GetDevList();
                 if (devsList is null) return;
+                listv.BeginUpdate();
                 for (int i = 0; i < devsList.Count; i++)
                 {
                     if (devsList[i].DevType == "AGV" && devsList[i].DevStatue == "True")
                     {
-                        listv.BeginUpdate();
-
                         if (listv.Name.Equals("vehicleslist"))
                         {
-                            listv.Items[i].SubItems[2].Text = devsList[i].DevStatue;
-                            listv.Items[i].SubItems[4].Text = devsList[i].SensorList[4].RValue;
+                            DeviceBackImf dev = devsList.Find(c => { return c.DevId == listv.Items[i].SubItems[0].Text; });
+                            listv.Items[i].SubItems[2].Text = dev.DevStatue;
+                            listv.Items[i].SubItems[4].Text = dev.SensorList[4].RValue;
+                            //listv.Items[i].SubItems[2].Text = devsList[i].DevStatue;
+                            //listv.Items[i].SubItems[4].Text = devsList[i].SensorList[4].RValue;
                         }
                         else if (listv.Name.Equals("alarmlist"))
                         {
@@ -2015,16 +2062,18 @@ namespace KEDAClient
 
                             for (int j = 0; j < a.Length; j++)
                             {
+                                
                                 if (devsList[i].SensorList[a[j]].RValue == "1")
                                 {
-                                    listv.Items[i].SubItems[3].Text = devsList[i].SensorList[a[j]].RValue;
+                                    DeviceBackImf dev = devsList.Find(c => { return c.DevId == listv.Items[i].SubItems[0].Text; });
+                                    listv.Items[i].SubItems[3].Text = dev.SensorList[a[j]].RValue;
+                                    //listv.Items[i].SubItems[3].Text = devsList[i].SensorList[a[j]].RValue;
                                 }
                             }
                         }
-
-                        listv.EndUpdate();
                     }
                 }
+                listv.EndUpdate();
             }
 
         
@@ -2047,33 +2096,39 @@ namespace KEDAClient
         /// </summary>
         private void RefreshtaskInform()
         {
-            GfxList<GfxServiceContractTaskExcute.TaskBackImf> taskList = JtWcfTaskHelper.GetAllTask();
-            if (taskList is null) return;
-            taskInformlist.Items.Clear();
-            for (int i = 0; i < taskList.Count; i++)
+            //GfxList<GfxServiceContractTaskExcute.TaskBackImf> tasksList = JtWcfTaskHelper.GetAllTask();
+            if (tasksList is null)
             {
-                ListViewItem item = new ListViewItem(taskList[i].DisGuid); // 任务id
-                item.SubItems.Add(taskList[i].TaskImf); // 任务信息
-                item.SubItems.Add(taskList[i].Statue.ToString()); // 任务状态
-                item.SubItems.Add(taskList[i].OrderSource); // 触发源
-                item.SubItems.Add(taskList[i].DisDevId); // 任务设备
-                item.SubItems.Add(taskList[i].PathMsg); // 任务路径
-                item.SubItems.Add(taskList[i].TaskCtrType.ToString()); // 控制参数，枚举类型
-                item.SubItems.Add(taskList[i].CurDisOrderMsg); // 指令信息
-                item.SubItems.Add(taskList[i].BackMsg); // 信息
-                item.SubItems.Add(taskList[i].TriggerTime.ToString()); // 触发时间
+                taskInformlist.Items.Clear();
+                return;
+            }
+            
+            taskInformlist.BeginUpdate();
+            for (int i = 0; i < tasksList.Count; i++)
+            {
+                ListViewItem item = new ListViewItem(tasksList[i].DisGuid); // 任务id
+                item.SubItems.Add(tasksList[i].TaskImf); // 任务信息
+                item.SubItems.Add(tasksList[i].Statue.ToString()); // 任务状态
+                item.SubItems.Add(tasksList[i].OrderSource); // 触发源
+                item.SubItems.Add(tasksList[i].DisDevId); // 任务设备
+                item.SubItems.Add(tasksList[i].PathMsg); // 任务路径
+                item.SubItems.Add(tasksList[i].TaskCtrType.ToString()); // 控制参数，枚举类型
+                item.SubItems.Add(tasksList[i].CurDisOrderMsg); // 指令信息
+                item.SubItems.Add(tasksList[i].BackMsg); // 信息
+                item.SubItems.Add(tasksList[i].TriggerTime.ToString()); // 触发时间
 
-                if (taskStatus.ContainsKey(taskList[i].DisGuid))
+                if (taskStatus.ContainsKey(tasksList[i].DisGuid))
                 {
-                    taskStatus[taskList[i].DisGuid] = "startmissioin";
+                    taskStatus[tasksList[i].DisGuid] = "startmissioin";
                 }
                 else
                 {
-                    taskStatus.Add(taskList[i].DisGuid, "startmission");
+                    taskStatus.Add(tasksList[i].DisGuid, "startmission");
                 }
                 // 显示项
                 taskInformlist.Items.Add(item);
             }
+            taskInformlist.EndUpdate();
         }
 
 
@@ -2082,6 +2137,20 @@ namespace KEDAClient
         /// </summary>
         private void Statetimer_Tick(object sender, EventArgs e)
         {
+            if (devFirst && devOk)
+            {
+                VehiclesDisplay();//dev
+                OtherdevDisplay();//dev
+                AlarmDataDisplay();//dev
+                devFirst = false;
+            }
+
+            if (taskFirst && taskOk)
+            {
+                AllTaskListDisplay();
+                TaskInformDisplay();
+                taskFirst = false;
+            }
             switch (tabControl1.SelectedIndex)
             {
                 case 0://0 missions
@@ -2099,9 +2168,10 @@ namespace KEDAClient
                     break;
                 case 4://4 vehicles
                     RefreshListview(vehicleslist);
+                    RefreshListview(otherdevlist);
                     break;
                 default:
-                    RefreshListview(otherdevlist);
+                    
                     break;
             }
         }
@@ -2118,10 +2188,10 @@ namespace KEDAClient
         /// </summary>
         private void executeTask_Click(object sender, EventArgs e)
         {
-            GfxList<TaskRelationMember> memberlist = JtWcfTaskHelper.GetDefineTask();
+            //GfxList<TaskRelationMember> memberlist = JtWcfTaskHelper.GetDefineTask();
             try
             {
-                if (memberlist != null)
+                if (definetasklist != null)
                 {
                     if (executeTasklist.SelectedItems == null)
                     {
@@ -2146,14 +2216,14 @@ namespace KEDAClient
         private void button1_Click(object sender, EventArgs e)
         {
             GfxList<TaskRelationMember> definetasklist = JtWcfTaskHelper.GetDefineTask();
-            GfxList<GfxServiceContractTaskExcute.TaskBackImf> taskList = JtWcfTaskHelper.GetAllTask();
+            //GfxList<GfxServiceContractTaskExcute.TaskBackImf> taskList = JtWcfTaskHelper.GetAllTask();
             if (definetasklist == null && definetasklist.Count <= 0)
             {
                 MessageBox.Show("当前没有已定义的任务", "系统提示", MessageBoxButtons.OK, MessageBoxIcon.Hand);
             }
             else
             {
-                if (taskList.Count <= 0)
+                if (tasksList.Count <= 0)
                 {
                     if (executeTasklist.FocusedItem == null)
                     {
@@ -2168,11 +2238,11 @@ namespace KEDAClient
                 }
                 else
                 {
-                    if (taskList.Count == 1 && taskList[0].TaskImf == definetasklist[0].TaskRelatName)
+                    if (tasksList.Count == 1 && tasksList[0].TaskImf == definetasklist[0].TaskRelatName)
                     {
                         WcfClientHelper.CreateService<IUserOperation_TaskExcute>().StartTask(executeTasklist.Items[1].SubItems[0].Text, "MainTest");
                     }
-                    else if (taskList.Count == 1 && taskList[0].TaskImf == definetasklist[1].TaskRelatName)
+                    else if (tasksList.Count == 1 && tasksList[0].TaskImf == definetasklist[1].TaskRelatName)
                     {
                         WcfClientHelper.CreateService<IUserOperation_TaskExcute>().StartTask(executeTasklist.Items[0].SubItems[0].Text, "MainTest");
                     }
@@ -2209,16 +2279,21 @@ namespace KEDAClient
         /// </summary>
         private void Refreshtask()
         {
-            GfxList<TaskRelationMember> definetasklist = JtWcfTaskHelper.GetDefineTask();
-            GfxList<GfxServiceContractTaskExcute.TaskBackImf> taskList = JtWcfTaskHelper.GetAllTask();
-            if (taskList.Count == 1 && taskList[0].TaskImf == definetasklist[0].TaskRelatName)
+            //GfxList<TaskRelationMember> definetasklist = JtWcfTaskHelper.GetDefineTask();
+            //GfxList<GfxServiceContractTaskExcute.TaskBackImf> taskList = JtWcfTaskHelper.GetAllTask();
+            if (tasksList.Count == 1 && tasksList[0].TaskImf == definetasklist[0].TaskRelatName)
             {
                 WcfClientHelper.CreateService<IUserOperation_TaskExcute>().StartTask(executeTasklist.Items[1].SubItems[0].Text, "MainTest");
             }
-            else if (taskList.Count == 1 && taskList[0].TaskImf == definetasklist[1].TaskRelatName)
+            else if (tasksList.Count == 1 && tasksList[0].TaskImf == definetasklist[1].TaskRelatName)
             {
                 WcfClientHelper.CreateService<IUserOperation_TaskExcute>().StartTask(executeTasklist.Items[0].SubItems[0].Text, "MainTest");
             }
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            tabControl1SelectIndex = tabControl1.SelectedIndex;
         }
 
         /// <summary>
@@ -2235,6 +2310,56 @@ namespace KEDAClient
             catch { }
 
             timerFunc.Enabled = true;
+        }
+
+        /// <summary>
+        /// 后台线程去更新获取设备，任务信息
+        /// </summary>
+        private void queryDataThreadFunc()
+        {
+            while (true)
+            {
+                if (!JtWcfTaskHelper.IsConnected || !JtWcfDispatchHelper.Open())
+                {
+                    Thread.Sleep(1000);
+                    continue;
+                }
+                else
+                {
+                    ////全局的列表数据变量
+                    //GfxList<DeviceBackImf> devsList;                    // = JtWcfMainHelper.GetDevList();
+                    //GfxList<GfxServiceContractTaskExcute.TaskBackImf> taskList;// = JtWcfTaskHelper.GetAllTask();
+                    //GfxList<TaskRelationMember> definetasklist;// = JtWcfTaskHelper.GetDefineTask();
+
+                    //Boolean devDataChange, taskDataChange, definetaskDataChange;
+                    switch (tabControl1SelectIndex)
+                    {
+                        case 0://0 task
+                            tasksList = JtWcfTaskHelper.GetAllTask();
+                            taskOk = true;
+                            break;
+                        case 1://1 alarms
+                            devsList = JtWcfMainHelper.GetDevList();
+                            devOk = true;
+                            break;
+                        case 2://2 logger
+
+                            break;
+                        case 3://3 devices
+                            devsList = JtWcfMainHelper.GetDevList();
+                            devOk = true;
+                            break;
+                        case 4://4 vehicles
+                            devsList = JtWcfMainHelper.GetDevList();
+                            devOk = true;
+                            break;
+                        default:
+
+                            break;
+                    }
+                    Thread.Sleep(1000);
+                }
+            }
         }
     }
 }
