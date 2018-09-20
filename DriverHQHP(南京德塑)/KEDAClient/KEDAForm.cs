@@ -2049,10 +2049,18 @@ namespace KEDAClient
                         if (listv.Name.Equals("vehicleslist"))
                         {
                             DeviceBackImf dev = devsList.Find(c => { return c.DevId == listv.Items[i].SubItems[0].Text; });
-                            listv.Items[i].SubItems[2].Text = dev.DevStatue;
-                            listv.Items[i].SubItems[4].Text = dev.SensorList[4].RValue;
-                            //listv.Items[i].SubItems[2].Text = devsList[i].DevStatue;
-                            //listv.Items[i].SubItems[4].Text = devsList[i].SensorList[4].RValue;
+                            if(dev is null)
+                            {
+                               
+                            }
+                            else
+                            {
+                                listv.Items[i].SubItems[2].Text = dev.DevStatue;
+                                listv.Items[i].SubItems[4].Text = dev.SensorList[4].RValue;
+                                //listv.Items[i].SubItems[2].Text = devsList[i].DevStatue;
+                                //listv.Items[i].SubItems[4].Text = devsList[i].SensorList[4].RValue;
+                            }
+
                         }
                         else if (listv.Name.Equals("alarmlist"))
                         {
@@ -2100,7 +2108,8 @@ namespace KEDAClient
                 taskInformlist.Items.Clear();
                 return;
             }
-            
+            taskInformlist.Items.Clear();
+
             taskInformlist.BeginUpdate();
             for (int i = 0; i < tasksList.Count; i++)
             {
@@ -2153,7 +2162,7 @@ namespace KEDAClient
             {
                 case 0://0 missions
                     RefreshListview(taskInformlist);
-                    //RefreshtaskInform();
+                    RefreshtaskInform();
                     break;
                 case 1://1 alarms
                     RefreshListview(alarmlist);
