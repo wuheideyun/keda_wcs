@@ -2582,6 +2582,7 @@ namespace KEDAClient
                     {
                         case 0://0 task
                             tasksList = JtWcfTaskHelper.GetAllTask();
+                            definetasklist = JtWcfTaskHelper.GetDefineTask();
                             taskOk = true;
                             break;
                         case 1://1 alarms
