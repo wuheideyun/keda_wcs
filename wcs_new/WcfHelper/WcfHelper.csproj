@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BC199DE0-693C-4601-87F3-C34C15BA0368}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JTWcfHelper</RootNamespace>
+    <AssemblyName>JTWcfHelper</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\新建文件夹\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AveControls">
+      <HintPath>..\外部接口\AveControls.dll</HintPath>
+    </Reference>
+    <Reference Include="AveExpress">
+      <HintPath>..\外部接口\AveExpress.dll</HintPath>
+    </Reference>
+    <Reference Include="BaseSkinClass">
+      <HintPath>..\外部接口\BaseSkinClass.dll</HintPath>
+    </Reference>
+    <Reference Include="GfxCommonInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxCommonInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="GfxDataContract, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxDataContract.dll</HintPath>
+    </Reference>
+    <Reference Include="GfxServiceContractClient, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxServiceContractClient.dll</HintPath>
+    </Reference>
+    <Reference Include="GfxServiceContractClientDispatch">
+      <HintPath>..\..\..\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxServiceContractClientDispatch.dll</HintPath>
+    </Reference>
+    <Reference Include="GfxServiceContractPluginInterface">
+      <HintPath>..\..\..\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxServiceContractPluginInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="GfxServiceContractTaskExcute, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxServiceContractTaskExcute.dll</HintPath>
+    </Reference>
+    <Reference Include="GfxServiceContractTaskRelate, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxServiceContractTaskRelate.dll</HintPath>
+    </Reference>
+    <Reference Include="RCommonData">
+      <HintPath>..\..\..\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\RCommonData.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Win32APIDll">
+      <HintPath>..\外部接口\Win32APIDll.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="WcfMainHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WcfTaskHelper.cs" />
+    <Compile Include="WcfDispatchHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GfxStoreInterface\GfxStoreInterface.csproj">
+      <Project>{e05007f7-e74b-4f30-bc64-1bf33e40299f}</Project>
+      <Name>GfxStoreInterface</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

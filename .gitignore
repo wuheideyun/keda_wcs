@@ -76,3 +76,6 @@ ModelManifest.xml
 
 #Backup file
 *.bak
+
+#DLL
+*.dll
