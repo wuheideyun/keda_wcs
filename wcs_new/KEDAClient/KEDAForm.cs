@@ -2622,6 +2622,7 @@ namespace KEDAClient
         {
             while (true)
             {
+                Thread.Sleep(2000);
                 if (unloadState == 0)
                 {
                     // 判断窑尾是否有货           
@@ -2643,7 +2644,7 @@ namespace KEDAClient
                     }
 
                 }
-                Thread.Sleep(2000);
+                
             }
 
         }
@@ -2656,6 +2657,7 @@ namespace KEDAClient
         {
             while (true)
             {
+                Thread.Sleep(2000);
                 if (_loadStaHasGoods && unloadState == 1)
                 {
 
@@ -2677,7 +2679,7 @@ namespace KEDAClient
 
                     }
                 }
-                Thread.Sleep(2000);
+                
             }
         }
 
@@ -2688,6 +2690,7 @@ namespace KEDAClient
         {
             while (true)
             {
+                Thread.Sleep(2000);
                 if (_HasFreeAGV && unloadState == 2)
                 {
                     // 自定义一个任务：AGV从当前等待位到窑尾装载点
@@ -2715,7 +2718,7 @@ namespace KEDAClient
                     unloadState = 3;
 
                 }
-                Thread.Sleep(2000);
+                
             }
 
         }
@@ -2727,6 +2730,8 @@ namespace KEDAClient
         {
             while (true)
             {
+
+                Thread.Sleep(2000);
                 if (unloadState == 3 && devsList != null && devsList.Count != 0)
                 {
                     DeviceBackImf dev = devsList.Find(c => { return c.DevType == "AGV" && c.SensorList[1].RValue == _loadgoodsSta; });
@@ -2745,7 +2750,6 @@ namespace KEDAClient
 
                 }
 
-                Thread.Sleep(2000);
             }
         }
 
@@ -2756,6 +2760,7 @@ namespace KEDAClient
         {
             while (true)
             {
+                Thread.Sleep(2000);
                 if (_loadStaHasAGV && unloadState == 4)
                 {
                     if (devsList != null && devsList.Count != 0)
@@ -2772,7 +2777,7 @@ namespace KEDAClient
 
                     }
                 }
-                Thread.Sleep(2000);
+            
             }
         }
 
@@ -2785,6 +2790,7 @@ namespace KEDAClient
         {
             while (true)
             {
+                Thread.Sleep(2000);
                 if (unloadState == 5)
                 {
                     if (devsList != null && devsList.Count != 0)
@@ -2806,7 +2812,7 @@ namespace KEDAClient
 
                     }
                 }
-                Thread.Sleep(2000);
+            
             }
         }
 
@@ -2817,6 +2823,7 @@ namespace KEDAClient
         {
             while (true)
             {
+                Thread.Sleep(2000);
                 if (_AGVHasGoods && unloadState == 6)
                 {
                     if (devsList != null && devsList.Count != 0)
@@ -2834,7 +2841,7 @@ namespace KEDAClient
                         }
                     }
                 }
-                Thread.Sleep(2000);
+           
             }
         }
 
@@ -2845,6 +2852,7 @@ namespace KEDAClient
         {
             while (true)
             {
+                Thread.Sleep(2000);
                 if (unloadState ==7)
                 {
                     // 自定义一个任务：AGV从窑尾装载点到窑头卸载等待区
@@ -2871,7 +2879,7 @@ namespace KEDAClient
 
                     unloadState = 0;
                 }
-                Thread.Sleep(2000);
+             
             }
 
         }
@@ -2883,6 +2891,7 @@ namespace KEDAClient
         {
             while (true)
             {
+                Thread.Sleep(2000);
                 if (devsList != null && devsList.Count != 0 && loadState == 0)
                 {
                     DeviceBackImf dev = devsList.Find(c => { return c.DevType == "AGV" && c.SensorList[1].RValue == _unloadWaitSta && c.SensorList[35].RValue == "1"; });
@@ -2900,7 +2909,7 @@ namespace KEDAClient
                     }
 
                 }
-                Thread.Sleep(2000);
+              
             }
 
         }
@@ -2912,6 +2921,7 @@ namespace KEDAClient
         {
             while (true)
             {
+                Thread.Sleep(2000);
                 if (_HasUnloadAGV && loadState == 1)
                 {
                     //判断窑头卸载辊台上是否有货
@@ -2933,7 +2943,7 @@ namespace KEDAClient
                         }
                     }
                 }
-                Thread.Sleep(2000);
+               
             }
 
         }
@@ -2945,6 +2955,7 @@ namespace KEDAClient
         {
             while (true)
             {
+                Thread.Sleep(2000);
                 if (!_unloadStaHasGoods && loadState == 2)
                 {
                     // 自定义一个任务：AGV从卸载等待位到窑头卸载点
@@ -2972,7 +2983,7 @@ namespace KEDAClient
                     loadState = 3;
 
                 }
-                Thread.Sleep(2000);
+              
             }
 
         }
@@ -2984,6 +2995,7 @@ namespace KEDAClient
         {
             while (true)
             {
+                Thread.Sleep(2000);
                 if (devsList != null && devsList.Count != 0 && loadState == 3)
                 {
                     DeviceBackImf dev = devsList.Find(c => { return c.DevType == "AGV" && c.SensorList[1].RValue == _unloadgoodsSta && c.SensorList[35].RValue == "1"; });
@@ -3001,7 +3013,7 @@ namespace KEDAClient
                     }
 
                 }
-                Thread.Sleep(2000);
+              
             }
 
         }
@@ -3013,6 +3025,7 @@ namespace KEDAClient
         {
             while (true)
             {
+                Thread.Sleep(2000);
                 if (_unloadStaHasAGV && loadState == 4)
                 {
                     if (devsList != null && devsList.Count != 0)
@@ -3041,7 +3054,7 @@ namespace KEDAClient
 
                     }
                 }
-                Thread.Sleep(2000);
+                
             }
         }
 
@@ -3052,6 +3065,7 @@ namespace KEDAClient
         {
             while (true)
             {
+                Thread.Sleep(2000);
                 if (_isRorate && loadState == 5)
                 {
                     if (devsList != null && devsList.Count != 0)
@@ -3068,7 +3082,7 @@ namespace KEDAClient
 
                     }
                 }
-                Thread.Sleep(2000);
+              
             }
 
         }
@@ -3080,6 +3094,7 @@ namespace KEDAClient
         {
             while (true)
             {
+                Thread.Sleep(2000);
                 if (devsList != null && devsList.Count != 0 && loadState == 6)
                 {
                     DeviceBackImf dev = devsList.Find(c => { return c.DevType == "AGV" && c.SensorList[35].RValue == "0"; });
@@ -3097,7 +3112,7 @@ namespace KEDAClient
                     }
 
                 }
-                Thread.Sleep(2000);
+               
             }
         }
 
@@ -3108,6 +3123,7 @@ namespace KEDAClient
         {
             while (true)
             {
+                Thread.Sleep(2000);
                 if (!_AGVGoodsStatue && loadState == 7)
                 {
                     if (devsList != null && devsList.Count != 0)
@@ -3126,7 +3142,7 @@ namespace KEDAClient
 
                     }
                 }
-                Thread.Sleep(2000);
+             
             }
         }
 
@@ -3137,6 +3153,7 @@ namespace KEDAClient
         {
             while (true)
             {
+                Thread.Sleep(2000);
                 if (loadState == 8)
                 {
                     // 自定义一个任务：AGV从窑头卸载点到窑尾装载等待区
@@ -3164,7 +3181,7 @@ namespace KEDAClient
                     loadState = 0;
                 }
 
-                Thread.Sleep(2000);
+              
             }
 
         }
