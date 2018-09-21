@@ -336,6 +336,9 @@ namespace KEDAClient
             labelLogo.Text = APPConfig.LogoStr();  //公司名称
             UpdateBtnMember();
 
+            //启动作业线程
+            F_DataCenter.Init();
+
             this.WindowState = FormWindowState.Maximized;
 
             queryDataThread = new Thread(queryDataThreadFunc);
