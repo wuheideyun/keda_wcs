@@ -2578,6 +2578,9 @@ namespace KEDAClient
                     //GfxList<TaskRelationMember> definetasklist;// = JtWcfTaskHelper.GetDefineTask();
 
                     //Boolean devDataChange, taskDataChange, definetaskDataChange;
+
+                    devsList = JtWcfMainHelper.GetDevList();
+                    devOk = true;
                     switch (tabControl1SelectIndex)
                     {
                         case 0://0 task
@@ -2586,19 +2589,19 @@ namespace KEDAClient
                             taskOk = true;
                             break;
                         case 1://1 alarms
-                            devsList = JtWcfMainHelper.GetDevList();
-                            devOk = true;
+                            //devsList = JtWcfMainHelper.GetDevList();
+                            //devOk = true;
                             break;
                         case 2://2 logger
 
                             break;
                         case 3://3 devices
-                            devsList = JtWcfMainHelper.GetDevList();
-                            devOk = true;
+                            //devsList = JtWcfMainHelper.GetDevList();
+                            //devOk = true;
                             break;
                         case 4://4 vehicles
-                            devsList = JtWcfMainHelper.GetDevList();
-                            devOk = true;
+                            //devsList = JtWcfMainHelper.GetDevList();
+                           //devOk = true;
                             break;
                         default:
 
@@ -2828,7 +2831,7 @@ namespace KEDAClient
                         }
                     }
                 }
-                Thread.Sleep(2000);
+                Thread.Sleep(200);
             }
         }
 
@@ -2894,7 +2897,7 @@ namespace KEDAClient
                     }
 
                 }
-                Thread.Sleep(2000);
+                Thread.Sleep(5000);
             }
 
         }
