@@ -71,7 +71,7 @@ namespace KEDAClient
         /// <summary>
         ///  当前站点号
         /// </summary>
-        public int _locTar = -1; 
+        public int _locTar = -1;
 
         /// <summary>
         /// 站点集合
@@ -117,7 +117,7 @@ namespace KEDAClient
         /// <summary>
         ///  窑尾装载站点是否有AGV
         /// </summary>
-        private bool _loadStaHasAGV = false;    
+        private bool _loadStaHasAGV = false;
 
         /// <summary>
         ///  窑头卸载站点是否有有货状态AGV
@@ -272,6 +272,20 @@ namespace KEDAClient
         /// 线程17：同时，AGV从窑头卸载点到窑尾装载等待区
         /// </summary>
         Thread thread17;
+
+        /// <summary>
+        /// 当前装载状态 
+        /// 1.有货 开始找车
+        /// 2.正在找车
+        /// 3.车正去接货
+        /// 4.
+        /// </summary>
+        int unloadState = 0;
+
+        /// <summary>
+        /// 当前装载状态 
+        /// 
+        int loadState = 0;
 
 
         //全局的列表数据变量
@@ -1234,6 +1248,7 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void buttonManSend_Click(object sender, EventArgs e)
         {
+
             if (!_isLogin) { MessageBox.Show("请先登录后再操作！", "提示"); return; }
             //ddd
 
@@ -1995,7 +2010,7 @@ namespace KEDAClient
             {
                 return;
             }
-         
+
             // 判断电量低于百分80
             else //if (Convert.ToInt32(vehicleslist.FocusedItem.SubItems[4].Text) < 100)
             {
@@ -2051,13 +2066,13 @@ namespace KEDAClient
                 {
                     MessageBox.Show("目前AGV没有正在充电！", "提示");
                 }
-                else 
+                else
                 {
                     //记录agv状态
                     agvStatus[vehicleslist.FocusedItem.Text] = "endcharge";
                     SetOutputMsg2("测试下结束充电按钮，AGV向后启动");
                     endcharge.Enabled = false;
-                }                
+                }
             }
         }
 
@@ -2269,9 +2284,9 @@ namespace KEDAClient
                         if (listv.Name.Equals("vehicleslist"))
                         {
                             DeviceBackImf dev = devsList.Find(c => { return c.DevId == listv.Items[i].SubItems[0].Text; });
-                            if(dev is null)
+                            if (dev is null)
                             {
-                               
+
                             }
                             else
                             {
@@ -2288,10 +2303,11 @@ namespace KEDAClient
 
                             for (int j = 0; j < a.Length; j++)
                             {
-                                
+
                                 if (devsList[i].SensorList[a[j]].RValue == "1")
                                 {
                                     DeviceBackImf dev = devsList.Find(c => { return c.DevId == listv.Items[i].SubItems[0].Text; });
+
                                     listv.Items[i].SubItems[3].Text = dev.SensorList[a[j]].RValue;
                                     //listv.Items[i].SubItems[3].Text = devsList[i].SensorList[a[j]].RValue;
                                 }
@@ -2302,7 +2318,7 @@ namespace KEDAClient
                 listv.EndUpdate();
             }
 
-        
+
             //if (listv.Name.Equals("taskInformlist"))
             //{
             //    GfxList<GfxServiceContractTaskExcute.TaskBackImf> taskList = JtWcfTaskHelper.GetAllTask();
@@ -2398,7 +2414,7 @@ namespace KEDAClient
                     RefreshListview(otherdevlist);
                     break;
                 default:
-                    
+
                     break;
             }
         }
@@ -2538,7 +2554,7 @@ namespace KEDAClient
 
             timerFunc.Enabled = true;
 
-       
+
 
         }
 
@@ -2597,27 +2613,32 @@ namespace KEDAClient
         /// </summary>
         private void LoadStaHasGoods()
         {
-            // 判断窑尾是否有货           
-            if (devsList != null && devsList.Count != 0)
+            while (true)
             {
-                foreach (var dev in devsList)
+                if (unloadState == 0)
                 {
-                    // PLC 在线，且货物状态为1
-                    if (dev.DevType == "PLC" && dev.DevStatue == "True" && dev.SensorList[0].RValue == "1")
+                    // 判断窑尾是否有货           
+                    if (devsList != null && devsList.Count != 0)
                     {
-                        _loadStaHasGoods = true;
+                        DeviceBackImf dev = devsList.Find(c => { return c.DevType == "PLC" && c.DevStatue == "True" && c.SensorList[0].RValue == "1" && c.DevId == "PLC0000001"; });
+
+                        // PLC 在线，且货物状态为1
+                        if (dev != null)
+                        {
+                            _loadStaHasGoods = true;
+                            unloadState = 1;
+                        }
+                        else
+                        {
+                            _loadStaHasGoods = false;
+                        }
+
                     }
-                    else
-                    {
-                        _loadStaHasGoods = false;
-                    }
+
                 }
+                Thread.Sleep(2000);
             }
-            else
-            {
-                _loadStaHasGoods = false;
-                //SetOutputMsg("当前设备列表为空，请检查！");
-            }
+
         }
 
 
@@ -2626,28 +2647,30 @@ namespace KEDAClient
         /// </summary>
         private void HasFreeAGV()
         {
-            if (_loadStaHasGoods)
-            {              
-                if (devsList != null && devsList.Count != 0)
+            while (true)
+            {
+                if (_loadStaHasGoods && unloadState == 1)
                 {
-                    foreach (var dev in devsList)
+
+                    if (devsList != null && devsList.Count != 0)
                     {
+                        DeviceBackImf dev = devsList.Find(c => { return c.DevType == "AGV" && c.DevStatue == "True" && c.SensorList[1].RValue == _loadWaitSta && c.SensorList[9].RValue == "true" && c.SensorList[7].RValue == "0"; });
+
                         // 只有位于等待区首位置的在线、空闲、未充电的AGV 才能执行任务
-                        if (dev.DevType == "AGV" && dev.DevStatue == "True" && dev.SensorList[1].RValue == _loadWaitSta && dev.SensorList[9].RValue == "true" && dev.SensorList[7].RValue == "0")
+                        if (dev != null)
                         {
                             _HasFreeAGV = true;
+                            unloadState = 2;
+
                         }
                         else
                         {
                             _HasFreeAGV = false;
                         }
+
                     }
                 }
-                else
-                {
-                    _HasFreeAGV = false;
-                    //SetOutputMsg("当前设备列表为空，请检查！");
-                }
+                Thread.Sleep(2000);
             }
         }
 
@@ -2656,36 +2679,38 @@ namespace KEDAClient
         /// </summary>
         private void SendAGVtoLoadSta()
         {
-            if (_HasFreeAGV)
+            while (true)
             {
-                // 自定义一个任务：AGV从当前等待位到窑尾装载点
-                OnceTaskMember task = new OnceTaskMember();
+                if (_HasFreeAGV && unloadState == 2)
+                {
+                    // 自定义一个任务：AGV从当前等待位到窑尾装载点
+                    OnceTaskMember task = new OnceTaskMember();
 
-                ////任务ID
-                //task.DisGuid = "装货";
+                    ////任务ID
+                    //task.DisGuid = "装货";
 
-                //任务名称
-                task.TaskRelatName = "AGV从当前等待位到窑尾装载点";
+                    //任务名称
+                    task.TaskRelatName = "AGV从当前等待位到窑尾装载点";
 
-                //任务完成是否自动清除
-                task.IsAotuRemove = false;
+                    //任务完成是否自动清除
+                    task.IsAotuRemove = false;
 
-                //任务中一个调度节点
-                DispatchOrderObj dis = new DispatchOrderObj();
+                    //任务中一个调度节点
+                    DispatchOrderObj dis = new DispatchOrderObj();
 
-                //调度的终点（地标）：窑尾装载点
-                dis.EndSite = _loadgoodsSta;
+                    //调度的终点（地标）：窑尾装载点
+                    dis.EndSite = _loadgoodsSta;
 
-                task.DisOrderList.Add(dis);
+                    task.DisOrderList.Add(dis);
 
-                JtWcfTaskHelper.StartTaskTemp("AGV去窑尾接货", task);
+                    JtWcfTaskHelper.StartTaskTemp("AGV去窑尾接货", task);
 
+                    unloadState = 3;
 
+                }
+                Thread.Sleep(2000);
             }
-            else
-            {
-                //SetOutputMsg("当前装载待命区没有空闲AGV！");
-            }
+
         }
 
         /// <summary>
@@ -2695,112 +2720,115 @@ namespace KEDAClient
         {
             while (true)
             {
-                if (devsList != null && devsList.Count != 0)
+                if (unloadState == 3 && devsList != null && devsList.Count != 0)
                 {
-                    foreach (var dev in devsList)
+                    DeviceBackImf dev = devsList.Find(c => { return c.DevType == "AGV" && c.SensorList[1].RValue == _loadgoodsSta; });
+
+                    //  窑尾装载点有没有AGV,若有直接跳出遍历
+                    if (dev != null)
                     {
-                        //  窑尾装载点有没有AGV,若有直接跳出遍历
-                        if (dev.DevType == "AGV" && dev.SensorList[1].RValue == _loadgoodsSta)
-                        {
-                            _loadStaHasAGV = true;
-                            break;
-                        }
-                        else
-                        {
-                            _loadStaHasAGV = false;
-                        }
+                        _loadStaHasAGV = true;
+                        unloadState = 4;
+
                     }
+                    else
+                    {
+                        _loadStaHasAGV = false;
+                    }
+
                 }
+
+                Thread.Sleep(2000);
             }
         }
 
         /// <summary>
-        ///WCS给线边辊台发送下料、电机正转的指令
+        ///WCS给线边辊台 PLC0000001 发送下料、电机正转的指令
         /// </summary>
         private void LoadLineRollerTable()
         {
             while (true)
             {
-                if (_loadStaHasAGV)
-                {                   
+                if (_loadStaHasAGV && unloadState == 4)
+                {
                     if (devsList != null && devsList.Count != 0)
                     {
-                        foreach (var dev in devsList)
+                        DeviceBackImf dev = devsList.Find(c => { return c.DevId == "PLC0000001" && c.DevStatue == "True"; });
+                        // 装载点有AGV，线边辊台准备出料
+                        if (dev != null)
                         {
-                            // 装载点有AGV，线边辊台准备出料
-                            if (dev.DevType == "PLC" && dev.DevStatue == "True")
-                            {
-                                // 线边辊台下料正转  Order1: 2,1
-                                JtWcfMainHelper.SendOrder(dev.DevId, new CommonDeviceOrderObj("线边辊台下料 正转" + LocSite, 1, 2, 1));
-                            }
-                        }
-                    }
-                    //else
-                    //{
-                    //    SetOutputMsg("当前设备列表为空，请检查！");
-                    //}
-                }
-                //else
-                //{
-                //    SetOutputMsg("窑尾装载点没有AGV! ");
-                //}
-            }
+                            // 线边辊台下料正转  Order1: 2,1
+                            JtWcfMainHelper.SendOrder(dev.DevId, new CommonDeviceOrderObj("线边辊台下料 正转" + LocSite, 1, 2, 1));
+                            unloadState = 5;
 
+                        }
+
+                    }
+                }
+                Thread.Sleep(2000);
+            }
         }
 
         /// <summary>
-        ///判断AGV上是否有货
+        ///接货流程
+        ///判断装载完成后，AGV上是否有货
         /// </summary>
         /// <returns></returns>
         private void AGVHasGoods()
         {
-            if (devsList != null && devsList.Count != 0)
+            while (true)
             {
-                foreach (var dev in devsList)
+                if (unloadState == 5)
                 {
-                    //  判断处于装载位的AGV上是否有货,若有直接跳出遍历
-                    if (dev.DevType == "AGV" && dev.SensorList[1].RValue == _loadgoodsSta && dev.SensorList[35].RValue == "1")
+                    if (devsList != null && devsList.Count != 0)
                     {
-                        _AGVHasGoods = true;
-                        break;
-                    }
-                    else
-                    {
-                        _AGVHasGoods = false;
+                        DeviceBackImf dev = devsList.Find(c => { return c.SensorList[1].RValue == _loadgoodsSta && c.SensorList[35].RValue == "1" && c.DevType == "AGV"; });
+
+
+                        //  判断处于装载位的AGV上是否有货,若有直接跳出遍历
+                        if (dev != null)
+                        {
+                            _AGVHasGoods = true;
+                            unloadState = 6;                          
+
+                        }
+                        else
+                        {
+                            _AGVHasGoods = false;
+                        }
+
                     }
                 }
+                Thread.Sleep(2000);
             }
         }
 
         /// <summary>
-        ///WCS给线边辊台发送下料、电机停止的指令
+        ///WCS给线边辊台 PLC0000001  发送下料、电机停止的指令
         /// </summary>
         private void LoadLineRollerTableStop()
         {
-            if (_AGVHasGoods)
+            while (true)
             {
-                if (devsList != null && devsList.Count != 0)
+                if (_AGVHasGoods && unloadState == 6)
                 {
-                    foreach (var dev in devsList)
+                    if (devsList != null && devsList.Count != 0)
                     {
+                        DeviceBackImf dev = devsList.Find(c => { return c.DevId == "PLC0000001"; });
                         // 装载点有AGV，线边辊台准备出料
-                        if (dev.DevType == "PLC" && dev.DevStatue == "True")
+                        if (dev != null && dev.DevStatue == "True")
                         {
                             // 线边辊台上料正转  Order1: 1,3
                             JtWcfMainHelper.SendOrder(dev.DevId, new CommonDeviceOrderObj("线边辊台下料 停止" + LocSite, 1, 2, 3));
-                            //SetOutputMsg("AGV完成此次上料！");
+
+                            unloadState = 7;
+                            
+
                         }
                     }
                 }
-                //else
-                //{
-                //    SetOutputMsg("当前设备列表为空，请检查！");
-                //}
+                Thread.Sleep(2000);
             }
-            //else
-            //{
-            //    SetOutputMsg("AGV上货物状态显示没货，请检查! ");
-            //}
         }
 
         /// <summary>
@@ -2808,28 +2836,37 @@ namespace KEDAClient
         /// </summary>
         private void SendAGVtoUnloadWaitSta()
         {
+            while (true)
+            {
+                if (unloadState ==7)
+                {
+                    // 自定义一个任务：AGV从窑尾装载点到窑头卸载等待区
+                    OnceTaskMember task = new OnceTaskMember();
 
-            // 自定义一个任务：AGV从窑尾装载点到窑头卸载等待区
-            OnceTaskMember task = new OnceTaskMember();
+                    ////任务ID
+                    //task.DisGuid = "去窑头卸载等待区";
 
-            ////任务ID
-            //task.DisGuid = "去窑头卸载等待区";
+                    //任务名称
+                    task.TaskRelatName = "AGV从窑尾装载点到窑头卸载等待区";
 
-            //任务名称
-            task.TaskRelatName = "AGV从窑尾装载点到窑头卸载等待区";
+                    //任务完成是否自动清除
+                    task.IsAotuRemove = false;
 
-            //任务完成是否自动清除
-            task.IsAotuRemove = false;
+                    //任务中一个调度节点
+                    DispatchOrderObj dis = new DispatchOrderObj();
 
-            //任务中一个调度节点
-            DispatchOrderObj dis = new DispatchOrderObj();
+                    //调度的终点（地标）：窑尾装载点
+                    dis.EndSite = _unloadWaitSta;
 
-            //调度的终点（地标）：窑尾装载点
-            dis.EndSite = _unloadWaitSta;
+                    task.DisOrderList.Add(dis);
 
-            task.DisOrderList.Add(dis);
+                    JtWcfTaskHelper.StartTaskTemp("窑头卸载等待区", task);
 
-            JtWcfTaskHelper.StartTaskTemp("窑头卸载等待区", task);
+                    unloadState = 0;
+                }
+                Thread.Sleep(2000);
+            }
+
         }
 
         /// <summary>
@@ -2837,22 +2874,28 @@ namespace KEDAClient
         /// </summary>      
         private void UnloadWaitStaHasAGV()
         {
-            if (devsList != null && devsList.Count != 0)
+            while (true)
             {
-                foreach (var dev in devsList)
+                if (devsList != null && devsList.Count != 0 && loadState == 0)
                 {
+                    DeviceBackImf dev = devsList.Find(c => { return c.DevType == "AGV" && c.SensorList[1].RValue == _unloadWaitSta && c.SensorList[35].RValue == "1"; });
+
                     //  窑头卸载等待点有没有准备卸货的 AGV,若有直接跳出遍历
-                    if (dev.DevType == "AGV" && dev.SensorList[1].RValue == _unloadWaitSta && dev.SensorList[35].RValue == "1")
+                    if (dev != null)
                     {
                         _HasUnloadAGV = true;
-                        break;
+                        loadState = 1;
+
                     }
                     else
                     {
                         _HasUnloadAGV = false;
                     }
+
                 }
+                Thread.Sleep(2000);
             }
+
         }
 
         /// <summary>
@@ -2860,30 +2903,32 @@ namespace KEDAClient
         /// </summary>
         private void UnloadStaHasGoods()
         {
-            if (_HasUnloadAGV)
+            while (true)
             {
-                //判断窑头卸载辊台上是否有货
-                if (devsList != null && devsList.Count != 0)
+                if (_HasUnloadAGV && loadState == 1)
                 {
-                    foreach (var dev in devsList)
+                    //判断窑头卸载辊台上是否有货
+                    if (devsList != null && devsList.Count != 0)
                     {
-                        // PLC 在线，且货物状态为1
-                        if (dev.DevType == "PLC" && dev.DevStatue == "True" && dev.SensorList[0].RValue == "1")
+                        DeviceBackImf dev = devsList.Find(c => { return c.DevType == "PLC" && c.DevStatue == "True" && c.SensorList[0].RValue == "1" && c.DevId == "PLC0000002"; });
                         {
-                            _unloadStaHasGoods = true;
-                        }
-                        else
-                        {
-                            _unloadStaHasGoods = false;
+                            // PLC 在线，且货物状态为1
+                            if (dev != null)
+                            {
+                                _unloadStaHasGoods = true;
+                                loadState = 2;
+
+                            }
+                            else
+                            {
+                                _unloadStaHasGoods = false;
+                            }
                         }
                     }
                 }
-                else
-                {
-                    _unloadStaHasGoods = false;
-                    //SetOutputMsg("当前设备列表为空，请检查！");
-                }
+                Thread.Sleep(2000);
             }
+
         }
 
         /// <summary>
@@ -2891,30 +2936,38 @@ namespace KEDAClient
         /// </summary>
         private void SendAGVtoUnloadSta()
         {
-            if (!_unloadStaHasGoods)
+            while (true)
             {
-                // 自定义一个任务：AGV从卸载等待位到窑头卸载点
-                OnceTaskMember task = new OnceTaskMember();
+                if (!_unloadStaHasGoods && loadState == 2)
+                {
+                    // 自定义一个任务：AGV从卸载等待位到窑头卸载点
+                    OnceTaskMember task = new OnceTaskMember();
 
-                ////任务ID
-                //task.DisGuid = "去窑头卸载点";
+                    ////任务ID
+                    //task.DisGuid = "去窑头卸载点";
 
-                //任务名称
-                task.TaskRelatName = "AGV从卸载等待位到窑头卸载点";
+                    //任务名称
+                    task.TaskRelatName = "AGV从卸载等待位到窑头卸载点";
 
-                //任务完成是否自动清除
-                task.IsAotuRemove = false;
+                    //任务完成是否自动清除
+                    task.IsAotuRemove = false;
 
-                //任务中一个调度节点
-                DispatchOrderObj dis = new DispatchOrderObj();
+                    //任务中一个调度节点
+                    DispatchOrderObj dis = new DispatchOrderObj();
 
-                //调度的终点（地标）：窑头卸载点
-                dis.EndSite = _unloadgoodsSta;
+                    //调度的终点（地标）：窑头卸载点
+                    dis.EndSite = _unloadgoodsSta;
 
-                task.DisOrderList.Add(dis);
+                    task.DisOrderList.Add(dis);
 
-                JtWcfTaskHelper.StartTaskTemp("去窑头卸载点", task);
+                    JtWcfTaskHelper.StartTaskTemp("去窑头卸载点", task);
+
+                    loadState = 3;
+
+                }
+                Thread.Sleep(2000);
             }
+
         }
 
         /// <summary>
@@ -2922,22 +2975,28 @@ namespace KEDAClient
         /// </summary>
         private void UnloadStaHasAGV()
         {
-            if (devsList != null && devsList.Count != 0)
+            while (true)
             {
-                foreach (var dev in devsList)
+                if (devsList != null && devsList.Count != 0 && loadState == 3)
                 {
+                    DeviceBackImf dev = devsList.Find(c => { return c.DevType == "AGV" && c.SensorList[1].RValue == _unloadgoodsSta && c.SensorList[35].RValue == "1"; });
+
                     //  窑尾装载点有没有有货状态的AGV,若有直接跳出遍历
-                    if (dev.DevType == "AGV" && dev.SensorList[1].RValue == _unloadgoodsSta && dev.SensorList[35].RValue == "1")
+                    if (dev != null)
                     {
                         _unloadStaHasAGV = true;
-                        break;
+                        loadState = 4;
+
                     }
                     else
                     {
                         _unloadStaHasAGV = false;
                     }
+
                 }
+                Thread.Sleep(2000);
             }
+
         }
 
         /// <summary>
@@ -2945,38 +3004,38 @@ namespace KEDAClient
         /// </summary>
         private void UnloadLineRollerTable()
         {
-            if (_unloadStaHasAGV)
+            while (true)
             {
-                if (devsList != null && devsList.Count != 0)
+                if (_unloadStaHasAGV && loadState == 4)
                 {
-                    foreach (var dev in devsList)
+                    if (devsList != null && devsList.Count != 0)
                     {
+                        DeviceBackImf dev = devsList.Find(c => { return c.DevType == "PLC" && c.DevStatue == "True" && c.DevId == "PLC0000002"; });
+
                         // 装载点有有货的AGV，线边辊台准备接货
-                        if (dev.DevType == "PLC" && dev.DevStatue == "True")
+                        if (dev != null)
                         {
                             // 线边辊台上料 正转  Order1: 1,1
                             JtWcfMainHelper.SendOrder(dev.DevId, new CommonDeviceOrderObj("线边辊台上料 停止" + LocSite, 1, 1, 1));
+
+                            Thread.Sleep(3000);
                             // 判断线边辊台电机是否正在转动
                             if (dev.SensorList[1].RValue == "1")
                             {
                                 _isRorate = true;
+                                loadState =5;
+
                             }
                             else
                             {
                                 _isRorate = false;
                             }
                         }
+
                     }
                 }
-                //else
-                //{
-                //    SetOutputMsg("当前设备列表为空，请检查！");
-                //}
+                Thread.Sleep(2000);
             }
-            //else
-            //{
-            //    SetOutputMsg("窑头卸载点没有AGV! ");
-            //}
         }
 
         /// <summary>
@@ -2984,25 +3043,27 @@ namespace KEDAClient
         /// </summary>
         private void ReadyToUnload()
         {
-            if (_isRorate)
+            while (true)
             {
-                if (devsList != null && devsList.Count != 0)
+                if (_isRorate && loadState == 5)
                 {
-                    foreach (var dev in devsList)
+                    if (devsList != null && devsList.Count != 0)
                     {
+                        DeviceBackImf dev = devsList.Find(c => { return c.DevType == "AGV" && c.DevStatue == "True" && c.SensorList[1].RValue == _unloadgoodsSta && c.SensorList[9].RValue == "true" && c.SensorList[35].RValue == "1"; });
+
                         // 启动窑头卸载点的AGV 车载辊台转动卸货
-                        if (dev.DevType == "AGV" && dev.DevStatue == "True" && dev.SensorList[1].RValue == _unloadgoodsSta && dev.SensorList[9].RValue == "true" && dev.SensorList[35].RValue == "1")
+                        if (dev != null)
                         {
                             JtWcfMainHelper.SendOrder(dev.DevId, new CommonDeviceOrderObj("车载辊台下料 正转" + LocSite, 1, 2, 1));
-                            break;
+                            loadState = 6;
+
                         }
+
                     }
                 }
-                else
-                {
-                    SetOutputMsg("当前设备列表为空，请检查！");
-                }
+                Thread.Sleep(2000);
             }
+
         }
 
         /// <summary>
@@ -3010,20 +3071,26 @@ namespace KEDAClient
         /// </summary>
         private void AGVGoodsStatue()
         {
-            if (devsList != null && devsList.Count != 0)
+            while (true)
             {
-                foreach (var dev in devsList)
+                if (devsList != null && devsList.Count != 0 && loadState == 6)
                 {
+                    DeviceBackImf dev = devsList.Find(c => { return c.DevType == "AGV" && c.SensorList[35].RValue == "0"; });
+
                     // 判断AGV上的货物状态是否为无货
-                    if (dev.SensorList[35].RValue == "0")
+                    if (dev != null)
                     {
                         _AGVGoodsStatue = false;
+                        loadState = 7;
+
                     }
                     else
                     {
                         _AGVGoodsStatue = true;
                     }
+
                 }
+                Thread.Sleep(2000);
             }
         }
 
@@ -3032,30 +3099,28 @@ namespace KEDAClient
         /// </summary>
         private void UnloadLineRollerTableStop()
         {
-            if (!_AGVGoodsStatue)
+            while (true)
             {
-                if (devsList != null && devsList.Count != 0)
+                if (!_AGVGoodsStatue && loadState == 7)
                 {
-                    foreach (var dev in devsList)
+                    if (devsList != null && devsList.Count != 0)
                     {
+                        DeviceBackImf dev = devsList.Find(c => { return c.DevType == "PLC" && c.DevId == "PLC0000002" && c.DevStatue == "True"; });
+
                         // 装载点有AGV，线边辊台准备出料
-                        if (dev.DevType == "PLC" && dev.DevStatue == "True")
+                        if (dev != null)
                         {
                             // 线边辊台上料  停止  Order1: 1,3
                             JtWcfMainHelper.SendOrder(dev.DevId, new CommonDeviceOrderObj("线边辊台上料 停止" + LocSite, 1, 1, 3));
-                            SetOutputMsg("AGV完成此次上料！");
+
+                            loadState = 8;
+
                         }
+
                     }
                 }
-                else
-                {
-                    SetOutputMsg("当前设备列表为空，请检查！");
-                }
+                Thread.Sleep(2000);
             }
-            //else
-            //{
-            //    SetOutputMsg("AGV上货物状态显示没货，请检查! ");
-            //}
         }
 
         /// <summary>
@@ -3063,28 +3128,38 @@ namespace KEDAClient
         /// </summary>
         private void SendAGVtoLoadWaitSta()
         {
+            while (true)
+            {
+                if (loadState == 8)
+                {
+                    // 自定义一个任务：AGV从窑头卸载点到窑尾装载等待区
+                    OnceTaskMember task = new OnceTaskMember();
 
-            // 自定义一个任务：AGV从窑头卸载点到窑尾装载等待区
-            OnceTaskMember task = new OnceTaskMember();
+                    ////任务ID
+                    //task.DisGuid = "去窑尾装载等待区";
 
-            ////任务ID
-            //task.DisGuid = "去窑尾装载等待区";
+                    //任务名称
+                    task.TaskRelatName = "AGV从窑头卸载点到窑尾装载等待区";
 
-            //任务名称
-            task.TaskRelatName = "AGV从窑头卸载点到窑尾装载等待区";
+                    //任务完成是否自动清除
+                    task.IsAotuRemove = false;
 
-            //任务完成是否自动清除
-            task.IsAotuRemove = false;
+                    //任务中一个调度节点
+                    DispatchOrderObj dis = new DispatchOrderObj();
 
-            //任务中一个调度节点
-            DispatchOrderObj dis = new DispatchOrderObj();
+                    //调度的终点（地标）：窑尾装载等待区
+                    dis.EndSite = _loadWaitSta;
 
-            //调度的终点（地标）：窑尾装载等待区
-            dis.EndSite = _loadWaitSta;
+                    task.DisOrderList.Add(dis);
 
-            task.DisOrderList.Add(dis);
+                    JtWcfTaskHelper.StartTaskTemp("窑尾装载等待区", task);
 
-            JtWcfTaskHelper.StartTaskTemp("窑尾装载等待区", task);
+                    loadState = 0;
+                }
+
+                Thread.Sleep(2000);
+            }
+
         }
     }
 }
