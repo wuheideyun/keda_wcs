@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace KEDAClient
 {
@@ -38,11 +39,19 @@ namespace KEDAClient
         /// </summary>
         Thread _thread = null;
 
+        private SynchronizationContext mainThreadSynContext;
+
+        ListBox listBox;
+
         /// <summary>
         /// 构造函数
         /// </summary>
-        public F_DevManager()
+        public F_DevManager(SynchronizationContext context, ListBox listBoxOutput)
         {
+            mainThreadSynContext = context;
+
+            listBox = listBoxOutput;
+
             _thread = new Thread(ThreadFunc);
 
             _thread.Name = "服务端数据刷新线程";
@@ -50,6 +59,33 @@ namespace KEDAClient
             _thread.IsBackground = true;
 
             _thread.Start();
+        }
+
+        /// <summary>
+        /// 展示服务日志到界面
+        /// </summary>
+        private void sendServerLog(String msg)
+        {
+            mainThreadSynContext.Post(new SendOrPostCallback(displayLogToUi), msg);
+
+        }
+
+        /// <summary>
+        /// 回到主线程，操作日志框，展示日志
+        /// </summary>
+        private void displayLogToUi(object obj)
+        {
+            String msg = (String)obj;
+            if (string.IsNullOrEmpty(msg)) { msg = "空消息"; }
+
+            if (listBox.Items.Count > 200)
+            {
+                listBox.Items.RemoveAt(0);
+            }
+
+            listBox.Items.Add(string.Format("【{0}】：{1}", DateTime.Now.TimeOfDay.ToString(), msg));
+
+            listBox.SelectedIndex = listBox.Items.Count - 1;
         }
 
         /// <summary>

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace KEDAClient
 {
@@ -53,19 +55,20 @@ namespace KEDAClient
         /// <summary>
         /// 
         /// </summary>
-        public static void Init()
+        public static void Init(SynchronizationContext context, ListBox listBoxOutput)
         {
             if (!_init)
             {
                 _init = true;
 
-                _mDev = new F_DevManager();
+                _mDev = new F_DevManager(context, listBoxOutput);
 
-                _mTask = new F_ExcTaskManager();
+                _mTask = new F_ExcTaskManager(context,listBoxOutput);
 
-                _mLogic = new F_Logic();
+                _mLogic = new F_Logic(context, listBoxOutput);
             }
         }
+
 
         /// <summary>
         /// 停止后台服务

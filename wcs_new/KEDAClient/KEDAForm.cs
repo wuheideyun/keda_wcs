@@ -1273,7 +1273,7 @@ namespace KEDAClient
         /// 输出系统信息（任务）
         /// </summary>
         /// <param name="msg"></param>
-        private void SetOutputMsg(string msg)
+        public void SetOutputMsg(string msg)
         {
             if (string.IsNullOrEmpty(msg)) { msg = "空消息"; }
 
@@ -3092,7 +3092,7 @@ namespace KEDAClient
         private void startServer_Click(object sender, EventArgs e)
         {
             
-            F_DataCenter.Init();
+            F_DataCenter.Init(SynchronizationContext.Current,listBoxOutput);
             SetOutputMsg("服务启动");
             startServer.Enabled = false;
             stopServer.Enabled = true;

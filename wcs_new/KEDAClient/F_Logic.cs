@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace KEDAClient
 {
@@ -26,15 +27,25 @@ namespace KEDAClient
         /// </summary>
         Thread _thread = null;
 
+        private SynchronizationContext mainThreadSynContext;
+
+        ListBox listBox;
+
         /// <summary>
         /// 构造函数
         /// </summary>
-        public F_Logic()
+        public F_Logic(SynchronizationContext context, ListBox listBoxOutput)
         {
+            mainThreadSynContext = context;
+
+            listBox = listBoxOutput;
             _plcHead.Site = "60";
 
             _plcEnd.Site = "64";
-            initPLC();
+            
+            InitToEndWait();
+
+            InitToHeadWait();
 
             _thread = new Thread(ThreadFunc);
 
@@ -43,20 +54,33 @@ namespace KEDAClient
             _thread.Start();
         }
 
-        public void initPLC()
+        /// <summary>
+        /// 展示服务日志到界面
+        /// </summary>
+        private void sendServerLog(String msg)
         {
-            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(_plcEnd.Site);
-            F_AGV agv2 = F_DataCenter.MDev.IGetDevOnSite(_plcHead.Site);
+            mainThreadSynContext.Post(new SendOrPostCallback(displayLogToUi), msg);
 
-            if (agv != null)
-            {
-                _plcEnd.IsLock = true;
-            }
-            if (agv2 != null)
-            {
-                _plcHead.IsLock = true;
-            }
         }
+
+        /// <summary>
+        /// 回到主线程，操作日志框，展示日志
+        /// </summary>
+        private void displayLogToUi(object obj)
+        {
+            String msg = (String)obj;
+            if (string.IsNullOrEmpty(msg)) { msg = "空消息"; }
+
+            if (listBox.Items.Count > 200)
+            {
+                listBox.Items.RemoveAt(0);
+            }
+
+            listBox.Items.Add(string.Format("【{0}】：{1}", DateTime.Now.TimeOfDay.ToString(), msg));
+
+            listBox.SelectedIndex = listBox.Items.Count - 1;
+        }
+
 
         /// <summary>
         /// 
@@ -91,9 +115,12 @@ namespace KEDAClient
             if (!_plcEnd.IsLock && _plcEnd.Sta_Material == EnumSta_Material.有货)
             {
                 ///派发一个从窑尾装载等待区到此PLC（窑尾装载点）取货的任务
-                if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcEnd, EnumOper.取货, Convert.ToString(EnumSite.窑尾装载等待区), _plcEnd.Site)))
+                if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcEnd, EnumOper.取货, ConstSetBA.窑尾装载等待区, _plcEnd.Site)))
                 {
                     _plcEnd.IsLock = true;
+
+                    sendServerLog("任务：派发一个从窑尾装载等待区到此PLC（窑尾装载点）取货的任务");
+
                 }
             }
         }
@@ -107,11 +134,13 @@ namespace KEDAClient
 
             if (agv != null && agv.IsFree)
             {
-                F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, _plcEnd.Site, Convert.ToString(EnumSite.窑头卸载等待区));
+                F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, _plcEnd.Site, ConstSetBA.窑头卸载等待区);
 
                 task.Id = agv.Id;
 
                 F_DataCenter.MTask.IStartTask(task);
+
+                sendServerLog("任务："+ agv.Id+",窑尾取货完成Agv从窑尾装载点到窑头卸载等待区");
 
             }
         }
@@ -126,9 +155,12 @@ namespace KEDAClient
             if (!_plcHead.IsLock && _plcHead.Sta_Material == EnumSta_Material.无货)
             {
                 ///派发一个从窑头卸载等待区到此PLC取货（窑头卸载点）的任务
-                if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcHead, EnumOper.放货, "39","60")))
+                if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcHead, EnumOper.放货, ConstSetBA.窑头卸载等待区, ConstSetBA.窑头卸载点)))
                 {
                     _plcHead.IsLock = true;
+
+                    sendServerLog("任务：派发一个从窑头卸载等待区到此PLC取货（窑头卸载点）的任务");
+
                 }
             }
         }
@@ -148,6 +180,48 @@ namespace KEDAClient
                 task.Id = agv.Id;
 
                 F_DataCenter.MTask.IStartTask(task);
+
+                sendServerLog("任务：AGV:" + agv.Id + ",从窑头卸载点到窑尾装载等待区");
+
+            }
+        }
+
+        /// <summary>
+        /// 如果agv有货 回到卸载等待区
+        /// </summary>
+        private void InitToHeadWait()
+        {
+            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(_plcHead.Site);
+
+            if (agv != null)
+            {
+                F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, agv.Site, ConstSetBA.窑头卸载等待区);
+
+                task.Id = agv.Id;
+
+                F_DataCenter.MTask.IStartTask(task);
+
+                sendServerLog("任务：AGV:" + agv.Id + ",回到窑头卸载等待区");
+                
+            }
+        }
+
+        /// <summary>
+        /// 如果agv没货 回到装载等待区
+        /// </summary>
+        private void InitToEndWait()
+        {
+            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(_plcEnd.Site);
+
+            if (agv != null)
+            {
+                F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, agv.Site, ConstSetBA.窑尾装载等待区);
+
+                task.Id = agv.Id;
+
+                F_DataCenter.MTask.IStartTask(task);
+
+                sendServerLog("任务：AGV:"+agv.Id+ ",回到窑尾装载等待区");
 
             }
         }

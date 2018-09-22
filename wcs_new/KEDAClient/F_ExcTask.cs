@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace KEDAClient
 {
@@ -112,9 +113,9 @@ namespace KEDAClient
         /// <summary>
         /// 事务处理
         /// </summary>
-        public void DoWork()
+        public String DoWork()
         {
-            if (_isSuc) { return; }
+            if (_isSuc) { return ""; }
 
             _taskDispatch = JTWcfHelper.WcfMainHelper.GetDispatch(Id);
 
@@ -129,6 +130,7 @@ namespace KEDAClient
                 string back = "";
 
                 JTWcfHelper.WcfMainHelper.StartDispatch(dis, out back);
+                return back;
             }
             else
             {
@@ -163,6 +165,7 @@ namespace KEDAClient
                                 }
                             }
                         }
+                        return "";
                     }
                     else if (_operType == EnumOper.放货)
                     {
@@ -191,12 +194,15 @@ namespace KEDAClient
                             }
 
                         }
+                        return "";
                     }
                     else if (_operType == EnumOper.无动作)
                     {
                         ISetTaskSuc();
+                        return "";
                     }
                 }
+                return "";
             }
         }
     }
@@ -207,6 +213,9 @@ namespace KEDAClient
     public class F_ExcTaskManager
     {
         object _ans = new object();
+        private SynchronizationContext mainThreadSynContext;
+
+        ListBox listBox;
 
         List<F_ExcTask> _taskList = new List<F_ExcTask>();
 
@@ -218,8 +227,12 @@ namespace KEDAClient
         /// <summary>
         /// 构造函数
         /// </summary>
-        public F_ExcTaskManager()
+        public F_ExcTaskManager(SynchronizationContext context, ListBox listBoxOutput)
         {
+            mainThreadSynContext = context;
+
+            listBox = listBoxOutput;
+
             _thread = new Thread(ThreadFunc);
 
             _thread.Name = "任务处理线程";
@@ -227,6 +240,34 @@ namespace KEDAClient
             _thread.IsBackground = true;
 
             _thread.Start();
+        }
+
+
+        /// <summary>
+        /// 展示服务日志到界面
+        /// </summary>
+        private void sendServerLog(String msg)
+        {
+            mainThreadSynContext.Post(new SendOrPostCallback(displayLogToUi), msg);
+
+        }
+
+        /// <summary>
+        /// 回到主线程，操作日志框，展示日志
+        /// </summary>
+        private void displayLogToUi(object obj)
+        {
+            String msg = (String)obj;
+            if (string.IsNullOrEmpty(msg)) { msg = "空消息"; }
+
+            if (listBox.Items.Count > 200)
+            {
+                listBox.Items.RemoveAt(0);
+            }
+
+            listBox.Items.Add(string.Format("【{0}】：{1}", DateTime.Now.TimeOfDay.ToString(), msg));
+
+            listBox.SelectedIndex = listBox.Items.Count - 1;
         }
 
         /// <summary>
@@ -246,7 +287,8 @@ namespace KEDAClient
 
                     foreach (var item in taskList)
                     {
-                        item.DoWork();
+                        String msg = item.DoWork();
+                        if (msg != "") sendServerLog(msg);
 
                         if (item.IsSuc) { IDeletTask(item.Id); }
                     }
