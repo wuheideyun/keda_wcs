@@ -114,12 +114,12 @@ namespace KEDAClient
             ///窑尾有货 并且 此次任务没有被响应
             if (!_plcEnd.IsLock && _plcEnd.Sta_Material == EnumSta_Material.有货)
             {
-                ///派发一个从窑尾装载等待区到此PLC（窑尾装载点）取货的任务
+                ///派发一个从窑尾装载等待区到窑尾装载点取货的任务
                 if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcEnd, EnumOper.取货, ConstSetBA.窑尾装载等待区, _plcEnd.Site)))
                 {
                     _plcEnd.IsLock = true;
 
-                    sendServerLog("任务：派发一个从窑尾装载等待区到此PLC（窑尾装载点）取货的任务");
+                    sendServerLog("任务：派发一个从窑尾装载等待区到窑尾装载点取货的任务");
 
                 }
             }
@@ -154,12 +154,12 @@ namespace KEDAClient
             ///窑头无货 并且 此次任务没有被响应
             if (!_plcHead.IsLock && _plcHead.Sta_Material == EnumSta_Material.无货)
             {
-                ///派发一个从窑头卸载等待区到此PLC取货（窑头卸载点）的任务
+                ///派发一个从窑头卸载等待区到窑头卸载点的任务
                 if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcHead, EnumOper.放货, ConstSetBA.窑头卸载等待区, ConstSetBA.窑头卸载点)))
                 {
                     _plcHead.IsLock = true;
 
-                    sendServerLog("任务：派发一个从窑头卸载等待区到此PLC取货（窑头卸载点）的任务");
+                    sendServerLog("任务：派发一个从窑头卸载等待区到窑头卸载点的任务");
 
                 }
             }
@@ -175,7 +175,7 @@ namespace KEDAClient
 
             if (agv != null && agv.IsFree)
             {
-                F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, "60", "63");
+                F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, ConstSetBA.窑头卸载点, ConstSetBA.窑尾装载等待区);
 
                 task.Id = agv.Id;
 

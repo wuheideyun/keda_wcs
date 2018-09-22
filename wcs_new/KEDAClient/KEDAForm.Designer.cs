@@ -43,6 +43,8 @@
             this.登录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.注销登录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.用户登录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.startServer = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopServer = new System.Windows.Forms.ToolStripMenuItem();
             this.labelLogo = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -96,8 +98,6 @@
             this.timerFunc = new System.Windows.Forms.Timer(this.components);
             this.Statetimer = new System.Windows.Forms.Timer(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.startServer = new System.Windows.Forms.ToolStripMenuItem();
-            this.stopServer = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -219,6 +219,21 @@
             this.用户登录ToolStripMenuItem.Text = "用户登录(&L)";
             this.用户登录ToolStripMenuItem.Click += new System.EventHandler(this.用户登录ToolStripMenuItem_Click_1);
             // 
+            // startServer
+            // 
+            this.startServer.Name = "startServer";
+            this.startServer.Size = new System.Drawing.Size(68, 21);
+            this.startServer.Text = "启动服务";
+            this.startServer.Click += new System.EventHandler(this.startServer_Click);
+            // 
+            // stopServer
+            // 
+            this.stopServer.Enabled = false;
+            this.stopServer.Name = "stopServer";
+            this.stopServer.Size = new System.Drawing.Size(68, 21);
+            this.stopServer.Text = "停止服务";
+            this.stopServer.Click += new System.EventHandler(this.stopServer_Click);
+            // 
             // labelLogo
             // 
             this.labelLogo.AutoSize = true;
@@ -293,7 +308,7 @@
             this.groupBox1.Font = new System.Drawing.Font("宋体", 12F);
             this.groupBox1.Location = new System.Drawing.Point(6, 295);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(367, 140);
+            this.groupBox1.Size = new System.Drawing.Size(668, 140);
             this.groupBox1.TabIndex = 28;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "系统信息";
@@ -302,9 +317,10 @@
             // 
             this.listBoxOutput.Font = new System.Drawing.Font("宋体", 10F);
             this.listBoxOutput.FormattingEnabled = true;
+            this.listBoxOutput.HorizontalScrollbar = true;
             this.listBoxOutput.Location = new System.Drawing.Point(14, 25);
             this.listBoxOutput.Name = "listBoxOutput";
-            this.listBoxOutput.Size = new System.Drawing.Size(345, 108);
+            this.listBoxOutput.Size = new System.Drawing.Size(648, 108);
             this.listBoxOutput.TabIndex = 9;
             // 
             // tabControl2
@@ -854,21 +870,6 @@
             // 
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // startServer
-            // 
-            this.startServer.Name = "startServer";
-            this.startServer.Size = new System.Drawing.Size(68, 21);
-            this.startServer.Text = "启动服务";
-            this.startServer.Click += new System.EventHandler(this.startServer_Click);
-            // 
-            // stopServer
-            // 
-            this.stopServer.Enabled = false;
-            this.stopServer.Name = "stopServer";
-            this.stopServer.Size = new System.Drawing.Size(68, 21);
-            this.stopServer.Text = "停止服务";
-            this.stopServer.Click += new System.EventHandler(this.stopServer_Click);
             // 
             // KEDAForm
             // 
