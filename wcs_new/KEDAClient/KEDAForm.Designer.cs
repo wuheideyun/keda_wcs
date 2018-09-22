@@ -96,6 +96,8 @@
             this.timerFunc = new System.Windows.Forms.Timer(this.components);
             this.Statetimer = new System.Windows.Forms.Timer(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.startServer = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopServer = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -178,7 +180,9 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.刷新ToolStripMenuItem,
-            this.登录ToolStripMenuItem});
+            this.登录ToolStripMenuItem,
+            this.startServer,
+            this.stopServer});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1011, 25);
@@ -851,6 +855,21 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // startServer
+            // 
+            this.startServer.Name = "startServer";
+            this.startServer.Size = new System.Drawing.Size(68, 21);
+            this.startServer.Text = "启动服务";
+            this.startServer.Click += new System.EventHandler(this.startServer_Click);
+            // 
+            // stopServer
+            // 
+            this.stopServer.Enabled = false;
+            this.stopServer.Name = "stopServer";
+            this.stopServer.Size = new System.Drawing.Size(68, 21);
+            this.stopServer.Text = "停止服务";
+            this.stopServer.Click += new System.EventHandler(this.stopServer_Click);
+            // 
             // KEDAForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -965,5 +984,7 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ToolStripMenuItem startServer;
+        private System.Windows.Forms.ToolStripMenuItem stopServer;
     }
 }

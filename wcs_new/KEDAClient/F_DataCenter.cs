@@ -66,5 +66,19 @@ namespace KEDAClient
                 _mLogic = new F_Logic();
             }
         }
+
+        /// <summary>
+        /// 停止后台服务
+        /// </summary>
+        public static void StopServer()
+        {
+            if (_init)
+            {
+                _mDev.ThreadStop();
+                _mTask.ThreadStop();
+                _mLogic.ThreadStop();
+                _init = false;
+            }
+        }
     }
 }

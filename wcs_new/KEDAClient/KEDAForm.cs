@@ -16,7 +16,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using JTWcfHelper;
 
 
 namespace KEDAClient
@@ -337,7 +336,7 @@ namespace KEDAClient
             UpdateBtnMember();
 
             //启动作业线程
-            F_DataCenter.Init();
+            //F_DataCenter.Init();
 
             this.WindowState = FormWindowState.Maximized;
 
@@ -3085,6 +3084,29 @@ namespace KEDAClient
               
             }
 
+        }
+
+        /// <summary>
+        ///  启动服务
+        /// </summary>
+        private void startServer_Click(object sender, EventArgs e)
+        {
+            
+            F_DataCenter.Init();
+            SetOutputMsg("服务启动");
+            startServer.Enabled = false;
+            stopServer.Enabled = true;
+        }
+
+        /// <summary>
+        ///  停止服务
+        /// </summary>
+        private void stopServer_Click(object sender, EventArgs e)
+        {
+            F_DataCenter.StopServer();
+            SetOutputMsg("服务停止");
+            startServer.Enabled = true;
+            stopServer.Enabled = false;
         }
 
         /// <summary>

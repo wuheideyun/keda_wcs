@@ -117,6 +117,7 @@ namespace KEDAClient
             }
         }
 
+
         /// <summary>
         /// 窑头卸货完成Agv从窑头卸载点到窑尾装载等待区
         /// </summary>
@@ -133,6 +134,15 @@ namespace KEDAClient
                 F_DataCenter.MTask.IStartTask(task);
 
             }
+        }
+
+        /// <summary>
+        /// 停止事务线程
+        /// </summary>
+        public void ThreadStop()
+        {
+            if (_thread != null) _thread.Abort();
+
         }
     }
 }
