@@ -108,5 +108,14 @@ namespace KEDAClient
                 }
             }
         }
+
+
+        /// <summary>
+        /// 停止事务线程
+        /// </summary>
+        public void ThreadStop()
+        {
+            if (_thread != null) _thread.Abort();
+        }
     }
 }
