@@ -197,6 +197,7 @@ namespace KEDAClient
             return null;
         }
 
+
         /// <summary>
         /// 获取不在窑头卸载等待区，并且有货的AGV
         /// </summary>

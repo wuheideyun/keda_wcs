@@ -160,8 +160,10 @@ namespace KEDAClient
         /// </summary>
         private void TaskPlcHeadPut()
         {
+            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.窑头卸载等待区);
+
             ///窑头无货 并且 此次任务没有被响应
-            if (!_plcHead.IsLock && _plcHead.Sta_Material == EnumSta_Material.无货)
+            if (!_plcHead.IsLock && _plcHead.Sta_Material == EnumSta_Material.无货 && agv !=null)
             {
                 ///派发一个从窑头卸载等待区到窑头卸载点的任务
                 if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcHead, EnumOper.放货, ConstSetBA.窑头卸载等待区, ConstSetBA.窑头卸载点)))
