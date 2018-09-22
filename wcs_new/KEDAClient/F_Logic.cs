@@ -14,12 +14,12 @@ namespace KEDAClient
         /// <summary>
         /// 窑尾PLC
         /// </summary>
-        F_PLCLine _plcEnd = new F_PLCLine("PLC0000001");
+        F_PLCLine _plcEnd = new F_PLCLine("PLC0000002");
 
         /// <summary>
         /// 窑头PLC
         /// </summary>
-        F_PLCLine _plcHead = new F_PLCLine("PLC0000002");
+        F_PLCLine _plcHead = new F_PLCLine("PLC0000001");
 
         /// <summary>
         /// 事务处理线程
@@ -31,15 +31,31 @@ namespace KEDAClient
         /// </summary>
         public F_Logic()
         {
-            _plcHead.Site = "2";
+            _plcHead.Site = "60";
 
-            _plcEnd.Site = "1";
+            _plcEnd.Site = "64";
+            initPLC();
 
             _thread = new Thread(ThreadFunc);
 
             _thread.IsBackground = true;
 
             _thread.Start();
+        }
+
+        public void initPLC()
+        {
+            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(_plcEnd.Site);
+            F_AGV agv2 = F_DataCenter.MDev.IGetDevOnSite(_plcHead.Site);
+
+            if (agv != null)
+            {
+                _plcEnd.IsLock = true;
+            }
+            if (agv2 != null)
+            {
+                _plcHead.IsLock = true;
+            }
         }
 
         /// <summary>
@@ -75,7 +91,7 @@ namespace KEDAClient
             if (!_plcEnd.IsLock && _plcEnd.Sta_Material == EnumSta_Material.有货)
             {
                 ///派发一个从窑尾装载等待区到此PLC（窑尾装载点）取货的任务
-                if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcEnd, EnumOper.取货, EnumSite.窑尾装载等待区.ToString(), _plcEnd.Site)))
+                if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcEnd, EnumOper.取货, Convert.ToString(EnumSite.窑尾装载等待区), _plcEnd.Site)))
                 {
                     _plcEnd.IsLock = true;
                 }
@@ -91,7 +107,7 @@ namespace KEDAClient
 
             if (agv != null && agv.IsFree)
             {
-                F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, _plcEnd.Site, EnumSite.窑头卸载等待区.ToString());
+                F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, _plcEnd.Site, Convert.ToString(EnumSite.窑头卸载等待区));
 
                 task.Id = agv.Id;
 
@@ -110,7 +126,7 @@ namespace KEDAClient
             if (!_plcHead.IsLock && _plcHead.Sta_Material == EnumSta_Material.无货)
             {
                 ///派发一个从窑头卸载等待区到此PLC取货（窑头卸载点）的任务
-                if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcHead, EnumOper.放货, EnumSite.窑头卸载等待区.ToString(), _plcHead.Site)))
+                if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcHead, EnumOper.放货, "39","60")))
                 {
                     _plcHead.IsLock = true;
                 }
@@ -127,7 +143,7 @@ namespace KEDAClient
 
             if (agv != null && agv.IsFree)
             {
-                F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, _plcHead.Site, EnumSite.窑尾装载等待区.ToString());
+                F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, "60", "63");
 
                 task.Id = agv.Id;
 
