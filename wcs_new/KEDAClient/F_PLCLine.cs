@@ -31,7 +31,11 @@ namespace KEDAClient
 
         停止 = 3,
 
-        未知
+        未知,
+
+        电机运行 = 1,
+
+        电机停止 = 2,
     }
 
     /// <summary>
@@ -52,10 +56,19 @@ namespace KEDAClient
     public enum EnumPara
     {
         正向启动 = 1,
-
         反向启动 = 2,
-
         辊台停止 = 0,
+
+        agv上料启动 = 2,
+        agv下料启动 = 2,
+        agv辊台停止 = 3,
+
+        窑尾辊台允许下料 = 1,
+        窑尾辊台禁止下料 = 2,
+
+        窑头辊台上料中 = 1,
+        窑头辊台上料完成 = 2,
+        窑头辊台其他状态 = 3,
     }
 
     /// <summary>

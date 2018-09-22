@@ -12,7 +12,7 @@ namespace KEDAClient
     /// 操作类型
     /// </summary>
     public enum EnumOper
-    { 
+    {
         无动作,
         取货,
         放货
@@ -24,7 +24,7 @@ namespace KEDAClient
     public class F_ExcTask
     {
         string _id = Guid.NewGuid().ToString();
-        
+
         /// <summary>
         /// 任务起点
         /// </summary>
@@ -87,7 +87,7 @@ namespace KEDAClient
         /// </summary>
         /// <param name="plc"></param>
         /// <param name="oper"></param>
-        public F_ExcTask(F_PLCLine plc,EnumOper oper,string startSite,string endSite)
+        public F_ExcTask(F_PLCLine plc, EnumOper oper, string startSite, string endSite)
         {
             _plc = plc;
 
@@ -138,6 +138,7 @@ namespace KEDAClient
                 ///此次调度任务已经完成
                 if (_taskDispatch.OrderStatue == ResultTypeEnum.Suc)
                 {
+
                     if (_operType == EnumOper.取货)
                     {
                         ///当前AGV的到达的地标 与 棍台绑定地标一致
@@ -145,18 +146,18 @@ namespace KEDAClient
                         {
                             if (_plc.Sta_Material == EnumSta_Material.有货 && _agv.Sta_Material == EnumSta_Material.无货)
                             {
-                                _agv.SendOrdr(EnumType.上料操作, EnumPara.反向启动);
+                                _agv.SendOrdr(EnumType.上料操作, EnumPara.agv上料启动);
 
-                                _plc.SendOrdr(EnumType.下料操作, EnumPara.正向启动);
+                                _plc.SendOrdr(EnumType.下料操作, EnumPara.窑尾辊台允许下料);
                             }
 
                             if (_plc.Sta_Material == EnumSta_Material.无货 && _agv.Sta_Material == EnumSta_Material.有货)
                             {
-                                _agv.SendOrdr(EnumType.上料操作, EnumPara.辊台停止);
+                                _agv.SendOrdr(EnumType.上料操作, EnumPara.agv辊台停止);
 
-                                _plc.SendOrdr(EnumType.下料操作, EnumPara.辊台停止);
+                                _plc.SendOrdr(EnumType.下料操作, EnumPara.窑头辊台上料完成);
 
-                                if (_plc.Sta_Monitor == EnumSta_Monitor.停止)
+                                if (_plc.Sta_Monitor == EnumSta_Monitor.电机停止)
                                 {
                                     ISetTaskSuc();
                                 }
@@ -168,6 +169,26 @@ namespace KEDAClient
                         ///当前AGV的到达的地标 与 棍台绑定地标一致
                         if (_agv.Site == _plc.Site)
                         {
+
+
+                            if (_plc.Sta_Material == EnumSta_Material.无货 && _agv.Sta_Material == EnumSta_Material.有货)
+                            {
+                                _agv.SendOrdr(EnumType.下料操作, EnumPara.agv下料启动);
+
+                                _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台上料中);
+                            }
+
+                            if (_plc.Sta_Material == EnumSta_Material.有货 && _agv.Sta_Material == EnumSta_Material.无货)
+                            {
+                                _agv.SendOrdr(EnumType.下料操作, EnumPara.agv辊台停止);
+
+                                _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台上料完成);
+
+                                if (_plc.Sta_Monitor == EnumSta_Monitor.电机停止)
+                                {
+                                    ISetTaskSuc();
+                                }
+                            }
 
                         }
                     }
@@ -261,9 +282,9 @@ namespace KEDAClient
             {
                 F_ExcTask exit = _taskList.Find(c => { return c.Id == Id; });
 
-                if (exit != null && _taskList.Contains(exit)) 
-                { 
-                    _taskList.Remove(exit); 
+                if (exit != null && _taskList.Contains(exit))
+                {
+                    _taskList.Remove(exit);
                 }
             }
         }
