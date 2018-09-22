@@ -346,73 +346,73 @@ namespace KEDAClient
             queryDataThread.Start();
 
 
-            thread1 = new Thread(LoadStaHasGoods);
-            thread1.IsBackground = true;
-            thread1.Start();
+            //thread1 = new Thread(LoadStaHasGoods);
+            //thread1.IsBackground = true;
+            //thread1.Start();
 
-            thread2 = new Thread(HasFreeAGV);
-            thread2.IsBackground = true;
-            thread2.Start();
+            //thread2 = new Thread(HasFreeAGV);
+            //thread2.IsBackground = true;
+            //thread2.Start();
 
-            thread3 = new Thread(SendAGVtoLoadSta);
-            thread3.IsBackground = true;
-            thread3.Start();
+            //thread3 = new Thread(SendAGVtoLoadSta);
+            //thread3.IsBackground = true;
+            //thread3.Start();
 
-            thread4 = new Thread(LoadStaHasAGV);
-            thread4.IsBackground = true;
-            thread4.Start();
+            //thread4 = new Thread(LoadStaHasAGV);
+            //thread4.IsBackground = true;
+            //thread4.Start();
 
-            thread5 = new Thread(LoadLineRollerTable);
-            thread5.IsBackground = true;
-            thread5.Start();
+            //thread5 = new Thread(LoadLineRollerTable);
+            //thread5.IsBackground = true;
+            //thread5.Start();
 
-            thread6 = new Thread(AGVHasGoods);
-            thread6.IsBackground = true;
-            thread6.Start();
+            //thread6 = new Thread(AGVHasGoods);
+            //thread6.IsBackground = true;
+            //thread6.Start();
 
-            thread7 = new Thread(LoadLineRollerTableStop);
-            thread7.IsBackground = true;
-            thread7.Start();
+            //thread7 = new Thread(LoadLineRollerTableStop);
+            //thread7.IsBackground = true;
+            //thread7.Start();
 
-            thread8 = new Thread(SendAGVtoUnloadWaitSta);
-            thread8.IsBackground = true;
-            thread8.Start();
+            //thread8 = new Thread(SendAGVtoUnloadWaitSta);
+            //thread8.IsBackground = true;
+            //thread8.Start();
 
-            thread9 = new Thread(UnloadWaitStaHasAGV);
-            thread9.IsBackground = true;
-            thread9.Start();
+            //thread9 = new Thread(UnloadWaitStaHasAGV);
+            //thread9.IsBackground = true;
+            //thread9.Start();
 
-            thread10 = new Thread(UnloadStaHasGoods);
-            thread10.IsBackground = true;
-            thread10.Start();
+            //thread10 = new Thread(UnloadStaHasGoods);
+            //thread10.IsBackground = true;
+            //thread10.Start();
 
-            thread11 = new Thread(SendAGVtoUnloadSta);
-            thread11.IsBackground = true;
-            thread11.Start();
+            //thread11 = new Thread(SendAGVtoUnloadSta);
+            //thread11.IsBackground = true;
+            //thread11.Start();
 
-            thread12 = new Thread(UnloadStaHasAGV);
-            thread12.IsBackground = true;
-            thread12.Start();
+            //thread12 = new Thread(UnloadStaHasAGV);
+            //thread12.IsBackground = true;
+            //thread12.Start();
 
-            thread13 = new Thread(UnloadLineRollerTable);
-            thread13.IsBackground = true;
-            thread13.Start();
+            //thread13 = new Thread(UnloadLineRollerTable);
+            //thread13.IsBackground = true;
+            //thread13.Start();
 
-            thread14 = new Thread(ReadyToUnload);
-            thread14.IsBackground = true;
-            thread14.Start();
+            //thread14 = new Thread(ReadyToUnload);
+            //thread14.IsBackground = true;
+            //thread14.Start();
 
-            thread15 = new Thread(AGVGoodsStatue);
-            thread15.IsBackground = true;
-            thread15.Start();
+            //thread15 = new Thread(AGVGoodsStatue);
+            //thread15.IsBackground = true;
+            //thread15.Start();
 
-            thread16 = new Thread(UnloadLineRollerTableStop);
-            thread16.IsBackground = true;
-            thread16.Start();
+            //thread16 = new Thread(UnloadLineRollerTableStop);
+            //thread16.IsBackground = true;
+            //thread16.Start();
 
-            thread17 = new Thread(SendAGVtoLoadWaitSta);
-            thread17.IsBackground = true;
-            thread17.Start();
+            //thread17 = new Thread(SendAGVtoLoadWaitSta);
+            //thread17.IsBackground = true;
+            //thread17.Start();
         }
 
 
