@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using GfxCommonInterfaces;
 
 namespace KEDAClient
 {
@@ -173,7 +174,8 @@ namespace KEDAClient
         {
             lock (_ans)
             {
-                return _dispatchList.Find(c => { return c.DisDevId == devid; }) != null;
+
+                return _dispatchList.Find(c => { return c.DisDevId == devid && c.OrderStatue != ResultTypeEnum.Suc; }) != null;
             }
         }
 
@@ -189,6 +191,57 @@ namespace KEDAClient
                 DeviceBackImf dev = _devList.Find(c => { return c.DevType == "AGV" && c.SensorList[1].RValue == site; });
 
                 if (dev != null) { return new F_AGV(dev.DevId); }
+            }
+            catch { }
+
+            return null;
+        }
+
+        /// <summary>
+        /// 获取不在窑头卸载等待区，并且有货的AGV
+        /// </summary>
+        /// <param name="site"></param>
+        /// <returns></returns>
+        public List<F_AGV> IGetDevNotOnWaitSite()
+        {
+            try
+            {
+                List<DeviceBackImf> devs = _devList.FindAll(c => { return c.DevType == "AGV" && c.SensorList[1].RValue != ConstSetBA.窑头卸载等待区 && c.SensorList[26].RValue =="1"; });
+
+                if (devs != null) {
+                    List<F_AGV> list = new List<F_AGV>();
+                    foreach(DeviceBackImf dev in devs)
+                    {
+                        list.Add(new F_AGV(dev.DevId));
+                    }
+                    return list;
+                }
+            }
+            catch { }
+
+            return null;
+        }
+
+        /// <summary>
+        /// 获取不在窑头卸载等待区，并且没货的AGV
+        /// </summary>
+        /// <param name="site"></param>
+        /// <returns></returns>
+        public List<F_AGV> IGetDevNotLoadOnWaitSite()
+        {
+            try
+            {
+                List<DeviceBackImf> devs = _devList.FindAll(c => { return c.DevType == "AGV" && c.SensorList[1].RValue != ConstSetBA.窑尾装载等待区 && c.SensorList[26].RValue == "2"; });
+
+                if (devs != null)
+                {
+                    List<F_AGV> list = new List<F_AGV>();
+                    foreach (DeviceBackImf dev in devs)
+                    {
+                        list.Add(new F_AGV(dev.DevId));
+                    }
+                    return list;
+                }
             }
             catch { }
 

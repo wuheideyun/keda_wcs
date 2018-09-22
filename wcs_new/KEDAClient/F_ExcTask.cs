@@ -125,6 +125,7 @@ namespace KEDAClient
 
                 dis.EndSite = _endSite;
 
+
                 if (!string.IsNullOrEmpty(_startSite)) { dis.StartSiteList.Add(_startSite); }
 
                 string back = "";
@@ -146,14 +147,18 @@ namespace KEDAClient
                         ///当前AGV的到达的地标 与 棍台绑定地标一致
                         if (_agv.Site == _plc.Site)
                         {
-                            if (_plc.Sta_Material == EnumSta_Material.有货 && _agv.Sta_Material == EnumSta_Material.无货)
+
+                            if (//_plc.Sta_Material == EnumSta_Material.有货 && 
+                            (_agv.Sta_Material == EnumSta_Material.无货 || _agv.Sta_Material == EnumSta_Material.传送中))
                             {
                                 _agv.SendOrdr(EnumType.上料操作, EnumPara.agv上料启动);
 
                                 _plc.SendOrdr(EnumType.下料操作, EnumPara.窑尾辊台允许下料);
                             }
 
-                            if (_plc.Sta_Material == EnumSta_Material.无货 && _agv.Sta_Material == EnumSta_Material.有货)
+
+                            if (_plc.Sta_Material == EnumSta_Material.无货 &&
+                                _agv.Sta_Material == EnumSta_Material.有货)
                             {
                                 _agv.SendOrdr(EnumType.上料操作, EnumPara.agv辊台停止);
 
@@ -173,19 +178,31 @@ namespace KEDAClient
                         if (_agv.Site == _plc.Site)
                         {
 
-
-                            if (_plc.Sta_Material == EnumSta_Material.无货 && _agv.Sta_Material == EnumSta_Material.有货)
+                            if (//_plc.Sta_Material == EnumSta_Material.无货 &&
+                                _agv.Sta_Material == EnumSta_Material.有货)
                             {
+                                _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台上料中);
+
                                 _agv.SendOrdr(EnumType.下料操作, EnumPara.agv下料启动);
 
-                                _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台上料中);
                             }
+
+                            if (//_plc.Sta_Material == EnumSta_Material.有货 &&
+                                (_agv.Sta_Material == EnumSta_Material.传送中 || _agv.Sta_Material == EnumSta_Material.有货))
+                            {
+                                _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台上料中);
+
+                                _agv.SendOrdr(EnumType.下料操作, EnumPara.agv下料启动);
+
+                            }
+
 
                             if (_plc.Sta_Material == EnumSta_Material.有货 && _agv.Sta_Material == EnumSta_Material.无货)
                             {
+                                _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台上料完成);
+
                                 _agv.SendOrdr(EnumType.下料操作, EnumPara.agv辊台停止);
 
-                                _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台上料完成);
 
                                 if (_plc.Sta_Monitor == EnumSta_Monitor.电机停止)
                                 {
@@ -336,7 +353,7 @@ namespace KEDAClient
         /// </summary>
         public void ThreadStop()
         {
-            if(_thread !=null) _thread.Abort();
+            if (_thread != null) _thread.Abort();
         }
     }
 }

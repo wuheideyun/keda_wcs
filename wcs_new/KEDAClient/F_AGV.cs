@@ -55,6 +55,25 @@ namespace KEDAClient
         }
 
         /// <summary>
+        /// 电机状态
+        /// </summary>
+        public EnumSta_Monitor Sta_Monitor
+        {
+            get
+            {
+                EnumSta_Monitor result = EnumSta_Monitor.未知;
+
+                try
+                {
+                    result = (EnumSta_Monitor)Convert.ToInt32((F_DataCenter.MDev.IGetSenValue(_id, "0037")));
+                }
+                catch { result = EnumSta_Monitor.未知; }
+
+                return result;
+            }
+        }
+
+        /// <summary>
         /// 当前地标
         /// </summary>
         /// <returns></returns>
@@ -85,7 +104,7 @@ namespace KEDAClient
         {
             get
             {
-                return F_DataCenter.MDev.IGetSenValue(_id, "0010") == "true" && !F_DataCenter.MDev.IsDevInDispath(_id);
+                return F_DataCenter.MDev.IGetSenValue(_id, "0010") == "true" && !(F_DataCenter.MDev.IsDevInDispath(_id));
             }
         }
 

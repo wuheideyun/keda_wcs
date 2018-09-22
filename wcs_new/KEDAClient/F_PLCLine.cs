@@ -59,8 +59,8 @@ namespace KEDAClient
         反向启动 = 2,
         辊台停止 = 0,
 
-        agv上料启动 = 2,
-        agv下料启动 = 2,
+        agv上料启动 = 1,
+        agv下料启动 = 1,
         agv辊台停止 = 3,
 
         窑尾辊台允许下料 = 1,

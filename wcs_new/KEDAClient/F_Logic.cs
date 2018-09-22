@@ -15,7 +15,7 @@ namespace KEDAClient
         /// <summary>
         /// 窑尾PLC
         /// </summary>
-        F_PLCLine _plcEnd = new F_PLCLine("PLC0000002");
+        F_PLCLine _plcEnd = new F_PLCLine("PLC0000001");
 
         /// <summary>
         /// 窑头PLC
@@ -39,19 +39,28 @@ namespace KEDAClient
             mainThreadSynContext = context;
 
             listBox = listBoxOutput;
-            _plcHead.Site = "60";
 
-            _plcEnd.Site = "64";
+            _plcHead.Site = ConstSetBA.窑头卸载点;
+
+            _plcEnd.Site = ConstSetBA.窑尾装载点;
             
-            InitToEndWait();
+            //InitToEndWait();
 
-            InitToHeadWait();
+            //InitToHeadWait();
 
             _thread = new Thread(ThreadFunc);
 
             _thread.IsBackground = true;
 
             _thread.Start();
+
+            Thread tr = new Thread(InitToHeadWait);
+            tr.IsBackground = true;
+            tr.Start();
+
+            Thread tr2 = new Thread(InitToEndWait);
+            tr2.IsBackground = true;
+            tr2.Start();
         }
 
         /// <summary>
@@ -112,7 +121,7 @@ namespace KEDAClient
         private void TaskPlcEndGet()
         {
             ///窑尾有货 并且 此次任务没有被响应
-            if (!_plcEnd.IsLock && _plcEnd.Sta_Material == EnumSta_Material.有货)
+            if (!_plcEnd.IsLock )//&& _plcEnd.Sta_Material == EnumSta_Material.有货)
             {
                 ///派发一个从窑尾装载等待区到窑尾装载点取货的任务
                 if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcEnd, EnumOper.取货, ConstSetBA.窑尾装载等待区, _plcEnd.Site)))
@@ -132,9 +141,9 @@ namespace KEDAClient
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(_plcEnd.Site);
 
-            if (agv != null && agv.IsFree)
+            if (agv != null && agv.IsFree && agv.Sta_Material == EnumSta_Material.有货)
             {
-                F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, _plcEnd.Site, ConstSetBA.窑头卸载等待区);
+                F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, ConstSetBA.窑尾装载点, ConstSetBA.窑头卸载等待区);
 
                 task.Id = agv.Id;
 
@@ -173,7 +182,7 @@ namespace KEDAClient
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(_plcHead.Site);
 
-            if (agv != null && agv.IsFree)
+            if (agv != null && agv.IsFree && agv.Sta_Material == EnumSta_Material.无货)
             {
                 F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, ConstSetBA.窑头卸载点, ConstSetBA.窑尾装载等待区);
 
@@ -181,7 +190,7 @@ namespace KEDAClient
 
                 F_DataCenter.MTask.IStartTask(task);
 
-                sendServerLog("任务：AGV:" + agv.Id + ",从窑头卸载点到窑尾装载等待区");
+                sendServerLog("任务:" + agv.Id + ",从窑头卸载点到窑尾装载等待区");
 
             }
         }
@@ -191,18 +200,22 @@ namespace KEDAClient
         /// </summary>
         private void InitToHeadWait()
         {
-            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(_plcHead.Site);
+            Thread.Sleep(5000);
+            List<F_AGV> agvs = F_DataCenter.MDev.IGetDevNotOnWaitSite();
 
-            if (agv != null)
+            if (agvs != null)
             {
-                F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, agv.Site, ConstSetBA.窑头卸载等待区);
+                foreach(F_AGV agv in agvs)
+                {
+                    F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, agv.Site, ConstSetBA.窑头卸载等待区);
 
-                task.Id = agv.Id;
+                    task.Id = agv.Id;
 
-                F_DataCenter.MTask.IStartTask(task);
+                    F_DataCenter.MTask.IStartTask(task);
 
-                sendServerLog("任务：AGV:" + agv.Id + ",回到窑头卸载等待区");
-                
+                    sendServerLog("任务：" + agv.Id + ",回到窑头卸载等待区");
+                }
+               
             }
         }
 
@@ -211,17 +224,21 @@ namespace KEDAClient
         /// </summary>
         private void InitToEndWait()
         {
-            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(_plcEnd.Site);
+            Thread.Sleep(5000);
+            List<F_AGV> agvs = F_DataCenter.MDev.IGetDevNotLoadOnWaitSite();
 
-            if (agv != null)
+            if (agvs != null)
             {
-                F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, agv.Site, ConstSetBA.窑尾装载等待区);
+                foreach (F_AGV agv in agvs)
+                {
+                    F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, agv.Site, ConstSetBA.窑尾装载等待区);
 
-                task.Id = agv.Id;
+                    task.Id = agv.Id;
 
-                F_DataCenter.MTask.IStartTask(task);
+                    F_DataCenter.MTask.IStartTask(task);
 
-                sendServerLog("任务：AGV:"+agv.Id+ ",回到窑尾装载等待区");
+                    sendServerLog("任务：" + agv.Id + ",回到窑尾装载等待区");
+                }
 
             }
         }

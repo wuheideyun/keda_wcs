@@ -15,6 +15,8 @@ namespace KEDAClient
         public static String 窑头卸载等待区 = "39";
 
         public static String 窑头卸载点 = "60";
+
+        public static String AGV有货 = "";
     }
 
     /// <summary>
