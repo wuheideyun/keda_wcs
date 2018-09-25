@@ -29,7 +29,6 @@ namespace KEDAClient
         /// PLC系统ID
         /// </summary>
         string _id = "";
-
         public string Id
         {
             get { return _id; }
@@ -84,6 +83,31 @@ namespace KEDAClient
                 return F_DataCenter.MDev.IGetSenValue(_id, "0002");
             }
         }
+
+        /// <summary>
+        /// AGV电量
+        /// </summary>
+        /// <returns></returns>
+        public string Electicity
+        {
+            get
+            {
+                return F_DataCenter.MDev.IGetSenValue(_id, "0007");
+            }
+        }
+
+        /// <summary>
+        /// 充电状态
+        /// </summary>
+        /// <returns></returns>
+        public string ChargeStatus
+        {
+            get
+            {
+                return F_DataCenter.MDev.IGetSenValue(_id, "0008");
+            }
+        }
+
 
         /// <summary>
         /// 备用信息

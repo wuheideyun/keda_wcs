@@ -18,7 +18,8 @@ namespace KEDAClient
         取货,
         放货,
         充电,
-        充电完成回待命区
+        充电完成的车去卸货,
+        充电完成的车去接货
     }
 
     /// <summary>
