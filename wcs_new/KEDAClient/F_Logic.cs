@@ -65,6 +65,11 @@ namespace KEDAClient
             Thread tr3 = new Thread(InitToCharge);
             tr3.IsBackground = true;
             tr3.Start();
+
+            Thread tr4 = new Thread(ChargeSucTOWait);
+            tr4.IsBackground = true;
+            tr4.Start();
+
         }
 
         /// <summary>
@@ -279,6 +284,41 @@ namespace KEDAClient
                         F_DataCenter.MTask.IStartTask(task);
 
                         sendServerLog("任务：" + agv.Id + ",去到充电点充电");
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 充电完成，回到相应待命区
+        /// </summary>
+        public void ChargeSucTOWait()
+        {
+            Thread.Sleep(5000);
+            List<F_AGV> agvs = F_DataCenter.MDev.ChargeSuc();
+            if (agvs != null)
+            {
+                foreach (F_AGV agv in agvs)
+                {
+                    if (agv.Site == ConstSetBA.充电点1)
+                    {
+                        F_ExcTask task = new F_ExcTask(null, EnumOper.充电完成回待命区, ConstSetBA.充电点1, ConstSetBA.窑尾装载等待区);
+
+                        task.Id = agv.Id;
+
+                        F_DataCenter.MTask.IStartTask(task);
+
+                        sendServerLog("任务：" + agv.Id + ",充电完成，回到窑尾装载等待区");
+                    }
+                    if (agv.Site == ConstSetBA.充电点2)
+                    {
+                        F_ExcTask task = new F_ExcTask(null, EnumOper.充电完成回待命区, ConstSetBA.充电点2, ConstSetBA.窑头卸载等待区);
+
+                        task.Id = agv.Id;
+
+                        F_DataCenter.MTask.IStartTask(task);
+
+                        sendServerLog("任务：" + agv.Id + ",充电完成，回到窑头卸载等待区");
                     }
                 }
             }

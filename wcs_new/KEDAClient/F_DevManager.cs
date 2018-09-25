@@ -259,9 +259,36 @@ namespace KEDAClient
                 // 查找电量低于80的AGV
                 List<DeviceBackImf> devs = _devList.FindAll(c => {
                     return c.DevType == "AGV" &&
-// (c.SensorList[1].RValue != ConstSetBA.窑尾装载等待区 || c.SensorList[1].RValue != ConstSetBA.窑头卸载等待区) &&
-Convert.ToInt32(c.SensorList[6].RValue) < 80;
+                    Convert.ToInt32(c.SensorList[6].RValue) < 60 &&
+                    c.SensorList[7].RValue == "3";
                 });
+                if (devs != null)
+                {
+                    List<F_AGV> list = new List<F_AGV>();
+                    foreach (DeviceBackImf dev in devs)
+                    {
+                        list.Add(new F_AGV(dev.DevId));
+                    }
+                    return list;
+                }
+            }
+            catch { }
+            return null;
+        }
+
+        /// <summary>
+        /// 获取充电完成的车
+        /// </summary>
+        public List<F_AGV> ChargeSuc()
+        {
+            try
+            {
+                // 查找充电AGV，判断电量是否大于95 ，且充电状态为充电完成
+                List<DeviceBackImf> devs = _devList.FindAll(c => {
+                    return Convert.ToInt32(c.SensorList[6].RValue) > 95 && c.SensorList[1].RValue == ConstSetBA.充电点1
+                     && c.SensorList[7].RValue == "2";
+                });
+
                 if (devs != null)
                 {
                     List<F_AGV> list = new List<F_AGV>();
