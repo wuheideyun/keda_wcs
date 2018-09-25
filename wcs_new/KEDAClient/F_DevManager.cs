@@ -207,7 +207,7 @@ namespace KEDAClient
         {
             try
             {
-                List<DeviceBackImf> devs = _devList.FindAll(c => { return c.DevType == "AGV" && c.SensorList[1].RValue != ConstSetBA.窑头卸载等待区 && c.SensorList[26].RValue =="1"; });
+                List<DeviceBackImf> devs = _devList.FindAll(c => { return c.DevType == "AGV" && c.SensorList[1].RValue != ConstSetBA.窑头卸载等待区 && c.SensorList[35].RValue =="1"; });
 
                 if (devs != null) {
                     List<F_AGV> list = new List<F_AGV>();
@@ -224,7 +224,7 @@ namespace KEDAClient
         }
 
         /// <summary>
-        /// 获取不在窑头卸载等待区，并且没货的AGV
+        /// 获取不在窑尾装载等待区，并且没货的AGV
         /// </summary>
         /// <param name="site"></param>
         /// <returns></returns>
@@ -232,7 +232,7 @@ namespace KEDAClient
         {
             try
             {
-                List<DeviceBackImf> devs = _devList.FindAll(c => { return c.DevType == "AGV" && c.SensorList[1].RValue != ConstSetBA.窑尾装载等待区 && c.SensorList[26].RValue == "2"; });
+                List<DeviceBackImf> devs = _devList.FindAll(c => { return c.DevType == "AGV" && c.SensorList[1].RValue != ConstSetBA.窑尾装载等待区 && c.SensorList[35].RValue == "2"; });
 
                 if (devs != null)
                 {
