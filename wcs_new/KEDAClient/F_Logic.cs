@@ -61,6 +61,10 @@ namespace KEDAClient
             Thread tr2 = new Thread(InitToEndWait);
             tr2.IsBackground = true;
             tr2.Start();
+
+            Thread tr3 = new Thread(InitToCharge);
+            tr3.IsBackground = true;
+            tr3.Start();
         }
 
         /// <summary>
@@ -242,6 +246,41 @@ namespace KEDAClient
                     sendServerLog("任务：" + agv.Id + ",回到窑尾装载等待区");
                 }
 
+            }
+        }
+
+        /// <summary>
+        /// 让在等待区的，且电量低于80的AGV去充电
+        /// </summary>
+        private void InitToCharge()
+        {
+            Thread.Sleep(5000);
+            List<F_AGV> agvs = F_DataCenter.MDev.NeedChargeAGV();
+            if (agvs != null)
+            {
+                foreach (F_AGV agv in agvs)
+                {
+                    if (agv.Site == ConstSetBA.窑头卸载等待区)
+                    {
+                        F_ExcTask task = new F_ExcTask(null, EnumOper.充电, ConstSetBA.窑头卸载等待区, ConstSetBA.充电点);
+
+                        task.Id = agv.Id;
+
+                        F_DataCenter.MTask.IStartTask(task);
+
+                        sendServerLog("任务：" + agv.Id + ",去到充电点充电");
+                    }
+                    if (agv.Site == ConstSetBA.窑尾装载等待区)
+                    {
+                        F_ExcTask task = new F_ExcTask(null, EnumOper.充电, ConstSetBA.窑尾装载等待区, ConstSetBA.充电点);
+
+                        task.Id = agv.Id;
+
+                        F_DataCenter.MTask.IStartTask(task);
+
+                        sendServerLog("任务：" + agv.Id + ",去到充电点充电");
+                    }
+                }
             }
         }
 

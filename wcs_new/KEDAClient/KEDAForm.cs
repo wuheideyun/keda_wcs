@@ -2015,7 +2015,7 @@ namespace KEDAClient
             }
 
             // 判断电量低于百分80
-            else //if (Convert.ToInt32(vehicleslist.FocusedItem.SubItems[4].Text) < 100)
+            else //if (Convert.ToInt32(vehicleslist.FocusedItem.SubItems[4].Text) < 80)
             {
                 OnceTaskMember task = new OnceTaskMember();
 
