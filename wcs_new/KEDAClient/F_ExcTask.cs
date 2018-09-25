@@ -121,7 +121,9 @@ namespace KEDAClient
 
             if (_taskDispatch == null)
             {
-                DispatchOrderObj dis = new DispatchOrderObj(); dis.DisGuid = Id;
+                DispatchOrderObj dis = new DispatchOrderObj();
+
+                dis.DisGuid = Id;
 
                 dis.EndSite = _endSite;
 
@@ -157,7 +159,7 @@ namespace KEDAClient
                             }
 
 
-                            if (_plc.Sta_Material == EnumSta_Material.无货 &&
+                            if (//_plc.Sta_Material == EnumSta_Material.无货 &&
                                 _agv.Sta_Material == EnumSta_Material.有货)
                             {
                                 _agv.SendOrdr(EnumType.上料操作, EnumPara.agv辊台停止);
@@ -178,16 +180,8 @@ namespace KEDAClient
                         if (_agv.Site == _plc.Site)
                         {
 
-                            if (//_plc.Sta_Material == EnumSta_Material.无货 &&
-                                _agv.Sta_Material == EnumSta_Material.有货)
-                            {
-                                _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台上料中);
-
-                                _agv.SendOrdr(EnumType.下料操作, EnumPara.agv下料启动);
-
-                            }
-
-                            if (//_plc.Sta_Material == EnumSta_Material.有货 &&
+                           
+                            if (//(_plc.Sta_Material == EnumSta_Material.有货 || _plc.Sta_Material == EnumSta_Material.无货 )&&
                                 (_agv.Sta_Material == EnumSta_Material.传送中 || _agv.Sta_Material == EnumSta_Material.有货))
                             {
                                 _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台上料中);
@@ -197,7 +191,8 @@ namespace KEDAClient
                             }
 
 
-                            if (_plc.Sta_Material == EnumSta_Material.有货 && _agv.Sta_Material == EnumSta_Material.无货)
+                            if (//_plc.Sta_Material == EnumSta_Material.有货 && 
+                                _agv.Sta_Material == EnumSta_Material.无货)
                             {
                                 _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台上料完成);
 
