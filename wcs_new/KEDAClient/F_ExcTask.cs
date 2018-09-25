@@ -16,7 +16,8 @@ namespace KEDAClient
     {
         无动作,
         取货,
-        放货
+        放货，
+        充电
     }
 
     /// <summary>

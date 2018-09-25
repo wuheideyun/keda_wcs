@@ -262,7 +262,7 @@ namespace KEDAClient
                 {
                     if (agv.Site == ConstSetBA.窑头卸载等待区)
                     {
-                        F_ExcTask task = new F_ExcTask(null, EnumOper.充电, ConstSetBA.窑头卸载等待区, ConstSetBA.充电点);
+                        F_ExcTask task = new F_ExcTask(null, EnumOper.充电, ConstSetBA.窑头卸载等待区, ConstSetBA.充电点2);
 
                         task.Id = agv.Id;
 
@@ -272,7 +272,7 @@ namespace KEDAClient
                     }
                     if (agv.Site == ConstSetBA.窑尾装载等待区)
                     {
-                        F_ExcTask task = new F_ExcTask(null, EnumOper.充电, ConstSetBA.窑尾装载等待区, ConstSetBA.充电点);
+                        F_ExcTask task = new F_ExcTask(null, EnumOper.充电, ConstSetBA.窑尾装载等待区, ConstSetBA.充电点1);
 
                         task.Id = agv.Id;
 
