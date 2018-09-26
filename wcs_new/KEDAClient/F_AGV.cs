@@ -88,11 +88,11 @@ namespace KEDAClient
         /// AGV电量
         /// </summary>
         /// <returns></returns>
-        public string Electicity
+        public int Electicity
         {
             get
             {
-                return F_DataCenter.MDev.IGetSenValue(_id, "0007");
+                return Convert.ToInt32(F_DataCenter.MDev.IGetSenValue(_id, "0007"));
             }
         }
 

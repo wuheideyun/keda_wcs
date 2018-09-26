@@ -18,8 +18,6 @@ namespace KEDAClient
         取货,
         放货,
         充电,
-        充电完成的车去卸货,
-        充电完成的车去接货
     }
 
     /// <summary>
@@ -211,6 +209,7 @@ namespace KEDAClient
                         }
                         return "";
                     }
+
                     else if (_operType == EnumOper.无动作)
                     {
                         ISetTaskSuc();

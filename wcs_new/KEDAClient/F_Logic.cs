@@ -15,7 +15,7 @@ namespace KEDAClient
         /// <summary>
         /// 窑尾PLC
         /// </summary>
-        F_PLCLine _plcEnd = new F_PLCLine("PLC0000001");
+        F_PLCLine _plcEnd = new F_PLCLine("PLC0000002");
 
         /// <summary>
         /// 窑头PLC
@@ -150,7 +150,9 @@ namespace KEDAClient
         private void TaskPlcEndGet()
         {
             ///窑尾有货 并且 此次任务没有被响应
-            if (!_plcEnd.IsLock)//&& _plcEnd.Sta_Material == EnumSta_Material.有货)
+            if (!_plcEnd.IsLock 
+                //&& _plcEnd.Sta_Material == EnumSta_Material.有货
+                )
             {
                 //窑尾等待区的车不需要充电且没有充电完成的车
                 if (!_PlcEndNeedCharge && !_PlcEndChargeSuc)
@@ -287,8 +289,8 @@ namespace KEDAClient
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.窑尾装载等待区);
             // 让电量低于60且未充电的AGV去充电
-            if (agv != null && agv.IsFree && Convert.ToInt32(agv.Electicity) < 60 &&
-                    agv.ChargeStatus == "2")
+            if (agv != null && agv.IsFree && agv.Electicity < 60 &&
+                    agv.ChargeStatus == "3")
             {
                 _PlcEndNeedCharge = true;
 
@@ -315,8 +317,8 @@ namespace KEDAClient
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.窑头卸载等待区);
             // 让电量低于60且未充电的AGV去充电
-            if (agv != null  && Convert.ToInt32(agv.Electicity) < 60 &&
-                    agv.ChargeStatus == "2")
+            if (agv != null  &&  agv.Electicity < 60 &&
+                    agv.ChargeStatus == "3")
             {
                 _PlcHeadNeedCharge = true;
 
@@ -344,13 +346,14 @@ namespace KEDAClient
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.接货充电点);
             // 有充电完成的AGV,且窑尾装载点有货、AGV上无货
-            if (agv != null && agv.ChargeStatus == "3")
+            if (agv != null && agv.ChargeStatus == "2")
             {
-                if ( _plcEnd.Sta_Material == EnumSta_Material.有货 && agv.Sta_Material == EnumSta_Material.无货)
+                if (// _plcEnd.Sta_Material == EnumSta_Material.有货 &&
+                    agv.Sta_Material == EnumSta_Material.无货)
                 {
                     _PlcEndChargeSuc = true;
 
-                    F_ExcTask task = new F_ExcTask(null, EnumOper.充电完成的车去接货, ConstSetBA.接货充电点, ConstSetBA.窑尾装载点);
+                    F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.取货, ConstSetBA.接货充电点, ConstSetBA.窑尾装载点);
 
                     task.Id = agv.Id;
 
@@ -373,13 +376,13 @@ namespace KEDAClient
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.卸货充电点);
             // 有充电完成的AGV,且窑头卸载点没货
-            if (agv != null && agv.ChargeStatus == "3")
+            if (agv != null && agv.ChargeStatus == "2")
             {
                 _PlcHeadChargeSuc = true;
 
                 if(_plcHead.Sta_Material == EnumSta_Material.无货 &&  agv.Sta_Material == EnumSta_Material.有货)
                 {
-                    F_ExcTask task = new F_ExcTask(null, EnumOper.充电完成的车去卸货, ConstSetBA.卸货充电点, ConstSetBA.窑头卸载点);
+                    F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.放货, ConstSetBA.卸货充电点, ConstSetBA.窑头卸载点);
 
                     task.Id = agv.Id;
 
