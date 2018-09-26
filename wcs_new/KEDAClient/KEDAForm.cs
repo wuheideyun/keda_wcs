@@ -2035,10 +2035,10 @@ namespace KEDAClient
                 DispatchOrderObj dis = new DispatchOrderObj();
 
                 ///调度的起点链表
-                dis.StartSiteList.Add("36");
+                dis.StartSiteList.Add("39");
 
                 //调度的终点
-                dis.EndSite = "50";
+                dis.EndSite = "63";
 
                 task.DisOrderList.Add(dis);
 

@@ -129,21 +129,21 @@ namespace KEDAClient
 
                 try
                 {
-                    PlcEndCharge();
+                    PlcEndCharge();// 窑尾等待区的AGV去充电
 
-                    PlcEndChargeSuc();
+                    PlcEndChargeSuc();//窑尾充电点有充电完成的AGV,优先派充电完成的车去接货
 
-                    TaskPlcEndGet();
+                    TaskPlcEndGet();// 窑尾取货任务
 
-                    TaskEndToHeadWait();
+                    TaskEndToHeadWait();// 窑尾取货完成Agv从窑尾装载点到窑头卸载等待区
 
-                    PlcHeadCharge();
+                    PlcHeadCharge();// 窑头卸载区的AGV去充电
 
-                    PlcHeadChargeSuc();
+                    PlcHeadChargeSuc();//窑头充电点有充电完成的AGV,优先派充电完成的车去卸货
 
-                    TaskPlcHeadPut();
+                    TaskPlcHeadPut();// 窑头放货任务
 
-                    TaskEndToEndWait();
+                    TaskEndToEndWait();// 窑头卸货完成Agv从窑头卸载点到窑尾装载等待区
 
                 }
                 catch { }
@@ -393,7 +393,7 @@ namespace KEDAClient
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.接货充电点);
             // 有充电完成的AGV,且窑尾装载点有货、AGV上无货
-            if (agv != null && agv.ChargeStatus == "2")
+            if (agv != null && agv.ChargeStatus == "3")
             {
                 if (// _plcEnd.Sta_Material == EnumSta_Material.有货 &&
                     agv.Sta_Material == EnumSta_Material.无货)
@@ -402,11 +402,15 @@ namespace KEDAClient
 
                     F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.取货, ConstSetBA.接货充电点, ConstSetBA.窑尾装载点);
 
+                    _plcEnd.IsLock = true;
+
                     task.Id = agv.Id;
 
                     F_DataCenter.MTask.IStartTask(task);
 
                     sendServerLog("任务：" + agv.Id + ",充电完成，派充电完成的车去接货");
+
+
                 }            
             }
             else
@@ -423,13 +427,15 @@ namespace KEDAClient
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.卸货充电点);
             // 有充电完成的AGV,且窑头卸载点没货
-            if (agv != null && agv.ChargeStatus == "2")
+            if (agv != null && agv.ChargeStatus == "3")
             {
                 _PlcHeadChargeSuc = true;
 
                 if(_plcHead.Sta_Material == EnumSta_Material.无货 &&  agv.Sta_Material == EnumSta_Material.有货)
                 {
                     F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.放货, ConstSetBA.卸货充电点, ConstSetBA.窑头卸载点);
+
+                    _plcHead.IsLock = true;
 
                     task.Id = agv.Id;
 

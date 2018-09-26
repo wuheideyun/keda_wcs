@@ -24,12 +24,7 @@ namespace KEDAClient
     /// 电机状态
     /// </summary>
     public enum EnumSta_Monitor
-    {
-        正转 = 1,
-
-        反转 = 2,
-
-        停止 = 3,
+    {     
 
         未知,
 
@@ -55,9 +50,6 @@ namespace KEDAClient
     /// </summary>
     public enum EnumPara
     {
-        正向启动 = 1,
-        反向启动 = 2,
-        辊台停止 = 0,
 
         agv上料启动 = 1,
         agv下料启动 = 1,
