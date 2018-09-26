@@ -16,9 +16,9 @@ namespace KEDAClient
 
         public static String 窑头卸载点 = "60";
 
-        public static String 充电点1 = "50";
+        public static String 接货充电点 = "50";
 
-        public static String 充电点2 = "50";
+        public static String 卸货充电点 = "50";
 
         public static String AGV有货 = "";
     }
