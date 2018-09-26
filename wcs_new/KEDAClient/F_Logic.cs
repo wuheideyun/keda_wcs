@@ -32,6 +32,16 @@ namespace KEDAClient
         ListBox listBox;
 
         /// <summary>
+        /// 初始启动系统的时候，是否有在等待点和卸载点之间的车要回窑头卸载点
+        /// </summary>
+        public bool _ToPlcHead = false;
+
+        /// <summary>
+        /// 初始启动系统的时候，是否有在等待点和装载点之间的车要回窑尾装载点
+        /// </summary>
+        public bool _ToPlcEnd = false;
+
+        /// <summary>
         /// 窑尾等待区AGV是否需要充电
         /// </summary>
         public bool _PlcEndNeedCharge = false;
@@ -63,10 +73,6 @@ namespace KEDAClient
             _plcHead.Site = ConstSetBA.窑头卸载点;
 
             _plcEnd.Site = ConstSetBA.窑尾装载点;
-
-            //InitToEndWait();
-
-            //InitToHeadWait();
 
             _thread = new Thread(ThreadFunc);
 
@@ -150,12 +156,12 @@ namespace KEDAClient
         private void TaskPlcEndGet()
         {
             ///窑尾有货 并且 此次任务没有被响应
-            if (!_plcEnd.IsLock 
+            if (!_plcEnd.IsLock
                 //&& _plcEnd.Sta_Material == EnumSta_Material.有货
                 )
             {
-                //窑尾等待区的车不需要充电且没有充电完成的车
-                if (!_PlcEndNeedCharge && !_PlcEndChargeSuc)
+                //窑尾等待区的车不需要充电、没有充电完成的车 、没有回装载点的车
+                if (!_PlcEndNeedCharge && !_PlcEndChargeSuc && !_ToPlcEnd)
                 {
                     ///派发一个从窑尾装载等待区到窑尾装载点取货的任务
                     if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcEnd, EnumOper.取货, ConstSetBA.窑尾装载等待区, _plcEnd.Site)))
@@ -165,6 +171,10 @@ namespace KEDAClient
                         sendServerLog("任务：派发一个从窑尾装载等待区到窑尾装载点取货的任务");
 
                     }
+                }
+                else
+                {
+                    _ToPlcEnd = false;
                 }
             }
         }
@@ -200,8 +210,8 @@ namespace KEDAClient
             ///窑头无货 并且 此次任务没有被响应
             if (!_plcHead.IsLock && _plcHead.Sta_Material == EnumSta_Material.无货 && agv != null)
             {
-                //窑头等待区的车不需要充电且没有充电完成的车
-                if (!_PlcHeadNeedCharge && !_PlcHeadChargeSuc)
+                //窑头等待区的车不需要充电、没有充电完成的车、没有回卸载点的车
+                if (!_PlcHeadNeedCharge && !_PlcHeadChargeSuc && !_ToPlcHead)
                 {
                     ///派发一个从窑头卸载等待区到窑头卸载点的任务
                     if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcHead, EnumOper.放货, ConstSetBA.窑头卸载等待区, ConstSetBA.窑头卸载点)))
@@ -210,7 +220,11 @@ namespace KEDAClient
 
                         sendServerLog("任务：派发一个从窑头卸载等待区到窑头卸载点的任务");
                     }
-                }                    
+                }
+                else
+                {
+                    _ToPlcHead = false;
+                }
             }
         }
 
@@ -235,7 +249,7 @@ namespace KEDAClient
         }
 
         /// <summary>
-        /// 如果agv有货 回到卸载等待区
+        /// 如果agv有货 回到卸载等待区 ，或者回到卸载点
         /// </summary>
         private void InitToHeadWait()
         {
@@ -246,20 +260,37 @@ namespace KEDAClient
             {
                 foreach (F_AGV agv in agvs)
                 {
-                    F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, agv.Site, ConstSetBA.窑头卸载等待区);
+                    if (agv.Site != ConstSetBA.窑头等待点和卸载点之间)
+                    {
+                        F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, agv.Site, ConstSetBA.窑头卸载等待区);
 
-                    task.Id = agv.Id;
+                        task.Id = agv.Id;
 
-                    F_DataCenter.MTask.IStartTask(task);
+                        F_DataCenter.MTask.IStartTask(task);
 
-                    sendServerLog("任务：" + agv.Id + ",回到窑头卸载等待区");
+                        sendServerLog("任务：" + agv.Id + ",回到窑头卸载等待区");
+
+                    }
+                    else
+                    {
+                        /// 如果agv有货 且位于等待点和装载点之间，回到窑头卸载点
+                        _ToPlcHead = true;
+
+                        F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.放货, ConstSetBA.窑头等待点和卸载点之间, ConstSetBA.窑头卸载点);
+
+                        task.Id = agv.Id;
+
+                        F_DataCenter.MTask.IStartTask(task);
+
+                        sendServerLog("任务：" + agv.Id + ",位于等待点和卸载点之间的AGV去卸货");
+                    }
                 }
 
             }
         }
 
         /// <summary>
-        /// 如果agv没货 回到装载等待区
+        /// 如果agv没货 回到装载等待区，或者回到装载点
         /// </summary>
         private void InitToEndWait()
         {
@@ -270,13 +301,29 @@ namespace KEDAClient
             {
                 foreach (F_AGV agv in agvs)
                 {
-                    F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, agv.Site, ConstSetBA.窑尾装载等待区);
+                    if (agv.Site != ConstSetBA.窑尾等待点和装载点之间)
+                    {
+                        F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, agv.Site, ConstSetBA.窑尾装载等待区);
 
-                    task.Id = agv.Id;
+                        task.Id = agv.Id;
 
-                    F_DataCenter.MTask.IStartTask(task);
+                        F_DataCenter.MTask.IStartTask(task);
 
-                    sendServerLog("任务：" + agv.Id + ",回到窑尾装载等待区");
+                        sendServerLog("任务：" + agv.Id + ",回到窑尾装载等待区");
+                    }
+                    else
+                    {
+                        /// 如果agv无货 且位于等待点和装载点之间，回到尾装载点
+                        _ToPlcEnd = true;
+
+                        F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.放货, ConstSetBA.窑尾等待点和装载点之间, ConstSetBA.窑头卸载点);
+
+                        task.Id = agv.Id;
+
+                        F_DataCenter.MTask.IStartTask(task);
+
+                        sendServerLog("任务：" + agv.Id + ",位于等待点和装载载点之间的AGV去装货");
+                    }
                 }
 
             }

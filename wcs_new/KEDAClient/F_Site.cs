@@ -20,6 +20,10 @@ namespace KEDAClient
 
         public static String 卸货充电点 = "50";
 
+        public static String 窑尾等待点和装载点之间 = "36";
+
+        public static String 窑头等待点和卸载点之间 = "61";
+
         public static String AGV有货 = "";
     }
 
