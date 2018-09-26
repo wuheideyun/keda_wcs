@@ -24,6 +24,8 @@ namespace KEDAClient
 
         public static String 窑头等待点和卸载点之间 = "61";
 
+        public static int    最低电量 = 60;
+
         public static String AGV有货 = "";
     }
 

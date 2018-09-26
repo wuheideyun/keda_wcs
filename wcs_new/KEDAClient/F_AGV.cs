@@ -100,12 +100,20 @@ namespace KEDAClient
         /// 充电状态
         /// </summary>
         /// <returns></returns>
-        public string ChargeStatus
+        public EnumChargeStatus ChargeStatus
         {
             get
             {
-                return F_DataCenter.MDev.IGetSenValue(_id, "0008");
-            }
+                EnumChargeStatus result = EnumChargeStatus.未知;
+
+                try
+                {
+                    result = (EnumChargeStatus)Convert.ToInt32((F_DataCenter.MDev.IGetSenValue(_id, "0008")));
+                }
+                catch { result = EnumChargeStatus.未知; }
+
+                return result;
+            }        
         }
 
 

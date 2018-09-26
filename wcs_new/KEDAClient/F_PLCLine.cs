@@ -34,6 +34,21 @@ namespace KEDAClient
     }
 
     /// <summary>
+    /// 充电状态
+    /// </summary>
+    public enum EnumChargeStatus
+    {
+        正在充电 = 1,
+
+        充电完成 = 2,
+
+        未充电 = 3,
+
+        未知
+
+    }
+
+    /// <summary>
     /// 上下料操作枚举
     /// </summary>
     public enum EnumType

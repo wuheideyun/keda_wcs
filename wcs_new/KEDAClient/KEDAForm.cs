@@ -299,6 +299,8 @@ namespace KEDAClient
 
         //保存当前tab的位置
         private int tabControl1SelectIndex = 0;
+        private string _startSite;
+        private string _endSite;
 
         /// <summary>
         /// 当前客户端的站点编号对应地标
@@ -2013,7 +2015,6 @@ namespace KEDAClient
             {
                 return;
             }
-
             // 判断电量低于百分80
             else //if (Convert.ToInt32(vehicleslist.FocusedItem.SubItems[4].Text) < 80)
             {
@@ -2034,16 +2035,28 @@ namespace KEDAClient
                 //任务中一个调度节点
                 DispatchOrderObj dis = new DispatchOrderObj();
 
-                ///调度的起点链表
-                dis.StartSiteList.Add("39");
+                string startSite = dis.StartSiteList.First();
+                            
+                string[] site  = textBox1.Text.Split(',');
 
-                //调度的终点
-                dis.EndSite = "63";
+                ///调度的起点链表 
+                startSite = site[0];
+
+                ////调度的终点
+                dis.EndSite = site[1];
+
+                /////调度的起点链表  
+               
+                //dis.StartSiteList.Add("39");
+
+                ////调度的终点
+                //dis.EndSite = "63";
 
                 task.DisOrderList.Add(dis);
-
+                
                 if (JTWcfHelper.WcfTaskHelper.StartTaskTemp("客户端_KEDA", task))
-                {
+                {      
+                   
                     //记录agv状态
                     agvStatus[vehicleslist.FocusedItem.Text] = "charge";
                     SetOutputMsg2("AGV充电");
@@ -2320,21 +2333,6 @@ namespace KEDAClient
                 }
                 listv.EndUpdate();
             }
-
-
-            //if (listv.Name.Equals("taskInformlist"))
-            //{
-            //    GfxList<GfxServiceContractTaskExcute.TaskBackImf> taskList = JTWcfHelper.WcfTaskHelper.GetAllTask();
-            //    if (taskList is null) return;
-            //    listv.BeginUpdate();
-            //    for (int i = 0; i < taskList.Count; i++)
-            //    {
-            //        listv.Items[0].SubItems[2].Text = taskList[i].Statue.ToString();// 任务状态
-            //        listv.Items[0].SubItems[6].Text = taskList[i].TaskCtrType.ToString();// 控制参数
-            //    }
-            //    listv.EndUpdate();
-            //}
-
         }
         /// <summary>
         /// 刷新当前任务
@@ -2556,8 +2554,6 @@ namespace KEDAClient
             catch { }
 
             timerFunc.Enabled = true;
-
-
 
         }
 

@@ -790,7 +790,8 @@
             "清除站点",
             "开启声音",
             "关闭声音",
-            "心跳指令"});
+            "心跳指令",
+            "自定义一个任务"});
             this.comboBox1.Location = new System.Drawing.Point(719, 55);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(160, 24);
