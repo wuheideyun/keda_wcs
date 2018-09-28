@@ -1906,7 +1906,7 @@ namespace KEDAClient
         {
             JTWcfHelper.WcfMainHelper.InitPara(_severIp, "", "");
 
-            if (JTWcfHelper.WcfMainHelper.SendOrder(vehicleslist.FocusedItem.Text, new CommonDeviceOrderObj("停止" + LocSite, 2, 1)))
+            if (JTWcfHelper.WcfMainHelper.SendOrder(vehicleslist.FocusedItem.Text, new CommonDeviceOrderObj("停止" + LocSite, 2, 0)))
             {
                 //MessageBox.Show(vehicleslist.FocusedItem.Text, "提示");
                 agvForwordMove.Enabled = true;
