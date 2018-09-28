@@ -616,7 +616,18 @@ namespace KEDAClient
                         item.SubItems.Add("停止");  // 运行状态：停止
                     }
                     item.SubItems.Add(item1.SensorList[sens[2]].RValue); // 电量
-                    item.SubItems.Add(item1.SensorList[sens[3]].RValue); // 充电状态
+                    if(item1.SensorList[sens[3]].RValue == "1")
+                    {
+                        item.SubItems.Add("正充电");  
+                    }
+                    else if(item1.SensorList[sens[3]].RValue == "2")
+                    {
+                        item.SubItems.Add("充电完成");
+                    }
+                    else
+                    {
+                        item.SubItems.Add("未充电");
+                    }                    
 
                     agvStatus.Add(item1.DevId, "stop");
 
@@ -2033,24 +2044,11 @@ namespace KEDAClient
                 task.IsAotuRemove = false;
 
                 //任务中一个调度节点
-                DispatchOrderObj dis = new DispatchOrderObj();
+                DispatchOrderObj dis = new DispatchOrderObj();               
 
-                string startSite = dis.StartSiteList.First();
-                            
-                string[] site  = textBox1.Text.Split(',');
-
-                ///调度的起点链表 
-                startSite = site[0];
 
                 ////调度的终点
-                dis.EndSite = site[1];
-
-                /////调度的起点链表  
-               
-                //dis.StartSiteList.Add("39");
-
-                ////调度的终点
-                //dis.EndSite = "63";
+                dis.EndSite = textBox1.Text;
 
                 task.DisOrderList.Add(dis);
                 
@@ -2306,10 +2304,9 @@ namespace KEDAClient
                             }
                             else
                             {
-                                listv.Items[i].SubItems[2].Text = dev.DevStatue;
-                                listv.Items[i].SubItems[4].Text = dev.SensorList[4].RValue;
-                                //listv.Items[i].SubItems[2].Text = devsList[i].DevStatue;
-                                //listv.Items[i].SubItems[4].Text = devsList[i].SensorList[4].RValue;
+                                listv.Items[i].SubItems[2].Text = dev.DevStatue;  // AGV在线状态
+                                listv.Items[i].SubItems[4].Text = dev.SensorList[6].RValue;  // 电量
+                                listv.Items[i].SubItems[5].Text = dev.SensorList[7].RValue;   // 充电状态                         
                             }
 
                         }

@@ -335,9 +335,10 @@ namespace KEDAClient
         private void PlcEndCharge()
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.窑尾装载等待区);
+            F_AGV agv1 = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.接货充电点);
             // 让电量低于60且未充电的AGV去充电
             if (agv != null && agv.IsFree && agv.Electicity < ConstSetBA.最低电量 &&
-                agv.ChargeStatus == EnumChargeStatus.未充电)
+                agv.ChargeStatus == EnumChargeStatus.未充电 && agv1 ==null)
             {
                 _PlcEndNeedCharge = true;
 
@@ -363,9 +364,10 @@ namespace KEDAClient
         private void PlcHeadCharge()
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.窑头卸载等待区);
+            F_AGV agv1 = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.卸货充电点);
             // 让电量低于60且未充电的AGV去充电
             if (agv != null  &&  agv.Electicity < ConstSetBA.最低电量 &&
-                agv.ChargeStatus ==EnumChargeStatus.未充电)
+                agv.ChargeStatus ==EnumChargeStatus.未充电 &&  agv1 ==null)
             {
                 _PlcHeadNeedCharge = true;
 
@@ -374,7 +376,7 @@ namespace KEDAClient
                 task.Id = agv.Id;
 
                 F_DataCenter.MTask.IStartTask(task);
-
+                
                 sendServerLog("任务：" + agv.Id + ",去到窑头充电点充电");
 
             }
@@ -401,6 +403,7 @@ namespace KEDAClient
                     _PlcEndChargeSuc = true;
 
                     F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.取货, ConstSetBA.接货充电点, ConstSetBA.窑尾装载点);
+                  
 
                     _plcEnd.IsLock = true;
 

@@ -181,7 +181,7 @@ namespace KEDAClient
                         if (_agv.Site == _plc.Site)
                         {
 
-                           
+
                             if (//(_plc.Sta_Material == EnumSta_Material.有货 || _plc.Sta_Material == EnumSta_Material.无货 )&&
                                 (_agv.Sta_Material == EnumSta_Material.传送中 || _agv.Sta_Material == EnumSta_Material.有货))
                             {
@@ -209,7 +209,11 @@ namespace KEDAClient
                         }
                         return "";
                     }
-
+                    else if (_operType == EnumOper.充电)
+                    {
+                        ISetTaskSuc();
+                        return "";
+                    }
                     else if (_operType == EnumOper.无动作)
                     {
                         ISetTaskSuc();
