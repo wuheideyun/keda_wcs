@@ -188,7 +188,7 @@ namespace KEDAClient
         {
             try
             {
-                DeviceBackImf dev = _devList.Find(c => { return c.DevType == "AGV" && c.SensorList[1].RValue == site; });
+                DeviceBackImf dev = _devList.Find(c => { return c.DevType == "AGV" && c.SensorList[ConstSetBA.地标].RValue == site; });
 
                 if (dev != null) { return new F_AGV(dev.DevId); }
             }
@@ -207,11 +207,15 @@ namespace KEDAClient
         {
             try
             {
-                List<DeviceBackImf> devs = _devList.FindAll(c => { return c.DevType == "AGV" && c.SensorList[1].RValue != ConstSetBA.窑头卸载等待区 && c.SensorList[35].RValue =="1"; });
+                List<DeviceBackImf> devs = _devList.FindAll(c =>
+                {
+                    return c.DevType == "AGV" && c.SensorList[ConstSetBA.地标].RValue != ConstSetBA.窑头卸载等待区 && c.SensorList[ConstSetBA.货物状态].RValue == ConstSetBA.AGV有货;
+                });
 
-                if (devs != null) {
+                if (devs != null)
+                {
                     List<F_AGV> list = new List<F_AGV>();
-                    foreach(DeviceBackImf dev in devs)
+                    foreach (DeviceBackImf dev in devs)
                     {
                         list.Add(new F_AGV(dev.DevId));
                     }
@@ -232,7 +236,7 @@ namespace KEDAClient
         {
             try
             {
-                List<DeviceBackImf> devs = _devList.FindAll(c => { return c.DevType == "AGV" && c.SensorList[1].RValue != ConstSetBA.窑尾装载等待区 && c.SensorList[35].RValue == "2"; });
+                List<DeviceBackImf> devs = _devList.FindAll(c => { return c.DevType == "AGV" && c.SensorList[ConstSetBA.地标].RValue != ConstSetBA.窑尾装载等待区 && c.SensorList[ConstSetBA.货物状态].RValue ==ConstSetBA.AGV无货; });
 
                 if (devs != null)
                 {

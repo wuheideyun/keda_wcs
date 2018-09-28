@@ -567,6 +567,7 @@ namespace KEDAClient
             vehicleslist.Columns.Add("车辆型号", 100, HorizontalAlignment.Left); // 设备型号
             vehicleslist.Columns.Add("车辆状态", 150, HorizontalAlignment.Left);
             vehicleslist.Columns.Add("运行状态", 150, HorizontalAlignment.Left); // 运行状态：前进、后退、停止
+            vehicleslist.Columns.Add("地标", 150, HorizontalAlignment.Left);
             vehicleslist.Columns.Add("电量", 150, HorizontalAlignment.Left); // 电量
             vehicleslist.Columns.Add("充电状态", 150, HorizontalAlignment.Left); // 充电状态
 
@@ -592,15 +593,15 @@ namespace KEDAClient
                 if (item1.DevType == "AGV")
                 {
                     // 状态 、运行方向、电量、充电状态
-                    int[] sens = new int[] { 0, 4, 6, 7 };
-                    ListViewItem item = new ListViewItem(item1.DevId); // 设备id
-                    item.SubItems.Add(item1.DevModel); // 设备型号   
-                    item.SubItems.Add(item1.DevStatue); // 设备状态  
-
+                    int[] sens = new int[] { 0,1, 4, 6, 7 };
+                    ListViewItem item = new ListViewItem(item1.DevId); // 车辆编号
+                    item.SubItems.Add(item1.DevModel); // 车辆型号   
+                    item.SubItems.Add(item1.DevStatue); // 车辆状态                                      
                     // 判断AGV是停止还是运行，1为运行、3为停止
                     if (item1.SensorList[sens[0]].RValue == "1")
                     {
-                        if (item1.SensorList[sens[1]].RValue == "0")
+                        // 运行方向： 0 前进  1后退 
+                        if (item1.SensorList[sens[2]].RValue == "0")
                         {
                             item.SubItems.Add("前进"); // 运行状态：前进
                         }
@@ -615,16 +616,17 @@ namespace KEDAClient
                     {
                         item.SubItems.Add("停止");  // 运行状态：停止
                     }
-                    item.SubItems.Add(item1.SensorList[sens[2]].RValue); // 电量
-                    if(item1.SensorList[sens[3]].RValue == "1")
+                    item.SubItems.Add(item1.SensorList[sens[1]].RValue); // 地标   
+                    item.SubItems.Add(item1.SensorList[sens[3]].RValue); // 电量
+                    if(item1.SensorList[sens[4]].RValue == "1")
                     {
                         item.SubItems.Add("正充电");  
                     }
-                    else if(item1.SensorList[sens[3]].RValue == "2")
+                    else if(item1.SensorList[sens[4]].RValue == "2")
                     {
                         item.SubItems.Add("充电完成");
                     }
-                    else
+                    else if (item1.SensorList[sens[4]].RValue == "3")
                     {
                         item.SubItems.Add("未充电");
                     }                    
@@ -1906,7 +1908,7 @@ namespace KEDAClient
         {
             JTWcfHelper.WcfMainHelper.InitPara(_severIp, "", "");
 
-            if (JTWcfHelper.WcfMainHelper.SendOrder(vehicleslist.FocusedItem.Text, new CommonDeviceOrderObj("停止" + LocSite, 2, 1)))
+            if (JTWcfHelper.WcfMainHelper.SendOrder(vehicleslist.FocusedItem.Text, new CommonDeviceOrderObj("停止" + LocSite, 2, 0)))
             {
                 //MessageBox.Show(vehicleslist.FocusedItem.Text, "提示");
                 agvForwordMove.Enabled = true;
@@ -2046,15 +2048,13 @@ namespace KEDAClient
                 //任务中一个调度节点
                 DispatchOrderObj dis = new DispatchOrderObj();               
 
-
                 ////调度的终点
                 dis.EndSite = textBox1.Text;
 
                 task.DisOrderList.Add(dis);
                 
                 if (JTWcfHelper.WcfTaskHelper.StartTaskTemp("客户端_KEDA", task))
-                {      
-                   
+                {                         
                     //记录agv状态
                     agvStatus[vehicleslist.FocusedItem.Text] = "charge";
                     SetOutputMsg2("AGV充电");
@@ -2283,7 +2283,7 @@ namespace KEDAClient
             }
         }
         private void RefreshListview(ListView listv)
-        {
+        { 
             //System.Diagnostics.Debug.WriteLine(listv.Name);
 
             if (listv.Name.Equals("vehicleslist") || listv.Name.Equals("alarmlist"))
@@ -2305,8 +2305,10 @@ namespace KEDAClient
                             else
                             {
                                 listv.Items[i].SubItems[2].Text = dev.DevStatue;  // AGV在线状态
-                                listv.Items[i].SubItems[4].Text = dev.SensorList[6].RValue;  // 电量
-                                listv.Items[i].SubItems[5].Text = dev.SensorList[7].RValue;   // 充电状态                         
+                                listv.Items[i].SubItems[3].Text = dev.SensorList[4].RValue;  // 运行状态
+                                listv.Items[i].SubItems[4].Text = dev.SensorList[1].RValue;  // 地标
+                                listv.Items[i].SubItems[5].Text = dev.SensorList[6].RValue;  // 电量
+                                listv.Items[i].SubItems[6].Text = dev.SensorList[7].RValue;   // 充电状态                         
                             }
 
                         }

@@ -6,6 +6,9 @@ using System.Text;
 
 namespace KEDAClient
 {
+
+
+
     /// <summary>
     /// 货物状态
     /// </summary>
@@ -26,12 +29,28 @@ namespace KEDAClient
     public class F_AGV
     {
         /// <summary>
+        /// 是否被锁
+        /// </summary>
+        bool _isLock = false;
+
+
+        /// <summary>
         /// PLC系统ID
         /// </summary>
         string _id = "";
         public string Id
         {
             get { return _id; }
+        }
+
+
+        /// <summary>
+        /// 是否被锁
+        /// </summary>
+        public bool IsLock
+        {
+            get { return _isLock; }
+            set { _isLock = value; }
         }
 
         /// <summary>

@@ -463,7 +463,7 @@ namespace JTWcfHelper
         }
 
         /// <summary>
-        /// 开启或暂停任务
+        /// 开启任务
         /// </summary>
         /// <param name="taskId">任务</param>
         /// <param name="oper">操作类型</param>
