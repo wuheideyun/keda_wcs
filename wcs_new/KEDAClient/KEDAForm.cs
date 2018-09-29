@@ -596,41 +596,12 @@ namespace KEDAClient
                     int[] sens = new int[] { 0,1, 4, 6, 7 };
                     ListViewItem item = new ListViewItem(item1.DevId); // 车辆编号
                     item.SubItems.Add(item1.DevModel); // 车辆型号   
-                    item.SubItems.Add(item1.DevStatue); // 车辆状态                                      
-                    // 判断AGV是停止还是运行，1为运行、3为停止
-                    if (item1.SensorList[sens[0]].RValue == "1")
-                    {
-                        // 运行方向： 0 前进  1后退 
-                        if (item1.SensorList[sens[2]].RValue == "0")
-                        {
-                            item.SubItems.Add("前进"); // 运行状态：前进
-                        }
-
-                        //  item1.SensorList[sens[1]].RValue == "1"  后退
-                        else
-                        {
-                            item.SubItems.Add("后退"); // 运行状态：后退
-                        }
-                    }
-                    else
-                    {
-                        item.SubItems.Add("停止");  // 运行状态：停止
-                    }
+                    item.SubItems.Add(item1.DevStatue); // 车辆状态    
+                    item.SubItems.Add(item1.SensorList[sens[0]].RValue); // 运行状态  
                     item.SubItems.Add(item1.SensorList[sens[1]].RValue); // 地标   
                     item.SubItems.Add(item1.SensorList[sens[3]].RValue); // 电量
-                    if(item1.SensorList[sens[4]].RValue == "1")
-                    {
-                        item.SubItems.Add("正充电");  
-                    }
-                    else if(item1.SensorList[sens[4]].RValue == "2")
-                    {
-                        item.SubItems.Add("充电完成");
-                    }
-                    else if (item1.SensorList[sens[4]].RValue == "3")
-                    {
-                        item.SubItems.Add("未充电");
-                    }                    
-
+                    item.SubItems.Add(item1.SensorList[sens[4]].RValue); // 充电状态
+                    
                     agvStatus.Add(item1.DevId, "stop");
 
                     // 显示项
@@ -1845,7 +1816,7 @@ namespace KEDAClient
         }
 
         /// <summary>
-        /// 指令发送
+        /// 指令发送（车辆界面）
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1907,7 +1878,7 @@ namespace KEDAClient
         public void StopAGV()
         {
             JTWcfHelper.WcfMainHelper.InitPara(_severIp, "", "");
-
+            // 1是快速停止、0是慢速
             if (JTWcfHelper.WcfMainHelper.SendOrder(vehicleslist.FocusedItem.Text, new CommonDeviceOrderObj("停止" + LocSite, 2, 0)))
             {
                 //MessageBox.Show(vehicleslist.FocusedItem.Text, "提示");
@@ -2304,11 +2275,44 @@ namespace KEDAClient
                             }
                             else
                             {
-                                listv.Items[i].SubItems[2].Text = dev.DevStatue;  // AGV在线状态
-                                listv.Items[i].SubItems[3].Text = dev.SensorList[4].RValue;  // 运行状态
+                                listv.Items[i].SubItems[2].Text = dev.DevStatue;  // AGV在线状态                                                                                
+                                // 判断AGV是停止还是运行，1为运行、3为停止
+                                if (dev.SensorList[4].RValue == "1")
+                                {
+                                    // 运行方向： 0 前进  1后退 
+                                    if (dev.SensorList[ConstSetBA.运行方向].RValue == "0")
+                                    {
+                                        listv.Items[i].SubItems[3].Text = "前进"; // 运行状态：前进
+                                    }
+                                    //  item1.SensorList[sens[1]].RValue == "1"  后退
+                                    else
+                                    {
+                                        listv.Items[i].SubItems[3].Text = "后退"; // 运行状态：后退
+                                    }
+                                }
+                                else
+                                {
+                                    listv.Items[i].SubItems[3].Text = "停止";  // 运行状态：停止
+                                }
                                 listv.Items[i].SubItems[4].Text = dev.SensorList[1].RValue;  // 地标
                                 listv.Items[i].SubItems[5].Text = dev.SensorList[6].RValue;  // 电量
-                                listv.Items[i].SubItems[6].Text = dev.SensorList[7].RValue;   // 充电状态                         
+                                // 充电状态            
+                                if (dev.SensorList[ConstSetBA.充电状态].RValue == "1")
+                                {
+                                    listv.Items[i].SubItems[6].Text="正充电";
+                                }
+                                else if (dev.SensorList[ConstSetBA.充电状态].RValue == "2")
+                                {
+                                    listv.Items[i].SubItems[6].Text = "充电完成";
+                                }
+                                else if (dev.SensorList[ConstSetBA.充电状态].RValue == "3")
+                                {
+                                    listv.Items[i].SubItems[6].Text = "未充电";
+                                }
+                                else
+                                {
+                                    listv.Items[i].SubItems[6].Text = "未知";
+                                }                                  
                             }
 
                         }

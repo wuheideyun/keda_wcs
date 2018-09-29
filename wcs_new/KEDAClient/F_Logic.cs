@@ -1,5 +1,6 @@
 ﻿using Gfx.GfxDataManagerServer;
 using GfxCommonInterfaces;
+using GfxServiceContractClient;
 using GfxServiceContractTaskExcute;
 using System;
 using System.Collections.Generic;
@@ -65,9 +66,9 @@ namespace KEDAClient
         public bool _PlcHeadChargeSuc = false;
 
         /// <summary>
-        ///发生故障执行次数
+        /// 异常AGV
         /// </summary>
-        private int count;
+        Dictionary<string, int> dic = new Dictionary<string, int>();
 
         /// <summary>
         /// 构造函数
@@ -96,10 +97,10 @@ namespace KEDAClient
             tr2.IsBackground = true;
             tr2.Start();
 
-            Thread tr3= new Thread(ClearTask);
+            Thread tr3 = new Thread(ClearTask);
             tr3.IsBackground = true;
             tr3.Start();
-   
+
         }
 
         /// <summary>
@@ -182,7 +183,7 @@ namespace KEDAClient
                     {
                         _plcEnd.IsLock = true;
 
-                        sendServerLog("从窑尾装载等待区到窑尾装载点取货");
+                        sendServerLog(agv.Id + "从窑尾装载等待区到窑尾装载点取货");
 
                     }
                 }
@@ -200,7 +201,7 @@ namespace KEDAClient
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(_plcEnd.Site);
 
-            if (agv != null && agv.IsFree 
+            if (agv != null && agv.IsFree
                 //&& agv.Sta_Material == EnumSta_Material.有货
                 )
             {
@@ -210,7 +211,7 @@ namespace KEDAClient
 
                 F_DataCenter.MTask.IStartTask(task);
 
-                sendServerLog("窑尾取货完成Agv从窑尾装载点到窑头卸载等待区");
+                sendServerLog(agv.Id + "窑尾取货完成Agv从窑尾装载点到窑头卸载等待区");
 
             }
         }
@@ -234,7 +235,7 @@ namespace KEDAClient
                     {
                         _plcHead.IsLock = true;
 
-                        sendServerLog("从窑头卸载等待区到窑头卸载点的任务");
+                        sendServerLog(agv.Id + "从窑头卸载等待区到窑头卸载点的任务");
                     }
                 }
                 else
@@ -251,7 +252,7 @@ namespace KEDAClient
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(_plcHead.Site);
 
-            if (agv != null && agv.IsFree 
+            if (agv != null && agv.IsFree
                 //&& agv.Sta_Material == EnumSta_Material.无货
                 )
             {
@@ -261,7 +262,7 @@ namespace KEDAClient
 
                 F_DataCenter.MTask.IStartTask(task);
 
-                sendServerLog("从窑头卸载点到窑尾装载等待区");
+                sendServerLog(agv.Id + "从窑头卸载点到窑尾装载等待区");
 
             }
         }
@@ -286,7 +287,7 @@ namespace KEDAClient
 
                         F_DataCenter.MTask.IStartTask(task);
 
-                        sendServerLog("" + agv.Id + ",回到窑头卸载等待区");
+                        sendServerLog(agv.Id + ",回到窑头卸载等待区");
 
                     }
                     else
@@ -300,7 +301,7 @@ namespace KEDAClient
 
                         F_DataCenter.MTask.IStartTask(task);
 
-                        sendServerLog("位于等待点和卸载点之间的AGV去卸货");
+                        sendServerLog(agv.Id + "位于等待点和卸载点之间的AGV去卸货");
                     }
                 }
 
@@ -327,7 +328,7 @@ namespace KEDAClient
 
                         F_DataCenter.MTask.IStartTask(task);
 
-                        sendServerLog("" + agv.Id + ",回到窑尾装载等待区");
+                        sendServerLog(agv.Id + ",回到窑尾装载等待区");
                     }
                     else
                     {
@@ -340,7 +341,7 @@ namespace KEDAClient
 
                         F_DataCenter.MTask.IStartTask(task);
 
-                        sendServerLog("位于等待点和装载载点之间的AGV去装货");
+                        sendServerLog(agv.Id + "位于等待点和装载载点之间的AGV去装货");
                     }
                 }
 
@@ -356,7 +357,7 @@ namespace KEDAClient
             F_AGV agv1 = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.接货充电点);
             // 让未上锁的、电量低于60且未充电的AGV去充电，且接货充电点没有AGV
             if (agv != null && agv.IsFree && agv.Electicity <= ConstSetBA.最低电量 &&
-                agv.ChargeStatus == EnumChargeStatus.未充电 && agv1 ==null)
+                agv.ChargeStatus == EnumChargeStatus.未充电 && agv1 == null)
             {
                 _PlcEndNeedCharge = true;
 
@@ -368,7 +369,7 @@ namespace KEDAClient
 
                 F_DataCenter.MTask.IStartTask(task);
 
-                sendServerLog("" + agv.Id + ",去到窑尾充电点充电");
+                sendServerLog(agv.Id + ",去到窑尾充电点充电");
 
             }
             else
@@ -386,8 +387,8 @@ namespace KEDAClient
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.窑头卸载等待区);
             F_AGV agv1 = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.卸货充电点);
             // 让电量低于60且未充电的AGV去充电
-            if (agv != null  &&  agv.Electicity <= ConstSetBA.最低电量 &&
-                agv.ChargeStatus ==EnumChargeStatus.未充电 &&  agv1 ==null)
+            if (agv != null && agv.Electicity <= ConstSetBA.最低电量 &&
+                agv.ChargeStatus == EnumChargeStatus.未充电 && agv1 == null)
             {
                 _PlcHeadNeedCharge = true;
 
@@ -398,8 +399,8 @@ namespace KEDAClient
                 task.Id = agv.Id;
 
                 F_DataCenter.MTask.IStartTask(task);
-                
-                sendServerLog("" + agv.Id + ",去到窑头充电点充电");
+
+                sendServerLog(agv.Id + ",去到窑头充电点充电");
 
             }
             else
@@ -435,10 +436,10 @@ namespace KEDAClient
 
                     F_DataCenter.MTask.IStartTask(task);
 
-                    sendServerLog("" + agv.Id + ",充电完成，派充电完成的车去接货");
+                    sendServerLog(agv.Id + ",充电完成，派充电完成的车去接货");
 
 
-                }            
+                }
             }
             else
             {
@@ -454,11 +455,11 @@ namespace KEDAClient
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.卸货充电点);
             // 有充电完成的AGV,且窑头卸载点没货
-            if (agv != null && agv.ChargeStatus ==EnumChargeStatus.充电完成)
+            if (agv != null && agv.ChargeStatus == EnumChargeStatus.充电完成)
             {
                 _PlcHeadChargeSuc = true;
 
-                if(_plcHead.Sta_Material == EnumSta_Material.无货 
+                if (_plcHead.Sta_Material == EnumSta_Material.无货
                     //&&  agv.Sta_Material == EnumSta_Material.有货
                     )
                 {
@@ -470,7 +471,7 @@ namespace KEDAClient
 
                     F_DataCenter.MTask.IStartTask(task);
 
-                    sendServerLog("" + agv.Id + ",充电完成，派充电完成的车去卸货");
+                    sendServerLog(agv.Id + ",充电完成，派充电完成的车去卸货");
                 }
             }
             else
@@ -489,22 +490,48 @@ namespace KEDAClient
             {
                 Thread.Sleep(5000);
                 List<F_AGV> agvs = F_DataCenter.MDev.ErrorOrFalse();
-                GfxList<TaskBackImf> tasklist = JTWcfHelper.WcfTaskHelper.GetAllTask();
-                if (agvs != null)
+                List<DispatchBackMember> tasklist = JTWcfHelper.WcfMainHelper.GetDispatchList();
+                if (agvs != null && tasklist.Count > 0)
                 {
-                    foreach (var item in agvs)
+                    foreach (var agv in agvs)
                     {
                         foreach (var task in tasklist)
                         {
                             // 有故障的车是否对应任务的设备ID
-                            if (item.Id == task.DisDevId)
+                            if (agv.Id == task.DisDevId)
                             {
-                                count++;
-                                if(count>=10)
+                                if (dic.ContainsKey(agv.Id))
                                 {
-                                    // 终止该任务
-                                    JTWcfHelper.WcfMainHelper.CtrDispatch(task.DisGuid, DisOrderCtrTypeEnum.Stop);
+                                    int count = 0;
+                                    dic.TryGetValue(agv.Id, out count);
+                                    if (count >= 10)
+                                    {
+                                        // 终止该任务
+                                        JTWcfHelper.WcfMainHelper.CtrDispatch(task.DisGuid, DisOrderCtrTypeEnum.Stop);
+                                        sendServerLog("终止异常的 " + agv.Id + "正在执行的任务");
+                                        count = 0;
+                                    }
+                                    else
+                                    {
+                                        count++;
+                                        sendServerLog("异常的 " + agv.Id + "已等待处理 " + count + " 次");
+                                    }
+                                    dic.Remove(agv.Id);
+                                    dic.Add(agv.Id, count);
                                 }
+                                else
+                                {
+                                    dic.Add(agv.Id, 0);
+                                }
+
+                                //var timeout = DateTime.Now.AddSeconds(30);
+                                //if (DateTime.Now > timeout)
+                                //{
+                                //    //超时
+                                //    // 终止该任务
+                                //    JTWcfHelper.WcfMainHelper.CtrDispatch(task.DisGuid, DisOrderCtrTypeEnum.Stop);
+                                //    return;
+                                //}
                             }
                         }
                     }

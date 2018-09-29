@@ -32,6 +32,10 @@ namespace KEDAClient
 
         public static int 地标= 1;
 
+        public static int 运行方向 = 4;
+
+        public static int 充电状态 = 7;
+
         public static int 货物状态 = 26;
     }
 

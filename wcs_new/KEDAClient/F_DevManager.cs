@@ -263,11 +263,9 @@ namespace KEDAClient
         {
             try
             {
-                List<DeviceBackImf> devs = _devList.FindAll(c =>
-                {
-                    return c.DevType == "AGV" &&
-(c.DevStatue == "False" || c.SensorList[ErrorType.脱轨].RValue == "1" || c.SensorList[ErrorType.急停触发].RValue == "1" ||
-c.SensorList[ErrorType.驱动器故障].RValue == "1" || c.SensorList[ErrorType.轨道错误].RValue == "1");
+                List<DeviceBackImf> devs = _devList.FindAll(c =>{return c.DevType == "AGV" &&
+                (c.DevStatue == "False" || c.SensorList[ErrorType.脱轨].RValue == "1" || c.SensorList[ErrorType.急停触发].RValue == "1" ||
+                 c.SensorList[ErrorType.驱动器故障].RValue == "1" || c.SensorList[ErrorType.轨道错误].RValue == "1");
                 });
 
                 if (devs != null)

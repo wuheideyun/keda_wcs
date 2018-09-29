@@ -135,7 +135,6 @@ namespace KEDAClient
             }        
         }
 
-
         /// <summary>
         /// 备用信息
         /// </summary>
