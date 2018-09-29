@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Gfx.GfxDataManagerServer;
+using GfxCommonInterfaces;
+using GfxServiceContractTaskExcute;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -62,6 +65,11 @@ namespace KEDAClient
         public bool _PlcHeadChargeSuc = false;
 
         /// <summary>
+        ///发生故障执行次数
+        /// </summary>
+        private int count;
+
+        /// <summary>
         /// 构造函数
         /// </summary>
         public F_Logic(SynchronizationContext context, ListBox listBoxOutput)
@@ -88,6 +96,10 @@ namespace KEDAClient
             tr2.IsBackground = true;
             tr2.Start();
 
+            Thread tr3= new Thread(ClearTask);
+            tr3.IsBackground = true;
+            tr3.Start();
+   
         }
 
         /// <summary>
@@ -170,7 +182,7 @@ namespace KEDAClient
                     {
                         _plcEnd.IsLock = true;
 
-                        sendServerLog("任务：派发一个从窑尾装载等待区到窑尾装载点取货的任务");
+                        sendServerLog("从窑尾装载等待区到窑尾装载点取货");
 
                     }
                 }
@@ -198,7 +210,7 @@ namespace KEDAClient
 
                 F_DataCenter.MTask.IStartTask(task);
 
-                sendServerLog("任务：" + agv.Id + ",窑尾取货完成Agv从窑尾装载点到窑头卸载等待区");
+                sendServerLog("窑尾取货完成Agv从窑尾装载点到窑头卸载等待区");
 
             }
         }
@@ -222,7 +234,7 @@ namespace KEDAClient
                     {
                         _plcHead.IsLock = true;
 
-                        sendServerLog("任务：派发一个从窑头卸载等待区到窑头卸载点的任务");
+                        sendServerLog("从窑头卸载等待区到窑头卸载点的任务");
                     }
                 }
                 else
@@ -249,7 +261,7 @@ namespace KEDAClient
 
                 F_DataCenter.MTask.IStartTask(task);
 
-                sendServerLog("任务:" + agv.Id + ",从窑头卸载点到窑尾装载等待区");
+                sendServerLog("从窑头卸载点到窑尾装载等待区");
 
             }
         }
@@ -274,7 +286,7 @@ namespace KEDAClient
 
                         F_DataCenter.MTask.IStartTask(task);
 
-                        sendServerLog("任务：" + agv.Id + ",回到窑头卸载等待区");
+                        sendServerLog("" + agv.Id + ",回到窑头卸载等待区");
 
                     }
                     else
@@ -288,7 +300,7 @@ namespace KEDAClient
 
                         F_DataCenter.MTask.IStartTask(task);
 
-                        sendServerLog("任务：" + agv.Id + ",位于等待点和卸载点之间的AGV去卸货");
+                        sendServerLog("位于等待点和卸载点之间的AGV去卸货");
                     }
                 }
 
@@ -315,7 +327,7 @@ namespace KEDAClient
 
                         F_DataCenter.MTask.IStartTask(task);
 
-                        sendServerLog("任务：" + agv.Id + ",回到窑尾装载等待区");
+                        sendServerLog("" + agv.Id + ",回到窑尾装载等待区");
                     }
                     else
                     {
@@ -328,7 +340,7 @@ namespace KEDAClient
 
                         F_DataCenter.MTask.IStartTask(task);
 
-                        sendServerLog("任务：" + agv.Id + ",位于等待点和装载载点之间的AGV去装货");
+                        sendServerLog("位于等待点和装载载点之间的AGV去装货");
                     }
                 }
 
@@ -356,7 +368,7 @@ namespace KEDAClient
 
                 F_DataCenter.MTask.IStartTask(task);
 
-                sendServerLog("任务：" + agv.Id + ",去到窑尾充电点充电");
+                sendServerLog("" + agv.Id + ",去到窑尾充电点充电");
 
             }
             else
@@ -387,7 +399,7 @@ namespace KEDAClient
 
                 F_DataCenter.MTask.IStartTask(task);
                 
-                sendServerLog("任务：" + agv.Id + ",去到窑头充电点充电");
+                sendServerLog("" + agv.Id + ",去到窑头充电点充电");
 
             }
             else
@@ -423,7 +435,7 @@ namespace KEDAClient
 
                     F_DataCenter.MTask.IStartTask(task);
 
-                    sendServerLog("任务：" + agv.Id + ",充电完成，派充电完成的车去接货");
+                    sendServerLog("" + agv.Id + ",充电完成，派充电完成的车去接货");
 
 
                 }            
@@ -458,12 +470,45 @@ namespace KEDAClient
 
                     F_DataCenter.MTask.IStartTask(task);
 
-                    sendServerLog("任务：" + agv.Id + ",充电完成，派充电完成的车去卸货");
+                    sendServerLog("" + agv.Id + ",充电完成，派充电完成的车去卸货");
                 }
             }
             else
             {
                 _PlcHeadChargeSuc = false;
+            }
+        }
+
+
+        /// <summary>
+        /// 发生故障、离线的车，清除其相应的任务
+        /// </summary>
+        public void ClearTask()
+        {
+            while (true)
+            {
+                Thread.Sleep(5000);
+                List<F_AGV> agvs = F_DataCenter.MDev.ErrorOrFalse();
+                GfxList<TaskBackImf> tasklist = JTWcfHelper.WcfTaskHelper.GetAllTask();
+                if (agvs != null)
+                {
+                    foreach (var item in agvs)
+                    {
+                        foreach (var task in tasklist)
+                        {
+                            // 有故障的车是否对应任务的设备ID
+                            if (item.Id == task.DisDevId)
+                            {
+                                count++;
+                                if(count>=10)
+                                {
+                                    // 终止该任务
+                                    JTWcfHelper.WcfMainHelper.CtrDispatch(task.DisGuid, DisOrderCtrTypeEnum.Stop);
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 

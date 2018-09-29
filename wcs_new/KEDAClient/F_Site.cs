@@ -35,18 +35,22 @@ namespace KEDAClient
         public static int 货物状态 = 26;
     }
 
-    /// <summary>
-    ///地标
-    /// </summary>
-    //public enum EnumSite
-    //{
-    //    窑尾装载等待区 =63,
+    public class ErrorType
+    {
+        public static int 故障代码 = 8;
 
-    //    窑尾装载点 = 64,
+        public static int 脱轨 = 10;
 
-    //    窑头卸载等待区 = 39,
+        public static int 轨道错误 = 12;
 
-    //    窑头卸载点 = 60,
-    //}
-   
+        public static int 机械撞 = 13;
+
+        public static int 避障异常 = 14;
+
+        public static int 驱动器故障 = 15;
+
+        public static int 挂钩故障 = 16;
+
+        public static int 急停触发 = 20;
+    }
 }

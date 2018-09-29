@@ -236,7 +236,39 @@ namespace KEDAClient
         {
             try
             {
-                List<DeviceBackImf> devs = _devList.FindAll(c => { return c.DevType == "AGV" && c.SensorList[ConstSetBA.地标].RValue != ConstSetBA.窑尾装载等待区 && c.SensorList[ConstSetBA.货物状态].RValue ==ConstSetBA.AGV无货; });
+                List<DeviceBackImf> devs = _devList.FindAll(c => { return c.DevType == "AGV" && c.SensorList[ConstSetBA.地标].RValue != ConstSetBA.窑尾装载等待区 && c.SensorList[ConstSetBA.货物状态].RValue == ConstSetBA.AGV无货; });
+
+                if (devs != null)
+                {
+                    List<F_AGV> list = new List<F_AGV>();
+                    foreach (DeviceBackImf dev in devs)
+                    {
+                        list.Add(new F_AGV(dev.DevId));
+                    }
+                    return list;
+                }
+            }
+            catch { }
+
+            return null;
+        }
+
+
+        /// <summary>
+        /// 获取发生错误，或者离线的AGV
+        /// </summary>
+        /// <param name="site"></param>
+        /// <returns></returns>
+        public List<F_AGV> ErrorOrFalse()
+        {
+            try
+            {
+                List<DeviceBackImf> devs = _devList.FindAll(c =>
+                {
+                    return c.DevType == "AGV" &&
+(c.DevStatue == "False" || c.SensorList[ErrorType.脱轨].RValue == "1" || c.SensorList[ErrorType.急停触发].RValue == "1" ||
+c.SensorList[ErrorType.驱动器故障].RValue == "1" || c.SensorList[ErrorType.轨道错误].RValue == "1");
+                });
 
                 if (devs != null)
                 {
