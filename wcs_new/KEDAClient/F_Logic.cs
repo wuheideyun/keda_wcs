@@ -504,7 +504,7 @@ namespace KEDAClient
                                 {
                                     int count = 0;
                                     dic.TryGetValue(agv.Id, out count);
-                                    if (count >= 10)
+                                    if (count >= 1)
                                     {
                                         // 终止该任务
                                         JTWcfHelper.WcfMainHelper.CtrDispatch(task.DisGuid, DisOrderCtrTypeEnum.Stop);
