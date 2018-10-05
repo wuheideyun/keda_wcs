@@ -36,7 +36,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\NJDSClient\bin\Debug\GfxAgvMapEx.dll</HintPath>
     </Reference>
-    <Reference Include="GfxCommonInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+    <Reference Include="GfxCommonInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\DriverHQHP(南京德塑)\HQHPCtrol\bin\Debug\GfxCommonInterfaces.dll</HintPath>
+    </Reference>
     <Reference Include="GfxDataContract, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\JTWcfHelper\bin\Debug\新建文件夹\GfxDataContract.dll</HintPath>

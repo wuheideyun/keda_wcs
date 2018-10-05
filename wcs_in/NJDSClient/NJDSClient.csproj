@@ -39,22 +39,22 @@
   <ItemGroup>
     <Reference Include="GfxAgvMapEx, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\EXP\GfxAgvMapEx.dll</HintPath>
+      <HintPath>..\..\wcs_new\EXP\GfxAgvMapEx.dll</HintPath>
     </Reference>
     <Reference Include="GfxCommonInterfaces">
-      <HintPath>..\EXP\GfxCommonInterfaces.dll</HintPath>
+      <HintPath>..\..\DriverHQHP(南京德塑)\HQHPCtrol\bin\Debug\GfxCommonInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="GfxDataContract">
-      <HintPath>..\EXP\GfxDataContract.dll</HintPath>
+      <HintPath>..\..\DriverHQHP(南京德塑)\HQHPCtrol\bin\Debug\GfxDataContract.dll</HintPath>
     </Reference>
     <Reference Include="GfxServiceContractAreaConfig">
       <HintPath>..\EXP\GfxServiceContractAreaConfig.dll</HintPath>
     </Reference>
     <Reference Include="GfxServiceContractClient">
-      <HintPath>..\EXP\GfxServiceContractClient.dll</HintPath>
+      <HintPath>..\..\DriverHQHP(南京德塑)\HQHPCtrol\bin\Debug\GfxServiceContractClient.dll</HintPath>
     </Reference>
     <Reference Include="GfxServiceContractClientDispatch">
-      <HintPath>..\EXP\GfxServiceContractClientDispatch.dll</HintPath>
+      <HintPath>..\..\DriverHQHP(南京德塑)\HQHPCtrol\bin\Debug\GfxServiceContractClientDispatch.dll</HintPath>
     </Reference>
     <Reference Include="GfxServiceContractDeviceConfig">
       <HintPath>..\EXP\GfxServiceContractDeviceConfig.dll</HintPath>
@@ -75,7 +75,7 @@
       <HintPath>..\EXP\GfxServiceContractPathConfig.dll</HintPath>
     </Reference>
     <Reference Include="GfxServiceContractPluginInterface">
-      <HintPath>..\EXP\GfxServiceContractPluginInterface.dll</HintPath>
+      <HintPath>..\..\DriverHQHP(南京德塑)\HQHPCtrol\bin\Debug\GfxServiceContractPluginInterface.dll</HintPath>
     </Reference>
     <Reference Include="GfxServiceContractSensorPtyDefine">
       <HintPath>..\EXP\GfxServiceContractSensorPtyDefine.dll</HintPath>
@@ -84,10 +84,10 @@
       <HintPath>..\EXP\GfxServiceContractSensorTypeDefine.dll</HintPath>
     </Reference>
     <Reference Include="GfxServiceContractTaskExcute">
-      <HintPath>..\EXP\GfxServiceContractTaskExcute.dll</HintPath>
+      <HintPath>..\..\DriverHQHP(南京德塑)\HQHPCtrol\bin\Debug\GfxServiceContractTaskExcute.dll</HintPath>
     </Reference>
     <Reference Include="GfxServiceContractTaskRelate">
-      <HintPath>..\EXP\GfxServiceContractTaskRelate.dll</HintPath>
+      <HintPath>..\..\DriverHQHP(南京德塑)\HQHPCtrol\bin\Debug\GfxServiceContractTaskRelate.dll</HintPath>
     </Reference>
     <Reference Include="GfxServiceContractTemStop">
       <HintPath>..\EXP\GfxServiceContractTemStop.dll</HintPath>
@@ -99,7 +99,7 @@
       <HintPath>..\EXP\GfxServiceContractUser.dll</HintPath>
     </Reference>
     <Reference Include="RCommonData">
-      <HintPath>..\..\..\服务端源码_微创科技\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\MicroTeleFile\GfxServer\ServiceFile\RCommonData.dll</HintPath>
+      <HintPath>..\..\DriverHQHP(南京德塑)\NJDSClient\bin\Debug\RCommonData.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -169,6 +169,17 @@
       <Project>{bc199de0-693c-4601-87f3-c34c15ba0368}</Project>
       <Name>WcfHelper</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="StdFormat">
+      <Guid>{6B263850-900B-11D0-9484-00A0C91110ED}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

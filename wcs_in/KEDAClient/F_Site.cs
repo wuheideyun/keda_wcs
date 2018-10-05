@@ -8,22 +8,6 @@ namespace KEDAClient
 {
     public class ConstSetBA
     {
-        public static String 窑尾装载等待区 = "63";
-
-        public static String 窑尾装载点 = "64";
-
-        public static String 窑头卸载等待区 = "39";
-
-        public static String 窑头卸载点 = "60";
-
-        public static String 接货充电点 = "50";
-
-        public static String 卸货充电点 = "50";
-
-        public static String 窑尾等待点和装载点之间 = "36";
-
-        public static String 窑头等待点和卸载点之间 = "61";
-
         public static int    最低电量 = 90;
 
         public static String AGV有货 = "1";
@@ -56,5 +40,30 @@ namespace KEDAClient
         public static int 挂钩故障 = 16;
 
         public static int 急停触发 = 20;
+    }
+
+    public class Site
+    {
+        public static String 窑尾6 = "33";
+
+        public static String 窑尾5 = "42";
+
+        public static String 窑尾2 = "32";
+
+        public static String 窑尾1 = "35";
+
+        public static String 窑头7 = "36";
+
+        public static String 窑头8 = "41";
+
+        public static String 窑头3 = "40";
+
+        public static String 窑头4 = "38";
+
+        public static String 充电点 = "50";
+
+        public static String 窑尾5和1之间 = "34";
+
+        public static String 窑头8和4之间 = "37";
     }
 }

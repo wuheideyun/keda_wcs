@@ -44,32 +44,32 @@
     </Reference>
     <Reference Include="GfxCommonInterfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxCommonInterfaces.dll</HintPath>
+      <HintPath>..\..\wcs_new\EXP\GfxCommonInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="GfxDataContract, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxDataContract.dll</HintPath>
+      <HintPath>..\..\DriverHQHP(南京德塑)\HQHPCtrol\bin\Debug\GfxDataContract.dll</HintPath>
     </Reference>
     <Reference Include="GfxServiceContractClient, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxServiceContractClient.dll</HintPath>
+      <HintPath>..\..\JTWcfHelper\bin\Debug\新建文件夹\GfxServiceContractClient.dll</HintPath>
     </Reference>
     <Reference Include="GfxServiceContractClientDispatch">
-      <HintPath>..\..\..\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxServiceContractClientDispatch.dll</HintPath>
+      <HintPath>..\..\DriverHQHP(南京德塑)\HQHPCtrol\bin\Debug\GfxServiceContractClientDispatch.dll</HintPath>
     </Reference>
     <Reference Include="GfxServiceContractPluginInterface">
-      <HintPath>..\..\..\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxServiceContractPluginInterface.dll</HintPath>
+      <HintPath>..\..\DriverHQHP(南京德塑)\HQHPCtrol\bin\Debug\GfxServiceContractPluginInterface.dll</HintPath>
     </Reference>
     <Reference Include="GfxServiceContractTaskExcute, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxServiceContractTaskExcute.dll</HintPath>
+      <HintPath>..\..\DriverHQHP(南京德塑)\HQHPCtrol\bin\Debug\GfxServiceContractTaskExcute.dll</HintPath>
     </Reference>
     <Reference Include="GfxServiceContractTaskRelate, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\GfxServiceContractTaskRelate.dll</HintPath>
+      <HintPath>..\..\DriverHQHP(南京德塑)\HQHPCtrol\bin\Debug\GfxServiceContractTaskRelate.dll</HintPath>
     </Reference>
     <Reference Include="RCommonData">
-      <HintPath>..\..\..\服务端源码\GfxDataManagerServer\GfxServerSetup\GfxServerSetup\Express\DVD-5\DiskImages\DISK1\program files\Chongqing Jaten Robot&amp;Automation Co.,Ltd\GfxServer\ServiceFile\RCommonData.dll</HintPath>
+      <HintPath>..\..\DriverHQHP(南京德塑)\NJDSClient\bin\Debug\RCommonData.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
