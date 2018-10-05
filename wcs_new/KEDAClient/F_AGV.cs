@@ -6,11 +6,9 @@ using System.Text;
 
 namespace KEDAClient
 {
-
-
-
+    
     /// <summary>
-    /// 货物状态
+    /// 运行状态
     /// </summary>
     public enum EnumSta_AGV
     {

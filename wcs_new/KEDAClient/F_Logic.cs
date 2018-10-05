@@ -335,7 +335,7 @@ namespace KEDAClient
                         /// 如果agv无货 且位于等待点和装载点之间，去到窑尾装载点
                         _ToPlcEnd = true;
 
-                        F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.放货, ConstSetBA.窑尾等待点和装载点之间, ConstSetBA.窑头卸载点);
+                        F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.放货, ConstSetBA.窑尾等待点和装载点之间, ConstSetBA.窑尾装载点);
 
                         task.Id = agv.Id;
 
@@ -490,15 +490,15 @@ namespace KEDAClient
             {
                 Thread.Sleep(5000);
                 List<F_AGV> agvs = F_DataCenter.MDev.ErrorOrFalse();
-                List<DispatchBackMember> tasklist = JTWcfHelper.WcfMainHelper.GetDispatchList();
-                if (agvs != null && tasklist.Count > 0)
+                List<DispatchBackMember> dispatchList = JTWcfHelper.WcfMainHelper.GetDispatchList();
+                if (agvs != null && dispatchList.Count > 0)
                 {
                     foreach (var agv in agvs)
                     {
-                        foreach (var task in tasklist)
+                        foreach (var dispatch in dispatchList)
                         {
                             // 有故障的车是否对应任务的设备ID
-                            if (agv.Id == task.DisDevId)
+                            if (agv.Id == dispatch.DisDevId)
                             {
                                 if (dic.ContainsKey(agv.Id))
                                 {
@@ -507,7 +507,7 @@ namespace KEDAClient
                                     if (count >= 1)
                                     {
                                         // 终止该任务
-                                        JTWcfHelper.WcfMainHelper.CtrDispatch(task.DisGuid, DisOrderCtrTypeEnum.Stop);
+                                        JTWcfHelper.WcfMainHelper.CtrDispatch(dispatch.DisGuid, DisOrderCtrTypeEnum.Stop);
                                         sendServerLog("终止异常的 " + agv.Id + "正在执行的任务");
                                         count = 0;
                                     }
@@ -523,18 +523,13 @@ namespace KEDAClient
                                 {
                                     dic.Add(agv.Id, 0);
                                 }
-
-                                //var timeout = DateTime.Now.AddSeconds(30);
-                                //if (DateTime.Now > timeout)
-                                //{
-                                //    //超时
-                                //    // 终止该任务
-                                //    JTWcfHelper.WcfMainHelper.CtrDispatch(task.DisGuid, DisOrderCtrTypeEnum.Stop);
-                                //    return;
-                                //}
                             }
                         }
                     }
+                }
+                else
+                {
+                    dic.Clear();
                 }
             }
         }
