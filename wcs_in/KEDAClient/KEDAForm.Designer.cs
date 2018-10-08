@@ -55,6 +55,7 @@
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.currentTask = new System.Windows.Forms.TabPage();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.initButton = new System.Windows.Forms.Button();
             this.taskInformlist = new System.Windows.Forms.ListView();
             this.endmission = new System.Windows.Forms.Button();
             this.startmission = new System.Windows.Forms.Button();
@@ -358,6 +359,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel3.AutoScroll = true;
             this.panel3.AutoSize = true;
+            this.panel3.Controls.Add(this.initButton);
             this.panel3.Controls.Add(this.taskInformlist);
             this.panel3.Controls.Add(this.endmission);
             this.panel3.Controls.Add(this.startmission);
@@ -366,6 +368,17 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(948, 190);
             this.panel3.TabIndex = 38;
+            // 
+            // initButton
+            // 
+            this.initButton.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.initButton.Location = new System.Drawing.Point(861, 93);
+            this.initButton.Name = "initButton";
+            this.initButton.Size = new System.Drawing.Size(74, 51);
+            this.initButton.TabIndex = 38;
+            this.initButton.Text = "初始化";
+            this.initButton.UseVisualStyleBackColor = false;
+            this.initButton.Click += new System.EventHandler(this.initButton_Click);
             // 
             // taskInformlist
             // 
@@ -988,5 +1001,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ToolStripMenuItem startServer;
         private System.Windows.Forms.ToolStripMenuItem stopServer;
+        public System.Windows.Forms.Button initButton;
     }
 }

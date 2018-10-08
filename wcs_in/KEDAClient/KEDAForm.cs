@@ -3108,6 +3108,12 @@ namespace KEDAClient
             stopServer.Enabled = false;
         }
 
+        private   void initButton_Click(object sender, EventArgs e)
+        {
+            F_Logic f_logic = F_DataCenter.MLogic;
+            f_logic.initButton();
+        }
+
         /// <summary>
         ///  判断执行卸货任务后的AGV，货物状态是否为无货
         /// </summary>
