@@ -341,13 +341,17 @@ namespace KEDAClient
             //启动作业线程
             //F_DataCenter.Init();
 
+            LogFactory.Init();//日志初始化
+
+            LogFactory.LogRunning("启动工具");
+
             this.WindowState = FormWindowState.Maximized;
 
             queryDataThread = new Thread(queryDataThreadFunc);
             queryDataThread.IsBackground = true;
             queryDataThread.Start();
 
-            LogFactory.init();//日志初始化
+
 
 
             //thread1 = new Thread(LoadStaHasGoods);
@@ -3097,6 +3101,8 @@ namespace KEDAClient
             SetOutputMsg("服务启动");
             startServer.Enabled = false;
             stopServer.Enabled = true;
+
+            LogFactory.LogRunning("服务启动");
         }
 
         /// <summary>
@@ -3108,6 +3114,8 @@ namespace KEDAClient
             SetOutputMsg("服务停止");
             startServer.Enabled = true;
             stopServer.Enabled = false;
+
+            LogFactory.LogRunning("服务停止");
         }
 
         /// <summary>
