@@ -371,6 +371,7 @@
             // 
             // initButton
             // 
+            this.initButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.initButton.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.initButton.Location = new System.Drawing.Point(861, 93);
             this.initButton.Name = "initButton";
@@ -1001,6 +1002,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ToolStripMenuItem startServer;
         private System.Windows.Forms.ToolStripMenuItem stopServer;
-        public System.Windows.Forms.Button initButton;
+        private System.Windows.Forms.Button initButton;
     }
 }

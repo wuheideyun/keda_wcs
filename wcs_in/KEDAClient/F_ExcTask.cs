@@ -152,7 +152,7 @@ namespace KEDAClient
                         ///当前AGV的到达的地标 与 棍台绑定地标一致
                         if (_agv.Site == _plc.Site)
                         {
-
+                            // 判断窑尾取货点的夹具状态、PLC和AGV货物状态
                             if (//_plc.Sta_Material == EnumSta_Material.有货 && 
                             //(_agv.Sta_Material == EnumSta_Material.无货 || _agv.Sta_Material == EnumSta_Material.传送中)
                             true)
@@ -162,7 +162,7 @@ namespace KEDAClient
                                 _plc.SendOrdr(EnumType.下料操作, EnumPara.窑尾辊台允许下料);
                             }
 
-
+                            // // 判断窑尾取货点的夹具状态、PLC和AGV货物状态
                             if (//_plc.Sta_Material == EnumSta_Material.无货 &&
                                 //_agv.Sta_Material == EnumSta_Material.有货
                                 true)

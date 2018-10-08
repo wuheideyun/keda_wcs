@@ -2280,14 +2280,13 @@ namespace KEDAClient
                             {
                                 listv.Items[i].SubItems[2].Text = dev.DevStatue;  // AGV在线状态                                                                                
                                 // 判断AGV是停止还是运行，1为运行、3为停止
-                                if (dev.SensorList[4].RValue == "1")
+                                if (dev.SensorList[0].RValue == "1")
                                 {
                                     // 运行方向： 0 前进  1后退 
                                     if (dev.SensorList[ConstSetBA.运行方向].RValue == "0")
                                     {
                                         listv.Items[i].SubItems[3].Text = "前进"; // 运行状态：前进
-                                    }
-                                    //  item1.SensorList[sens[1]].RValue == "1"  后退
+                                    }                                  
                                     else
                                     {
                                         listv.Items[i].SubItems[3].Text = "后退"; // 运行状态：后退
@@ -3111,10 +3110,18 @@ namespace KEDAClient
             stopServer.Enabled = false;
         }
 
+        /// <summary>
+        /// 初始化按钮（任务界面）
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private   void initButton_Click(object sender, EventArgs e)
         {
             F_Logic f_logic = F_DataCenter.MLogic;
-            f_logic.initButton();
+            if(f_logic!= null)
+            {
+                f_logic.initButton();
+            }           
         }
 
         /// <summary>
