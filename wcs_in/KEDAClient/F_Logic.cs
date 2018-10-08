@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using LogHelper;
 
 namespace KEDAClient
 {
@@ -183,6 +184,7 @@ namespace KEDAClient
                     _plcEnd.IsLock = true;
 
                     sendServerLog(agv.Id + "从窑尾装载等待点5 到 窑尾装载点1取货");
+                    LogFactory.LOG.LogDispatch(agv.Id,"到窑尾取货", "从窑尾装载等待点5 到 窑尾装载点1取货");
                 }
             }
             else
@@ -211,7 +213,7 @@ namespace KEDAClient
                 F_DataCenter.MTask.IStartTask(task);
 
                 sendServerLog(agv.Id + "窑尾取货完成Agv从窑尾装载点1到窑头卸载等待点7");
-
+                LogFactory.LOG.LogDispatch(agv.Id, "AGV送货", "窑尾取货完成Agv从窑尾装载点1到窑头卸载等待点7");
             }
         }
 
@@ -231,6 +233,9 @@ namespace KEDAClient
                     _plcHead.IsLock = true;
 
                     sendServerLog(agv.Id + "从窑头卸载等待点8 到 窑头卸载点4的任务");
+
+                    LogFactory.LOG.LogDispatch(agv.Id, "窑头卸货", "从窑头卸载等待点8 到 窑头卸载点4的任务");
+
                 }
             }
             else
@@ -257,6 +262,8 @@ namespace KEDAClient
                 F_DataCenter.MTask.IStartTask(task);
 
                 sendServerLog(agv.Id + "从窑头卸载点4到窑尾装载等待点6");
+
+                LogFactory.LOG.LogDispatch(agv.Id, "到窑尾接货", "从窑头卸载点4到窑尾装载等待点6");
 
             }
         }
@@ -299,6 +306,7 @@ namespace KEDAClient
 
                         sendServerLog(agv.Id + ",回到窑头卸载等待点7");
 
+                        LogFactory.LOG.LogDispatch(agv.Id,"车辆初始化","回到窑头卸载等待点7");
                     }
                     else
                     {
@@ -312,6 +320,9 @@ namespace KEDAClient
                         F_DataCenter.MTask.IStartTask(task);
 
                         sendServerLog(agv.Id + "位于等待点8和卸载点4之间的AGV去卸货");
+
+                        LogFactory.LOG.LogDispatch(agv.Id, "车辆初始化", "位于等待点8和卸载点4之间的AGV去卸货");
+
                     }
                 }
 
@@ -340,6 +351,9 @@ namespace KEDAClient
                         F_DataCenter.MTask.IStartTask(task);
 
                         sendServerLog(agv.Id + ",回到窑尾装载等待点6");
+
+                        LogFactory.LOG.LogDispatch(agv.Id, "车辆初始化", "回到窑尾装载等待点6");
+
                     }
                     else
                     {
@@ -353,6 +367,9 @@ namespace KEDAClient
                         F_DataCenter.MTask.IStartTask(task);
 
                         sendServerLog(agv.Id + "位于等待点5和装载载点1之间的AGV去装货");
+
+                        LogFactory.LOG.LogDispatch(agv.Id, "车辆初始化", "位于等待点5和装载载点1之间的AGV去装货");
+
                     }
                 }
 
@@ -382,6 +399,8 @@ namespace KEDAClient
                 F_DataCenter.MTask.IStartTask(task);
 
                 sendServerLog(agv.Id + ",去到充电点充电");
+
+                LogFactory.LOG.LogDispatch(agv.Id, "充电", "去到充电点充电");
 
             }
             else
@@ -420,6 +439,7 @@ namespace KEDAClient
 
                     sendServerLog(agv.Id + ",充电完成，派充电完成的车去卸载等待点7");
 
+                    LogFactory.LOG.LogDispatch(agv.Id, "充电完成", "派充电完成的车去卸载等待点7");
 
                 }
             }
@@ -448,6 +468,9 @@ namespace KEDAClient
                     if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcEnd, EnumOper.无动作, Site.窑尾6, Site.窑尾2)))
                     {
                         sendServerLog(agv.Id + ", 从窑尾等待6 去 窑尾夹具点2");
+
+                        LogFactory.LOG.LogDispatch(agv.Id, "接货", "从窑尾等待6去窑尾夹具点2");
+
                         agv.IsLock = true;
                     }
                 }
@@ -468,6 +491,9 @@ namespace KEDAClient
                 if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcEnd, EnumOper.无动作, Site.窑尾2, Site.窑尾5)))
                 {
                     sendServerLog(agv.Id + ",  从窑尾夹具点2  去 窑尾等待5");
+
+                    LogFactory.LOG.LogDispatch(agv.Id, "接货", "从窑尾夹具点2去窑尾等待5");
+
                     agv.IsLock = true;
                 }
             }
@@ -493,6 +519,9 @@ namespace KEDAClient
                     if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcHead, EnumOper.无动作, Site.窑头7, Site.窑头3)))
                     {
                         sendServerLog(agv.Id + ",  从窑头等待7 去 窑头夹具点3");
+
+                        LogFactory.LOG.LogDispatch(agv.Id, "卸货", "从窑尾夹具点2去窑尾等待5");
+
                         agv.IsLock = true;
                     }
                 }
@@ -513,6 +542,9 @@ namespace KEDAClient
                 if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcHead, EnumOper.无动作, Site.窑头3, Site.窑头8)))
                 {
                     sendServerLog(agv.Id + ", 从窑头夹具点3 去 窑头等待8 ");
+
+                    LogFactory.LOG.LogDispatch(agv.Id, "卸货", "从窑头夹具点3去窑头等待8");
+
                     agv.IsLock = true;
                 }
             }

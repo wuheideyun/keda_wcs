@@ -1,5 +1,6 @@
 ﻿using Gfx.GfxDataManagerServer;
 using GfxCommonInterfaces;
+using LogHelper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -351,7 +352,10 @@ namespace KEDAClient
 
                 if (exit != null && _taskList.Contains(exit))
                 {
+                    //LogFactory.LOG.LogFinish(exit.Id , "", "调度信息");
+
                     _taskList.Remove(exit);
+                                        
                 }
             }
         }

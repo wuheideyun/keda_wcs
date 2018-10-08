@@ -6,6 +6,7 @@ using GfxServiceContractClient;
 using GfxServiceContractClientDispatch;
 using GfxServiceContractTaskExcute;
 using JTWcfHelper;
+using LogHelper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -345,6 +346,8 @@ namespace KEDAClient
             queryDataThread = new Thread(queryDataThreadFunc);
             queryDataThread.IsBackground = true;
             queryDataThread.Start();
+
+            LogFactory.init();//日志初始化
 
 
             //thread1 = new Thread(LoadStaHasGoods);
