@@ -172,6 +172,7 @@ namespace KEDAClient
                     _plcEnd.IsLock = true;
 
                     sendServerLog(agv.Id + "从窑尾装载等待点5 到 窑尾装载点1取货");
+
                     LogFactory.LogDispatch(agv.Id, "到窑尾取货", "从窑尾装载等待点5 到 窑尾装载点1取货");
                 }
             }
@@ -253,7 +254,7 @@ namespace KEDAClient
 
                 sendServerLog(agv.Id + "从窑头卸载点4 到 窑尾装载点1");
 
-                LogFactory.LogDispatch(agv.Id, "到窑尾接货", "从窑头卸载点4到窑尾装载等待点6");
+                LogFactory.LogDispatch(agv.Id, "到窑尾接货", "从窑头卸载点4到窑尾装载点1");
 
             }
         }
@@ -506,7 +507,7 @@ namespace KEDAClient
                     {
                         sendServerLog(agv.Id + ",  从窑头等待7 去 窑头夹具点3");
 
-                        LogFactory.LogDispatch(agv.Id, "卸货", "从窑尾夹具点2去窑尾等待5");
+                        LogFactory.LogDispatch(agv.Id, "卸货", "从窑头等待7去窑头夹具点3");
 
                         agv.IsLock = true;
                     }
@@ -564,13 +565,20 @@ namespace KEDAClient
                                     {
                                         // 终止该任务
                                         JTWcfHelper.WcfMainHelper.CtrDispatch(dispatch.DisGuid, DisOrderCtrTypeEnum.Stop);
+
                                         sendServerLog("终止异常的 " + agv.Id + "正在执行的任务");
+
+                                        LogFactory.LogRunning("终止异常的 " + agv.Id + "正在执行的任务");
+
                                         count = 0;
                                     }
                                     else
                                     {
                                         count++;
+
                                         sendServerLog("异常的 " + agv.Id + "已等待处理 " + count + " 次");
+
+                                        LogFactory.LogRunning("异常的 " + agv.Id + "已等待处理 " + count + " 次");
                                     }
                                     dic.Remove(agv.Id);
                                     dic.Add(agv.Id, count);

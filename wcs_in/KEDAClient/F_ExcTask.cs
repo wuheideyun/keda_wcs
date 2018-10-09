@@ -63,6 +63,18 @@ namespace KEDAClient
         /// </summary>
         DispatchBackMember _taskDispatch = null;
 
+        public string StartSite
+        {
+            get { return _startSite; }
+            set { _startSite = value; }
+        }
+
+        public string EndSite
+        {
+            get { return _endSite; }
+            set { _endSite = value; }
+        }
+
         public string Id
         {
             get { return _id; }
@@ -352,7 +364,8 @@ namespace KEDAClient
 
                 if (exit != null && _taskList.Contains(exit))
                 {
-                    //LogFactory.LOG.LogFinish(exit.Id , "", "调度信息");
+                 
+                    LogFactory.LogFinish(exit.Id ,"调度完成","从地标"+exit.StartSite +"到地标"+exit.EndSite );
 
                     _taskList.Remove(exit);
                                         
