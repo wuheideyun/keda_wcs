@@ -155,33 +155,7 @@ namespace KEDAClient
                 catch { }
             }
         }
-
-        /// <summary>
-        /// 窑尾取货任务
-        /// </summary>
-        private void TaskPlcEndGet()
-        {
-            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(Site.窑尾5);
-
-            ///窑尾等待点5的AGV没有锁定 并且 此次任务没有被响应
-            if (!_plcEnd.IsLock && agv != null && !agv.IsLock)
-            {
-                ///派发一个从窑尾装载等待点2 到 窑尾装载点取货的任务
-                if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcEnd, EnumOper.取货, Site.窑尾5, _plcEnd.Site)))
-                {
-                    _plcEnd.IsLock = true;
-
-                    sendServerLog(agv.Id + "从窑尾装载等待点5 到 窑尾装载点1取货");
-
-                    LogFactory.LogDispatch(agv.Id, "到窑尾取货", "从窑尾装载等待点5 到 窑尾装载点1取货");
-                }
-            }
-            else
-            {
-                _ToPlcEnd = false;
-            }
-        }
-
+       
         /// <summary>
         /// 窑尾取货完成Agv从窑尾夹具2 到 窑头卸载等待点7
         /// </summary>
@@ -223,6 +197,8 @@ namespace KEDAClient
                 {
                     _plcHead.IsLock = true;
 
+                    agv.IsLock = true;
+
                     sendServerLog(agv.Id + "从窑头卸载等待点8 到 窑头卸载点4的任务");
 
                     LogFactory.LogDispatch(agv.Id, "窑头卸货", "从窑头卸载等待点8 到 窑头卸载点4的任务");
@@ -242,11 +218,13 @@ namespace KEDAClient
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(_plcHead.Site);
 
-            if (agv != null && agv.IsFree
+            if (agv != null && agv.IsFree && agv.IsLock
                 //&& agv.Sta_Material == EnumSta_Material.无货
                 )
             {
                 F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.取货, Site.窑头4, Site.窑尾1);
+
+                agv.IsLock = true;
 
                 task.Id = agv.Id;
 
