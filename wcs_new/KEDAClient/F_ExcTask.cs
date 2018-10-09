@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using LogHelper;
 
 namespace KEDAClient
 {
@@ -61,6 +62,18 @@ namespace KEDAClient
         /// 此次任务的调度结果
         /// </summary>
         DispatchBackMember _taskDispatch = null;
+
+        public string StartSite
+        {
+            get { return _startSite; }
+            set { _startSite = value; }
+        }
+
+        public string EndSite
+        {
+            get { return _endSite; }
+            set { _endSite = value; }
+        }
 
         public string Id
         {
@@ -349,6 +362,8 @@ namespace KEDAClient
 
                 if (exit != null && _taskList.Contains(exit))
                 {
+                    LogFactory.LogFinish(exit.Id, "调度完成", "从地标" + exit.StartSite + "到地标" + exit.EndSite);
+
                     _taskList.Remove(exit);
                 }
             }

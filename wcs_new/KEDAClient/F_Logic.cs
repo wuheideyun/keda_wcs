@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using LogHelper;
 
 namespace KEDAClient
 {
@@ -185,6 +186,8 @@ namespace KEDAClient
 
                         sendServerLog(agv.Id + "从窑尾装载等待区到窑尾装载点取货");
 
+                        LogFactory.LogDispatch(agv.Id, "到窑尾取货", "从窑尾装载等待区到窑尾装载点取货");
+
                     }
                 }
                 else
@@ -213,6 +216,8 @@ namespace KEDAClient
 
                 sendServerLog(agv.Id + "窑尾取货完成Agv从窑尾装载点到窑头卸载等待区");
 
+                LogFactory.LogDispatch(agv.Id, "AGV送货", "窑尾取货完成Agv从窑尾装载点到窑头卸载等待区");
+                
             }
         }
 
@@ -236,6 +241,9 @@ namespace KEDAClient
                         _plcHead.IsLock = true;
 
                         sendServerLog(agv.Id + "从窑头卸载等待区到窑头卸载点的任务");
+
+                        LogFactory.LogDispatch(agv.Id, "卸货", "从窑头卸载等待区到窑头卸载点的任务");
+
                     }
                 }
                 else
@@ -264,6 +272,8 @@ namespace KEDAClient
 
                 sendServerLog(agv.Id + "从窑头卸载点到窑尾装载等待区");
 
+                LogFactory.LogDispatch(agv.Id, "接货", "从窑头卸载点到窑尾装载等待区");
+
             }
         }
 
@@ -289,6 +299,8 @@ namespace KEDAClient
 
                         sendServerLog(agv.Id + ",回到窑头卸载等待区");
 
+                        LogFactory.LogDispatch(agv.Id, "车辆初始化", "回到窑头卸载等待区");
+
                     }
                     else
                     {
@@ -302,6 +314,9 @@ namespace KEDAClient
                         F_DataCenter.MTask.IStartTask(task);
 
                         sendServerLog(agv.Id + "位于等待点和卸载点之间的AGV去卸货");
+
+                        LogFactory.LogDispatch(agv.Id, "车辆初始化", "位于等待点和卸载点之间的AGV去卸货");
+
                     }
                 }
 
@@ -329,6 +344,9 @@ namespace KEDAClient
                         F_DataCenter.MTask.IStartTask(task);
 
                         sendServerLog(agv.Id + ",回到窑尾装载等待区");
+
+                        LogFactory.LogDispatch(agv.Id, "车辆初始化", "回到窑尾装载等待区");
+
                     }
                     else
                     {
@@ -342,6 +360,9 @@ namespace KEDAClient
                         F_DataCenter.MTask.IStartTask(task);
 
                         sendServerLog(agv.Id + "位于等待点和装载载点之间的AGV去装货");
+
+                        LogFactory.LogDispatch(agv.Id, "车辆初始化", "位于等待点和装载载点之间的AGV去装货");
+
                     }
                 }
 
@@ -370,6 +391,8 @@ namespace KEDAClient
                 F_DataCenter.MTask.IStartTask(task);
 
                 sendServerLog(agv.Id + ",去到窑尾充电点充电");
+
+                LogFactory.LogDispatch(agv.Id, "充电", "去到窑尾充电点充电");
 
             }
             else
@@ -401,6 +424,8 @@ namespace KEDAClient
                 F_DataCenter.MTask.IStartTask(task);
 
                 sendServerLog(agv.Id + ",去到窑头充电点充电");
+
+                LogFactory.LogDispatch(agv.Id, "充电", "去到窑头充电点充电");
 
             }
             else
@@ -438,6 +463,7 @@ namespace KEDAClient
 
                     sendServerLog(agv.Id + ",充电完成，派充电完成的车去接货");
 
+                    LogFactory.LogDispatch(agv.Id, "充电完成", "派充电完成的车去接货");
 
                 }
             }
@@ -472,6 +498,9 @@ namespace KEDAClient
                     F_DataCenter.MTask.IStartTask(task);
 
                     sendServerLog(agv.Id + ",充电完成，派充电完成的车去卸货");
+
+                    LogFactory.LogDispatch(agv.Id, "充电完成", "派充电完成的车去卸货");
+
                 }
             }
             else
@@ -509,12 +538,18 @@ namespace KEDAClient
                                         // 终止该任务
                                         JTWcfHelper.WcfMainHelper.CtrDispatch(dispatch.DisGuid, DisOrderCtrTypeEnum.Stop);
                                         sendServerLog("终止异常的 " + agv.Id + "正在执行的任务");
+
+                                        LogFactory.LogRunning("终止异常的 " + agv.Id + "正在执行的任务");
+
                                         count = 0;
                                     }
                                     else
                                     {
                                         count++;
                                         sendServerLog("异常的 " + agv.Id + "已等待处理 " + count + " 次");
+
+                                        LogFactory.LogRunning("异常的 " + agv.Id + "已等待处理 " + count + " 次");
+
                                     }
                                     dic.Remove(agv.Id);
                                     dic.Add(agv.Id, count);
