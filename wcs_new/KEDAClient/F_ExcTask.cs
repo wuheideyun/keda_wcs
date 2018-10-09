@@ -75,6 +75,16 @@ namespace KEDAClient
             set { _endSite = value; }
         }
 
+        public string GetTaskInfo()
+        {
+            return "从地标" + StartSite + "到地标" + EndSite;
+        }
+
+        public string GetAgvId()
+        {
+            return _agv.Id;
+        }
+
         public string Id
         {
             get { return _id; }
@@ -362,7 +372,8 @@ namespace KEDAClient
 
                 if (exit != null && _taskList.Contains(exit))
                 {
-                    LogFactory.LogFinish(exit.Id, "调度完成", "从地标" + exit.StartSite + "到地标" + exit.EndSite);
+
+                    LogFactory.LogAdd(LOGTYPE.FINISH, exit.Id, exit.GetAgvId(), exit.GetTaskInfo());//任务完成日志
 
                     _taskList.Remove(exit);
                 }
