@@ -1,0 +1,25 @@
+1.右键解决方案-》管理NuGet程序包-》浏览-》搜索SQLite
+2.安装 
+System.Data.Sqlite;
+System.Data.SQLite.Core;
+System.Data.SQLite.Linq;
+System.Data.SQLite.EF6;
+
+3.添加依赖dll文件 LogHelper.dll
+
+
+4.使用 LogFactory.init(); //初始化
+
+5.例子
+                LogFactory.LogError("查找车辆错误", "找不到符合条件的AGV小车");
+                LogFactory.LogDispatch("调度ID", "窑尾调度", "调度信息");
+                LogFactory.LogFinish("调度完成ID", "窑头调度", "调度信息");
+
+6.查看日志
+
+7.安装SQLiteStudio InstallSQLiteStudio-3.2.1.exe
+
+8.打开数据库工具，打开项目下的bin/debug文件夹下的LogData  选择数据库类型System.Data.SQLite
+数据库密码是：1234
+
+9.右键表 Generate query for table ->select 查询即可

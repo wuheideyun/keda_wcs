@@ -1,0 +1,27 @@
+###生成DLL文件####
+1.右键解决方案点击生成
+2.在bin\Debug目录下会有：对应的 Dl l 文件 和  .DLL.xml注释文件  和 pdb调试文件
+
+可以将这几个都放到有需要的项目EXP文件下，然后导入下
+
+
+###让生成的dll带注释#####
+
+https://blog.csdn.net/Benjayming/article/details/8953948
+在刚开始用dll时，通常会有这种的疑问：为什么自己生成的dll会没有注释，.Net类型中的注释是怎么来的？后来才知道，为准备生成dll的类添加注释是有讲究的，是有格式规范的。
+        要使生成的dll在“从元数据”查看的时候有注释，须先在项目属性中的“生成”一栏的输出选项上勾选“XML文档文件”。
+然后，在类中添加注释时用如下格式(在类、方法、属性上边连敲三个‘/’后，即自动出现)：
+/// <summary>
+/// max of two
+/// </summary>
+/// <param name="a"></param>
+/// <param name="b"></param>
+/// <returns>max</returns>
+public static int GetMax(int a, int b)
+{
+ return (a > b ? a : b);
+}
+
+   可以看出注释是XML格式的，写好注释后再次“生成”,会发现同一目录下多出了一个与dll文件同名的XML文件，里面就是从程序集中提取的XML注释。
+以后再从元数据查看定义时，就会发现上面多出了注释。
+
