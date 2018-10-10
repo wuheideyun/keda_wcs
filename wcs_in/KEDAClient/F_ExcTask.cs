@@ -19,6 +19,9 @@ namespace KEDAClient
         取货,
         放货,
         充电,
+        窑尾1号机械手,
+        窑尾2号机械手,
+        窑头机械手,
     }
 
     /// <summary>
@@ -173,27 +176,26 @@ namespace KEDAClient
                         ///当前AGV的到达的地标 与 棍台绑定地标一致
                         if (_agv.Site == _plc.Site)
                         {
-                            // 判断窑尾取货点的夹具状态、PLC和AGV货物状态
+                            // 判断窑尾PLC的货物状态和AGV货物状态
                             if (//_plc.Sta_Material == EnumSta_Material.有货 && 
                             //(_agv.Sta_Material == EnumSta_Material.无货 || _agv.Sta_Material == EnumSta_Material.传送中)
                             true)
                             {
                                 _agv.SendOrdr(EnumType.上料操作, EnumPara.agv上料启动);
 
-                                _plc.SendOrdr(EnumType.下料操作, EnumPara.窑尾辊台允许下料);
+                                _plc.SendOrdr(EnumType.下料操作, EnumPara.窑尾辊台启动);
                             }
 
-                            // // 判断窑尾取货点的夹具状态、PLC和AGV货物状态
+                            // // 判断窑尾是否出料完成
                             if (//_plc.Sta_Material == EnumSta_Material.无货 &&
                                 //_agv.Sta_Material == EnumSta_Material.有货
                                 true)
                             {
                                 _agv.SendOrdr(EnumType.上料操作, EnumPara.agv辊台停止);
 
-                                _plc.SendOrdr(EnumType.下料操作, EnumPara.窑头辊台上料完成);
+                                _plc.SendOrdr(EnumType.下料操作, EnumPara.窑尾辊台停止);
 
-                                if (//_plc.Sta_Monitor == EnumSta_Monitor.电机停止
-                                    true)
+                                if (_plc.Sta_Monitor == EnumSta_Monitor.窑尾电机停止)
                                 {
                                     ISetTaskSuc();
                                 }
@@ -212,7 +214,7 @@ namespace KEDAClient
                                 //(_agv.Sta_Material == EnumSta_Material.传送中 || _agv.Sta_Material == EnumSta_Material.有货)
                                 true)
                             {
-                                _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台上料中);
+                                _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台启动);
 
                                 _agv.SendOrdr(EnumType.下料操作, EnumPara.agv下料启动);
 
@@ -220,10 +222,10 @@ namespace KEDAClient
 
 
                             if (//_plc.Sta_Material == EnumSta_Material.有货 && 
-                               // _agv.Sta_Material == EnumSta_Material.无货
+                                // _agv.Sta_Material == EnumSta_Material.无货
                                true)
                             {
-                                _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台上料完成);
+                                _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台停止);
 
                                 _agv.SendOrdr(EnumType.下料操作, EnumPara.agv辊台停止);
 
@@ -241,6 +243,53 @@ namespace KEDAClient
                     else if (_operType == EnumOper.充电)
                     {
                         ISetTaskSuc();
+                        return "";
+                    }
+                    else if (_operType == EnumOper.窑尾1号机械手)
+                    {
+                        ///当前AGV的地标是否为窑尾1号机械手位置
+                        if (_agv.Site == _plc.Site)
+                        {
+
+                            _plc.SendOrdr(EnumType.下料操作, EnumPara.窑尾1号机械手启动);
+
+                            if (_plc.Sta_Monitor == EnumSta_Monitor.窑尾1号机械手停止)
+                            {
+                                ISetTaskSuc();
+                            }
+                        }
+                        return "";
+                    }
+                    else if (_operType == EnumOper.窑尾2号机械手)
+                    {
+                        ///当前AGV的地标是否为窑尾2号机械手位置
+                        if (_agv.Site == Site.窑尾2)
+                        {
+
+                            _plc.SendOrdr(EnumType.下料操作, EnumPara.窑尾2号机械手启动);
+
+                            if (_plc.Sta_Monitor == EnumSta_Monitor.窑尾2号机械手停止)
+                            {
+                                ISetTaskSuc();
+                            }
+
+                        }
+                        return "";
+                    }
+                    else if (_operType == EnumOper.窑头机械手)
+                    {
+                        ///当前AGV的地标是否为窑头机械手位置
+                        if (_agv.Site == Site.窑头3)
+                        {
+
+                            _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头机械手启动);
+
+                            if (_plc.Sta_Monitor == EnumSta_Monitor.窑头机械手停止)
+                            {
+                                ISetTaskSuc();
+                            }
+                        }
+
                         return "";
                     }
                     else if (_operType == EnumOper.无动作)
@@ -373,12 +422,12 @@ namespace KEDAClient
 
                 if (exit != null && _taskList.Contains(exit))
                 {
-                 
+
                     //LogFactory.LogFinish(exit.Id ,"调度完成",exit.GetTaskInfo());
                     LogFactory.LogAdd(LOGTYPE.FINISH, exit.Id, exit.GetAgvId(), exit.GetTaskInfo());//任务完成日志
 
                     _taskList.Remove(exit);
-                                        
+
                 }
             }
         }

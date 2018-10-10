@@ -133,11 +133,13 @@ namespace KEDAClient
 
                 try
                 {
+                    EndHolder1(); //窑尾机械手1操作
+
                     EndToEndWait(); // 从窑尾1 去 窑尾等待5
 
-                    EndWaitToHolder(); // 从窑尾等待5 去 窑尾夹具点2                                     
+                    EndWaitToHolder2(); // 从窑尾等待5 去 窑尾夹具点2                                     
 
-                    EndHolderToHeadWait();// 窑尾夹具2 到 窑头等待点7
+                    EndHolderToHeadWait();// 窑尾机械手2 到 窑头等待点7
 
                     PlcHeadCharge();// 窑头等待点7的AGV去充电点50
 
@@ -145,11 +147,12 @@ namespace KEDAClient
 
                     HeadWaitToHolder(); //  从窑头等待7 去 窑头夹具点3
 
-                    HolderToHeadWait(); // 从窑头夹具点3 去 窑头等待8
+                    HolderToHeadWait(); // 从窑头机械手3 去 窑头等待8
 
                     TaskPlcHeadPut();// 窑头8到4，放货任务
 
                     TaskHeadToEnd();// 窑头卸货完成Agv从窑头4 到 窑尾1
+    
 
                 }
                 catch { }
@@ -163,9 +166,8 @@ namespace KEDAClient
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(Site.窑尾2);
 
-            if (agv != null && agv.IsFree && !agv.IsLock
-                && agv.Sta_Material == EnumSta_Material.有货
-                )
+            // 判断窑尾机械手2号是否完成
+            if (agv != null && agv.IsFree && !agv.IsLock  && agv.Sta_Material == EnumSta_Material.窑尾2号机械手完成 )
             {
                 F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, Site.窑尾2, Site.窑头7);
 
@@ -183,7 +185,7 @@ namespace KEDAClient
         }
 
         /// <summary>
-        /// 窑头放货任务
+        /// 从窑头8到窑头4，窑头放货任务
         /// </summary>
         private void TaskPlcHeadPut()
         {
@@ -236,7 +238,30 @@ namespace KEDAClient
 
             }
         }
+        /// <summary>
+        /// 窑尾机械手1操作
+        /// </summary>
+        private void EndHolder1()
+        {
+            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(_plcHead.Site);
 
+            // AGV已经取货完成，
+            if (agv != null && agv.IsFree && agv.IsLock  && agv.Sta_Material == EnumSta_Material.有货 )
+            {
+                F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.窑尾1号机械手, Site.窑尾1, Site.窑尾1);
+
+                agv.IsLock = true;
+
+                task.Id = agv.Id;
+
+                F_DataCenter.MTask.IStartTask(task);
+
+                sendServerLog(agv.Id + "窑尾1号机械手启动");
+
+                LogFactory.LogDispatch(agv.Id, "取货完成", " 窑尾1号机械手启动");
+
+            }
+        }
 
         /// <summary>
         /// 初始化按钮方法
@@ -425,8 +450,8 @@ namespace KEDAClient
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(_plcEnd.Site);
 
-            // 判断窑尾1 夹具的状态 
-            if (agv != null && !agv.IsLock)
+            // 判断窑尾1 号机械手的状态 
+            if (agv != null && !agv.IsLock && agv.Sta_Material== EnumSta_Material.窑尾1号机械手完成)
             {
                 // 从窑尾1 去 窑尾等待5
                 if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcEnd, EnumOper.无动作, Site.窑尾1, Site.窑尾5)))
@@ -445,7 +470,7 @@ namespace KEDAClient
         /// <summary>
         /// 从窑尾等待5 去 窑尾夹具点2   
         /// </summary>
-        public void EndWaitToHolder()
+        public void EndWaitToHolder2()
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(Site.窑尾5);
 
@@ -453,7 +478,7 @@ namespace KEDAClient
             if (agv != null && !agv.IsLock)
             {
                 // 从窑尾夹具点2 到 窑尾等待点5  
-                if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcEnd, EnumOper.无动作, Site.窑尾5, Site.窑尾2)))
+                if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcEnd, EnumOper.窑尾2号机械手, Site.窑尾5, Site.窑尾2)))
                 {
                     sendServerLog(agv.Id + ",  从窑尾等待5  去 窑尾夹具点2");
 
@@ -481,7 +506,7 @@ namespace KEDAClient
                     )
                 {
                     // 从窑头等待7 去 窑头夹具点3
-                    if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcHead, EnumOper.无动作, Site.窑头7, Site.窑头3)))
+                    if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcHead, EnumOper.窑头机械手, Site.窑头7, Site.窑头3)))
                     {
                         sendServerLog(agv.Id + ",  从窑头等待7 去 窑头夹具点3");
 
@@ -500,8 +525,8 @@ namespace KEDAClient
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(Site.窑头3);
 
-            // 判断夹具的状态 
-            if (agv != null && !agv.IsLock && true)
+            // 判断窑头机械手是否完成的状态 
+            if (agv != null && !agv.IsLock && agv.Sta_Material == EnumSta_Material.窑头机械手完成)
             {
                 // 从窑尾夹具点2 到 窑尾等待点5  
                 if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcHead, EnumOper.无动作, Site.窑头3, Site.窑头8)))
