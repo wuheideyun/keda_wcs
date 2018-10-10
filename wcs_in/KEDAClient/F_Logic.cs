@@ -180,7 +180,7 @@ namespace KEDAClient
 
                 sendServerLog(agv.Id + "窑尾取货完成Agv从窑尾夹具2 到 窑头等待点7");
 
-                LogFactory.LogDispatch(agv.Id, "AGV送货", "窑尾取货完成Agv从窑尾夹具2 到 窑头等待点7");
+                LogFactory.LogDispatch(agv.Id, "送货", "窑尾取货完成Agv从窑尾夹具2 到 窑头等待点7");
             }
         }
 
@@ -243,10 +243,10 @@ namespace KEDAClient
         /// </summary>
         private void EndHolder1()
         {
-            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(_plcHead.Site);
+            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(_plcEnd.Site);
 
             // AGV已经取货完成，
-            if (agv != null && agv.IsFree && agv.IsLock  && agv.Sta_Material == EnumSta_Material.有货 )
+            if (agv != null && agv.IsFree && !agv.IsLock  && agv.Sta_Material == EnumSta_Material.有货 )
             {
                 F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.窑尾1号机械手, Site.窑尾1, Site.窑尾1);
 
@@ -459,7 +459,7 @@ namespace KEDAClient
 
                     sendServerLog(agv.Id + ", 从窑尾1 去 窑尾等待5");
 
-                    LogFactory.LogDispatch(agv.Id, "接货", ", 从窑尾1 去 窑尾等待5");
+                    LogFactory.LogDispatch(agv.Id, "取货完成", ", 从窑尾1 去 窑尾等待5");
 
                     agv.IsLock = true;
 
@@ -482,7 +482,7 @@ namespace KEDAClient
                 {
                     sendServerLog(agv.Id + ",  从窑尾等待5  去 窑尾夹具点2");
 
-                    LogFactory.LogDispatch(agv.Id, "接货", "从窑尾等待5  去 窑尾夹具点2");
+                    LogFactory.LogDispatch(agv.Id, "取货完成", "从窑尾等待5  去 窑尾夹具点2");
 
                     agv.IsLock = true;
                 }
@@ -497,7 +497,7 @@ namespace KEDAClient
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(Site.窑头7);
 
             //窑头等待区7的车不需要充电、没有充电完成的车 、没有初始化时要去窑头装载点的车
-            if (agv != null && !agv.IsLock && !_PlcHeadNeedCharge && !_PlcHeadChargeSuc && !_ToPlcHead)
+            if (agv != null && !agv.IsLock && !_PlcHeadNeedCharge && !_PlcHeadChargeSuc && !_ToPlcHead && agv.Electicity > ConstSetBA.最低电量)
             {
                 // 判断夹具的状态 及 窑尾货物状态、AGV货物状态
                 if (true
