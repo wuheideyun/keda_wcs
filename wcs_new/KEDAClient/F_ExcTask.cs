@@ -373,7 +373,7 @@ namespace KEDAClient
                 if (exit != null && _taskList.Contains(exit))
                 {
 
-                    LogFactory.LogAdd(LOGTYPE.FINISH, exit.Id, exit.GetAgvId(), exit.GetTaskInfo());//任务完成日志
+                    LogFactory.LogAdd(LOGTYPE.FINISH, exit.Id, exit.GetAgvId(), "调度完成", exit.GetTaskInfo());//任务完成日志
 
                     _taskList.Remove(exit);
                 }

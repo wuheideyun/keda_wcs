@@ -64,142 +64,6 @@
             备用字段5
             </summary>
         </member>
-        <member name="T:LogHelper.LogFactory">
-            <summary>
-            日志工厂：1.初始化；2.记录日志
-            </summary>
-        </member>
-        <member name="F:LogHelper.LogFactory._init">
-            <summary>
-            初始化完成标准
-            </summary>
-        </member>
-        <member name="P:LogHelper.LogFactory.LOG">
-            <summary>
-            日志操作类
-            </summary>
-        </member>
-        <member name="M:LogHelper.LogFactory.Init">
-            <summary>
-            初始化日志服务：没有密码，默认数据文件名
-            </summary>
-        </member>
-        <member name="M:LogHelper.LogFactory.InitParam(System.String,System.String)">
-            <summary>
-            带有数据库密码，和文件明的初始化
-            </summary>
-            <param name="passwd"></param>
-            <param name="dbName"></param>
-        </member>
-        <member name="M:LogHelper.LogFactory.SetDbPwd(System.String)">
-            <summary>
-            设置日志文件打开密码，默认没有密码
-            </summary>
-        </member>
-        <member name="M:LogHelper.LogFactory.LogError(System.String,System.String)">
-             <summary>
-            记录错误信息
-             </summary>
-        </member>
-        <member name="M:LogHelper.LogFactory.LogDispatch(System.String,System.String,System.String)">
-             <summary>
-            记录请求调度信息
-             </summary>
-        </member>
-        <member name="M:LogHelper.LogFactory.LogFinish(System.String,System.String,System.String)">
-             <summary>
-            记录请求调度信息
-             </summary>
-        </member>
-        <member name="M:LogHelper.LogFactory.LogRunning(System.String)">
-            <summary>
-            记录运行日志：如启动工具，启动服务等
-            </summary>
-            <param name="runningmsg"></param>
-        </member>
-        <member name="M:LogHelper.LogFactory.LogAdd(LogHelper.LOGTYPE,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
-            <summary>
-            自定义添加日志
-            </summary>
-            <param name="lOGTYPE">日志类型：</param>
-            <param name="logid">日志ID</param>
-            <param name="logsubject">日志对象</param>
-            <param name="logcontent">日志内容</param>
-            <param name="key01">保留字段1</param>
-            <param name="key02">保留字段2</param>
-            <param name="key03">保留字段3</param>
-            <param name="key04">保留字段4</param>
-            <param name="key05">保留字段5</param>
-        </member>
-        <member name="T:LogHelper.LogHelper">
-            <summary>
-            日志操作类
-            </summary>
-        </member>
-        <member name="F:LogHelper.LogHelper.logA">
-            <summary>
-            对象锁
-            </summary>
-        </member>
-        <member name="F:LogHelper.LogHelper.logB">
-            <summary>
-            对象锁
-            </summary>
-        </member>
-        <member name="F:LogHelper.LogHelper._logList_temp">
-            <summary>
-            储存用户当前日志
-            </summary>
-        </member>
-        <member name="F:LogHelper.LogHelper._logList">
-            <summary>
-            将要保存到数据库的日志
-            </summary>
-        </member>
-        <member name="F:LogHelper.LogHelper._errorList">
-            <summary>
-            进行报错数据库时保存的错误日志
-            </summary>
-        </member>
-        <member name="F:LogHelper.LogHelper._switchThread">
-            <summary>
-            将缓存日志给到数据库保存线程
-            </summary>
-        </member>
-        <member name="F:LogHelper.LogHelper._saveToDBThread">
-            <summary>
-            保存日志到数据库线程
-            </summary>
-        </member>
-        <member name="M:LogHelper.LogHelper.#ctor">
-            <summary>
-            构造函数
-            </summary>
-        </member>
-        <member name="M:LogHelper.LogHelper.LogAdd(LogHelper.LOGTYPE,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
-            <summary>
-            添加日志
-            </summary>
-            <param name="lOGTYPE">日志类型</param>
-            <param name="logid">日志ID</param>
-            <param name="logsubject">日志对象</param>
-            <param name="logcontent">日志内容</param>
-            <param name="key01">保留字段1</param>
-            <param name="key02">保留字段2</param>
-            <param name="key03">保留字段3</param>
-            <param name="key04">保留字段4</param>
-            <param name="key05">保留字段5</param>
-        </member>
-        <member name="M:LogHelper.LogHelper.SwicthLog">
-            <summary>
-            更新保存日志到数据库的队列
-            </summary>
-        </member>
-        <member name="M:LogHelper.LogHelper.SaveLogToDB">
-            <summary>
-            保存日志到数据库
-            </summary>
-        </member>
         <member name="T:LogHelper.LOGTYPE">
             <summary>
             日志类型定义
@@ -274,6 +138,144 @@
             </summary>
             <param name="value"></param>
             <returns></returns>
+        </member>
+        <member name="T:LogHelper.LogFactory">
+            <summary>
+            日志工厂：1.初始化；2.记录日志
+            </summary>
+        </member>
+        <member name="F:LogHelper.LogFactory._init">
+            <summary>
+            初始化完成标准
+            </summary>
+        </member>
+        <member name="P:LogHelper.LogFactory.LOG">
+            <summary>
+            日志操作类
+            </summary>
+        </member>
+        <member name="M:LogHelper.LogFactory.Init">
+            <summary>
+            初始化日志服务：没有密码，默认数据文件名
+            </summary>
+        </member>
+        <member name="M:LogHelper.LogFactory.InitParam(System.String,System.String)">
+            <summary>
+            带有数据库密码，和文件明的初始化
+            </summary>
+            <param name="passwd"></param>
+            <param name="dbName"></param>
+        </member>
+        <member name="M:LogHelper.LogFactory.SetDbPwd(System.String)">
+            <summary>
+            设置日志文件打开密码，默认没有密码
+            </summary>
+        </member>
+        <member name="M:LogHelper.LogFactory.LogError(System.String,System.String)">
+             <summary>
+            记录错误信息
+             </summary>
+        </member>
+        <member name="M:LogHelper.LogFactory.LogDispatch(System.String,System.String,System.String)">
+             <summary>
+            记录请求调度信息
+             </summary>
+        </member>
+        <member name="M:LogHelper.LogFactory.LogFinish(System.String,System.String,System.String)">
+             <summary>
+            记录请求调度信息
+             </summary>
+        </member>
+        <member name="M:LogHelper.LogFactory.LogRunning(System.String)">
+            <summary>
+            记录运行日志：如启动工具，启动服务等
+            </summary>
+            <param name="runningmsg"></param>
+        </member>
+        <member name="M:LogHelper.LogFactory.LogAdd(LogHelper.LOGTYPE,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            自定义添加日志
+            </summary>
+            <param name="logtype">日志类型：</param>
+            <param name="logid">日志ID</param>
+            <param name="logobject">日志对象</param>
+            <param name="logsubject">日志主题</param>
+            <param name="logcontent">日志内容</param>
+            <param name="key01">保留字段1</param>
+            <param name="key02">保留字段2</param>
+            <param name="key03">保留字段3</param>
+            <param name="key04">保留字段4</param>
+            <param name="key05">保留字段5</param>
+        </member>
+        <member name="T:LogHelper.LogHelper">
+            <summary>
+            日志操作类
+            </summary>
+        </member>
+        <member name="F:LogHelper.LogHelper.logA">
+            <summary>
+            对象锁
+            </summary>
+        </member>
+        <member name="F:LogHelper.LogHelper.logB">
+            <summary>
+            对象锁
+            </summary>
+        </member>
+        <member name="F:LogHelper.LogHelper._logList_temp">
+            <summary>
+            储存用户当前日志
+            </summary>
+        </member>
+        <member name="F:LogHelper.LogHelper._logList">
+            <summary>
+            将要保存到数据库的日志
+            </summary>
+        </member>
+        <member name="F:LogHelper.LogHelper._errorList">
+            <summary>
+            进行报错数据库时保存的错误日志
+            </summary>
+        </member>
+        <member name="F:LogHelper.LogHelper._switchThread">
+            <summary>
+            将缓存日志给到数据库保存线程
+            </summary>
+        </member>
+        <member name="F:LogHelper.LogHelper._saveToDBThread">
+            <summary>
+            保存日志到数据库线程
+            </summary>
+        </member>
+        <member name="M:LogHelper.LogHelper.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:LogHelper.LogHelper.LogAdd(LogHelper.LOGTYPE,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            添加日志
+            </summary>
+            <param name="logtype">日志类型</param>
+            <param name="logid">日志ID</param>
+            <param name="logobject">日志对象</param>
+            <param name="logsubject">日志主题</param>
+            <param name="logcontent">日志内容</param>
+            <param name="key01">保留字段1</param>
+            <param name="key02">保留字段2</param>
+            <param name="key03">保留字段3</param>
+            <param name="key04">保留字段4</param>
+            <param name="key05">保留字段5</param>
+        </member>
+        <member name="M:LogHelper.LogHelper.SwicthLog">
+            <summary>
+            更新保存日志到数据库的队列
+            </summary>
+        </member>
+        <member name="M:LogHelper.LogHelper.SaveLogToDB">
+            <summary>
+            保存日志到数据库
+            </summary>
         </member>
         <member name="F:LogHelper.LogSQL.m_dbName">
             <summary>
