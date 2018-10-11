@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WcfHelper", "WcfHelper\WcfH
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KEDAClient", "KEDAClient\KEDAClient.csproj", "{85C717F5-4C23-498C-BA5D-A7D43D557FF1}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{C77558F7-26C6-42BB-8680-71D9D000D516}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "WCS", "Setup\Setup.vdproj", "{C77558F7-26C6-42BB-8680-71D9D000D516}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +47,7 @@ Global
 		{C77558F7-26C6-42BB-8680-71D9D000D516}.Debug|Default.ActiveCfg = Debug
 		{C77558F7-26C6-42BB-8680-71D9D000D516}.Debug|Default.Build.0 = Debug
 		{C77558F7-26C6-42BB-8680-71D9D000D516}.Release|Any CPU.ActiveCfg = Release
+		{C77558F7-26C6-42BB-8680-71D9D000D516}.Release|Any CPU.Build.0 = Release
 		{C77558F7-26C6-42BB-8680-71D9D000D516}.Release|Default.ActiveCfg = Release
 		{C77558F7-26C6-42BB-8680-71D9D000D516}.Release|Default.Build.0 = Release
 	EndGlobalSection
@@ -55,6 +56,12 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {167135D8-E561-44F4-A7E4-F49BFAD1E56A}
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Default = Debug|Default
+		Release|Any CPU = Release|Any CPU
+		Release|Default = Release|Default
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
