@@ -167,7 +167,7 @@ namespace KEDAClient
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(Site.窑尾2);
 
             // 判断窑尾机械手2号是否完成
-            if (agv != null && agv.IsFree && !agv.IsLock  && agv.Sta_Material == EnumSta_Material.有货
+            if (agv != null && agv.IsFree && !agv.IsLock // && agv.Sta_Material == EnumSta_Material.有货
                 //&& _plcEnd.Sta_Material == EnumSta_Material.窑尾2号机械手完成 
                 )
             {
@@ -248,13 +248,18 @@ namespace KEDAClient
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(_plcEnd.Site);
 
             // AGV已经取货完成，
-            if (agv != null && agv.IsFree && !agv.IsLock  && agv.Sta_Material == EnumSta_Material.有货 )
+            if (agv != null && agv.IsFree && !agv.IsLock  && agv.Sta_Material == EnumSta_Material.有货 && !_plcEnd.IsLock 
+                && _plcEnd.Sta_Material== EnumSta_Material.窑尾出料完成
+                && false
+                )
             {
                 F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.窑尾1号机械手, Site.窑尾1, Site.窑尾1);
 
                 agv.IsLock = true;
 
                 task.Id = agv.Id;
+
+                _plcEnd.IsLock = true;
 
                 F_DataCenter.MTask.IStartTask(task);
 
@@ -556,7 +561,7 @@ namespace KEDAClient
                                 {
                                     int count = 0;
                                     dic.TryGetValue(agv.Id, out count);
-                                    if (count >= 1)
+                                    if (count >= 10)
                                     {
                                         // 终止该任务
                                         JTWcfHelper.WcfMainHelper.CtrDispatch(dispatch.DisGuid, DisOrderCtrTypeEnum.Stop);

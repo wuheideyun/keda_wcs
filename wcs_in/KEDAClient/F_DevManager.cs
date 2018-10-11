@@ -209,7 +209,7 @@ namespace KEDAClient
             {
                 List<DeviceBackImf> devs = _devList.FindAll(c =>
                 {
-                    return c.DevType == "AGV" && c.SensorList[ConstSetBA.地标].RValue != Site.窑头7 && c.SensorList[ConstSetBA.货物状态].RValue == ConstSetBA.AGV有货;
+                    return c.DevType == "AGV" && c.SensorList[ConstSetBA.地标].RValue != Site.窑尾2 && c.SensorList[ConstSetBA.货物状态].RValue == ConstSetBA.AGV有货;
                 });
 
                 if (devs != null)
