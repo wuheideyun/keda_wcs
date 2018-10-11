@@ -53,8 +53,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\JTWcfHelper\bin\Debug\新建文件夹\GfxServiceContractTaskExcute.dll</HintPath>
     </Reference>
-    <Reference Include="LogHelper">
-      <HintPath>..\EXP\LogHelper.dll</HintPath>
+    <Reference Include="LogHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\EXP\LogHelper.dll</HintPath>
     </Reference>
     <Reference Include="RCommonData, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>

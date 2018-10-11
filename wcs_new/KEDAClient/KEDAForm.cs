@@ -16,7 +16,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using LogHelper;
+using System.IO;
 
 namespace KEDAClient
 {
@@ -340,6 +341,9 @@ namespace KEDAClient
             //启动作业线程
             //F_DataCenter.Init();
 
+            LogFactory.Init();
+            LogFactory.LogRunning("启动应用");
+
             this.WindowState = FormWindowState.Maximized;
 
             queryDataThread = new Thread(queryDataThreadFunc);
@@ -414,6 +418,9 @@ namespace KEDAClient
             //thread17 = new Thread(SendAGVtoLoadWaitSta);
             //thread17.IsBackground = true;
             //thread17.Start();
+
+
+
         }
 
 
@@ -3090,11 +3097,13 @@ namespace KEDAClient
         /// </summary>
         private void startServer_Click(object sender, EventArgs e)
         {
-            
-            F_DataCenter.Init(SynchronizationContext.Current,listBoxOutput);
+
+            F_DataCenter.Init(SynchronizationContext.Current, listBoxOutput);
             SetOutputMsg("服务启动");
             startServer.Enabled = false;
             stopServer.Enabled = true;
+
+            LogFactory.LogRunning("服务启动");
         }
 
         /// <summary>
@@ -3106,6 +3115,9 @@ namespace KEDAClient
             SetOutputMsg("服务停止");
             startServer.Enabled = true;
             stopServer.Enabled = false;
+
+            LogFactory.LogRunning("服务停止");
+
         }
 
         /// <summary>
