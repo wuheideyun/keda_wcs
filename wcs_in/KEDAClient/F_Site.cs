@@ -64,6 +64,6 @@ namespace KEDAClient
 
         public static String 窑尾5和1之间 = "34";
 
-        public static String 窑头8和4之间 = "37";
+        public static String 窑头8和4之间 = "40";
     }
 }

@@ -195,7 +195,9 @@ namespace KEDAClient
 
                                 _plc.SendOrdr(EnumType.下料操作, EnumPara.窑尾辊台停止);
 
-                                if (_plc.Sta_Monitor == EnumSta_Monitor.窑尾电机停止)
+                                if (true
+                                    //&&_plc.Sta_Monitor == EnumSta_Monitor.窑尾电机停止
+                                    )
                                 {
                                     ISetTaskSuc();
                                 }
