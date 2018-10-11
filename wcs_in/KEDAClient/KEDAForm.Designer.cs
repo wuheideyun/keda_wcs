@@ -53,6 +53,9 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.listBoxOutput = new System.Windows.Forms.ListBox();
             this.tabControl2 = new System.Windows.Forms.TabControl();
+            this.dispatch = new System.Windows.Forms.TabPage();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.dispatchlist = new System.Windows.Forms.ListView();
             this.currentTask = new System.Windows.Forms.TabPage();
             this.panel3 = new System.Windows.Forms.Panel();
             this.initButton = new System.Windows.Forms.Button();
@@ -107,6 +110,8 @@
             this.panel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabControl2.SuspendLayout();
+            this.dispatch.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.currentTask.SuspendLayout();
             this.panel3.SuspendLayout();
             this.taskList.SuspendLayout();
@@ -329,6 +334,7 @@
             this.tabControl2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl2.Controls.Add(this.dispatch);
             this.tabControl2.Controls.Add(this.currentTask);
             this.tabControl2.Controls.Add(this.taskList);
             this.tabControl2.Controls.Add(this.station);
@@ -340,6 +346,40 @@
             this.tabControl2.SelectedIndex = 0;
             this.tabControl2.Size = new System.Drawing.Size(965, 224);
             this.tabControl2.TabIndex = 27;
+            this.tabControl2.SelectedIndexChanged += new System.EventHandler(this.tabControl2_SelectedIndexChanged);
+            // 
+            // dispatch
+            // 
+            this.dispatch.Controls.Add(this.panel4);
+            this.dispatch.Location = new System.Drawing.Point(4, 31);
+            this.dispatch.Name = "dispatch";
+            this.dispatch.Size = new System.Drawing.Size(957, 189);
+            this.dispatch.TabIndex = 4;
+            this.dispatch.Text = "调度任务";
+            this.dispatch.UseVisualStyleBackColor = true;
+            // 
+            // panel4
+            // 
+            this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel4.Controls.Add(this.dispatchlist);
+            this.panel4.Location = new System.Drawing.Point(3, 3);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(951, 183);
+            this.panel4.TabIndex = 1;
+            // 
+            // dispatchlist
+            // 
+            this.dispatchlist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dispatchlist.GridLines = true;
+            this.dispatchlist.Location = new System.Drawing.Point(3, 3);
+            this.dispatchlist.Name = "dispatchlist";
+            this.dispatchlist.Size = new System.Drawing.Size(697, 177);
+            this.dispatchlist.TabIndex = 0;
+            this.dispatchlist.UseCompatibleStateImageBehavior = false;
             // 
             // currentTask
             // 
@@ -366,7 +406,7 @@
             this.panel3.Controls.Add(this.pausemission);
             this.panel3.Location = new System.Drawing.Point(6, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(948, 190);
+            this.panel3.Size = new System.Drawing.Size(948, 180);
             this.panel3.TabIndex = 38;
             // 
             // initButton
@@ -390,7 +430,7 @@
             this.taskInformlist.GridLines = true;
             this.taskInformlist.Location = new System.Drawing.Point(3, 3);
             this.taskInformlist.Name = "taskInformlist";
-            this.taskInformlist.Size = new System.Drawing.Size(737, 180);
+            this.taskInformlist.Size = new System.Drawing.Size(737, 170);
             this.taskInformlist.TabIndex = 0;
             this.taskInformlist.UseCompatibleStateImageBehavior = false;
             this.taskInformlist.View = System.Windows.Forms.View.Details;
@@ -913,6 +953,8 @@
             this.panel2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.tabControl2.ResumeLayout(false);
+            this.dispatch.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
             this.currentTask.ResumeLayout(false);
             this.currentTask.PerformLayout();
             this.panel3.ResumeLayout(false);
@@ -1003,5 +1045,8 @@
         private System.Windows.Forms.ToolStripMenuItem startServer;
         private System.Windows.Forms.ToolStripMenuItem stopServer;
         private System.Windows.Forms.Button initButton;
+        private System.Windows.Forms.TabPage dispatch;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.ListView dispatchlist;
     }
 }

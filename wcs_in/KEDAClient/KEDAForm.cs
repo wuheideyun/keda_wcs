@@ -290,6 +290,7 @@ namespace KEDAClient
 
 
         //全局的列表数据变量
+        List<DispatchBackMember> dislist;
         GfxList<DeviceBackImf> devsList;                    // = JTWcfHelper.WcfMainHelper.GetDevList();
         GfxList<GfxServiceContractTaskExcute.TaskBackImf> tasksList;// = JTWcfHelper.WcfTaskHelper.GetAllTask();
         GfxList<TaskRelationMember> definetasklist;// = JTWcfHelper.WcfTaskHelper.GetDefineTask();
@@ -331,7 +332,8 @@ namespace KEDAClient
             Logger(); // 日志
             Otherdev(); // 设备
             Vehicles(); //车辆
-            TaskInform(); // 当前任务
+            DispatchTask(); // 调度任务        
+            CurrentTaskInform(); // 当前任务
             AllTaskList(); //任务列表
             toolStripLabelVersion.Text = "版本号：V14.1";  //版本号
             timerFunc.Enabled = true;  // 系统时间
@@ -600,7 +602,7 @@ namespace KEDAClient
                 if (item1.DevType == "AGV")
                 {
                     // 状态 、运行方向、电量、充电状态
-                    int[] sens = new int[] { 0,1, 4, 6, 7 };
+                    int[] sens = new int[] { 0, 1, 4, 6, 7 };
                     ListViewItem item = new ListViewItem(item1.DevId); // 车辆编号
                     item.SubItems.Add(item1.DevModel); // 车辆型号   
                     item.SubItems.Add(item1.DevStatue); // 车辆状态    
@@ -608,7 +610,7 @@ namespace KEDAClient
                     item.SubItems.Add(item1.SensorList[sens[1]].RValue); // 地标   
                     item.SubItems.Add(item1.SensorList[sens[3]].RValue); // 电量
                     item.SubItems.Add(item1.SensorList[sens[4]].RValue); // 充电状态
-                    
+
                     agvStatus.Add(item1.DevId, "stop");
 
                     // 显示项
@@ -621,7 +623,7 @@ namespace KEDAClient
         /// <summary>
         ///  获取当前任务信息
         /// </summary>
-        private void TaskInform()
+        private void CurrentTaskInform()
         {
             // 添加表头，即列名
             taskInformlist.Columns.Add("任务id", 200, HorizontalAlignment.Left);
@@ -725,6 +727,66 @@ namespace KEDAClient
             executeTasklist.EndUpdate();
 
         }
+
+        /// <summary>
+        /// 调度任务列表
+        /// </summary>
+        private void DispatchTask()
+        {
+            //添加表头，即列名
+            dispatchlist.Columns.Add("调度id", 200, HorizontalAlignment.Center);
+            dispatchlist.Columns.Add("调度信息", 100, HorizontalAlignment.Left);
+            dispatchlist.Columns.Add("调度状态", 150, HorizontalAlignment.Left);
+            dispatchlist.Columns.Add("触发源", 200, HorizontalAlignment.Left);
+            dispatchlist.Columns.Add(" 调度设备", 150, HorizontalAlignment.Left);
+            dispatchlist.Columns.Add("调度路径", 150, HorizontalAlignment.Left);
+            dispatchlist.Columns.Add(" 控制参数", 100, HorizontalAlignment.Left);
+            dispatchlist.Columns.Add(" 备注", 150, HorizontalAlignment.Left);
+
+            dispatchlist.View = System.Windows.Forms.View.Details;
+        }
+
+
+        /// <summary>
+        /// 调度任务列表展示
+        /// </summary>
+        private void DispatchListDisplay()
+        {
+            List<DispatchBackMember> dislist = WcfMainHelper.GetDispatchList();
+            if (dislist is null)
+            {
+                //dispatchlist.Clear();
+                return;
+            }
+            dispatchlist.BeginUpdate();
+
+
+
+            ListViewItem ite = new ListViewItem("1111111"); // 调度id
+            ite.SubItems.Add(" 测试"); // 调度信息
+            dispatchlist.Items.Add(ite);
+
+
+
+            foreach (var item1 in dislist)
+            {
+                ListViewItem item = new ListViewItem(item1.DisGuid); // 调度id
+               // item.SubItems.Add(item1.TaskImf); // 调度信息
+                item.SubItems.Add(" 测试"); // 调度信息
+                item.SubItems.Add(item1.OrderStatue.ToString()); // 调度状态
+                item.SubItems.Add(item1.OrderSource); // 触发源
+                item.SubItems.Add(item1.DisDevId); // 调度设备
+                item.SubItems.Add(item1.PathMsg); // 调度路径
+                item.SubItems.Add(item1.TaskCtrType.ToString()); // 控制参数，枚举类型             
+                item.SubItems.Add(item1.BackMsg); // 备注       
+
+                dispatchlist.Items.Add(item);
+            }
+
+            // 结束数据处理
+            dispatchlist.EndUpdate();
+        }
+
         /// <summary>
         /// 注销登录
         /// </summary>
@@ -2024,15 +2086,15 @@ namespace KEDAClient
                 task.IsAotuRemove = false;
 
                 //任务中一个调度节点
-                DispatchOrderObj dis = new DispatchOrderObj();               
+                DispatchOrderObj dis = new DispatchOrderObj();
 
                 ////调度的终点
                 dis.EndSite = textBox1.Text;
 
                 task.DisOrderList.Add(dis);
-                
+
                 if (JTWcfHelper.WcfTaskHelper.StartTaskTemp("客户端_KEDA", task))
-                {                         
+                {
                     //记录agv状态
                     agvStatus[vehicleslist.FocusedItem.Text] = "charge";
                     SetOutputMsg2("AGV充电");
@@ -2261,7 +2323,7 @@ namespace KEDAClient
             }
         }
         private void RefreshListview(ListView listv)
-        { 
+        {
             //System.Diagnostics.Debug.WriteLine(listv.Name);
 
             if (listv.Name.Equals("vehicleslist") || listv.Name.Equals("alarmlist"))
@@ -2290,7 +2352,7 @@ namespace KEDAClient
                                     if (dev.SensorList[ConstSetBA.运行方向].RValue == "0")
                                     {
                                         listv.Items[i].SubItems[3].Text = "前进"; // 运行状态：前进
-                                    }                                  
+                                    }
                                     else
                                     {
                                         listv.Items[i].SubItems[3].Text = "后退"; // 运行状态：后退
@@ -2305,7 +2367,7 @@ namespace KEDAClient
                                 // 充电状态            
                                 if (dev.SensorList[ConstSetBA.充电状态].RValue == "1")
                                 {
-                                    listv.Items[i].SubItems[6].Text="正充电";
+                                    listv.Items[i].SubItems[6].Text = "正充电";
                                 }
                                 else if (dev.SensorList[ConstSetBA.充电状态].RValue == "2")
                                 {
@@ -2318,7 +2380,7 @@ namespace KEDAClient
                                 else
                                 {
                                     listv.Items[i].SubItems[6].Text = "未知";
-                                }                                  
+                                }
                             }
 
                         }
@@ -2384,6 +2446,36 @@ namespace KEDAClient
             taskInformlist.EndUpdate();
         }
 
+        /// <summary>
+        /// 刷新调度任务信息
+        /// </summary>
+        private void RefreshdispatchInform()
+        {
+            if (dislist is null)
+            {
+                dispatchlist.Items.Clear();
+                return;
+            }
+            dispatchlist.Items.Clear();
+
+            dispatchlist.BeginUpdate();
+            foreach (var item1 in dislist)
+            {
+                ListViewItem item = new ListViewItem(item1.DisGuid); // 调度id
+                item.SubItems.Add(item1.TaskImf); // 调度信息
+                item.SubItems.Add(item1.OrderStatue.ToString()); // 调度状态
+                item.SubItems.Add(item1.OrderSource); // 触发源
+                item.SubItems.Add(item1.DisDevId); // 调度设备
+                item.SubItems.Add(item1.PathMsg); // 调度路径
+                item.SubItems.Add(item1.TaskCtrType.ToString()); // 控制参数，枚举类型             
+                item.SubItems.Add(item1.BackMsg); // 备注       
+
+                dispatchlist.Items.Add(item);
+            }
+
+            // 结束数据处理
+            dispatchlist.EndUpdate();
+        }
 
         /// <summary>
         /// 定时刷新车辆信息
@@ -2402,6 +2494,7 @@ namespace KEDAClient
             {
                 AllTaskListDisplay();
                 TaskInformDisplay();
+                DispatchListDisplay();
                 taskFirst = false;
             }
             switch (tabControl1.SelectedIndex)
@@ -2409,6 +2502,7 @@ namespace KEDAClient
                 case 0://0 missions
                     RefreshListview(taskInformlist);
                     RefreshtaskInform();
+                    RefreshdispatchInform();
                     break;
                 case 1://1 alarms
                     RefreshListview(alarmlist);
@@ -2591,13 +2685,14 @@ namespace KEDAClient
                     switch (tabControl1SelectIndex)
                     {
                         case 0://0 task
+                            dislist = WcfMainHelper.GetDispatchList();
                             tasksList = JTWcfHelper.WcfTaskHelper.GetAllTask();
                             definetasklist = JTWcfHelper.WcfTaskHelper.GetDefineTask();
                             taskOk = true;
                             break;
                         case 1://1 alarms
-                            
-                            
+
+
                             break;
                         case 2://2 logger
 
@@ -2648,7 +2743,7 @@ namespace KEDAClient
                     }
 
                 }
-                
+
             }
 
         }
@@ -2683,7 +2778,7 @@ namespace KEDAClient
 
                     }
                 }
-                
+
             }
         }
 
@@ -2722,7 +2817,7 @@ namespace KEDAClient
                     unloadState = 3;
 
                 }
-                
+
             }
 
         }
@@ -2781,7 +2876,7 @@ namespace KEDAClient
 
                     }
                 }
-            
+
             }
         }
 
@@ -2806,7 +2901,7 @@ namespace KEDAClient
                         if (dev != null)
                         {
                             _AGVHasGoods = true;
-                            unloadState = 6;                          
+                            unloadState = 6;
 
                         }
                         else
@@ -2816,7 +2911,7 @@ namespace KEDAClient
 
                     }
                 }
-            
+
             }
         }
 
@@ -2840,12 +2935,12 @@ namespace KEDAClient
                             JTWcfHelper.WcfMainHelper.SendOrder(dev.DevId, new CommonDeviceOrderObj("线边辊台下料 停止" + LocSite, 1, 2, 3));
 
                             unloadState = 7;
-                            
+
 
                         }
                     }
                 }
-           
+
             }
         }
 
@@ -2857,7 +2952,7 @@ namespace KEDAClient
             while (true)
             {
                 Thread.Sleep(2000);
-                if (unloadState ==7)
+                if (unloadState == 7)
                 {
                     // 自定义一个任务：AGV从窑尾装载点到窑头卸载等待区
                     OnceTaskMember task = new OnceTaskMember();
@@ -2883,7 +2978,7 @@ namespace KEDAClient
 
                     unloadState = 0;
                 }
-             
+
             }
 
         }
@@ -2913,7 +3008,7 @@ namespace KEDAClient
                     }
 
                 }
-              
+
             }
 
         }
@@ -2947,7 +3042,7 @@ namespace KEDAClient
                         }
                     }
                 }
-               
+
             }
 
         }
@@ -2987,7 +3082,7 @@ namespace KEDAClient
                     loadState = 3;
 
                 }
-              
+
             }
 
         }
@@ -3017,7 +3112,7 @@ namespace KEDAClient
                     }
 
                 }
-              
+
             }
 
         }
@@ -3047,7 +3142,7 @@ namespace KEDAClient
                             if (dev.SensorList[1].RValue == "1")
                             {
                                 _isRorate = true;
-                                loadState =5;
+                                loadState = 5;
 
                             }
                             else
@@ -3058,7 +3153,7 @@ namespace KEDAClient
 
                     }
                 }
-                
+
             }
         }
 
@@ -3086,7 +3181,7 @@ namespace KEDAClient
 
                     }
                 }
-              
+
             }
 
         }
@@ -3096,8 +3191,8 @@ namespace KEDAClient
         /// </summary>
         private void startServer_Click(object sender, EventArgs e)
         {
-            
-            F_DataCenter.Init(SynchronizationContext.Current,listBoxOutput);
+
+            F_DataCenter.Init(SynchronizationContext.Current, listBoxOutput);
             SetOutputMsg("服务启动");
             startServer.Enabled = false;
             stopServer.Enabled = true;
@@ -3123,13 +3218,18 @@ namespace KEDAClient
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private   void initButton_Click(object sender, EventArgs e)
+        private void initButton_Click(object sender, EventArgs e)
         {
             F_Logic f_logic = F_DataCenter.MLogic;
-            if(f_logic!= null)
+            if (f_logic != null)
             {
                 f_logic.initButton();
-            }           
+            }
+        }
+
+        private void tabControl2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int i = 1;
         }
 
         /// <summary>
@@ -3157,7 +3257,7 @@ namespace KEDAClient
                     }
 
                 }
-               
+
             }
         }
 
@@ -3187,7 +3287,7 @@ namespace KEDAClient
 
                     }
                 }
-             
+
             }
         }
 
@@ -3226,7 +3326,7 @@ namespace KEDAClient
                     loadState = 0;
                 }
 
-              
+
             }
 
         }
