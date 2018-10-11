@@ -76,7 +76,7 @@ namespace LogHelper
             {
                 Directory.CreateDirectory(path);
             }
-            string dbFileName = path + "/" + m_dbName;
+            string dbFileName = path + "\\" + m_dbName;
             if (!File.Exists(dbFileName))
             {
                 SQLiteConnection.CreateFile(dbFileName);
@@ -107,8 +107,8 @@ namespace LogHelper
         /// <summary>
         /// 执行非查询的数据库操作
         /// </summary>
+        /// <param name="cmd"></param>
         /// <param name="sqlString">要执行的sql语句</param>
-        /// <param name="parameters">参数列表</param>
         /// <returns>返回受影响的条数</returns>
 
         internal static int ExecuteNonQuery(SQLiteCommand cmd, string sqlString)
@@ -122,6 +122,7 @@ namespace LogHelper
         /// <summary>
         /// 执行非查询的数据库操作
         /// </summary>
+        /// <param name="cmd"></param>
         /// <param name="sqlString">要执行的sql语句</param>
         /// <param name="parameters">参数列表</param>
         /// <returns>返回受影响的条数</returns>
