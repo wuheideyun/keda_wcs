@@ -8,9 +8,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WcfHelper", "WcfHelper\WcfHelper.csproj", "{BC199DE0-693C-4601-87F3-C34C15BA0368}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KEDAClient", "KEDAClient\KEDAClient.csproj", "{85C717F5-4C23-498C-BA5D-A7D43D557FF1}"
-	ProjectSection(ProjectDependencies) = postProject
-		{BC199DE0-693C-4601-87F3-C34C15BA0368} = {BC199DE0-693C-4601-87F3-C34C15BA0368}
-	EndProjectSection
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "WCS", "Setup\Setup.vdproj", "{C77558F7-26C6-42BB-8680-71D9D000D516}"
 EndProject

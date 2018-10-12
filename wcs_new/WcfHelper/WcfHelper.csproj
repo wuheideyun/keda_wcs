@@ -91,12 +91,6 @@
     <Compile Include="WcfTaskHelper.cs" />
     <Compile Include="WcfDispatchHelper.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GfxStoreInterface\GfxStoreInterface.csproj">
-      <Project>{e05007f7-e74b-4f30-bc64-1bf33e40299f}</Project>
-      <Name>GfxStoreInterface</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
