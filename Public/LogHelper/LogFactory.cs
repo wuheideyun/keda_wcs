@@ -14,7 +14,7 @@ namespace LogHelper
         /// <summary>
         /// 初始化完成标准
         /// </summary>
-        private static Boolean _init;
+        private static Boolean _init = false;
 
         /// <summary>
         /// 日志操作类
