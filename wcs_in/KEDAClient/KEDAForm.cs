@@ -755,19 +755,11 @@ namespace KEDAClient
             List<DispatchBackMember> dislist = WcfMainHelper.GetDispatchList();
             if (dislist is null)
             {
-                //dispatchlist.Clear();
+                dispatchlist.Clear();
                 return;
             }
             dispatchlist.BeginUpdate();
-
-
-
-            ListViewItem ite = new ListViewItem("1111111"); // 调度id
-            ite.SubItems.Add(" 测试"); // 调度信息
-            dispatchlist.Items.Add(ite);
-
-
-
+            
             foreach (var item1 in dislist)
             {
                 ListViewItem item = new ListViewItem(item1.DisGuid); // 调度id

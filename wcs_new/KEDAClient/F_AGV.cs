@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ArrayMap;
 
 namespace KEDAClient
 {
@@ -26,12 +27,23 @@ namespace KEDAClient
     /// </summary>
     public class F_AGV
     {
-        /// <summary>
-        /// 是否被锁
-        /// </summary>
-        bool _isLock = false;
+        internal static MapList _mapList = new MapList();
 
+        public static void AgvLock(String agvid)
+        {
+            _mapList.Put(agvid, true);
+        }
 
+        public static void AgvRelease(String agvid)
+        {
+            _mapList.Put(agvid, false);
+        }
+
+        public static Boolean IsLock(String agvid)
+        {
+            return _mapList.GetBooleanValue(agvid);
+        }
+      
         /// <summary>
         /// PLC系统ID
         /// </summary>
@@ -39,17 +51,7 @@ namespace KEDAClient
         public string Id
         {
             get { return _id; }
-        }
-
-
-        /// <summary>
-        /// 是否被锁
-        /// </summary>
-        public bool IsLock
-        {
-            get { return _isLock; }
-            set { _isLock = value; }
-        }
+        }     
 
         /// <summary>
         /// 货物状态

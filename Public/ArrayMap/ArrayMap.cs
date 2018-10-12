@@ -138,7 +138,8 @@ namespace ArrayMap
                         return map.Value;
                     }
                 }
-                return null;
+                Put(key, false);
+                return false;
             }
         }
 

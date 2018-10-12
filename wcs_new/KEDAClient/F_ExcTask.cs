@@ -129,7 +129,7 @@ namespace KEDAClient
         private void ISetTaskSuc()
         {
             if (_plc != null) { _plc.IsLock = false; }
-            if (_agv != null) { _agv.IsLock = false; }
+            if (_agv != null) { F_AGV.AgvRelease(_agv.Id); }
 
             if (_taskDispatch != null) { if (JTWcfHelper.WcfMainHelper.CtrDispatch(_taskDispatch.DisGuid, DisOrderCtrTypeEnum.Stop)) { _isSuc = true; } }
             else { _isSuc = true; }
@@ -194,7 +194,7 @@ namespace KEDAClient
                                 _plc.SendOrdr(EnumType.下料操作, EnumPara.窑头辊台上料完成);
 
                                 if (_plc.Sta_Monitor == EnumSta_Monitor.电机停止)
-                                {
+                                {                            
                                     ISetTaskSuc();
                                 }
                             }
@@ -229,7 +229,7 @@ namespace KEDAClient
 
 
                                 if (_plc.Sta_Monitor == EnumSta_Monitor.电机停止)
-                                {
+                                {                               
                                     ISetTaskSuc();
                                 }
                             }
@@ -238,12 +238,12 @@ namespace KEDAClient
                         return "";
                     }
                     else if (_operType == EnumOper.充电)
-                    {
-                        ISetTaskSuc();
+                    {                      
+                        ISetTaskSuc();                   
                         return "";
                     }
                     else if (_operType == EnumOper.无动作)
-                    {
+                    {                      
                         ISetTaskSuc();
                         return "";
                     }
