@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.27703.2047
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogHelper", "LogHelper\LogHelper.csproj", "{F2146317-AEC8-4900-8508-3E7248BF9D7C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArrayMap", "ArrayMap\ArrayMap.csproj", "{40B4574D-9EF0-4F85-B31F-94B71256B927}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCenter", "TestCenter\TestCenter.csproj", "{81A7C750-07E3-4D1A-9A77-AF1667E7005E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{F2146317-AEC8-4900-8508-3E7248BF9D7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2146317-AEC8-4900-8508-3E7248BF9D7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2146317-AEC8-4900-8508-3E7248BF9D7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40B4574D-9EF0-4F85-B31F-94B71256B927}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40B4574D-9EF0-4F85-B31F-94B71256B927}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40B4574D-9EF0-4F85-B31F-94B71256B927}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40B4574D-9EF0-4F85-B31F-94B71256B927}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81A7C750-07E3-4D1A-9A77-AF1667E7005E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81A7C750-07E3-4D1A-9A77-AF1667E7005E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81A7C750-07E3-4D1A-9A77-AF1667E7005E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81A7C750-07E3-4D1A-9A77-AF1667E7005E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

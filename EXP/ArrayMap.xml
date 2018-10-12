@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ArrayMap</name>
+    </assembly>
+    <members>
+        <member name="T:ArrayMap.Map">
+            <summary>
+            Map类
+            属性 Key    String
+            属性 Value  Ojbect
+            </summary>
+        </member>
+        <member name="P:ArrayMap.Map.Key">
+            <summary>
+            Map数据的键值
+            </summary>
+        </member>
+        <member name="P:ArrayMap.Map.Value">
+            <summary>
+            Map数据键对应的值
+            </summary>
+        </member>
+        <member name="T:ArrayMap.MapList">
+            <summary>
+            Map数组，用于保存Key-value组合
+            </summary>
+        </member>
+        <member name="F:ArrayMap.MapList._obj">
+            <summary>
+            对象锁
+            </summary>
+        </member>
+        <member name="P:ArrayMap.MapList.length">
+            <summary>
+            Map的长度
+            </summary>
+        </member>
+        <member name="M:ArrayMap.MapList.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ArrayMap.MapList.Put(System.String,System.Object)">
+            <summary>
+            添加
+            </summary>
+            <param name="key"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:ArrayMap.MapList.Length">
+            <summary>
+            返回ArrayMap的长度
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ArrayMap.MapList.IsEmpty">
+            <summary>
+            判断是否为空
+            </summary>
+            <returns>如果为空则返回True,否则返回False</returns>
+        </member>
+        <member name="M:ArrayMap.MapList.ContainsKey(System.String)">
+            <summary>
+            判断是否已经有Key值为key的Map数据
+            </summary>
+            <param name="key"></param>
+            <returns>找到对应Key返回True,否则返回false</returns>
+        </member>
+        <member name="M:ArrayMap.MapList.Get(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ArrayMap.MapList.GetMap(System.String)">
+            <summary>
+            根据Key返回map对象
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ArrayMap.MapList.GetStringValue(System.String)">
+            <summary>
+            根据key获取字符串的值
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ArrayMap.MapList.GetBooleanValue(System.String)">
+            <summary>
+            根据Key返回布尔类型的结果
+            1.如果没有这个key则返回false
+            2.如果是字符串key则返回false
+            3.如果是布尔类型则返回布尔类型
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ArrayMap.MapList.Clear">
+            <summary>
+            清空数据
+            </summary>
+        </member>
+        <member name="M:ArrayMap.MapList.Remove(System.String)">
+            <summary>
+            移除key的数据
+            </summary>
+            <param name="key"></param>
+        </member>
+        <member name="M:ArrayMap.MapList.GetMapAtIndex(System.Int32)">
+            <summary>
+            根据索引获取Map
+            </summary>
+            <param name="index"></param>
+            <returns>Map数据</returns>
+        </member>
+    </members>
+</doc>
