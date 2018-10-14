@@ -1,21 +1,16 @@
 ﻿using Gfx.GfxDataManagerServer;
 using Gfx.RCommData;
-using GfxAgvMapEx;
 using GfxCommonInterfaces;
 using GfxServiceContractClient;
-using GfxServiceContractClientDispatch;
 using GfxServiceContractTaskExcute;
 using JTWcfHelper;
 using LogHelper;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
@@ -3219,10 +3214,6 @@ namespace KEDAClient
             }
         }
 
-        private void tabControl2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int i = 1;
-        }
 
         /// <summary>
         ///  判断执行卸货任务后的AGV，货物状态是否为无货

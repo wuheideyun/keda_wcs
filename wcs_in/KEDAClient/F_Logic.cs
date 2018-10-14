@@ -297,7 +297,7 @@ namespace KEDAClient
             {
                 foreach (F_AGV agv in agvs)
                 {
-                    if (agv.Site != Site.窑头8和4之间)
+                    if (agv.Site != Site.窑头8和4之间 && agv.Site != Site.窑头4)
                     {
                         F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, agv.Site, Site.窑头7);
 
@@ -305,16 +305,16 @@ namespace KEDAClient
 
                         F_DataCenter.MTask.IStartTask(task);
 
-                        sendServerLog(agv.Id + ",回到窑头卸载等待点7");
+                        sendServerLog(agv.Id + " 初始化,回到窑头卸载等待点7");
 
                         LogFactory.LogDispatch(agv.Id, "车辆初始化", "回到窑头卸载等待点7");
                     }
                     else
-                    {
+                    {   
                         /// 如果agv有货 且位于等待点8和 卸载点4之间，回到窑头卸载点
-                        _ToPlcHead = true;
+                         _ToPlcHead = true;
 
-                        F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.放货, Site.窑头8和4之间, Site.窑头4);
+                        F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.放货, agv.Site, Site.窑头4);
 
                         task.Id = agv.Id;
 
@@ -353,14 +353,13 @@ namespace KEDAClient
 
                         F_DataCenter.MTask.IStartTask(task);
 
-                        sendServerLog(agv.Id + ",回到窑尾装载点1");
+                        sendServerLog(agv.Id + " 初始化,回到窑尾装载点1");
 
                         LogFactory.LogDispatch(agv.Id, "车辆初始化", "回到窑尾装载点1");
 
                     }                  
                 }
-
-            }
+            }          
         }
 
         /// <summary>

@@ -199,7 +199,7 @@ namespace KEDAClient
 
 
         /// <summary>
-        /// 获取不在窑头卸载等待区，并且有货的AGV
+        ///初始化， 获取不在窑头卸载等待区，并且有货的AGV
         /// </summary>
         /// <param name="site"></param>
         /// <returns></returns>
@@ -209,7 +209,8 @@ namespace KEDAClient
             {
                 List<DeviceBackImf> devs = _devList.FindAll(c =>
                 {
-                    return c.DevType == "AGV" && c.SensorList[ConstSetBA.地标].RValue != Site.窑尾2 && c.SensorList[ConstSetBA.货物状态].RValue == ConstSetBA.AGV有货;
+                    // 不在窑尾1、窑尾2 且有货的AGV，应到窑头卸载等待区
+                    return c.DevType == "AGV" && c.SensorList[ConstSetBA.地标].RValue != Site.窑尾2 && c.SensorList[ConstSetBA.地标].RValue !=Site.窑尾1 && c.SensorList[ConstSetBA.货物状态].RValue == ConstSetBA.AGV有货;
                 });
 
                 if (devs != null)
@@ -228,7 +229,7 @@ namespace KEDAClient
         }
 
         /// <summary>
-        /// 获取不在窑尾装载等待区，并且没货的AGV
+        /// 获取不在窑尾装载点，并且没货的AGV
         /// </summary>
         /// <param name="site"></param>
         /// <returns></returns>
@@ -236,7 +237,7 @@ namespace KEDAClient
         {
             try
             {
-                List<DeviceBackImf> devs = _devList.FindAll(c => { return c.DevType == "AGV" && c.SensorList[ConstSetBA.地标].RValue !=Site.窑头4 && c.SensorList[ConstSetBA.货物状态].RValue == ConstSetBA.AGV无货; });
+                List<DeviceBackImf> devs = _devList.FindAll(c => { return c.DevType == "AGV" && c.SensorList[ConstSetBA.地标].RValue !=Site.窑尾1 && c.SensorList[ConstSetBA.货物状态].RValue == ConstSetBA.AGV无货; });
 
                 if (devs != null)
                 {

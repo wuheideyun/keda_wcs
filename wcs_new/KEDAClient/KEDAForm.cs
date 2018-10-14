@@ -290,6 +290,7 @@ namespace KEDAClient
 
 
         //全局的列表数据变量
+        List<DispatchBackMember> dislist;
         GfxList<DeviceBackImf> devsList;                    // = JTWcfHelper.WcfMainHelper.GetDevList();
         GfxList<GfxServiceContractTaskExcute.TaskBackImf> tasksList;// = JTWcfHelper.WcfTaskHelper.GetAllTask();
         GfxList<TaskRelationMember> definetasklist;// = JTWcfHelper.WcfTaskHelper.GetDefineTask();
@@ -333,6 +334,7 @@ namespace KEDAClient
             Vehicles(); //车辆
             TaskInform(); // 当前任务
             AllTaskList(); //任务列表
+            DispatchTask(); //调度任务
             toolStripLabelVersion.Text = "版本号：V14.1";  //版本号
             timerFunc.Enabled = true;  // 系统时间
             labelLogo.Text = APPConfig.LogoStr();  //公司名称
@@ -725,6 +727,57 @@ namespace KEDAClient
             executeTasklist.EndUpdate();
 
         }
+        /// <summary>
+        /// 调度任务列表
+        /// </summary>
+        private void DispatchTask()
+        {
+            //添加表头，即列名
+            dispatchlist.Columns.Add("调度id", 200, HorizontalAlignment.Center);
+            dispatchlist.Columns.Add("调度信息", 100, HorizontalAlignment.Left);
+            dispatchlist.Columns.Add("调度状态", 150, HorizontalAlignment.Left);
+            dispatchlist.Columns.Add("触发源", 200, HorizontalAlignment.Left);
+            dispatchlist.Columns.Add(" 调度设备", 150, HorizontalAlignment.Left);
+            dispatchlist.Columns.Add("调度路径", 150, HorizontalAlignment.Left);
+            dispatchlist.Columns.Add(" 控制参数", 100, HorizontalAlignment.Left);
+            dispatchlist.Columns.Add(" 备注", 150, HorizontalAlignment.Left);
+
+            dispatchlist.View = System.Windows.Forms.View.Details;
+        }
+
+
+        /// <summary>
+        /// 调度任务列表展示
+        /// </summary>
+        private void DispatchListDisplay()
+        {
+            List<DispatchBackMember> dislist = WcfMainHelper.GetDispatchList();
+            if (dislist is null)
+            {
+                dispatchlist.Clear();
+                return;
+            }
+            dispatchlist.BeginUpdate();
+
+            foreach (var item1 in dislist)
+            {
+                ListViewItem item = new ListViewItem(item1.DisGuid); // 调度id
+                                                                     // item.SubItems.Add(item1.TaskImf); // 调度信息
+                item.SubItems.Add(" 测试"); // 调度信息
+                item.SubItems.Add(item1.OrderStatue.ToString()); // 调度状态
+                item.SubItems.Add(item1.OrderSource); // 触发源
+                item.SubItems.Add(item1.DisDevId); // 调度设备
+                item.SubItems.Add(item1.PathMsg); // 调度路径
+                item.SubItems.Add(item1.TaskCtrType.ToString()); // 控制参数，枚举类型             
+                item.SubItems.Add(item1.BackMsg); // 备注       
+
+                dispatchlist.Items.Add(item);
+            }
+
+            // 结束数据处理
+            dispatchlist.EndUpdate();
+        }
+
         /// <summary>
         /// 注销登录
         /// </summary>
@@ -2384,7 +2437,36 @@ namespace KEDAClient
             }
             taskInformlist.EndUpdate();
         }
+        /// <summary>
+        /// 刷新调度任务信息
+        /// </summary>
+        private void RefreshdispatchInform()
+        {
+            if (dislist is null)
+            {
+                dispatchlist.Items.Clear();
+                return;
+            }
+            dispatchlist.Items.Clear();
 
+            dispatchlist.BeginUpdate();
+            foreach (var item1 in dislist)
+            {
+                ListViewItem item = new ListViewItem(item1.DisGuid); // 调度id
+                item.SubItems.Add(item1.TaskImf); // 调度信息
+                item.SubItems.Add(item1.OrderStatue.ToString()); // 调度状态
+                item.SubItems.Add(item1.OrderSource); // 触发源
+                item.SubItems.Add(item1.DisDevId); // 调度设备
+                item.SubItems.Add(item1.PathMsg); // 调度路径
+                item.SubItems.Add(item1.TaskCtrType.ToString()); // 控制参数，枚举类型             
+                item.SubItems.Add(item1.BackMsg); // 备注       
+
+                dispatchlist.Items.Add(item);
+            }
+
+            // 结束数据处理
+            dispatchlist.EndUpdate();
+        }
 
         /// <summary>
         /// 定时刷新车辆信息
@@ -2403,6 +2485,7 @@ namespace KEDAClient
             {
                 AllTaskListDisplay();
                 TaskInformDisplay();
+                DispatchListDisplay();
                 taskFirst = false;
             }
             switch (tabControl1.SelectedIndex)
@@ -2410,6 +2493,7 @@ namespace KEDAClient
                 case 0://0 missions
                     RefreshListview(taskInformlist);
                     RefreshtaskInform();
+                    RefreshdispatchInform();
                     break;
                 case 1://1 alarms
                     RefreshListview(alarmlist);

@@ -98,6 +98,8 @@
             this.timerFunc = new System.Windows.Forms.Timer(this.components);
             this.Statetimer = new System.Windows.Forms.Timer(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.dispatch = new System.Windows.Forms.TabPage();
+            this.dispatchlist = new System.Windows.Forms.ListView();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -118,6 +120,7 @@
             this.tabControl3.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
+            this.dispatch.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -328,6 +331,7 @@
             this.tabControl2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl2.Controls.Add(this.dispatch);
             this.tabControl2.Controls.Add(this.currentTask);
             this.tabControl2.Controls.Add(this.taskList);
             this.tabControl2.Controls.Add(this.station);
@@ -872,6 +876,29 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // dispatch
+            // 
+            this.dispatch.Controls.Add(this.dispatchlist);
+            this.dispatch.Location = new System.Drawing.Point(4, 31);
+            this.dispatch.Name = "dispatch";
+            this.dispatch.Size = new System.Drawing.Size(957, 189);
+            this.dispatch.TabIndex = 4;
+            this.dispatch.Text = "调度任务";
+            this.dispatch.UseVisualStyleBackColor = true;
+            // 
+            // dispatchlist
+            // 
+            this.dispatchlist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dispatchlist.FullRowSelect = true;
+            this.dispatchlist.GridLines = true;
+            this.dispatchlist.Location = new System.Drawing.Point(3, 3);
+            this.dispatchlist.Name = "dispatchlist";
+            this.dispatchlist.Size = new System.Drawing.Size(625, 183);
+            this.dispatchlist.TabIndex = 0;
+            this.dispatchlist.UseCompatibleStateImageBehavior = false;
+            // 
             // KEDAForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -913,6 +940,7 @@
             this.tabControl3.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
+            this.dispatch.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -988,5 +1016,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ToolStripMenuItem startServer;
         private System.Windows.Forms.ToolStripMenuItem stopServer;
+        private System.Windows.Forms.TabPage dispatch;
+        private System.Windows.Forms.ListView dispatchlist;
     }
 }
