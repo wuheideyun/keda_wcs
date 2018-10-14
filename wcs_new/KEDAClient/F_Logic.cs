@@ -234,7 +234,9 @@ namespace KEDAClient
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.窑头卸载等待区);
 
             ///窑头无货 窑头AGV未锁定 并且 此次任务没有被响应
-            if (!_plcHead.IsLock && _plcHead.Sta_Material == EnumSta_Material.无货 && agv != null && !F_AGV.IsLock(agv.Id))
+            if (!_plcHead.IsLock 
+                //&& _plcHead.Sta_Material == EnumSta_Material.无货 
+                && agv != null && !F_AGV.IsLock(agv.Id))
             {
                 //窑头等待区的车不需要充电、没有充电完成的车、没有回卸载点的车
                 if (!_PlcHeadNeedCharge && !_PlcHeadChargeSuc && !_ToPlcHead)
@@ -297,7 +299,7 @@ namespace KEDAClient
             {
                 foreach (F_AGV agv in agvs)
                 {
-                    if (agv.Site != ConstSetBA.窑头等待点和卸载点之间)
+                    if (agv.Site != ConstSetBA.窑头等待点和卸载点之间 && agv.Site != ConstSetBA.窑头卸载点)
                     {
                         F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, agv.Site, ConstSetBA.窑头卸载等待区);
 
@@ -305,23 +307,39 @@ namespace KEDAClient
 
                         F_DataCenter.MTask.IStartTask(task);
 
-                        sendServerLog(agv.Id + ",回到窑头卸载等待区");
+                        sendServerLog(agv.Id + ",初始化，回到窑头卸载等待区");
 
                         LogFactory.LogDispatch(agv.Id, "车辆初始化", "回到窑头卸载等待区");
 
+                    }
+                    else if(agv.Site == ConstSetBA.窑头卸载点)
+                    {
+                        // 初始化时，如果AGV已经卸货完成，则让AGV回到窑尾等待点
+                        if(agv.Sta_Material== EnumSta_Material.无货)
+                        {
+                            F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, agv.Site, ConstSetBA.窑尾装载等待区);
+
+                            task.Id = agv.Id;
+
+                            F_DataCenter.MTask.IStartTask(task);
+
+                            sendServerLog(agv.Id + "初始化，位于卸载点且卸货完成的AGV回到窑尾等待点");
+
+                            LogFactory.LogDispatch(agv.Id, "车辆初始化", "位于卸载点且卸货完成的AGV回到窑尾等待点");
+                        }
                     }
                     else
                     {
                         /// 如果agv有货 且位于等待点和装载点之间，回到窑头卸载点
                         _ToPlcHead = true;
 
-                        F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.放货, ConstSetBA.窑头等待点和卸载点之间, ConstSetBA.窑头卸载点);
+                        F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.放货, agv.Site, ConstSetBA.窑头卸载点);
 
                         task.Id = agv.Id;
 
                         F_DataCenter.MTask.IStartTask(task);
 
-                        sendServerLog(agv.Id + "位于等待点和卸载点之间的AGV去卸货");
+                        sendServerLog(agv.Id + "初始化，位于等待点和卸载点之间的AGV去卸货");
 
                         LogFactory.LogDispatch(agv.Id, "车辆初始化", "位于等待点和卸载点之间的AGV去卸货");
 
@@ -343,7 +361,7 @@ namespace KEDAClient
             {
                 foreach (F_AGV agv in agvs)
                 {
-                    if (agv.Site != ConstSetBA.窑尾等待点和装载点之间)
+                    if (agv.Site != ConstSetBA.窑尾等待点和装载点之间 && agv.Site!= ConstSetBA.窑尾装载点)
                     {
                         F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, agv.Site, ConstSetBA.窑尾装载等待区);
 
@@ -351,23 +369,39 @@ namespace KEDAClient
 
                         F_DataCenter.MTask.IStartTask(task);
 
-                        sendServerLog(agv.Id + ",回到窑尾装载等待区");
+                        sendServerLog(agv.Id + "初始化,回到窑尾装载等待区");
 
                         LogFactory.LogDispatch(agv.Id, "车辆初始化", "回到窑尾装载等待区");
 
+                    }
+                    else if ( agv.Site == ConstSetBA.窑尾装载点)
+                    {
+                        // 初始化时，如果AGV已接货完成，让其回到卸载等待点
+                        if(agv.Sta_Material == EnumSta_Material.有货)
+                        {
+                            F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, agv.Site, ConstSetBA.窑头卸载等待区);
+
+                            task.Id = agv.Id;
+
+                            F_DataCenter.MTask.IStartTask(task);
+
+                            sendServerLog(agv.Id + ",初始化，装载点的车回到卸载等待点");
+
+                            LogFactory.LogDispatch(agv.Id, "车辆初始化", "装载点的车回到卸载等待点");
+                        }
                     }
                     else
                     {
                         /// 如果agv无货 且位于等待点和装载点之间，去到窑尾装载点
                         _ToPlcEnd = true;
 
-                        F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.放货, ConstSetBA.窑尾等待点和装载点之间, ConstSetBA.窑尾装载点);
+                        F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.取货, agv.Site, ConstSetBA.窑尾装载点);
 
                         task.Id = agv.Id;
 
                         F_DataCenter.MTask.IStartTask(task);
 
-                        sendServerLog(agv.Id + "位于等待点和装载载点之间的AGV去装货");
+                        sendServerLog(agv.Id + "初始化，位于等待点和装载载点之间的AGV去装货");
 
                         LogFactory.LogDispatch(agv.Id, "车辆初始化", "位于等待点和装载载点之间的AGV去装货");
 

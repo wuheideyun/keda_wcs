@@ -193,7 +193,9 @@ namespace KEDAClient
 
                                 _plc.SendOrdr(EnumType.下料操作, EnumPara.窑头辊台上料完成);
 
-                                if (_plc.Sta_Monitor == EnumSta_Monitor.电机停止)
+                                if (true
+                                    //_plc.Sta_Monitor == EnumSta_Monitor.电机停止
+                                    )
                                 {                            
                                     ISetTaskSuc();
                                 }
@@ -228,7 +230,9 @@ namespace KEDAClient
                                 _agv.SendOrdr(EnumType.下料操作, EnumPara.agv辊台停止);
 
 
-                                if (_plc.Sta_Monitor == EnumSta_Monitor.电机停止)
+                                if (true
+                                    //&&_plc.Sta_Monitor == EnumSta_Monitor.电机停止
+                                    )
                                 {                               
                                     ISetTaskSuc();
                                 }
