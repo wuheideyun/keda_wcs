@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KEDAClient", "KEDAClient\KE
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "WCS", "WCS\WCS.vdproj", "{70EA162F-8BD9-432F-A8E2-CE969CE81F0E}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "WCS_in", "WCS_in\WCS_in.vdproj", "{04353498-2210-4AF4-AEEA-0DB8B2360941}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,8 @@ Global
 		{85C717F5-4C23-498C-BA5D-A7D43D557FF1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{70EA162F-8BD9-432F-A8E2-CE969CE81F0E}.Debug|Any CPU.ActiveCfg = Debug
 		{70EA162F-8BD9-432F-A8E2-CE969CE81F0E}.Release|Any CPU.ActiveCfg = Release
+		{04353498-2210-4AF4-AEEA-0DB8B2360941}.Debug|Any CPU.ActiveCfg = Debug
+		{04353498-2210-4AF4-AEEA-0DB8B2360941}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

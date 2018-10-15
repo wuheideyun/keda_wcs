@@ -209,8 +209,8 @@ namespace KEDAClient
             {
                 List<DeviceBackImf> devs = _devList.FindAll(c =>
                 {
-                    // 不在窑尾1、窑尾2 且有货的AGV，应到窑头卸载等待区
-                    return c.DevType == "AGV" && c.SensorList[ConstSetBA.地标].RValue != Site.窑尾2 && c.SensorList[ConstSetBA.地标].RValue !=Site.窑尾1 && c.SensorList[ConstSetBA.货物状态].RValue == ConstSetBA.AGV有货;
+                    // 不在窑尾1、窑尾5 且有货的AGV，应到窑头卸载等待区
+                    return c.DevType == "AGV" && c.SensorList[ConstSetBA.地标].RValue != Site.窑尾5 && c.SensorList[ConstSetBA.地标].RValue !=Site.窑尾1 && c.SensorList[ConstSetBA.货物状态].RValue == ConstSetBA.AGV有货;
                 });
 
                 if (devs != null)
