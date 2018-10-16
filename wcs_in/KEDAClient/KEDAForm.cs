@@ -1107,7 +1107,7 @@ namespace KEDAClient
                 return;
             }
             // 判断选定的AGV是否在线，若在线才可执行自定义任务
-            else if (vehicleslist.FocusedItem.SubItems[2].Text == "True")
+            else 
             {
                 defineDispatch.Enabled = true;
 
@@ -1365,6 +1365,7 @@ namespace KEDAClient
                     agvBackMove.Enabled = true;
                     agvStop.Enabled = true;
                 }
+                defineDispatch.Enabled = true;
             }
             else if (vehicleslist.FocusedItem.SubItems[2].Text == "False")
             {
