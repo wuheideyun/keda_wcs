@@ -155,10 +155,6 @@ namespace KEDAClient
         /// </summary>
         private bool _isRorate = false;
 
-        /// <summary>
-        /// 区域二待命点集合
-        /// </summary>
-        private List<AreaTwoWaitPointMember> _waitAreaTwoList = new List<AreaTwoWaitPointMember>();
 
         /// <summary>
         /// 已经选择的站点集合(车辆）
@@ -166,12 +162,10 @@ namespace KEDAClient
         private List<StationMember> _selectStation1 = new List<StationMember>();
 
 
-
-
         /// <summary>
         /// 任务ID与自身状态对应关系：状态值：startmission、pausemission、endmission
         /// </summary>
-        Dictionary<string, string> taskStatus = new Dictionary<string, string>();
+        //  Dictionary<string, string> taskStatus = new Dictionary<string, string>();
 
         /// <summary>
         /// 设备ID与自身状态对应关系(车辆）：状态值：stop、forwardmove、backmove
@@ -183,91 +177,6 @@ namespace KEDAClient
 
         //用于查询数据库数据的线程
         private Thread queryDataThread;
-
-        /// <summary>
-        /// 线程1：判断窑尾是否有货
-        /// </summary>
-        Thread thread1;
-
-        /// <summary>
-        /// 线程2：判断装载等待位是否有空闲AGV
-        /// </summary>
-        Thread thread2;
-
-        /// <summary>
-        /// 线程3：AGV从窑尾装载等待位到窑尾装载点
-        /// </summary>
-        Thread thread3;
-
-        /// <summary>
-        /// 线程4：判断窑尾装载点是否有AGV
-        /// </summary>
-        Thread thread4;
-
-        /// <summary>
-        /// 线程5：WCS给线边辊台发送下料、电机正转指令
-        /// </summary>
-        Thread thread5;
-
-        /// <summary>
-        /// 线程6：判断窑尾装载点的AGV上是否有货
-        /// </summary>
-        Thread thread6;
-
-        /// <summary>
-        /// 线程7：WCS给线边辊台发送下料料、电机停止指令，接货完成
-        /// </summary>
-        Thread thread7;
-
-        /// <summary>
-        /// 线程8：AGV从窑尾装载点到窑头卸载等待区域
-        /// </summary>
-        Thread thread8;
-
-        /// <summary>
-        /// 线程9：判断卸载等待区域是否有准备卸货的AGV
-        /// </summary>
-        Thread thread9;
-
-        /// <summary>
-        /// 线程10：判断窑头卸载辊台上是否有货
-        /// </summary>
-        Thread thread10;
-
-        /// <summary>
-        /// 线程11：WCS给AGV下发任务：从卸载等待位到窑头卸载点
-        /// </summary>
-        Thread thread11;
-
-        /// <summary>
-        /// 线程12：窑头卸载点是否有有货状态的AGV
-        /// </summary>
-        Thread thread12;
-
-        /// <summary>
-        /// 线程13：WCS给线边辊台发送上料、电机正转指令
-        /// </summary>
-        Thread thread13;
-
-        /// <summary>
-        /// 线程14：同时，启动AGV的车载辊台转动，开始卸货
-        /// </summary>
-        Thread thread14;
-
-        /// <summary>
-        /// 线程15：判断执行卸货任务后的AGV，货物状态是否为无货
-        /// </summary>
-        Thread thread15;
-
-        /// <summary>
-        /// 线程16：AGV上无货，WCS给线边辊台发送上料、电机停止的指令
-        /// </summary>
-        Thread thread16;
-
-        /// <summary>
-        /// 线程17：同时，AGV从窑头卸载点到窑尾装载等待区
-        /// </summary>
-        Thread thread17;
 
         /// <summary>
         /// 当前装载状态 
@@ -300,6 +209,19 @@ namespace KEDAClient
         private string _endSite;
 
         /// <summary>
+        /// 当前调度列表选中项
+        /// </summary>
+        private string dispatchliselect = "";
+
+        /// <summary>
+        /// 当前调度列表选中项索引
+        /// </summary>
+        private int _dispatSelectIndex = 0;
+
+        private string taskInformliselect = "";
+        private int _taskInformliSelectIndex = 0;
+
+        /// <summary>
         /// 当前客户端的站点编号对应地标
         /// </summary>
         public int LocSite
@@ -319,8 +241,7 @@ namespace KEDAClient
         {
             InitializeComponent();
             InitPara();
-            InitStaMember();  // 初始化站点成员
-            InitBtnMember();
+
             comboBox1.SelectedIndex = 0;
 
             Alarm(); // 报警
@@ -332,8 +253,7 @@ namespace KEDAClient
             AllTaskList(); //任务列表
             toolStripLabelVersion.Text = "版本号：V14.1";  //版本号
             timerFunc.Enabled = true;  // 系统时间
-            labelLogo.Text = APPConfig.LogoStr();  //公司名称
-            UpdateBtnMember();
+            labelLogo.Text = APPConfig.LogoStr();  //公司名称        
 
             //启动作业线程
             //F_DataCenter.Init();
@@ -349,75 +269,6 @@ namespace KEDAClient
             queryDataThread.Start();
 
 
-
-
-            //thread1 = new Thread(LoadStaHasGoods);
-            //thread1.IsBackground = true;
-            //thread1.Start();
-
-            //thread2 = new Thread(HasFreeAGV);
-            //thread2.IsBackground = true;
-            //thread2.Start();
-
-            //thread3 = new Thread(SendAGVtoLoadSta);
-            //thread3.IsBackground = true;
-            //thread3.Start();
-
-            //thread4 = new Thread(LoadStaHasAGV);
-            //thread4.IsBackground = true;
-            //thread4.Start();
-
-            //thread5 = new Thread(LoadLineRollerTable);
-            //thread5.IsBackground = true;
-            //thread5.Start();
-
-            //thread6 = new Thread(AGVHasGoods);
-            //thread6.IsBackground = true;
-            //thread6.Start();
-
-            //thread7 = new Thread(LoadLineRollerTableStop);
-            //thread7.IsBackground = true;
-            //thread7.Start();
-
-            //thread8 = new Thread(SendAGVtoUnloadWaitSta);
-            //thread8.IsBackground = true;
-            //thread8.Start();
-
-            //thread9 = new Thread(UnloadWaitStaHasAGV);
-            //thread9.IsBackground = true;
-            //thread9.Start();
-
-            //thread10 = new Thread(UnloadStaHasGoods);
-            //thread10.IsBackground = true;
-            //thread10.Start();
-
-            //thread11 = new Thread(SendAGVtoUnloadSta);
-            //thread11.IsBackground = true;
-            //thread11.Start();
-
-            //thread12 = new Thread(UnloadStaHasAGV);
-            //thread12.IsBackground = true;
-            //thread12.Start();
-
-            //thread13 = new Thread(UnloadLineRollerTable);
-            //thread13.IsBackground = true;
-            //thread13.Start();
-
-            //thread14 = new Thread(ReadyToUnload);
-            //thread14.IsBackground = true;
-            //thread14.Start();
-
-            //thread15 = new Thread(AGVGoodsStatue);
-            //thread15.IsBackground = true;
-            //thread15.Start();
-
-            //thread16 = new Thread(UnloadLineRollerTableStop);
-            //thread16.IsBackground = true;
-            //thread16.Start();
-
-            //thread17 = new Thread(SendAGVtoLoadWaitSta);
-            //thread17.IsBackground = true;
-            //thread17.Start();
         }
 
 
@@ -661,14 +512,6 @@ namespace KEDAClient
                 item.SubItems.Add(item1.BackMsg); // 信息
                 item.SubItems.Add(item1.TriggerTime.ToString()); // 触发时间
 
-                if (taskStatus.ContainsKey(item1.DisGuid))
-                {
-                    taskStatus[item1.DisGuid] = "startmissioin";
-                }
-                else
-                {
-                    taskStatus.Add(item1.DisGuid, "startmission");
-                }
                 //taskStatus.Add(item1.DisGuid, "startmission");
                 // 显示项
                 taskInformlist.Items.Add(item);
@@ -706,6 +549,7 @@ namespace KEDAClient
                 executeTasklist.Clear();
                 return;
             }
+
             executeTasklist.BeginUpdate();
             for (int i = 0; i < definetasklist.Count; i++)
             {
@@ -720,6 +564,7 @@ namespace KEDAClient
                 executeTasklist.Items.Add(item);
             }
             executeTasklist.EndUpdate();
+
 
         }
 
@@ -747,18 +592,18 @@ namespace KEDAClient
         /// </summary>
         private void DispatchListDisplay()
         {
-            List<DispatchBackMember> dislist = WcfMainHelper.GetDispatchList();
+            //List<DispatchBackMember> dislist = WcfMainHelper.GetDispatchList();
             if (dislist is null)
             {
                 dispatchlist.Clear();
                 return;
             }
             dispatchlist.BeginUpdate();
-            
+
             foreach (var item1 in dislist)
             {
                 ListViewItem item = new ListViewItem(item1.DisGuid); // 调度id
-               // item.SubItems.Add(item1.TaskImf); // 调度信息
+                                                                     // item.SubItems.Add(item1.TaskImf); // 调度信息
                 item.SubItems.Add(" 测试"); // 调度信息
                 item.SubItems.Add(item1.OrderStatue.ToString()); // 调度状态
                 item.SubItems.Add(item1.OrderSource); // 触发源
@@ -964,388 +809,25 @@ namespace KEDAClient
             this.Text = string.Format("{0} IP:{1}", _clientMark, IPHelper.GetLocalIntranetIP());
         }
 
-
-        /// <summary>
-        /// 初始化按钮
-        /// </summary>
-        private void InitBtnMember()
-        {
-            panelBtn.Controls.Clear();
-
-            int xNum = (panelBtn.Width - _startLoc.X) / (_xDis + _btnWidth);
-
-            foreach (var item in _staDic.Values)
-            {
-                Point point = GetIndexLoc(item.StaId - 1, xNum);
-
-
-                int x = point.X * (_xDis + _btnWidth) + _startLoc.X;
-
-                int y = point.Y * (_yDis + _btnHeight) + _startLoc.Y;
-
-                Button btn = new Button();
-
-                btn.Click += button_Click;
-
-                btn.Location = new Point(x, y);
-
-                btn.Width = _btnWidth;
-
-                btn.Height = _btnHeight;
-
-                btn.Tag = item;
-
-                btn.Text = item.Describ;
-
-                btn.BackColor = Control.DefaultBackColor;
-
-                panelBtn.Controls.Add(btn);
-
-            }
-
-            panelBtn1.Controls.Clear();
-
-            int x1Num = (panelBtn.Width - _startLoc.X) / (_xDis + _btnWidth);
-
-            foreach (var item in _staDic.Values)
-            {
-                Point point1 = GetIndexLoc(item.StaId - 1, x1Num);
-
-
-                int x = point1.X * (_xDis + _btnWidth) + _startLoc.X;
-
-                int y = point1.Y * (_yDis + _btnHeight) + _startLoc.Y;
-
-                Button btn1 = new Button();
-
-                btn1.Click += button_Click;
-
-                btn1.Location = new Point(x, y);
-
-                btn1.Width = _btnWidth;
-
-                btn1.Height = _btnHeight;
-
-                btn1.Tag = item;
-
-                btn1.Text = item.Describ;
-
-                btn1.BackColor = Control.DefaultBackColor;
-
-                panelBtn1.Controls.Add(btn1);
-
-            }
-        }
-
-        /// <summary>
-        ///  初始化站点成员
-        /// </summary>
-        private void InitStaMember()
-        {
-            string section = "StationConfigNum";
-
-            string keyPre = string.Format("站点个数");
-
-            string read = ConfigHelper.IniReadValue(section, keyPre, 100);
-
-            if (string.IsNullOrEmpty(read))
-            {
-                read = "100";
-
-                ConfigHelper.IniWriteValue(section, keyPre, read);
-            }
-
-            if (!Int32.TryParse(read, out _staCount))
-            {
-                _staCount = 100;
-            }
-
-            _staDic.Clear();
-
-            for (int i = 1; i <= _staCount; i++)
-            {
-                StationMember member = GetConfigMember(i);
-
-                if (member != null && !_staDic.ContainsKey(member.StaId))
-                {
-                    _staDic.Add(member.StaId, member);
-                }
-            }
-        }
-
-        /// <summary>
-        /// 获取指定成员
-        /// </summary>
-        /// <param name="i"></param>
-        /// <returns></returns>
-        private StationMember GetConfigMember(int id)
-        {
-            int dibiao = 0, tar = 0, index = 0, backTar = 0;
-
-            string des = "";
-
-            string section = "StationConfig";
-
-            string keyPre = string.Format("STA_N0.{0}_", id);
-
-            #region 地标
-            string key = string.Format(string.Format("{0}{1}", keyPre, "地标"));
-
-            string read = ConfigHelper.IniReadValue(section, key, 100);
-
-            if (string.IsNullOrEmpty(read))
-            {
-                read = id.ToString();
-
-                ConfigHelper.IniWriteValue(section, key, read);
-            }
-
-            Int32.TryParse(read, out dibiao);
-            #endregion
-
-            #region 站点
-            key = string.Format(string.Format("{0}{1}", keyPre, "站点"));
-
-            read = ConfigHelper.IniReadValue(section, key, 100);
-
-            if (string.IsNullOrEmpty(read))
-            {
-                read = id.ToString();
-
-                ConfigHelper.IniWriteValue(section, key, read);
-            }
-
-            Int32.TryParse(read, out tar);
-            #endregion
-
-            #region 描述
-            key = string.Format(string.Format("{0}{1}", keyPre, "描述"));
-
-            read = ConfigHelper.IniReadValue(section, key, 100);
-
-            if (string.IsNullOrEmpty(read))
-            {
-                read = string.Format("站点{0}", id);
-
-                ConfigHelper.IniWriteValue(section, key, read);
-            }
-
-            des = read;
-            #endregion
-
-            #region 优先级
-            key = string.Format(string.Format("{0}{1}", keyPre, "优先级"));
-
-            read = ConfigHelper.IniReadValue(section, key, 100);
-
-            if (string.IsNullOrEmpty(read))
-            {
-                read = id.ToString(); ;
-
-                ConfigHelper.IniWriteValue(section, key, read);
-            }
-
-            Int32.TryParse(read, out index);
-            #endregion
-
-            #region 待命点
-            key = string.Format(string.Format("{0}{1}", keyPre, "叫车点地标"));
-
-            read = ConfigHelper.IniReadValue(section, key, 100);
-
-            if (string.IsNullOrEmpty(read))
-            {
-                read = "0,";
-
-                ConfigHelper.IniWriteValue(section, key, read);
-            }
-
-            List<int> wait = new List<int>();
-
-            string[] tokens = read.Split(',');
-
-            if (tokens != null)
-            {
-                int tempNum = 0;
-
-                for (int i = 0; i < tokens.Length; i++)
-                {
-                    if (Int32.TryParse(tokens[i], out tempNum))
-                    {
-                        if (!wait.Contains(tempNum) && tempNum != 0)
-                        {
-                            wait.Add(tempNum);
-                        }
-                    }
-                }
-            }
-            #endregion
-
-            #region 返回站点
-            key = string.Format(string.Format("{0}{1}", keyPre, "返回站点"));
-
-            read = ConfigHelper.IniReadValue(section, key, 100);
-
-            if (string.IsNullOrEmpty(read))
-            {
-                read = "0,";
-
-                ConfigHelper.IniWriteValue(section, key, read);
-            }
-
-            List<int> backTarList = new List<int>();
-
-            tokens = read.Split(',');
-
-            if (tokens != null)
-            {
-                int tempNum = 0;
-
-                for (int i = 0; i < tokens.Length; i++)
-                {
-                    if (Int32.TryParse(tokens[i], out tempNum))
-                    {
-                        if (!backTarList.Contains(tempNum) && tempNum != 0)
-                        {
-                            backTarList.Add(tempNum);
-                        }
-                    }
-                }
-            }
-            #endregion
-
-            return new StationMember(id, dibiao, tar, des, index, wait, backTarList);
-        }
-
-        private void button_Click(object sender, EventArgs e)
-        {
-            if (sender is Button)
-            {
-                Button btn = sender as Button;
-                StationMember sta = btn.Tag as StationMember;
-
-
-                if (sta != null)
-                {
-                    if (!_selectStation.Contains(sta))
-                    {
-                        _selectStation.Add(sta);
-
-                        btn.BackColor = Color.Red;
-                    }
-                    else
-                    {
-                        _selectStation.Remove(sta);
-
-                        btn.BackColor = Control.DefaultBackColor;
-                    }
-
-                    textBoxNextTars.Text = SelectStaStr();
-
-                    SetOutputMsg(string.Format("当前已选择{0}", textBoxNextTars.Text));
-
-                }
-            }
-        }
-
-        /// <summary>
-        /// 获取已选择站点(任务）
-        /// </summary>
-        /// <returns></returns>
-        private string SelectStaStr()
-        {
-            if (_selectStation == null || _selectStation.Count < 1) { return string.Empty; }
-
-            _selectStation = _selectStation.OrderBy(c => c.OrderIndex).ToList();
-
-            StringBuilder sb = new StringBuilder();
-
-            foreach (var item in _selectStation)
-            {
-                sb.Append(string.Format("{0},", item.StaTarget));
-            }
-
-            return sb.ToString();
-        }
-
-
-        /// <summary>
-        /// 获取逻辑位置
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="jiange"></param>
-        /// <returns></returns>
-        private Point GetIndexLoc(int id, int jiange)
-        {
-            if (jiange == 0) { return new Point(0, 0); }
-
-            int x = id % jiange;
-
-            int y = id / jiange;
-
-            return new Point(x, y);
-        }
-
-        /// <summary>
-        /// 自动模式和手动模式的目的地站点选择按钮
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void buttonManSend_Click(object sender, EventArgs e)
-        {
-
-            if (!_isLogin) { MessageBox.Show("请先登录后再操作！", "提示"); return; }
-            //ddd
-
-            if (buttonManSend.Text != "自动模式")
-            {
-                buttonManSend.Text = "自动模式";
-
-                textBoxNextTars.ReadOnly = true;
-            }
-            else
-            {
-                buttonManSend.Text = "手动模式";
-
-                textBoxNextTars.ReadOnly = false;
-            }
-        }
-
         /// <summary>
         /// 输出系统信息（任务）
         /// </summary>
         /// <param name="msg"></param>
-        public void SetOutputMsg(string msg)
+        public void SetOutputMsg(ListBox listbox, string msg)
         {
             if (string.IsNullOrEmpty(msg)) { msg = "空消息"; }
 
-            if (listBoxOutput.Items.Count > 200)
+            if (listbox.Items.Count > 200)
             {
-                listBoxOutput.Items.RemoveAt(0);
+                listbox.Items.RemoveAt(0);
             }
 
-            listBoxOutput.Items.Add(string.Format("【{0}】：{1}", DateTime.Now.TimeOfDay.ToString(), msg));
+            listbox.Items.Add(string.Format("【{0}】：{1}", DateTime.Now.TimeOfDay.ToString(), msg));
 
-            listBoxOutput.SelectedIndex = listBoxOutput.Items.Count - 1;
+            listbox.SelectedIndex = listbox.Items.Count - 1;
         }
 
-        /// <summary>
-        /// 输出系统信息（车辆）
-        /// </summary>
-        /// <param name="msg"></param>
-        private void SetOutputMsg2(string msg)
-        {
-            if (string.IsNullOrEmpty(msg)) { msg = "空消息"; }
 
-            if (listBox1.Items.Count > 200)
-            {
-                listBox1.Items.RemoveAt(0);
-            }
-
-            listBox1.Items.Add(string.Format("【{0}】：{1}", DateTime.Now.TimeOfDay.ToString(), msg));
-
-            listBox1.SelectedIndex = listBox1.Items.Count - 1;
-        }
 
         /// <summary>
         /// 时钟
@@ -1377,40 +859,6 @@ namespace KEDAClient
             toolStripLabelLogin.Text = string.Format("用户状态：{0}", _isLogin ? "已登录" : "未登录");
         }
 
-        /// <summary>
-        /// 重置背景色
-        /// </summary>
-        private void ResetBackCorlor()
-        {
-            foreach (var item in panelBtn.Controls)
-            {
-                if (item is Button)
-                {
-                    Button btn = item as Button;
-
-                    if (btn != null && btn.BackColor != Control.DefaultBackColor)
-                    {
-                        btn.BackColor = Control.DefaultBackColor;
-                    }
-                }
-            }
-            _selectStation.Clear();  // 清除所有已选中站点
-        }
-
-        /// <summary>
-        /// 返回指定站点的位置
-        /// </summary>
-        /// <param name="tar"></param>
-        /// <returns></returns>
-        private StationMember GetRelateMember(int tar)
-        {
-            return _staDic.Values.ToList().Find(c => { return c.StaTarget == tar; });
-        }
-
-        private void KEDAForm_Load(object sender, EventArgs e)
-        {
-
-        }
 
         /// <summary>
         ///  刷新
@@ -1421,408 +869,11 @@ namespace KEDAClient
         {
             InitPara();
 
-            UpdateBtnMember();
-
-            InitStaMember();
-
-            InitBtnMember();
-
-            InitWaitPointAreaTwoMember();
-
             _selectStation.Clear();
         }
 
 
-        /// <summary>
-        /// 更新按钮
-        /// </summary>
-        private void UpdateBtnMember()
-        {
-            int xNum = (panelBtn.Width - _startLoc.X) / (_xDis + _btnWidth);
 
-            foreach (var item in panelBtn.Controls)
-            {
-                if (item is Button)
-                {
-                    Button btn = item as Button;
-
-                    if (btn != null && btn.Tag is StationMember)
-                    {
-                        int id = (btn.Tag as StationMember).StaId - 1;
-
-                        Point point = GetIndexLoc(id, xNum);
-
-                        int x = point.X * (_xDis + _btnWidth) + _startLoc.X;
-
-                        int y = point.Y * (_yDis + _btnHeight) + _startLoc.Y;
-
-                        btn.Location = new Point(x, y);
-
-                        btn.Width = _btnWidth;
-
-                        btn.Height = _btnHeight;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        ///  初始化区域二待命点成员
-        /// </summary>
-        private void InitWaitPointAreaTwoMember()
-        {
-            string section = "AreaTwoConfig";
-
-            string keyPre = string.Format("待名点个数");
-
-            string read = ConfigHelper.IniReadValue(section, keyPre, 100);
-
-            if (string.IsNullOrEmpty(read))
-            {
-                read = "3";
-
-                ConfigHelper.IniWriteValue(section, keyPre, read);
-            }
-
-            if (!Int32.TryParse(read, out _waitCountAreaTwo))
-            {
-                _waitCountAreaTwo = 3;
-            }
-
-            _waitAreaTwoList.Clear();
-
-            for (int i = 1; i <= _waitCountAreaTwo; i++)
-            {
-                AreaTwoWaitPointMember member = GetConfigArea2Member(i);
-
-                _waitAreaTwoList.Add(member);
-
-                _waitAreaTwoList = _waitAreaTwoList.OrderBy(c => c.OrderIndex).ToList();
-            }
-        }
-
-        /// <summary>
-        /// 返回指定成员
-        /// </summary>
-        /// <param name="i"></param>
-        /// <returns></returns>
-        private AreaTwoWaitPointMember GetConfigArea2Member(int id)
-        {
-            int dibiao = 0, tar = 0, index = 0;
-
-            string section = "AreaTwoConfig";
-
-            string keyPre = string.Format("STA_N0.{0}_", id);
-
-            #region 地标
-            string key = string.Format(string.Format("{0}{1}", keyPre, "地标"));
-
-            string read = ConfigHelper.IniReadValue(section, key, 100);
-
-            if (string.IsNullOrEmpty(read))
-            {
-                read = id.ToString();
-
-                ConfigHelper.IniWriteValue(section, key, read);
-            }
-
-            Int32.TryParse(read, out dibiao);
-            #endregion
-
-            #region 站点
-            key = string.Format(string.Format("{0}{1}", keyPre, "站点"));
-
-            read = ConfigHelper.IniReadValue(section, key, 100);
-
-            if (string.IsNullOrEmpty(read))
-            {
-                read = id.ToString();
-
-                ConfigHelper.IniWriteValue(section, key, read);
-            }
-
-            Int32.TryParse(read, out tar);
-            #endregion
-
-            #region 优先级
-            key = string.Format(string.Format("{0}{1}", keyPre, "优先级"));
-
-            read = ConfigHelper.IniReadValue(section, key, 100);
-
-            if (string.IsNullOrEmpty(read))
-            {
-                read = id.ToString(); ;
-
-                ConfigHelper.IniWriteValue(section, key, read);
-            }
-
-            Int32.TryParse(read, out index);
-            #endregion
-
-            return new AreaTwoWaitPointMember(id, dibiao, tar, index);
-        }
-
-
-        /// <summary>
-        /// 区域二待命点成员
-        /// </summary>
-        public class AreaTwoWaitPointMember
-        {
-            /// <summary>
-            /// 站点id
-            /// </summary>
-            private int _staId = -1;
-
-            /// <summary>
-            /// 站点地标
-            /// </summary>
-            private int _staSite = 0;
-
-            /// <summary>
-            /// 站点编号
-            /// </summary>
-            private int _staTarget = 0;
-
-            /// <summary>
-            /// 优先级
-            /// </summary>
-            private int _orderIndex = 0;
-
-            /// <summary>
-            /// 描述
-            /// </summary>
-            private string _describ = "暂无";
-
-            /// <summary>
-            /// 待命点集合
-            /// </summary>
-            private List<int> _waitList = new List<int>();
-
-            /// <summary>
-            /// 返回站点集合
-            /// </summary>
-            private List<int> _backTarList = new List<int>();
-
-            /// <summary>
-            /// 站点id
-            /// </summary>
-            public int StaId
-            {
-                get { return _staId; }
-                set { _staId = value; }
-            }
-
-            /// <summary>
-            /// 站点地标
-            /// </summary>
-            public int StaSite
-            {
-                get { return _staSite; }
-                set { _staSite = value; }
-            }
-
-            /// <summary>
-            /// 站点编号
-            /// </summary>
-            public int StaTarget
-            {
-                get { return _staTarget; }
-                set { _staTarget = value; }
-            }
-
-            /// <summary>
-            /// 优先级
-            /// </summary>
-            public int OrderIndex
-            {
-                get { return _orderIndex; }
-                set { _orderIndex = value; }
-            }
-
-            /// <summary>
-            /// 描述
-            /// </summary>
-            public string Describ
-            {
-                get { return _describ; }
-                set { _describ = value; }
-            }
-
-            /// <summary>
-            /// 待命点集合
-            /// </summary>
-            public List<int> WaitList
-            {
-                get { return _waitList; }
-                set { _waitList = value; }
-            }
-
-            /// <summary>
-            /// 返回站点集合
-            /// </summary>
-            public List<int> BackTarList
-            {
-                get { return _backTarList; }
-                set { _backTarList = value; }
-            }
-
-            /// <summary>
-            /// 构造函数
-            /// </summary>
-            /// <param name="id">id</param>
-            /// <param name="mark">地标</param>
-            /// <param name="tar">站点</param>
-            /// <param name="index">优先级</param>
-            public AreaTwoWaitPointMember(int id, int mark, int tar, int index)
-            {
-                _staId = id;
-
-                _staSite = mark;
-
-                _staTarget = tar;
-
-                _orderIndex = index;
-            }
-        }
-
-
-        /// <summary>
-        /// 站点成员
-        /// </summary>
-        public class StationMember
-        {
-            /// <summary>
-            /// 站点id
-            /// </summary>
-            private int _staId = -1;
-
-            /// <summary>
-            /// 站点地标
-            /// </summary>
-            private int _staSite = 0;
-
-            /// <summary>
-            /// 站点编号
-            /// </summary>
-            private int _staTarget = 0;
-
-            /// <summary>
-            /// 优先级
-            /// </summary>
-            private int _orderIndex = 0;
-
-            /// <summary>
-            /// 描述
-            /// </summary>
-            private string _describ = "暂无";
-
-            /// <summary>
-            /// 待命点集合
-            /// </summary>
-            private List<int> _waitList = new List<int>();
-
-            /// <summary>
-            /// 返回站点集合
-            /// </summary>
-            private List<int> _backTarList = new List<int>();
-
-            /// <summary>
-            /// 站点id
-            /// </summary>
-            public int StaId
-            {
-                get { return _staId; }
-                set { _staId = value; }
-            }
-
-            /// <summary>
-            /// 站点地标
-            /// </summary>
-            public int StaSite
-            {
-                get { return _staSite; }
-                set { _staSite = value; }
-            }
-
-            /// <summary>
-            /// 站点编号
-            /// </summary>
-            public int StaTarget
-            {
-                get { return _staTarget; }
-                set { _staTarget = value; }
-            }
-
-            /// <summary>
-            /// 优先级
-            /// </summary>
-            public int OrderIndex
-            {
-                get { return _orderIndex; }
-                set { _orderIndex = value; }
-            }
-
-            /// <summary>
-            /// 描述
-            /// </summary>
-            public string Describ
-            {
-                get { return _describ; }
-                set { _describ = value; }
-            }
-
-            /// <summary>
-            /// 待命点集合
-            /// </summary>
-            public List<int> WaitList
-            {
-                get { return _waitList; }
-                set { _waitList = value; }
-            }
-
-            /// <summary>
-            /// 返回站点集合
-            /// </summary>
-            public List<int> BackTarList
-            {
-                get { return _backTarList; }
-                set { _backTarList = value; }
-            }
-
-            /// <summary>
-            /// 构造函数
-            /// </summary>
-            /// <param name="id">id</param>
-            /// <param name="mark">地标</param>
-            /// <param name="tar">站点</param>
-            /// <param name="des">描述</param>
-            /// <param name="index">优先级</param>
-            /// <param name="waitList">待命点集合</param>      
-            /// <param name="backTar">返回站点</param> 
-            public StationMember(int id, int mark, int tar, string des, int index, List<int> waitList, List<int> backTar)
-            {
-                _staId = id;
-
-                _staSite = mark;
-
-                _staTarget = tar;
-
-                _describ = des;
-
-                _orderIndex = index;
-
-                if (waitList != null)
-                {
-                    _waitList = waitList;
-                }
-
-                if (backTar != null)
-                {
-                    _backTarList = backTar;
-                }
-            }
-
-        }
         public static class APPConfig
         {
             static string _section = "WAITCOMBINECofing";
@@ -1921,7 +972,7 @@ namespace KEDAClient
                 JTWcfHelper.WcfMainHelper.SendOrder(vehicleslist.FocusedItem.Text, new CommonDeviceOrderObj(this.comboBox1.Text, order, Convert.ToInt32(textBox1.Text)));
                 if (MessageBox.Show("确定发送指令参数？", "提示", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
                 {
-                    SetOutputMsg2("发送 " + this.comboBox1.Text + " 指令参数成功");
+                    SetOutputMsg(listBox1, "发送 " + this.comboBox1.Text + " 指令参数成功");
                 }
 
             }
@@ -2045,26 +1096,28 @@ namespace KEDAClient
         }
 
         /// <summary>
-        /// 车辆充电
+        /// 自定义一个任务
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void charge_Click(object sender, EventArgs e)
+        private void defineDispatch_Click(object sender, EventArgs e)
         {
             if (GetSelectDevid())
             {
                 return;
             }
-            // 判断电量低于百分80
-            else //if (Convert.ToInt32(vehicleslist.FocusedItem.SubItems[4].Text) < 80)
+            // 判断选定的AGV是否在线，若在线才可执行自定义任务
+            else if (vehicleslist.FocusedItem.SubItems[2].Text == "True")
             {
+                defineDispatch.Enabled = true;
+
                 OnceTaskMember task = new OnceTaskMember();
 
                 //任务ID
-                task.DisGuid = "测试ID";
+                task.DisGuid = "自定义任务ID";
 
                 //任务名称
-                task.TaskRelatName = "测试充电任务";
+                task.TaskRelatName = "自定义一个调度任务";
 
                 ///任务优先级
                 task.Priority = 1;
@@ -2082,37 +1135,7 @@ namespace KEDAClient
 
                 if (JTWcfHelper.WcfTaskHelper.StartTaskTemp("客户端_KEDA", task))
                 {
-                    //记录agv状态
-                    agvStatus[vehicleslist.FocusedItem.Text] = "charge";
-                    SetOutputMsg2("AGV充电");
-                    charge.Enabled = false;
-                }
-            }
-        }
-
-        /// <summary>
-        /// 充电完成
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void endcharge_Click(object sender, EventArgs e)
-        {
-            if (GetSelectDevid())
-            {
-                return;
-            }
-            else
-            {
-                if (charge.Enabled)
-                {
-                    MessageBox.Show("目前AGV没有正在充电！", "提示");
-                }
-                else
-                {
-                    //记录agv状态
-                    agvStatus[vehicleslist.FocusedItem.Text] = "endcharge";
-                    SetOutputMsg2("测试下结束充电按钮，AGV向后启动");
-                    endcharge.Enabled = false;
+                    SetOutputMsg(listBox1, "自定义一个调度任务");
                 }
             }
         }
@@ -2139,18 +1162,30 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void startmission_Click(object sender, EventArgs e)
         {
-            if (GetSelectTaskid())
+            switch (tabControl2.SelectedIndex)
             {
-                return;
-            }
-            else if (!pausemission.Enabled)
-            {
-                //记录任务执行状态
-                taskStatus[taskInformlist.FocusedItem.Text] = "startmission";
-                if (JTWcfHelper.WcfTaskHelper.AdminCtrTask(taskInformlist.FocusedItem.Text, DisOrderCtrTypeEnum.Start))
-                {
-                    SetOutputMsg("开始任务成功");
-                }
+                //调度任务列表
+                case 0:
+                    if (GetSelectDispatchid())
+                    {
+                        return;
+                    }
+                    else if (WcfMainHelper.CtrDispatch(dispatchliselect, DisOrderCtrTypeEnum.Start))
+                    {
+                        SetOutputMsg(listBoxOutput, "开始任务成功");
+                    }
+                    break;
+                //当前任务列表
+                case 1:
+                    if (GetSelectTaskid())
+                    {
+                        return;
+                    }
+                    else if (WcfTaskHelper.AdminCtrTask(taskInformliselect , DisOrderCtrTypeEnum.Start))
+                    {
+                        SetOutputMsg(listBoxOutput, "开始任务成功");
+                    }
+                    break;
             }
         }
 
@@ -2162,33 +1197,65 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void pausemission_Click(object sender, EventArgs e)
         {
-            //GfxList<TaskBackImf> taskList = JTWcfHelper.WcfTaskHelper.GetAllTask();
-            if (tasksList != null && tasksList.Count != 0)
+            switch (tabControl2.SelectedIndex)
             {
-                if (GetSelectTaskid())
-                {
-                    return;
-                }
-                else
-                {
-                    // 任务执行状态： unkonw  err  unready wait fail  doing  suc cancl
-                    string taskrunstatus = taskInformlist.FocusedItem.SubItems[2].Text;
-                    if (taskrunstatus == "suc" || taskrunstatus == "cancl")
+                // 调度任务
+                case 0:
+                    if (dislist != null && dislist.Count != 0)
                     {
-
-                        MessageBox.Show("该任务已执行成功或取消，无法暂停！", "提示");
-                    }
-                    else if (MessageBox.Show("当前站点派发任务未完成，是否暂停？", "提示", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
-                    {
-                        //记录任务执行状态
-                        taskStatus[taskInformlist.FocusedItem.Text] = "pausemission";
-                        if (JTWcfHelper.WcfTaskHelper.AdminCtrTask(taskInformlist.FocusedItem.Text, DisOrderCtrTypeEnum.Pause))
+                        if (GetSelectDispatchid())
                         {
-                            SetOutputMsg("任务暂停成功！");
+                            return;
+                        }
+                        else
+                        {
+                            // 任务执行状态： unkonw  err  unready wait fail  doing  suc cancl
+                            string taskrunstatus = dispatchlist.FocusedItem.SubItems[2].Text;
+                            if (taskrunstatus == "suc" || taskrunstatus == "cancl")
+                            {
+
+                                MessageBox.Show("该任务已执行成功或取消，无法暂停！", "提示");
+                            }
+                            else if (MessageBox.Show("当前站点派发任务未完成，是否暂停？", "提示", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                            {
+                                if (WcfMainHelper.CtrDispatch(dispatchliselect, DisOrderCtrTypeEnum.Pause))
+                                {
+                                    SetOutputMsg(listBoxOutput, "任务暂停成功！");
+                                }
+                            }
                         }
                     }
-                }
+                    break;
+                // 当前任务
+                case 1:
+                    //GfxList<TaskBackImf> taskList = JTWcfHelper.WcfTaskHelper.GetAllTask();
+                    if (tasksList != null && tasksList.Count != 0)
+                    {
+                        if (GetSelectTaskid())
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            // 任务执行状态： unkonw  err  unready wait fail  doing  suc cancl
+                            string taskrunstatus = taskInformlist.FocusedItem.SubItems[2].Text;
+                            if (taskrunstatus == "suc" || taskrunstatus == "cancl")
+                            {
+
+                                MessageBox.Show("该任务已执行成功或取消，无法暂停！", "提示");
+                            }
+                            else if (MessageBox.Show("当前站点派发任务未完成，是否暂停？", "提示", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                            {
+                                if (WcfTaskHelper.AdminCtrTask(taskInformliselect, DisOrderCtrTypeEnum.Pause))
+                                {
+                                    SetOutputMsg(listBoxOutput, "任务暂停成功！");
+                                }
+                            }
+                        }
+                    }
+                    break;
             }
+
         }
 
         /// <summary>
@@ -2198,27 +1265,53 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void endmission_Click(object sender, EventArgs e)
         {
-            //GfxList<TaskBackImf> taskList = JTWcfHelper.WcfTaskHelper.GetAllTask();
-            if (tasksList != null && tasksList.Count != 0)
+            switch (tabControl2.SelectedIndex)
             {
-                if (GetSelectTaskid())
-                {
-                    return;
-                }
-                else
-                {
-                    //记录任务执行状态
-                    taskStatus[taskInformlist.FocusedItem.Text] = "endmission";
-                    if (JTWcfHelper.WcfTaskHelper.AdminCtrTask(taskInformlist.FocusedItem.Text, DisOrderCtrTypeEnum.Stop))
+                // 调度任务列表
+                case 0:
+                    if (dislist != null && dislist.Count != 0)
                     {
-                        SetOutputMsg("结束任务成功");
+                        if (GetSelectDispatchid())
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            if (WcfMainHelper.CtrDispatch(dispatchliselect, DisOrderCtrTypeEnum.Stop))
+                            {
+                                SetOutputMsg(listBoxOutput, "结束任务成功");
+                            }
+                        }
                     }
-                }
+                    else
+                    {
+                        MessageBox.Show("当前没有正在执行的任务！");
+                    }
+                    break;
+                // 当前任务列表
+                case 1:
+                    //GfxList<TaskBackImf> taskList = JTWcfHelper.WcfTaskHelper.GetAllTask();
+                    if (tasksList != null && tasksList.Count != 0)
+                    {
+                        if (GetSelectTaskid())
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            if (WcfTaskHelper.AdminCtrTask(taskInformliselect, DisOrderCtrTypeEnum.Stop))
+                            {
+                                SetOutputMsg(listBoxOutput, "结束任务成功");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("当前没有正在执行的任务！");
+                    }
+                    break;
             }
-            else
-            {
-                MessageBox.Show("当前没有正在执行的任务！");
-            }
+
         }
 
 
@@ -2227,7 +1320,7 @@ namespace KEDAClient
         /// </summary>
         private bool GetSelectTaskid()
         {
-            if (taskInformlist.FocusedItem is null)
+            if (taskInformliselect  == null)
             {
                 MessageBox.Show("请选择需要执行的任务", "提示");
                 return true;
@@ -2235,28 +1328,17 @@ namespace KEDAClient
             return false;
         }
 
-
-        private void taskInformlist_SelectedIndexChanged(object sender, EventArgs e)
+        /// <summary>
+        /// 判断是否已选择某一调度任务id
+        /// </summary>
+        private bool GetSelectDispatchid()
         {
-            string taskstatus = taskStatus[taskInformlist.FocusedItem.Text];
-            if (taskstatus == "pausemission")
+            if (dispatchliselect == null)
             {
-                startmission.Enabled = true;
-                endmission.Enabled = true;
-                pausemission.Enabled = false;
+                MessageBox.Show("请选择需要执行的调度任务", "提示");
+                return true;
             }
-            else if (taskstatus == "startmission")
-            {
-                startmission.Enabled = false;
-                endmission.Enabled = true;
-                pausemission.Enabled = true;
-            }
-            else if (taskstatus == "endmission")
-            {
-                startmission.Enabled = false;
-                endmission.Enabled = true;
-                pausemission.Enabled = true;
-            }
+            return false;
         }
 
         private void vehicleslist_SelectedIndexChanged(object sender, EventArgs e)
@@ -2283,29 +1365,12 @@ namespace KEDAClient
                     agvBackMove.Enabled = true;
                     agvStop.Enabled = true;
                 }
-                else if (status == "charge")
-                {
-                    agvForwordMove.Enabled = false;
-                    agvBackMove.Enabled = false;
-                    agvStop.Enabled = false;
-                }
-                else if (status == "endcharge")
-                {
-                    agvForwordMove.Enabled = true;
-                    agvBackMove.Enabled = true;
-                    agvStop.Enabled = true;
-                }
-                charge.Enabled = true;
-                endcharge.Enabled = true;
-                buttonSend.Enabled = true;
             }
             else if (vehicleslist.FocusedItem.SubItems[2].Text == "False")
             {
                 agvForwordMove.Enabled = false;
                 agvBackMove.Enabled = false;
                 agvStop.Enabled = false;
-                charge.Enabled = false;
-                endcharge.Enabled = false;
                 buttonSend.Enabled = false;
             }
         }
@@ -2419,14 +1484,6 @@ namespace KEDAClient
                 item.SubItems.Add(tasksList[i].BackMsg); // 信息
                 item.SubItems.Add(tasksList[i].TriggerTime.ToString()); // 触发时间
 
-                if (taskStatus.ContainsKey(tasksList[i].DisGuid))
-                {
-                    taskStatus[tasksList[i].DisGuid] = "startmissioin";
-                }
-                else
-                {
-                    taskStatus.Add(tasksList[i].DisGuid, "startmission");
-                }
                 // 显示项
                 taskInformlist.Items.Add(item);
             }
@@ -2462,8 +1519,44 @@ namespace KEDAClient
 
             // 结束数据处理
             dispatchlist.EndUpdate();
+
+            // dispatchlist.Items[_dispatSelectIndex].Selected = true;
+
         }
 
+        /// <summary>
+        /// 调度任务列表选择改变
+        /// </summary>
+        private void dispatchlist_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            if (dispatchlist.FocusedItem is null)
+            {
+                dispatchliselect = null;
+            }
+            else
+            {
+                _dispatSelectIndex = dispatchlist.Items.IndexOf(dispatchlist.FocusedItem);
+                dispatchliselect = dispatchlist.FocusedItem.Text;
+            }
+
+        }
+
+        /// <summary>
+        /// 当前任务列表选择改变
+        /// </summary>
+        private void taskInformlist_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (taskInformlist.FocusedItem is null)
+            {
+                taskInformliselect = null;
+            }
+            else
+            {
+                _taskInformliSelectIndex = taskInformlist.Items.IndexOf(taskInformlist.FocusedItem);
+                taskInformliselect = taskInformlist.FocusedItem.Text;
+            }
+        }
         /// <summary>
         /// 定时刷新车辆信息
         /// </summary>
@@ -2517,135 +1610,89 @@ namespace KEDAClient
                 e.Cancel = true;
             }
         }
+
+
+        /// <summary>
+        ///  启动服务
+        /// </summary>
+        private void startServer_Click(object sender, EventArgs e)
+        {
+
+            F_DataCenter.Init(SynchronizationContext.Current, listBoxOutput);
+            SetOutputMsg(listBoxOutput, "服务启动");
+            startServer.Enabled = false;
+            stopServer.Enabled = true;
+
+            LogFactory.LogRunning("服务启动");
+        }
+
+        /// <summary>
+        ///  停止服务
+        /// </summary>
+        private void stopServer_Click(object sender, EventArgs e)
+        {
+            F_DataCenter.StopServer();
+            SetOutputMsg(listBoxOutput, "服务停止");
+            startServer.Enabled = true;
+            stopServer.Enabled = false;
+
+            LogFactory.LogRunning("服务停止");
+        }
+
         /// <summary>
         /// 执行任务
         /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void executeTask_Click(object sender, EventArgs e)
         {
-            //GfxList<TaskRelationMember> memberlist = JTWcfHelper.WcfTaskHelper.GetDefineTask();
             try
             {
-                if (definetasklist != null)
+                if (definetasklist!=null )
                 {
-                    if (executeTasklist.SelectedItems == null)
+                    if (executeTasklist.SelectedItems==null)
                     {
-                        MessageBox.Show("请选择相应的任务", "系统提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                        MessageBox.Show("请选择相应的任务","系统提示",MessageBoxButtons.OK,MessageBoxIcon.Asterisk );
                     }
                     else
                     {
                         WcfClientHelper.CreateService<IUserOperation_TaskExcute>().StartTask(executeTasklist.SelectedItems[0].SubItems[0].Text, "MainTest");
+
+                        SetOutputMsg(listBoxOutput, executeTasklist.SelectedItems[0].SubItems[1].Text);
+
+                        LogFactory.LogDispatch(executeTasklist.SelectedItems[0].SubItems[0].Text, "执行任务", executeTasklist.SelectedItems[0].SubItems[1].Text);
+
                     }
                 }
             }
             catch
             {
-                MessageBox.Show("错误", "系统提示", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                MessageBox.Show("错误","系统提示",MessageBoxButtons.OK,MessageBoxIcon.Hand );
             }
-
-            RefreshtaskInform();
-        }
-        /// <summary>
-        /// 触发循环任务
-        /// </summary>
-        private void button1_Click(object sender, EventArgs e)
-        {
-            GfxList<TaskRelationMember> definetasklist = JTWcfHelper.WcfTaskHelper.GetDefineTask();
-            //GfxList<GfxServiceContractTaskExcute.TaskBackImf> taskList = JTWcfHelper.WcfTaskHelper.GetAllTask();
-            if (definetasklist == null && definetasklist.Count <= 0)
-            {
-                MessageBox.Show("当前没有已定义的任务", "系统提示", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-            }
-            else
-            {
-                if (tasksList.Count <= 0)
-                {
-                    if (executeTasklist.FocusedItem == null)
-                    {
-                        MessageBox.Show("请选择相应的任务", "系统提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                    }
-                    else
-                    {
-                        WcfClientHelper.CreateService<IUserOperation_TaskExcute>().StartTask(executeTasklist.SelectedItems[0].SubItems[0].Text, "MainTest");
-
-                        timer1.Enabled = true;
-                    }
-                }
-                else
-                {
-                    if (tasksList.Count == 1 && tasksList[0].TaskImf == definetasklist[0].TaskRelatName)
-                    {
-                        WcfClientHelper.CreateService<IUserOperation_TaskExcute>().StartTask(executeTasklist.Items[1].SubItems[0].Text, "MainTest");
-                    }
-                    else if (tasksList.Count == 1 && tasksList[0].TaskImf == definetasklist[1].TaskRelatName)
-                    {
-                        WcfClientHelper.CreateService<IUserOperation_TaskExcute>().StartTask(executeTasklist.Items[0].SubItems[0].Text, "MainTest");
-                    }
-                    timer1.Enabled = true;
-                }
-            }
-
             RefreshtaskInform();
         }
 
+
         /// <summary>
-        /// 结束循环任务
+        /// 初始化按钮（任务界面）
         /// </summary>
-        private void button2_Click(object sender, EventArgs e)
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void initButton_Click(object sender, EventArgs e)
         {
-            JTWcfHelper.WcfMainHelper.InitPara(_severIp, "", "");
-
-            GfxList<TaskBackImf> result = JTWcfHelper.WcfTaskHelper.GetAllTask();
-            if (result != null)
+            F_Logic f_logic = F_DataCenter.MLogic;
+            if (f_logic != null)
             {
-                foreach (var item in result)
-                {
-                    ResultTypeEnum s = JTWcfHelper.WcfMainHelper.GetDipatchStatue(item.DisGuid);
-
-                    //JTWcfHelper.WcfMainHelper.CtrDispatch(item.DisGuid, DisOrderCtrTypeEnum.Stop);
-                    JTWcfHelper.WcfTaskHelper.AdminCtrTask(item.DisGuid, DisOrderCtrTypeEnum.Stop);
-                }
-
-                timer1.Enabled = false;
+                f_logic.initButton();
             }
         }
-        /// <summary>
-        /// 执行任务
-        /// </summary>
-        private void Refreshtask()
-        {
-            //GfxList<TaskRelationMember> definetasklist = JTWcfHelper.WcfTaskHelper.GetDefineTask();
-            //GfxList<GfxServiceContractTaskExcute.TaskBackImf> taskList = JTWcfHelper.WcfTaskHelper.GetAllTask();
-            if (tasksList.Count == 1 && tasksList[0].TaskImf == definetasklist[0].TaskRelatName)
-            {
-                WcfClientHelper.CreateService<IUserOperation_TaskExcute>().StartTask(executeTasklist.Items[1].SubItems[0].Text, "MainTest");
-            }
-            else if (tasksList.Count == 1 && tasksList[0].TaskImf == definetasklist[1].TaskRelatName)
-            {
-                WcfClientHelper.CreateService<IUserOperation_TaskExcute>().StartTask(executeTasklist.Items[0].SubItems[0].Text, "MainTest");
-            }
-        }
+
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             tabControl1SelectIndex = tabControl1.SelectedIndex;
         }
 
-        /// <summary>
-        /// 定时执行任务
-        /// </summary>
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            timerFunc.Enabled = false;
-
-            try
-            {
-                Refreshtask();
-            }
-            catch { }
-
-            timerFunc.Enabled = true;
-
-        }
 
         /// <summary>
         /// 后台线程去更新获取设备，任务信息
@@ -2661,10 +1708,7 @@ namespace KEDAClient
                 }
                 else
                 {
-                    ////全局的列表数据变量
-                    //GfxList<DeviceBackImf> devsList;                    // = JTWcfHelper.WcfMainHelper.GetDevList();
-                    //GfxList<GfxServiceContractTaskExcute.TaskBackImf> taskList;// = JTWcfHelper.WcfTaskHelper.GetAllTask();
-                    //GfxList<TaskRelationMember> definetasklist;// = JTWcfHelper.WcfTaskHelper.GetDefineTask();
+
 
                     //Boolean devDataChange, taskDataChange, definetaskDataChange;
                     devsList = JTWcfHelper.WcfMainHelper.GetDevList();
@@ -2701,617 +1745,145 @@ namespace KEDAClient
             }
         }
 
+
+    }
+
+
+    /// <summary>
+    /// 站点成员
+    /// </summary>
+    public class StationMember
+    {
         /// <summary>
-        /// 判断窑尾是否有货
+        /// 站点id
         /// </summary>
-        private void LoadStaHasGoods()
-        {
-            while (true)
-            {
-                Thread.Sleep(2000);
-                if (unloadState == 0)
-                {
-                    // 判断窑尾是否有货           
-                    if (devsList != null && devsList.Count != 0)
-                    {
-                        DeviceBackImf dev = devsList.Find(c => { return c.DevType == "PLC" && c.DevStatue == "True" && c.SensorList[0].RValue == "1" && c.DevId == "PLC0000001"; });
-
-                        // PLC 在线，且货物状态为1
-                        if (dev != null)
-                        {
-                            _loadStaHasGoods = true;
-                            unloadState = 1;
-                        }
-                        else
-                        {
-                            _loadStaHasGoods = false;
-                        }
-
-                    }
-
-                }
-
-            }
-
-        }
-
+        private int _staId = -1;
 
         /// <summary>
-        /// 判断装载等待位是否有空闲的AGV
+        /// 站点地标
         /// </summary>
-        private void HasFreeAGV()
+        private int _staSite = 0;
+
+        /// <summary>
+        /// 站点编号
+        /// </summary>
+        private int _staTarget = 0;
+
+        /// <summary>
+        /// 优先级
+        /// </summary>
+        private int _orderIndex = 0;
+
+        /// <summary>
+        /// 描述
+        /// </summary>
+        private string _describ = "暂无";
+
+        /// <summary>
+        /// 待命点集合
+        /// </summary>
+        private List<int> _waitList = new List<int>();
+
+        /// <summary>
+        /// 返回站点集合
+        /// </summary>
+        private List<int> _backTarList = new List<int>();
+
+        /// <summary>
+        /// 站点id
+        /// </summary>
+        public int StaId
         {
-            while (true)
-            {
-                Thread.Sleep(2000);
-                if (_loadStaHasGoods && unloadState == 1)
-                {
-
-                    if (devsList != null && devsList.Count != 0)
-                    {
-                        DeviceBackImf dev = devsList.Find(c => { return c.DevType == "AGV" && c.DevStatue == "True" && c.SensorList[1].RValue == _loadWaitSta && c.SensorList[9].RValue == "true" && c.SensorList[7].RValue == "0"; });
-
-                        // 只有位于等待区首位置的在线、空闲、未充电的AGV 才能执行任务
-                        if (dev != null)
-                        {
-                            _HasFreeAGV = true;
-                            unloadState = 2;
-
-                        }
-                        else
-                        {
-                            _HasFreeAGV = false;
-                        }
-
-                    }
-                }
-
-            }
+            get { return _staId; }
+            set { _staId = value; }
         }
 
         /// <summary>
-        /// AGV从当前窑尾装载等待位到窑尾装载点
+        /// 站点地标
         /// </summary>
-        private void SendAGVtoLoadSta()
+        public int StaSite
         {
-            while (true)
-            {
-                Thread.Sleep(2000);
-                if (_HasFreeAGV && unloadState == 2)
-                {
-                    // 自定义一个任务：AGV从当前等待位到窑尾装载点
-                    OnceTaskMember task = new OnceTaskMember();
-
-                    ////任务ID
-                    //task.DisGuid = "装货";
-
-                    //任务名称
-                    task.TaskRelatName = "AGV从当前等待位到窑尾装载点";
-
-                    //任务完成是否自动清除
-                    task.IsAotuRemove = false;
-
-                    //任务中一个调度节点
-                    DispatchOrderObj dis = new DispatchOrderObj();
-
-                    //调度的终点（地标）：窑尾装载点
-                    dis.EndSite = _loadgoodsSta;
-
-                    task.DisOrderList.Add(dis);
-
-                    JTWcfHelper.WcfTaskHelper.StartTaskTemp("AGV去窑尾接货", task);
-
-                    unloadState = 3;
-
-                }
-
-            }
-
+            get { return _staSite; }
+            set { _staSite = value; }
         }
 
         /// <summary>
-        /// 判断窑尾装载点是否有AGV
+        /// 站点编号
         /// </summary>
-        private void LoadStaHasAGV()
+        public int StaTarget
         {
-            while (true)
-            {
-
-                Thread.Sleep(2000);
-                if (unloadState == 3 && devsList != null && devsList.Count != 0)
-                {
-                    DeviceBackImf dev = devsList.Find(c => { return c.DevType == "AGV" && c.SensorList[1].RValue == _loadgoodsSta; });
-
-                    //  窑尾装载点有没有AGV,若有直接跳出遍历
-                    if (dev != null)
-                    {
-                        _loadStaHasAGV = true;
-                        unloadState = 4;
-
-                    }
-                    else
-                    {
-                        _loadStaHasAGV = false;
-                    }
-
-                }
-
-            }
+            get { return _staTarget; }
+            set { _staTarget = value; }
         }
 
         /// <summary>
-        ///WCS给线边辊台 PLC0000001 发送下料、电机正转的指令
+        /// 优先级
         /// </summary>
-        private void LoadLineRollerTable()
+        public int OrderIndex
         {
-            while (true)
+            get { return _orderIndex; }
+            set { _orderIndex = value; }
+        }
+
+        /// <summary>
+        /// 描述
+        /// </summary>
+        public string Describ
+        {
+            get { return _describ; }
+            set { _describ = value; }
+        }
+
+        /// <summary>
+        /// 待命点集合
+        /// </summary>
+        public List<int> WaitList
+        {
+            get { return _waitList; }
+            set { _waitList = value; }
+        }
+
+        /// <summary>
+        /// 返回站点集合
+        /// </summary>
+        public List<int> BackTarList
+        {
+            get { return _backTarList; }
+            set { _backTarList = value; }
+        }
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="id">id</param>
+        /// <param name="mark">地标</param>
+        /// <param name="tar">站点</param>
+        /// <param name="des">描述</param>
+        /// <param name="index">优先级</param>
+        /// <param name="waitList">待命点集合</param>      
+        /// <param name="backTar">返回站点</param> 
+        public StationMember(int id, int mark, int tar, string des, int index, List<int> waitList, List<int> backTar)
+        {
+            _staId = id;
+
+            _staSite = mark;
+
+            _staTarget = tar;
+
+            _describ = des;
+
+            _orderIndex = index;
+
+            if (waitList != null)
             {
-                Thread.Sleep(2000);
-                if (_loadStaHasAGV && unloadState == 4)
-                {
-                    if (devsList != null && devsList.Count != 0)
-                    {
-                        DeviceBackImf dev = devsList.Find(c => { return c.DevId == "PLC0000001" && c.DevStatue == "True"; });
-                        // 装载点有AGV，线边辊台准备出料
-                        if (dev != null)
-                        {
-                            // 线边辊台下料正转  Order1: 2,1
-                            JTWcfHelper.WcfMainHelper.SendOrder(dev.DevId, new CommonDeviceOrderObj("线边辊台下料 正转" + LocSite, 1, 2, 1));
-                            unloadState = 5;
+                _waitList = waitList;
+            }
 
-                        }
-
-                    }
-                }
-
+            if (backTar != null)
+            {
+                _backTarList = backTar;
             }
         }
 
-        /// <summary>
-        ///接货流程
-        ///判断装载完成后，AGV上是否有货
-        /// </summary>
-        /// <returns></returns>
-        private void AGVHasGoods()
-        {
-            while (true)
-            {
-                Thread.Sleep(2000);
-                if (unloadState == 5)
-                {
-                    if (devsList != null && devsList.Count != 0)
-                    {
-                        DeviceBackImf dev = devsList.Find(c => { return c.SensorList[1].RValue == _loadgoodsSta && c.SensorList[35].RValue == "1" && c.DevType == "AGV"; });
-
-
-                        //  判断处于装载位的AGV上是否有货,若有直接跳出遍历
-                        if (dev != null)
-                        {
-                            _AGVHasGoods = true;
-                            unloadState = 6;
-
-                        }
-                        else
-                        {
-                            _AGVHasGoods = false;
-                        }
-
-                    }
-                }
-
-            }
-        }
-
-        /// <summary>
-        ///WCS给线边辊台 PLC0000001  发送下料、电机停止的指令
-        /// </summary>
-        private void LoadLineRollerTableStop()
-        {
-            while (true)
-            {
-                Thread.Sleep(2000);
-                if (_AGVHasGoods && unloadState == 6)
-                {
-                    if (devsList != null && devsList.Count != 0)
-                    {
-                        DeviceBackImf dev = devsList.Find(c => { return c.DevId == "PLC0000001"; });
-                        // 装载点有AGV，线边辊台准备出料
-                        if (dev != null && dev.DevStatue == "True")
-                        {
-                            // 线边辊台上料正转  Order1: 1,3
-                            JTWcfHelper.WcfMainHelper.SendOrder(dev.DevId, new CommonDeviceOrderObj("线边辊台下料 停止" + LocSite, 1, 2, 3));
-
-                            unloadState = 7;
-
-
-                        }
-                    }
-                }
-
-            }
-        }
-
-        /// <summary>
-        /// 同时，AGV从窑尾装载点到窑头卸载等待区
-        /// </summary>
-        private void SendAGVtoUnloadWaitSta()
-        {
-            while (true)
-            {
-                Thread.Sleep(2000);
-                if (unloadState == 7)
-                {
-                    // 自定义一个任务：AGV从窑尾装载点到窑头卸载等待区
-                    OnceTaskMember task = new OnceTaskMember();
-
-                    ////任务ID
-                    //task.DisGuid = "去窑头卸载等待区";
-
-                    //任务名称
-                    task.TaskRelatName = "AGV从窑尾装载点到窑头卸载等待区";
-
-                    //任务完成是否自动清除
-                    task.IsAotuRemove = false;
-
-                    //任务中一个调度节点
-                    DispatchOrderObj dis = new DispatchOrderObj();
-
-                    //调度的终点（地标）：窑尾装载点
-                    dis.EndSite = _unloadWaitSta;
-
-                    task.DisOrderList.Add(dis);
-
-                    JTWcfHelper.WcfTaskHelper.StartTaskTemp("窑头卸载等待区", task);
-
-                    unloadState = 0;
-                }
-
-            }
-
-        }
-
-        /// <summary>
-        /// 判断窑头卸载等待位是否有准备卸货的AGV
-        /// </summary>      
-        private void UnloadWaitStaHasAGV()
-        {
-            while (true)
-            {
-                Thread.Sleep(2000);
-                if (devsList != null && devsList.Count != 0 && loadState == 0)
-                {
-                    DeviceBackImf dev = devsList.Find(c => { return c.DevType == "AGV" && c.SensorList[1].RValue == _unloadWaitSta && c.SensorList[35].RValue == "1"; });
-
-                    //  窑头卸载等待点有没有准备卸货的 AGV,若有直接跳出遍历
-                    if (dev != null)
-                    {
-                        _HasUnloadAGV = true;
-                        loadState = 1;
-
-                    }
-                    else
-                    {
-                        _HasUnloadAGV = false;
-                    }
-
-                }
-
-            }
-
-        }
-
-        /// <summary>
-        /// 判断窑头卸载辊台上是否有货
-        /// </summary>
-        private void UnloadStaHasGoods()
-        {
-            while (true)
-            {
-                Thread.Sleep(2000);
-                if (_HasUnloadAGV && loadState == 1)
-                {
-                    //判断窑头卸载辊台上是否有货
-                    if (devsList != null && devsList.Count != 0)
-                    {
-                        DeviceBackImf dev = devsList.Find(c => { return c.DevType == "PLC" && c.DevStatue == "True" && c.SensorList[0].RValue == "1" && c.DevId == "PLC0000002"; });
-                        {
-                            // PLC 在线，且货物状态为1
-                            if (dev != null)
-                            {
-                                _unloadStaHasGoods = true;
-                                loadState = 2;
-
-                            }
-                            else
-                            {
-                                _unloadStaHasGoods = false;
-                            }
-                        }
-                    }
-                }
-
-            }
-
-        }
-
-        /// <summary>
-        /// WCS给AGV下发任务：从卸载等待位到窑头卸载点
-        /// </summary>
-        private void SendAGVtoUnloadSta()
-        {
-            while (true)
-            {
-                Thread.Sleep(2000);
-                if (!_unloadStaHasGoods && loadState == 2)
-                {
-                    // 自定义一个任务：AGV从卸载等待位到窑头卸载点
-                    OnceTaskMember task = new OnceTaskMember();
-
-                    ////任务ID
-                    //task.DisGuid = "去窑头卸载点";
-
-                    //任务名称
-                    task.TaskRelatName = "AGV从卸载等待位到窑头卸载点";
-
-                    //任务完成是否自动清除
-                    task.IsAotuRemove = false;
-
-                    //任务中一个调度节点
-                    DispatchOrderObj dis = new DispatchOrderObj();
-
-                    //调度的终点（地标）：窑头卸载点
-                    dis.EndSite = _unloadgoodsSta;
-
-                    task.DisOrderList.Add(dis);
-
-                    JTWcfHelper.WcfTaskHelper.StartTaskTemp("去窑头卸载点", task);
-
-                    loadState = 3;
-
-                }
-
-            }
-
-        }
-
-        /// <summary>
-        /// 窑头卸载点是否有有货状态的AGV
-        /// </summary>
-        private void UnloadStaHasAGV()
-        {
-            while (true)
-            {
-                Thread.Sleep(2000);
-                if (devsList != null && devsList.Count != 0 && loadState == 3)
-                {
-                    DeviceBackImf dev = devsList.Find(c => { return c.DevType == "AGV" && c.SensorList[1].RValue == _unloadgoodsSta && c.SensorList[35].RValue == "1"; });
-
-                    //  窑尾装载点有没有有货状态的AGV,若有直接跳出遍历
-                    if (dev != null)
-                    {
-                        _unloadStaHasAGV = true;
-                        loadState = 4;
-
-                    }
-                    else
-                    {
-                        _unloadStaHasAGV = false;
-                    }
-
-                }
-
-            }
-
-        }
-
-        /// <summary>
-        ///WCS给线边辊台发送上料、电机正转的指令
-        /// </summary>
-        private void UnloadLineRollerTable()
-        {
-            while (true)
-            {
-                Thread.Sleep(2000);
-                if (_unloadStaHasAGV && loadState == 4)
-                {
-                    if (devsList != null && devsList.Count != 0)
-                    {
-                        DeviceBackImf dev = devsList.Find(c => { return c.DevType == "PLC" && c.DevStatue == "True" && c.DevId == "PLC0000002"; });
-
-                        // 装载点有有货的AGV，线边辊台准备接货
-                        if (dev != null)
-                        {
-                            // 线边辊台上料 正转  Order1: 1,1
-                            JTWcfHelper.WcfMainHelper.SendOrder(dev.DevId, new CommonDeviceOrderObj("线边辊台上料 停止" + LocSite, 1, 1, 1));
-
-                            Thread.Sleep(3000);
-                            // 判断线边辊台电机是否正在转动
-                            if (dev.SensorList[1].RValue == "1")
-                            {
-                                _isRorate = true;
-                                loadState = 5;
-
-                            }
-                            else
-                            {
-                                _isRorate = false;
-                            }
-                        }
-
-                    }
-                }
-
-            }
-        }
-
-        /// <summary>
-        /// 启动车载辊台转动卸货
-        /// </summary>
-        private void ReadyToUnload()
-        {
-            while (true)
-            {
-                Thread.Sleep(2000);
-                if (_isRorate && loadState == 5)
-                {
-                    if (devsList != null && devsList.Count != 0)
-                    {
-                        DeviceBackImf dev = devsList.Find(c => { return c.DevType == "AGV" && c.DevStatue == "True" && c.SensorList[1].RValue == _unloadgoodsSta && c.SensorList[9].RValue == "true" && c.SensorList[35].RValue == "1"; });
-
-                        // 启动窑头卸载点的AGV 车载辊台转动卸货
-                        if (dev != null)
-                        {
-                            JTWcfHelper.WcfMainHelper.SendOrder(dev.DevId, new CommonDeviceOrderObj("车载辊台下料 正转" + LocSite, 1, 2, 1));
-                            loadState = 6;
-
-                        }
-
-                    }
-                }
-
-            }
-
-        }
-
-        /// <summary>
-        ///  启动服务
-        /// </summary>
-        private void startServer_Click(object sender, EventArgs e)
-        {
-
-            F_DataCenter.Init(SynchronizationContext.Current, listBoxOutput);
-            SetOutputMsg("服务启动");
-            startServer.Enabled = false;
-            stopServer.Enabled = true;
-
-            LogFactory.LogRunning("服务启动");
-        }
-
-        /// <summary>
-        ///  停止服务
-        /// </summary>
-        private void stopServer_Click(object sender, EventArgs e)
-        {
-            F_DataCenter.StopServer();
-            SetOutputMsg("服务停止");
-            startServer.Enabled = true;
-            stopServer.Enabled = false;
-
-            LogFactory.LogRunning("服务停止");
-        }
-
-        /// <summary>
-        /// 初始化按钮（任务界面）
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void initButton_Click(object sender, EventArgs e)
-        {
-            F_Logic f_logic = F_DataCenter.MLogic;
-            if (f_logic != null)
-            {
-                f_logic.initButton();
-            }
-        }
-
-
-        /// <summary>
-        ///  判断执行卸货任务后的AGV，货物状态是否为无货
-        /// </summary>
-        private void AGVGoodsStatue()
-        {
-            while (true)
-            {
-                Thread.Sleep(2000);
-                if (devsList != null && devsList.Count != 0 && loadState == 6)
-                {
-                    DeviceBackImf dev = devsList.Find(c => { return c.DevType == "AGV" && c.SensorList[35].RValue == "0"; });
-
-                    // 判断AGV上的货物状态是否为无货
-                    if (dev != null)
-                    {
-                        _AGVGoodsStatue = false;
-                        loadState = 7;
-
-                    }
-                    else
-                    {
-                        _AGVGoodsStatue = true;
-                    }
-
-                }
-
-            }
-        }
-
-        /// <summary>
-        ///WCS给线边辊台发送上料、电机停止的指令
-        /// </summary>
-        private void UnloadLineRollerTableStop()
-        {
-            while (true)
-            {
-                Thread.Sleep(2000);
-                if (!_AGVGoodsStatue && loadState == 7)
-                {
-                    if (devsList != null && devsList.Count != 0)
-                    {
-                        DeviceBackImf dev = devsList.Find(c => { return c.DevType == "PLC" && c.DevId == "PLC0000002" && c.DevStatue == "True"; });
-
-                        // 装载点有AGV，线边辊台准备出料
-                        if (dev != null)
-                        {
-                            // 线边辊台上料  停止  Order1: 1,3
-                            JTWcfHelper.WcfMainHelper.SendOrder(dev.DevId, new CommonDeviceOrderObj("线边辊台上料 停止" + LocSite, 1, 1, 3));
-
-                            loadState = 8;
-
-                        }
-
-                    }
-                }
-
-            }
-        }
-
-        /// <summary>
-        /// 同时，AGV从窑头卸载点到窑尾装载等待区
-        /// </summary>
-        private void SendAGVtoLoadWaitSta()
-        {
-            while (true)
-            {
-                Thread.Sleep(2000);
-                if (loadState == 8)
-                {
-                    // 自定义一个任务：AGV从窑头卸载点到窑尾装载等待区
-                    OnceTaskMember task = new OnceTaskMember();
-
-                    ////任务ID
-                    //task.DisGuid = "去窑尾装载等待区";
-
-                    //任务名称
-                    task.TaskRelatName = "AGV从窑头卸载点到窑尾装载等待区";
-
-                    //任务完成是否自动清除
-                    task.IsAotuRemove = false;
-
-                    //任务中一个调度节点
-                    DispatchOrderObj dis = new DispatchOrderObj();
-
-                    //调度的终点（地标）：窑尾装载等待区
-                    dis.EndSite = _loadWaitSta;
-
-                    task.DisOrderList.Add(dis);
-
-                    JTWcfHelper.WcfTaskHelper.StartTaskTemp("窑尾装载等待区", task);
-
-                    loadState = 0;
-                }
-
-
-            }
-
-        }
     }
 }

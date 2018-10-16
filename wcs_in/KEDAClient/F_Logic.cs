@@ -79,13 +79,13 @@ namespace KEDAClient
 
             _plcEnd.Site = Site.窑尾1;
 
-            //Thread tr = new Thread(InitToHeadWait);
-            //tr.IsBackground = true;
-            //tr.Start();
+            Thread tr = new Thread(InitToHeadWait);
+            tr.IsBackground = true;
+            tr.Start();
 
-            //Thread tr2 = new Thread(InitToEnd);
-            //tr2.IsBackground = true;
-            //tr2.Start();
+            Thread tr2 = new Thread(InitToEnd);
+            tr2.IsBackground = true;
+            tr2.Start();
 
             Thread tr3 = new Thread(ClearTask);
             tr3.IsBackground = true;
