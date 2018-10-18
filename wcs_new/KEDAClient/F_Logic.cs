@@ -25,7 +25,7 @@ namespace KEDAClient
         /// <summary>
         /// 窑头PLC
         /// </summary>
-        F_PLCLine _plcHead = new F_PLCLine("PLC0000001");
+        F_PLCLine _plcHead = new F_PLCLine("PLC0000002");
 
         /// <summary>
         /// 事务处理线程
@@ -94,9 +94,9 @@ namespace KEDAClient
             tr.IsBackground = true;
             tr.Start();
 
-            Thread tr2 = new Thread(InitToEndWait);
-            tr2.IsBackground = true;
-            tr2.Start();
+            //Thread tr2 = new Thread(InitToEndWait);
+            //tr2.IsBackground = true;
+            //tr2.Start();
 
             Thread tr3 = new Thread(ClearTask);
             tr3.IsBackground = true;
@@ -221,7 +221,7 @@ namespace KEDAClient
                 sendServerLog(agv.Id + "窑尾取货完成Agv从窑尾装载点到窑头卸载等待区");
 
                 LogFactory.LogDispatch(agv.Id, "AGV送货", "窑尾取货完成Agv从窑尾装载点到窑头卸载等待区");
-                
+
             }
         }
 
@@ -234,7 +234,7 @@ namespace KEDAClient
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.窑头卸载等待区);
 
             ///窑头无货 窑头AGV未锁定 并且 此次任务没有被响应
-            if (!_plcHead.IsLock 
+            if (!_plcHead.IsLock
                 //&& _plcHead.Sta_Material == EnumSta_Material.无货 
                 && agv != null && !F_AGV.IsLock(agv.Id))
             {
@@ -311,7 +311,7 @@ namespace KEDAClient
 
                         LogFactory.LogDispatch(agv.Id, "车辆初始化", "回到窑头卸载等待区");
 
-                    }                  
+                    }
                     else
                     {
                         /// 如果agv有货 且位于等待点和装载点之间，回到窑头卸载点
@@ -345,7 +345,7 @@ namespace KEDAClient
             {
                 foreach (F_AGV agv in agvs)
                 {
-                    if (agv.Site != ConstSetBA.窑尾等待点和装载点之间 && agv.Site!= ConstSetBA.窑尾装载点)
+                    if (agv.Site != ConstSetBA.窑尾等待点和装载点之间 && agv.Site != ConstSetBA.窑尾装载点)
                     {
                         F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, agv.Site, ConstSetBA.窑尾装载等待区);
 
@@ -357,7 +357,7 @@ namespace KEDAClient
 
                         LogFactory.LogDispatch(agv.Id, "车辆初始化", "回到窑尾装载等待区");
 
-                    }                   
+                    }
                     else
                     {
                         /// 如果agv无货 且位于等待点和装载点之间，去到窑尾装载点
@@ -394,7 +394,7 @@ namespace KEDAClient
 
                 F_ExcTask task = new F_ExcTask(null, EnumOper.充电, ConstSetBA.窑尾装载等待区, ConstSetBA.接货充电点);
 
-                F_AGV .AgvLock(agv.Id);
+                F_AGV.AgvLock(agv.Id);
 
                 task.Id = agv.Id;
 
@@ -545,7 +545,7 @@ namespace KEDAClient
                                 {
                                     int count = 0;
                                     dic.TryGetValue(agv.Id, out count);
-                                    if (count >= 1)
+                                    if (count >= 10)
                                     {
                                         // 终止该任务
                                         JTWcfHelper.WcfMainHelper.CtrDispatch(dispatch.DisGuid, DisOrderCtrTypeEnum.Stop);

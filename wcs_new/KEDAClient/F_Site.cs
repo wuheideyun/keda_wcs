@@ -8,11 +8,11 @@ namespace KEDAClient
 {
     public class ConstSetBA
     {
-        public static String 窑尾装载等待区 = "13";
+        public static String 窑尾装载等待区 = "31";
 
         public static String 窑尾装载点 = "11";
 
-        public static String 窑头卸载等待区 = "12";
+        public static String 窑头卸载等待区 = "32";
 
         public static String 窑头卸载点 = "14";
 
