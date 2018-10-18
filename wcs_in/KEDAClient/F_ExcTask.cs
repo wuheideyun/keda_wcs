@@ -177,26 +177,26 @@ namespace KEDAClient
                         if (_agv.Site == _plc.Site)
                         {
                             // 判断窑尾PLC的货物状态和AGV货物状态
-                            if (//_plc.Sta_Material == EnumSta_Material.有货 && 
-                            //(_agv.Sta_Material == EnumSta_Material.无货 || _agv.Sta_Material == EnumSta_Material.传送中)
+                            if ((_plc.Sta_Material == EnumSta_Material.窑尾传输中 || _plc.Sta_Material == EnumSta_Material.AGV未知 || _plc.Sta_Material == EnumSta_Material.窑尾有货) && 
+                            //(_agv.Sta_Material == EnumSta_Material.AGV无货 || _agv.Sta_Material == EnumSta_Material.AGV传输中) &&
                             true)
                             {
-                               // _agv.SendOrdr(EnumType.上料操作, EnumPara.agv上料启动);
+                                _agv.SendOrdr(EnumType.上料操作, EnumPara.agv上料启动);
 
                                 _plc.SendOrdr(EnumType.下料操作, EnumPara.窑尾辊台启动);
                             }
 
                             // // 判断窑尾是否出料完成
-                            if (//_plc.Sta_Material == EnumSta_Material.无货 &&
-                                //_agv.Sta_Material == EnumSta_Material.有货
-                                true)
+                            if (_plc.Sta_Material == EnumSta_Material.窑尾出料完成
+                               && _agv.Sta_Material == EnumSta_Material.AGV有货
+                               && true)
                             {
-                                //_agv.SendOrdr(EnumType.上料操作, EnumPara.agv辊台停止);
+                                _agv.SendOrdr(EnumType.上料操作, EnumPara.agv辊台停止);
 
                                 _plc.SendOrdr(EnumType.下料操作, EnumPara.窑尾辊台停止);
 
                                 if (true
-                                    //&&_plc.Sta_Monitor == EnumSta_Monitor.窑尾电机停止
+                                    &&_agv.Sta_Monitor == EnumSta_Monitor.AGV电机停止
                                     )
                                 {
                                     ISetTaskSuc();
@@ -210,29 +210,27 @@ namespace KEDAClient
                         ///当前AGV的到达的地标 与 棍台绑定地标一致
                         if (_agv.Site == _plc.Site)
                         {
-
-
-                            if (//(_plc.Sta_Material == EnumSta_Material.有货 || _plc.Sta_Material == EnumSta_Material.无货 )&&
-                                //(_agv.Sta_Material == EnumSta_Material.传送中 || _agv.Sta_Material == EnumSta_Material.有货)
+                            
+                            if ((_plc.Sta_Material == EnumSta_Material.窑头无货 || _plc.Sta_Material == EnumSta_Material.窑头无货|| _plc.Sta_Material == EnumSta_Material.窑头传输中) &&
+                                (_agv.Sta_Material == EnumSta_Material.AGV传输中 || _agv.Sta_Material == EnumSta_Material.AGV有货) &&
                                 true)
                             {
                                 _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台启动);
 
-                               // _agv.SendOrdr(EnumType.下料操作, EnumPara.agv下料启动);
+                                _agv.SendOrdr(EnumType.下料操作, EnumPara.agv下料启动);
 
                             }
 
 
-                            if (//_plc.Sta_Material == EnumSta_Material.有货 && 
-                                // _agv.Sta_Material == EnumSta_Material.无货
+                            if (//_plc.Sta_Material == EnumSta_Material.窑头接料完成 && 
+                                //_agv.Sta_Material == EnumSta_Material.AGV无货 &&
                                true)
                             {
                                 _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台停止);
 
-                                //_agv.SendOrdr(EnumType.下料操作, EnumPara.agv辊台停止);
-
-
-                                if (//_plc.Sta_Monitor == EnumSta_Monitor.电机停止
+                                _agv.SendOrdr(EnumType.下料操作, EnumPara.agv辊台停止);
+                                
+                                if (_agv.Sta_Monitor == EnumSta_Monitor.AGV电机停止 &&
                                     true)
                                 {
                                     ISetTaskSuc();
@@ -255,16 +253,12 @@ namespace KEDAClient
 
                             _plc.SendOrdr(EnumType.下料操作, EnumPara.窑尾1号机械手启动);
 
-                            if (true
-                                //_plc.Sta_Material == EnumSta_Material.窑尾1号机械手完成
+                            if (_plc.Sta_Material == EnumSta_Material.窑尾1号机械手完成 &&
+                                true
                                 )
                             {
-                                if (true
-                                    //_plc.Sta_Monitor == EnumSta_Monitor.窑尾1号机械手停止
-                                    )
-                                {
-                                    ISetTaskSuc();
-                                }
+                                //1号机械手完成动作
+                                 ISetTaskSuc();
                             }
                         }
                         return "";
@@ -277,16 +271,11 @@ namespace KEDAClient
 
                             _plc.SendOrdr(EnumType.下料操作, EnumPara.窑尾2号机械手启动);
 
-                            if (true
-                                //_plc.Sta_Material == EnumSta_Material.窑尾2号机械手完成
+                            if (_plc.Sta_Material == EnumSta_Material.窑尾2号机械手完成 &&
+                                true
                                 )
                             {
-                                if (true
-                                    //_plc.Sta_Monitor == EnumSta_Monitor.窑尾2号机械手停止
-                                    )
-                                {
-                                    ISetTaskSuc();
-                                }
+                                ISetTaskSuc();
                             }
                         }
                         return "";
@@ -300,15 +289,10 @@ namespace KEDAClient
                             _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头机械手启动);
 
                             if (true
-                                //_plc.Sta_Material == EnumSta_Material.窑头机械手完成
+                                && _plc.Sta_Material == EnumSta_Material.窑头机械手完成
                                 )
                             {
-                                if (true
-                                    //_plc.Sta_Monitor == EnumSta_Monitor.窑头机械手停止
-                                    )
-                                {
-                                    ISetTaskSuc();
-                                }
+                                ISetTaskSuc();
                             }
                         }
 

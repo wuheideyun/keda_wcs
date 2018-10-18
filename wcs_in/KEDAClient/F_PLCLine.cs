@@ -12,19 +12,19 @@ namespace KEDAClient
     public enum EnumSta_Material
     {
         
-        未知 ,
-        有货 = 1,
-        无货 = 2,
-        传输中 = 3,
+        AGV未知 ,
+        AGV有货 = 1,
+        AGV无货 = 2,
+        AGV传输中 = 3,
 
-        窑尾无货 = 0 ,        
-        窑尾有货 = 1,
-        窑尾传输中 =2,    
-        窑尾出料完成 =3,
-        窑尾1号机械手运动 = 4,
-        窑尾1号机械手完成 = 5,
-        窑尾2号机械手运动 = 6,
-        窑尾2号机械手完成 = 7,
+        窑尾无货 = 1 ,        
+        窑尾有货 = 2,
+        窑尾传输中 =3,    
+        窑尾出料完成 =4,
+        窑尾1号机械手运动 = 5,
+        窑尾1号机械手完成 = 6,
+        窑尾2号机械手运动 = 7,
+        窑尾2号机械手完成 = 8,
 
         窑头机械手就绪 =1,
         窑头机械手运动 =2,
@@ -40,7 +40,16 @@ namespace KEDAClient
     /// 电机状态
     /// </summary>
     public enum EnumSta_Monitor
-    {     
+    {
+
+        //AGV电机状态
+
+        AGV电机正转 = 1,
+
+        AGV电机反转 = 2,
+
+        AGV电机停止 = 3,
+
 
         未知,
 
@@ -143,13 +152,13 @@ namespace KEDAClient
         {
             get 
             {
-                EnumSta_Material result = EnumSta_Material.未知;
+                EnumSta_Material result = EnumSta_Material.AGV未知;
 
                 try
                 {
                     result = (EnumSta_Material)Convert.ToInt32((F_DataCenter.MDev.IGetSenValue(_id, "0001")));
                 }
-                catch { result = EnumSta_Material.未知; }
+                catch { result = EnumSta_Material.AGV未知; }
 
                 return result;
             }

@@ -58,13 +58,13 @@ namespace KEDAClient
         {
             get 
             {
-                EnumSta_Material result = EnumSta_Material.未知;
+                EnumSta_Material result = EnumSta_Material.AGV未知;
 
                 try
                 {
                     result = (EnumSta_Material)Convert.ToInt32((F_DataCenter.MDev.IGetSenValue(_id, "0036")));
                 }
-                catch { result = EnumSta_Material.未知; }
+                catch { result = EnumSta_Material.AGV未知; }
 
                 return result;
             }

@@ -8,7 +8,7 @@ namespace KEDAClient
 {
     public class ConstSetBA
     {
-        public static int    最低电量 = 80;
+        public static int    最低电量 =60;
 
         public static String AGV有货 = "1";
 
