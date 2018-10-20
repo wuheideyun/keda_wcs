@@ -8,7 +8,7 @@ namespace KEDAClient
 {
     public class ConstSetBA
     {
-        public static String 窑尾装载等待区 = "31";
+        public static String 窑尾装载等待区 = "33";
 
         public static String 窑尾装载点 = "11";
 
@@ -16,15 +16,15 @@ namespace KEDAClient
 
         public static String 窑头卸载点 = "14";
 
-        public static String 接货充电点 = "56";
+        public static String 接货充电点 = "51";
 
-        public static String 卸货充电点 = "55";
+        public static String 卸货充电点 = "52";
 
-        public static String 窑尾等待点和装载点之间 = "36";
+        public static String 窑尾等待点和装载点之间 = "23";
 
-        public static String 窑头等待点和卸载点之间 = "61";
+        public static String 窑头等待点和卸载点之间 = "22";
 
-        public static int    最低电量 = -40;
+        public static int    最低电量 = 70;
 
         public static String AGV有货 = "1";
 
