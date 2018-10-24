@@ -43,6 +43,7 @@ namespace KEDAClient
         {
             return _mapList.GetBooleanValue(agvid);
         }
+
       
         /// <summary>
         /// PLC系统ID
