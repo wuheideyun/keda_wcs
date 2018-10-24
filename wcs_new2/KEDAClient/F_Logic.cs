@@ -141,7 +141,7 @@ namespace KEDAClient
 
                 try
                 {
-                    //PlcEndCharge();// 窑尾等待区的AGV去充电
+                    PlcEndCharge();// 窑尾等待区的AGV去充电
 
                     PlcEndChargeSuc();//窑尾充电点有充电完成的AGV,优先派充电完成的车去接货
 
@@ -149,7 +149,7 @@ namespace KEDAClient
 
                     TaskEndToHeadWait();// 窑尾取货完成Agv从窑尾装载点到窑头卸载等待区
 
-                    //PlcHeadCharge();// 窑头卸载区的AGV去充电
+                    PlcHeadCharge();// 窑头卸载区的AGV去充电
 
                     PlcHeadChargeSuc();//窑头充电点有充电完成的AGV,优先派充电完成的车去卸货
 
