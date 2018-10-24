@@ -97,6 +97,11 @@ namespace KEDAClient
         bool _isLock = false;
 
         /// <summary>
+        /// 充电站是否被锁
+        /// </summary>
+        bool _isBatteryLock = false;
+
+        /// <summary>
         /// 对应地标
         /// </summary>
         string _site = "0";
@@ -171,6 +176,16 @@ namespace KEDAClient
             get { return _isLock; }
             set { _isLock = value; }
         }
+
+        /// <summary>
+        /// 充电桩是否被锁
+        /// </summary>
+        public bool IsBatteryLock
+        {
+            get { return _isBatteryLock; }
+            set { _isBatteryLock = value; }
+        }
+
 
         /// <summary>
         /// 对应地标

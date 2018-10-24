@@ -128,7 +128,13 @@ namespace KEDAClient
         /// </summary>
         private void ISetTaskSuc()
         {
-            if (_plc != null) { _plc.IsLock = false; }
+            if (_plc != null)
+            {   _plc.IsLock = false;
+                if (_plc.IsBatteryLock)
+                {
+                    _plc.IsBatteryLock = false;
+                }
+            }
             if (_agv != null) { F_AGV.AgvRelease(_agv.Id); }
 
             if (_taskDispatch != null) { if (WcfMainHelper.CtrDispatch(_taskDispatch.Id, EnumCtrType.Stop)) { _isSuc = true; } }

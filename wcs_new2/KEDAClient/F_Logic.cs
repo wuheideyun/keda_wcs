@@ -396,13 +396,16 @@ namespace KEDAClient
                 //!F_AGV.IsLock(agv.Id) && 
                 agv.Electicity <= ConstSetBA.最低电量&&
                 agv.ChargeStatus == EnumChargeStatus.未充电 &&
-                 agv1 == null)
+                 agv1 == null
+                 && !_plcEnd.IsBatteryLock)
             {
                 _PlcEndNeedCharge = true;
 
                 F_ExcTask task = new F_ExcTask(null, EnumOper.充电, ConstSetBA.窑尾装载等待区, ConstSetBA.接货充电点);
 
                 F_AGV.AgvLock(agv.Id);
+
+                _plcEnd.IsBatteryLock = true;
 
                 task.Id = agv.Id;
 
@@ -430,7 +433,8 @@ namespace KEDAClient
             // 让电量低于60且未充电的AGV去充电
             if (agv != null && agv.Electicity <= ConstSetBA.最低电量 && !F_AGV.IsLock(agv.Id) &&
                 //agv.ChargeStatus == EnumChargeStatus.未充电  &&
-                agv1 == null)
+                agv1 == null
+                && !_plcHead.IsBatteryLock)
             {
                 _PlcHeadNeedCharge = true;
 
@@ -439,6 +443,8 @@ namespace KEDAClient
                 F_AGV.AgvLock(agv.Id);
 
                 task.Id = agv.Id;
+
+                _plcHead.IsBatteryLock = true;
 
                 F_DataCenter.MTask.IStartTask(task);
 
