@@ -313,22 +313,23 @@ namespace KEDAClient
                         LogFactory.LogDispatch(agv.Id, "车辆初始化", "回到窑头卸载等待区");
 
                     }
-                    else
-                    {
-                        /// 如果agv有货 且位于等待点和装载点之间，回到窑头卸载点
-                        _ToPlcHead = true;
+                    //货物状态异常，暂时屏蔽
+                    //else
+                    //{
+                    //    /// 如果agv有货 且位于等待点和装载点之间，回到窑头卸载点
+                    //    _ToPlcHead = true;
 
-                        F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.放货, agv.Site, ConstSetBA.窑头卸载点);
+                    //    F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.放货, agv.Site, ConstSetBA.窑头卸载点);
 
-                        task.Id = agv.Id;
+                    //    task.Id = agv.Id;
 
-                        F_DataCenter.MTask.IStartTask(task);
+                    //    F_DataCenter.MTask.IStartTask(task);
 
-                        sendServerLog(agv.Id + "初始化，位于等待点和卸载点之间的AGV去卸货");
+                    //    sendServerLog(agv.Id + "初始化，位于等待点和卸载点之间的AGV去卸货");
 
-                        LogFactory.LogDispatch(agv.Id, "车辆初始化", "位于等待点和卸载点之间的AGV去卸货");
+                    //    LogFactory.LogDispatch(agv.Id, "车辆初始化", "位于等待点和卸载点之间的AGV去卸货");
 
-                    }
+                    //}
                 }
 
             }
@@ -360,22 +361,23 @@ namespace KEDAClient
                         LogFactory.LogDispatch(agv.Id, "车辆初始化", "回到窑尾装载等待区");
 
                     }
-                    else
-                    {
-                        /// 如果agv无货 且位于等待点和装载点之间，去到窑尾装载点
-                        _ToPlcEnd = true;
+                    //货物状态异常，暂时屏蔽
+                    //else
+                    //{
+                    //    /// 如果agv无货 且位于等待点和装载点之间，去到窑尾装载点
+                    //    _ToPlcEnd = true;
 
-                        F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.取货, agv.Site, ConstSetBA.窑尾装载点);
+                    //    F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.取货, agv.Site, ConstSetBA.窑尾装载点);
 
-                        task.Id = agv.Id;
+                    //    task.Id = agv.Id;
 
-                        F_DataCenter.MTask.IStartTask(task);
+                    //    F_DataCenter.MTask.IStartTask(task);
 
-                        sendServerLog(agv.Id + "初始化，位于等待点和装载载点之间的AGV去装货");
+                    //    sendServerLog(agv.Id + "初始化，位于等待点和装载载点之间的AGV去装货");
 
-                        LogFactory.LogDispatch(agv.Id, "车辆初始化", "位于等待点和装载载点之间的AGV去装货");
+                    //    LogFactory.LogDispatch(agv.Id, "车辆初始化", "位于等待点和装载载点之间的AGV去装货");
 
-                    }
+                    //}
                 }
 
             }

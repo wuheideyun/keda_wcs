@@ -177,9 +177,8 @@ namespace KEDAClient
                         if (_agv.Site == _plc.Site)
                         {
                             // 判断窑尾PLC的货物状态和AGV货物状态
-                            if ((_plc.Sta_Material == EnumSta_Material.窑尾传输中 || _plc.Sta_Material == EnumSta_Material.AGV未知 || _plc.Sta_Material == EnumSta_Material.窑尾有货) && 
-                            //(_agv.Sta_Material == EnumSta_Material.AGV无货 || _agv.Sta_Material == EnumSta_Material.AGV传输中) &&
-                            true)
+                            if ((_plc.Sta_Material == EnumSta_Material.窑尾传输中 || _plc.Sta_Material == EnumSta_Material.AGV未知 || _plc.Sta_Material == EnumSta_Material.窑尾有货) &&
+                            (_agv.Sta_Material == EnumSta_Material.AGV无货 || _agv.Sta_Material == EnumSta_Material.AGV传输中))
                             {
                                 _agv.SendOrdr(EnumType.上料操作, EnumPara.agv上料启动);
 
@@ -187,8 +186,8 @@ namespace KEDAClient
                             }
 
                             // // 判断窑尾是否出料完成
-                            if (_plc.Sta_Material == EnumSta_Material.窑尾出料完成
-                               && _agv.Sta_Material == EnumSta_Material.AGV有货
+                            if (_plc.Sta_Material == EnumSta_Material.窑尾出料完成 &&
+                               _agv.Sta_Material == EnumSta_Material.AGV有货
                                && true)
                             {
                                 _agv.SendOrdr(EnumType.上料操作, EnumPara.agv辊台停止);
@@ -211,9 +210,8 @@ namespace KEDAClient
                         if (_agv.Site == _plc.Site)
                         {
                             
-                            if ((_plc.Sta_Material == EnumSta_Material.窑头无货 || _plc.Sta_Material == EnumSta_Material.窑头无货|| _plc.Sta_Material == EnumSta_Material.窑头传输中) &&
-                                (_agv.Sta_Material == EnumSta_Material.AGV传输中 || _agv.Sta_Material == EnumSta_Material.AGV有货) &&
-                                true)
+                            if ((_plc.Sta_Material == EnumSta_Material.窑头无货 || _plc.Sta_Material == EnumSta_Material.窑头无货 || _plc.Sta_Material == EnumSta_Material.窑头传输中) &&
+                                (_agv.Sta_Material == EnumSta_Material.AGV传输中 || _agv.Sta_Material == EnumSta_Material.AGV有货) )
                             {
                                 _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台启动);
 
@@ -222,8 +220,8 @@ namespace KEDAClient
                             }
 
 
-                            if (//_plc.Sta_Material == EnumSta_Material.窑头接料完成 && 
-                                //_agv.Sta_Material == EnumSta_Material.AGV无货 &&
+                            if (_plc.Sta_Material == EnumSta_Material.窑头接料完成 &&
+                                _agv.Sta_Material == EnumSta_Material.AGV无货 &&
                                true)
                             {
                                 _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台停止);
@@ -233,6 +231,7 @@ namespace KEDAClient
                                 if (_agv.Sta_Monitor == EnumSta_Monitor.AGV电机停止 &&
                                     true)
                                 {
+                                    Thread.Sleep(5000);
                                     ISetTaskSuc();
                                 }
                             }

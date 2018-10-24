@@ -176,7 +176,7 @@ namespace KEDAClient
                         {
 
                             if (//_plc.Sta_Material == EnumSta_Material.有货 && 
-                            (_agv.Sta_Material == EnumSta_Material.无货 || _agv.Sta_Material == EnumSta_Material.传送中)&&
+                            //(_agv.Sta_Material == EnumSta_Material.无货 || _agv.Sta_Material == EnumSta_Material.传送中)&&
                             true)
                             {
                                 _agv.SendOrdr(EnumType.上料操作, EnumPara.agv上料启动);
@@ -186,15 +186,15 @@ namespace KEDAClient
 
 
                             if (//_plc.Sta_Material == EnumSta_Material.无货 &&
-                                _agv.Sta_Material == EnumSta_Material.有货 &&
+                                //_agv.Sta_Material == EnumSta_Material.有货 &&
                                 true)
                             {
                                 _agv.SendOrdr(EnumType.上料操作, EnumPara.agv辊台停止);
 
                                 _plc.SendOrdr(EnumType.下料操作, EnumPara.窑头辊台上料完成);
 
-                                if (true &&
-                                    _agv.Sta_Monitor == EnumSta_Monitor.电机停止
+                                if (true 
+                                    //&&_agv.Sta_Monitor == EnumSta_Monitor.电机停止
                                     )
                                 {                            
                                     ISetTaskSuc();
@@ -211,7 +211,7 @@ namespace KEDAClient
 
 
                             if (//(_plc.Sta_Material == EnumSta_Material.有货 || _plc.Sta_Material == EnumSta_Material.无货 )&&
-                                (_agv.Sta_Material == EnumSta_Material.传送中 || _agv.Sta_Material == EnumSta_Material.有货) &&
+                                //(_agv.Sta_Material == EnumSta_Material.传送中 || _agv.Sta_Material == EnumSta_Material.有货) &&
                                 true)
                             {
                                 _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台上料中);
@@ -222,7 +222,7 @@ namespace KEDAClient
 
 
                             if (//_plc.Sta_Material == EnumSta_Material.有货 && 
-                               _agv.Sta_Material == EnumSta_Material.无货 &&
+                               //_agv.Sta_Material == EnumSta_Material.无货 &&
                                true)
                             {
                                 _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台上料完成);
@@ -231,7 +231,7 @@ namespace KEDAClient
 
 
                                 if (true
-                                    && _agv.Sta_Monitor == EnumSta_Monitor.电机停止
+                                    //&& _agv.Sta_Monitor == EnumSta_Monitor.电机停止
                                     )
                                 {                               
                                     ISetTaskSuc();
