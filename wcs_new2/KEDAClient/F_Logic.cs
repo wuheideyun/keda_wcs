@@ -141,17 +141,17 @@ namespace KEDAClient
 
                 try
                 {
-                    PlcEndCharge();// 窑尾等待区的AGV去充电
+                    //PlcEndCharge();// 窑尾等待区的AGV去充电
 
-                    PlcEndChargeSuc();//窑尾充电点有充电完成的AGV,优先派充电完成的车去接货
+                   // PlcEndChargeSuc();//窑尾充电点有充电完成的AGV,优先派充电完成的车去接货
 
                     TaskPlcEndGet();// 窑尾取货任务
 
                     TaskEndToHeadWait();// 窑尾取货完成Agv从窑尾装载点到窑头卸载等待区
 
-                    PlcHeadCharge();// 窑头卸载区的AGV去充电
+                    //PlcHeadCharge();// 窑头卸载区的AGV去充电
 
-                    PlcHeadChargeSuc();//窑头充电点有充电完成的AGV,优先派充电完成的车去卸货
+                    //PlcHeadChargeSuc();//窑头充电点有充电完成的AGV,优先派充电完成的车去卸货
 
                     TaskPlcHeadPut();// 窑头放货任务
 
@@ -236,7 +236,7 @@ namespace KEDAClient
             ///窑头无货 窑头AGV未锁定 并且 此次任务没有被响应
             if (//!_plcHead.IsLock
                 //&& _plcHead.Sta_Material == EnumSta_Material.无货 
-                agv != null 
+                agv != null&& agv.Electicity > ConstSetBA.最低电量
                 //&& !F_AGV.IsLock(agv.Id)
                 )
             {
@@ -507,7 +507,7 @@ namespace KEDAClient
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.卸货充电点);
             // 有充电完成的AGV,且窑头卸载点没货
             if (agv != null &&
-                //&& agv.ChargeStatus == EnumChargeStatus.充电完成 && 
+                agv.ChargeStatus == EnumChargeStatus.充电完成 && 
                 !F_AGV.IsLock(agv.Id))
             {
                 _PlcHeadChargeSuc = true;
