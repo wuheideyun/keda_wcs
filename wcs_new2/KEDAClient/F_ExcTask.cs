@@ -202,7 +202,7 @@ namespace KEDAClient
 
 
                             if (//_plc.Sta_Material == EnumSta_Material.无货 &&
-                                _agv.Sta_Material == EnumSta_Material.有货 &&
+                               // _agv.Sta_Material == EnumSta_Material.有货 &&
                                 true)
                             {
                                 _agv.SendOrdr(EnumType.上料操作, EnumPara.agv辊台停止);
@@ -238,7 +238,7 @@ namespace KEDAClient
 
 
                             if (//_plc.Sta_Material == EnumSta_Material.有货 && 
-                               _agv.Sta_Material == EnumSta_Material.无货 &&
+                               //_agv.Sta_Material == EnumSta_Material.无货 &&
                                true)
                             {
                                 _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台上料完成);
