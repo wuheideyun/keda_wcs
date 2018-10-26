@@ -102,6 +102,11 @@ namespace KEDAClient
         bool _isBatteryLock = false;
 
         /// <summary>
+        /// 充电车辆
+        /// </summary>
+        string _ChargeAgv = "";
+
+        /// <summary>
         /// 对应地标
         /// </summary>
         string _site = "0";
@@ -178,6 +183,15 @@ namespace KEDAClient
         }
 
         /// <summary>
+        /// 充电车辆
+        /// </summary>
+        public string ChargeAgv
+        {
+            get { return _ChargeAgv; }
+            set { _ChargeAgv = value; }
+        }
+
+        /// <summary>
         /// 充电桩是否被锁
         /// </summary>
         public bool IsBatteryLock
@@ -185,7 +199,6 @@ namespace KEDAClient
             get { return _isBatteryLock; }
             set { _isBatteryLock = value; }
         }
-
 
         /// <summary>
         /// 对应地标

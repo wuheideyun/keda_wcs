@@ -129,10 +129,17 @@ namespace KEDAClient
         private void ISetTaskSuc()
         {
             if (_plc != null)
-            {   _plc.IsLock = false;
-                if (_plc.IsBatteryLock)
+            {
+                _plc.IsLock = false;
+
+                if(_plc.ChargeAgv == _agv.Id)
                 {
-                    _plc.IsBatteryLock = false;
+
+                    if (_plc.IsBatteryLock)
+                    {
+                        _plc.IsBatteryLock = false;
+                    }
+
                 }
             }
             if (_agv != null) { F_AGV.AgvRelease(_agv.Id); }

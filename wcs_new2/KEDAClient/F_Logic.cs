@@ -141,9 +141,9 @@ namespace KEDAClient
 
                 try
                 {
-                    //PlcEndCharge();// 窑尾等待区的AGV去充电
+                    PlcEndCharge();// 窑尾等待区的AGV去充电
 
-                   // PlcEndChargeSuc();//窑尾充电点有充电完成的AGV,优先派充电完成的车去接货
+                   PlcEndChargeSuc();//窑尾充电点有充电完成的AGV,优先派充电完成的车去接货
 
                     TaskPlcEndGet();// 窑尾取货任务
 
@@ -234,14 +234,16 @@ namespace KEDAClient
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.窑头卸载等待区);
 
             ///窑头无货 窑头AGV未锁定 并且 此次任务没有被响应
-            if (//!_plcHead.IsLock
+            if (!_plcHead.IsLock&&
                 //&& _plcHead.Sta_Material == EnumSta_Material.无货 
-                agv != null&& agv.Electicity > ConstSetBA.最低电量
+                agv != null
+                //&& agv.Electicity > ConstSetBA.最低电量
                 //&& !F_AGV.IsLock(agv.Id)
                 )
             {
                 //窑头等待区的车不需要充电、没有充电完成的车、没有回卸载点的车
-                if (!_PlcHeadNeedCharge && !_PlcHeadChargeSuc && !_ToPlcHead)
+                if (!_PlcHeadNeedCharge && !_PlcHeadChargeSuc && !_ToPlcHead
+                    )
                 {
                     ///派发一个从窑头卸载等待区到窑头卸载点的任务
                     if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcHead, EnumOper.放货, ConstSetBA.窑头卸载等待区, ConstSetBA.窑头卸载点)))
@@ -394,10 +396,11 @@ namespace KEDAClient
             // 让未上锁的、电量低于60且未充电的AGV去充电，且接货充电点没有AGV
             if (agv != null && agv.IsFree && 
                 //!F_AGV.IsLock(agv.Id) && 
-                agv.Electicity <= ConstSetBA.最低电量&&
+                //agv.Electicity <= ConstSetBA.最低电量&&
+                agv.Electicity <90  &&
                 agv.ChargeStatus == EnumChargeStatus.未充电 &&
-                 agv1 == null
-                 && !_plcEnd.IsBatteryLock)
+                agv1 == null
+                && !_plcEnd.IsBatteryLock)
             {
                 _PlcEndNeedCharge = true;
 
@@ -406,6 +409,8 @@ namespace KEDAClient
                 F_AGV.AgvLock(agv.Id);
 
                 _plcEnd.IsBatteryLock = true;
+
+                _plcEnd.ChargeAgv = agv.Id;
 
                 task.Id = agv.Id;
 
@@ -420,6 +425,12 @@ namespace KEDAClient
             {
                 _PlcEndNeedCharge = false;
 
+                if( agv1 !=null)
+                {
+                    _plcEnd.IsBatteryLock = true;
+
+                    _plcEnd.ChargeAgv = agv1.Id;
+                }               
             }
         }
 
@@ -431,8 +442,11 @@ namespace KEDAClient
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.窑头卸载等待区);
             F_AGV agv1 = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.卸货充电点);
             // 让电量低于60且未充电的AGV去充电
-            if (agv != null && agv.Electicity <= ConstSetBA.最低电量 && !F_AGV.IsLock(agv.Id) &&
-                //agv.ChargeStatus == EnumChargeStatus.未充电  &&
+            if (agv != null &&
+                 //agv.Electicity <= ConstSetBA.最低电量 && 
+                 agv.Electicity <=80 &&
+               // !F_AGV.IsLock(agv.Id) &&
+                agv.ChargeStatus == EnumChargeStatus.未充电  &&
                 agv1 == null
                 && !_plcHead.IsBatteryLock)
             {
@@ -445,6 +459,8 @@ namespace KEDAClient
                 task.Id = agv.Id;
 
                 _plcHead.IsBatteryLock = true;
+
+                _plcHead.ChargeAgv = agv.Id;
 
                 F_DataCenter.MTask.IStartTask(task);
 
@@ -468,7 +484,9 @@ namespace KEDAClient
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.接货充电点);
             // 有未上锁的、充电完成的AGV,且窑尾装载点有货、AGV上无货
-            if (agv != null && !F_AGV.IsLock(agv.Id) && agv.ChargeStatus == EnumChargeStatus.充电完成)
+            if (agv != null && 
+                //!F_AGV.IsLock(agv.Id) && 
+                agv.ChargeStatus == EnumChargeStatus.充电完成)
             {
                 if (// _plcEnd.Sta_Material == EnumSta_Material.有货 &&
                     //agv.Sta_Material == EnumSta_Material.无货
@@ -507,8 +525,9 @@ namespace KEDAClient
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.卸货充电点);
             // 有充电完成的AGV,且窑头卸载点没货
             if (agv != null &&
-                agv.ChargeStatus == EnumChargeStatus.充电完成 && 
-                !F_AGV.IsLock(agv.Id))
+                agv.ChargeStatus == EnumChargeStatus.充电完成 
+               // &&!F_AGV.IsLock(agv.Id)
+               )
             {
                 _PlcHeadChargeSuc = true;
 
