@@ -16,7 +16,7 @@ namespace KEDAClient
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new KEDAForm());
+            Application.Run(new ControlForm());
         }
     }
 }

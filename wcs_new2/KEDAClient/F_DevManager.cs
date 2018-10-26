@@ -205,13 +205,14 @@ namespace KEDAClient
         /// </summary>
         /// <param name="site"></param>
         /// <returns></returns>
-        public List<F_AGV> IGetDevNotOnWaitSite()
+        public List<F_AGV> IGetDevNotOnWaitSite(String devid = null)
         {
             try
             {
                 List<DeviceBackImf> devs = _devList.FindAll(c =>
                 {
                     return c.DevType == "Magnet_Basic" && c.IsAlive
+                    && devid != null ? c.DevId == devid : true
                     && c.ProtyList[ConstSetBA.地标].RValue != ConstSetBA.窑头卸载等待区
                     && c.ProtyList[ConstSetBA.空闲].RValue == "True"
                     //&& (c.ProtyList[ConstSetBA.货物状态].RValue == ConstSetBA.AGV有货 || c.ProtyList[ConstSetBA.货物状态].RValue == "未知")
@@ -238,11 +239,12 @@ namespace KEDAClient
         /// </summary>
         /// <param name="site"></param>
         /// <returns></returns>
-        public List<F_AGV> IGetDevNotLoadOnWaitSite()
+        public List<F_AGV> IGetDevNotLoadOnWaitSite(String devid = null)
         {
             try
             {
                 List<DeviceBackImf> devs = _devList.FindAll(c => { return c.IsAlive 
+                    && devid!=null ? c.DevId == devid : true
                     && c.DevType == "Magnet_Basic"
                     && c.ProtyList[ConstSetBA.空闲].RValue == "True"
                     && c.ProtyList[ConstSetBA.地标].RValue != ConstSetBA.窑尾装载等待区 

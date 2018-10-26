@@ -53,6 +53,8 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.listBoxOutput = new System.Windows.Forms.ListBox();
             this.tabControl2 = new System.Windows.Forms.TabControl();
+            this.dispatch = new System.Windows.Forms.TabPage();
+            this.dispatchlist = new System.Windows.Forms.ListView();
             this.currentTask = new System.Windows.Forms.TabPage();
             this.panel3 = new System.Windows.Forms.Panel();
             this.taskInformlist = new System.Windows.Forms.ListView();
@@ -98,8 +100,6 @@
             this.timerFunc = new System.Windows.Forms.Timer(this.components);
             this.Statetimer = new System.Windows.Forms.Timer(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.dispatch = new System.Windows.Forms.TabPage();
-            this.dispatchlist = new System.Windows.Forms.ListView();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -108,6 +108,7 @@
             this.panel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabControl2.SuspendLayout();
+            this.dispatch.SuspendLayout();
             this.currentTask.SuspendLayout();
             this.panel3.SuspendLayout();
             this.taskList.SuspendLayout();
@@ -120,7 +121,6 @@
             this.tabControl3.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
-            this.dispatch.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -343,6 +343,29 @@
             this.tabControl2.SelectedIndex = 0;
             this.tabControl2.Size = new System.Drawing.Size(965, 224);
             this.tabControl2.TabIndex = 27;
+            // 
+            // dispatch
+            // 
+            this.dispatch.Controls.Add(this.dispatchlist);
+            this.dispatch.Location = new System.Drawing.Point(4, 31);
+            this.dispatch.Name = "dispatch";
+            this.dispatch.Size = new System.Drawing.Size(957, 189);
+            this.dispatch.TabIndex = 4;
+            this.dispatch.Text = "调度任务";
+            this.dispatch.UseVisualStyleBackColor = true;
+            // 
+            // dispatchlist
+            // 
+            this.dispatchlist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dispatchlist.FullRowSelect = true;
+            this.dispatchlist.GridLines = true;
+            this.dispatchlist.Location = new System.Drawing.Point(3, 3);
+            this.dispatchlist.Name = "dispatchlist";
+            this.dispatchlist.Size = new System.Drawing.Size(625, 183);
+            this.dispatchlist.TabIndex = 0;
+            this.dispatchlist.UseCompatibleStateImageBehavior = false;
             // 
             // currentTask
             // 
@@ -876,29 +899,6 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // dispatch
-            // 
-            this.dispatch.Controls.Add(this.dispatchlist);
-            this.dispatch.Location = new System.Drawing.Point(4, 31);
-            this.dispatch.Name = "dispatch";
-            this.dispatch.Size = new System.Drawing.Size(957, 189);
-            this.dispatch.TabIndex = 4;
-            this.dispatch.Text = "调度任务";
-            this.dispatch.UseVisualStyleBackColor = true;
-            // 
-            // dispatchlist
-            // 
-            this.dispatchlist.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dispatchlist.FullRowSelect = true;
-            this.dispatchlist.GridLines = true;
-            this.dispatchlist.Location = new System.Drawing.Point(3, 3);
-            this.dispatchlist.Name = "dispatchlist";
-            this.dispatchlist.Size = new System.Drawing.Size(625, 183);
-            this.dispatchlist.TabIndex = 0;
-            this.dispatchlist.UseCompatibleStateImageBehavior = false;
-            // 
             // KEDAForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -926,6 +926,7 @@
             this.panel2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.tabControl2.ResumeLayout(false);
+            this.dispatch.ResumeLayout(false);
             this.currentTask.ResumeLayout(false);
             this.currentTask.PerformLayout();
             this.panel3.ResumeLayout(false);
@@ -940,7 +941,6 @@
             this.tabControl3.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
-            this.dispatch.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -11,6 +11,15 @@ namespace KEDAClient
     public static class F_DataCenter
     {
         static bool _init = false;
+        /// <summary>
+        /// 自动生成任务开启关闭标识
+        /// </summary>
+        static bool _initF_logic = false;
+
+        /// <summary>
+        /// 执行任务启动与执行标识
+        /// </summary>
+        static bool _initF_ExcTask = false;
 
         /// <summary>
         /// 设备管理器

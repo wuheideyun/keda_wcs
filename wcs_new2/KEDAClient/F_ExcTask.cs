@@ -28,6 +28,8 @@ namespace KEDAClient
     {
         string _id = Guid.NewGuid().ToString();
 
+        int _objID;
+
         /// <summary>
         /// 任务起点
         /// </summary>
@@ -62,6 +64,14 @@ namespace KEDAClient
         /// 此次任务的调度结果
         /// </summary>
         FDispatchBackImf _taskDispatch = null;
+
+        /// <summary>
+        /// 对象的唯一标识
+        /// </summary>
+        public int NO
+        {
+            get { return _objID; }
+        }
 
         public string StartSite
         {
@@ -121,6 +131,8 @@ namespace KEDAClient
             _startSite = startSite;
 
             _endSite = endSite;
+            
+            _objID = this.GetHashCode();// int.Parse(DateTime.Now.ToString("yyyyMMddHHmmss", System.Globalization.DateTimeFormatInfo.InvariantInfo));
         }
 
         /// <summary>
@@ -330,11 +342,11 @@ namespace KEDAClient
             {
                 listBox.Items.RemoveAt(0);
             }
-
             listBox.Items.Add(string.Format("【{0}】：{1}", DateTime.Now.TimeOfDay.ToString(), msg));
 
             listBox.SelectedIndex = listBox.Items.Count - 1;
         }
+
 
         /// <summary>
         /// 事务线程
@@ -350,13 +362,15 @@ namespace KEDAClient
                 try
                 {
                     lock (_ans) { taskList.Clear(); taskList.AddRange(_taskList); }
-
-                    foreach (var item in taskList)
+                    if (ParamControl.Is_AutoExecuteTask)
                     {
-                        String msg = item.DoWork();
-                        if (msg != "") sendServerLog(msg);
+                        foreach (var item in taskList)
+                        {
+                            String msg = item.DoWork();
+                            if (msg != "") sendServerLog(msg);
 
-                        if (item.IsSuc) { IDeletTask(item.Id); }
+                            if (item.IsSuc) { IDeletTask(item.Id); }
+                        }
                     }
                 }
                 catch { }
@@ -368,13 +382,17 @@ namespace KEDAClient
         /// </summary>
         /// <param name="task"></param>
         /// <returns></returns>
-        public bool IStartTask(F_ExcTask task)
+        public bool IStartTask(F_ExcTask task,String msg)
         {
             lock (_ans)
             {
                 F_ExcTask exit = _taskList.Find(c => { return (c.Plc == task.Plc && task.Plc != null) || c.Id == task.Id; });
 
-                if (exit == null) { _taskList.Add(task); return true; }
+                if (exit == null) {
+                    _taskList.Add(task);
+                    PublicDataContorl.AddTaskData(new TaskData(task.NO, msg, task.StartSite+","+task.EndSite));
+                    return true;
+                }
             }
 
             return false;
@@ -394,7 +412,7 @@ namespace KEDAClient
                 {
 
                     LogFactory.LogAdd(LOGTYPE.FINISH, exit.Id, exit.GetAgvId(), "调度完成", exit.GetTaskInfo());//任务完成日志
-
+                    PublicDataContorl.TaskIsSucc(exit.NO);
                     _taskList.Remove(exit);
                 }
             }

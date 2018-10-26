@@ -37,32 +37,32 @@ namespace KEDAClient
         /// <summary>
         /// 初始启动系统的时候，是否有在等待点和卸载点之间的车要回窑头卸载点
         /// </summary>
-        public bool _ToPlcHead = false;
+        private bool _ToPlcHead = false;
 
         /// <summary>
         /// 初始启动系统的时候，是否有在等待点和装载点之间的车要回窑尾装载点
         /// </summary>
-        public bool _ToPlcEnd = false;
+        private bool _ToPlcEnd = false;
 
         /// <summary>
         /// 窑尾等待区AGV是否需要充电
         /// </summary>
-        public bool _PlcEndNeedCharge = false;
+        private bool _PlcEndNeedCharge = false;
 
         /// <summary>
         /// 窑头卸载区AGV是否需要充电
         /// </summary>
-        public bool _PlcHeadNeedCharge = false;
+        private bool _PlcHeadNeedCharge = false;
 
         /// <summary>
         /// 窑尾有无充电完成的AGV
         /// </summary>
-        public bool _PlcEndChargeSuc = false;
+        private bool _PlcEndChargeSuc = false;
 
         /// <summary>
         /// 窑头有无充电完成的AGV
         /// </summary>
-        public bool _PlcHeadChargeSuc = false;
+        private bool _PlcHeadChargeSuc = false;
 
         /// <summary>
         /// 异常AGV
@@ -88,19 +88,39 @@ namespace KEDAClient
 
             _thread.Start();
 
-            Thread tr = new Thread(InitToHeadWait);
-            tr.IsBackground = true;
-            tr.Start();
-
-            Thread tr2 = new Thread(InitToEndWait);
-            tr2.IsBackground = true;
-            tr2.Start();
+            
 
             Thread tr3 = new Thread(ClearTask);
             tr3.IsBackground = true;
             tr3.Start();
 
         }
+
+        /// <summary>
+        /// 1.不传参数则初始化所有AGV
+        /// 2.传Agvid则初始化指定AGV
+        /// </summary>
+        /// <param name="id"></param>
+        public void InitAgv(String id = null)
+        {
+            agvid = id;
+            Thread tr = new Thread(Init);
+            tr.IsBackground = true;
+            tr.Start();
+        }
+
+        private string agvid = null;
+
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        private void Init()
+        {
+            InitToEndWait();
+            InitToHeadWait();
+        }
+
+
 
         /// <summary>
         /// 展示服务日志到界面
@@ -141,27 +161,31 @@ namespace KEDAClient
 
                 try
                 {
-                    PlcEndCharge();// 窑尾等待区的AGV去充电
+                    //是否自动生成任务
+                    if (ParamControl.Is_AutoAddTask)
+                    {
+                        if (ParamControl.Do_TailCharge) PlcEndCharge();// 窑尾等待区的AGV去充电
 
-                   PlcEndChargeSuc();//窑尾充电点有充电完成的AGV,优先派充电完成的车去接货
+                        PlcEndChargeSuc();//窑尾充电点有充电完成的AGV,优先派充电完成的车去接货
 
-                    TaskPlcEndGet();// 窑尾取货任务
+                        if (ParamControl.Do_TailLoad) TaskPlcEndGet();// 窑尾取货任务
 
-                    TaskEndToHeadWait();// 窑尾取货完成Agv从窑尾装载点到窑头卸载等待区
+                        if (ParamControl.Do_ToHeadWait) TaskEndToHeadWait();// 窑尾取货完成Agv从窑尾装载点到窑头卸载等待区
 
-                    //PlcHeadCharge();// 窑头卸载区的AGV去充电
+                        //if(ParamControl.Do_HeadCharge)PlcHeadCharge();// 窑头卸载区的AGV去充电
 
-                    //PlcHeadChargeSuc();//窑头充电点有充电完成的AGV,优先派充电完成的车去卸货
+                        //PlcHeadChargeSuc();//窑头充电点有充电完成的AGV,优先派充电完成的车去卸货
 
-                    TaskPlcHeadPut();// 窑头放货任务
+                        if (ParamControl.Do_HeadUnload) TaskPlcHeadPut();// 窑头放货任务
 
-                    TaskEndToEndWait();// 窑头卸货完成Agv从窑头卸载点到窑尾装载等待区
-
+                        if (ParamControl.Do_ToTailWait) TaskEndToEndWait();// 窑头卸货完成Agv从窑头卸载点到窑尾装载等待区
+                    }
                 }
                 catch { }
             }
         }
 
+        private string TaskPlcEndGetMsg = "从窑尾装载等待区到窑尾装载点取货";
         /// <summary>
         /// 窑尾取货任务
         /// </summary>
@@ -178,16 +202,17 @@ namespace KEDAClient
                 //窑尾等待区的车不需要充电、没有充电完成的车 、没有初始化时要去窑尾装载点的车
                 if (!_PlcEndNeedCharge && !_PlcEndChargeSuc && !_ToPlcEnd)
                 {
+                   
                     ///派发一个从窑尾装载等待区到窑尾装载点取货的任务
-                    if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcEnd, EnumOper.取货, ConstSetBA.窑尾装载等待区, _plcEnd.Site)))
+                    if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcEnd, EnumOper.取货, ConstSetBA.窑尾装载等待区, _plcEnd.Site),(agv.Id+ TaskPlcEndGetMsg)))
                     {
                         _plcEnd.IsLock = true;
 
                         F_AGV.AgvLock(agv.Id);
 
-                        sendServerLog(agv.Id + "从窑尾装载等待区到窑尾装载点取货");
+                        sendServerLog(agv.Id + TaskPlcEndGetMsg);
 
-                        LogFactory.LogDispatch(agv.Id, "到窑尾取货", "从窑尾装载等待区到窑尾装载点取货");
+                        LogFactory.LogDispatch(agv.Id, "到窑尾取货", TaskPlcEndGetMsg);
 
                     }
                 }
@@ -198,6 +223,7 @@ namespace KEDAClient
             }
         }
 
+        private string TaskEndToHeadWaitMsg = "窑尾取货完成Agv从窑尾装载点到窑头卸载等待区";
         /// <summary>
         /// 窑尾取货完成Agv从窑尾装载点到窑头卸载等待区
         /// </summary>
@@ -215,17 +241,18 @@ namespace KEDAClient
                 F_AGV.AgvLock(agv.Id);
 
                 task.Id = agv.Id;
+                
 
-                F_DataCenter.MTask.IStartTask(task);
+                F_DataCenter.MTask.IStartTask(task,agv.Id+ TaskEndToHeadWaitMsg);
 
-                sendServerLog(agv.Id + "窑尾取货完成Agv从窑尾装载点到窑头卸载等待区");
+                sendServerLog(agv.Id + TaskEndToHeadWaitMsg);
 
-                LogFactory.LogDispatch(agv.Id, "AGV送货", "窑尾取货完成Agv从窑尾装载点到窑头卸载等待区");
+                LogFactory.LogDispatch(agv.Id, "AGV送货", TaskEndToHeadWaitMsg);
 
             }
         }
 
-
+        private string TaskPlcHeadPutMsg = "从窑头卸载等待区到窑头卸载点的任务";
         /// <summary>
         /// 窑头放货任务
         /// </summary>
@@ -245,16 +272,19 @@ namespace KEDAClient
                 if (!_PlcHeadNeedCharge && !_PlcHeadChargeSuc && !_ToPlcHead
                     )
                 {
+                    
                     ///派发一个从窑头卸载等待区到窑头卸载点的任务
-                    if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcHead, EnumOper.放货, ConstSetBA.窑头卸载等待区, ConstSetBA.窑头卸载点)))
+                    if (F_DataCenter.MTask.IStartTask(
+                        new F_ExcTask(_plcHead, EnumOper.放货, ConstSetBA.窑头卸载等待区, ConstSetBA.窑头卸载点)
+                        ,agv.Id+ TaskPlcHeadPutMsg))
                     {
                         _plcHead.IsLock = true;
 
                         F_AGV.AgvLock(agv.Id);
 
-                        sendServerLog(agv.Id + "从窑头卸载等待区到窑头卸载点的任务");
+                        sendServerLog(agv.Id + TaskPlcHeadPutMsg);
 
-                        LogFactory.LogDispatch(agv.Id, "卸货", "从窑头卸载等待区到窑头卸载点的任务");
+                        LogFactory.LogDispatch(agv.Id, "卸货", TaskPlcHeadPutMsg);
 
                     }
                 }
@@ -265,6 +295,7 @@ namespace KEDAClient
             }
         }
 
+        private string toEndWaitMsg = "从窑头卸载点到窑尾装载等待区";
         /// <summary>
         /// 窑头卸货完成Agv从窑头卸载点到窑尾装载等待区
         /// </summary>
@@ -283,22 +314,24 @@ namespace KEDAClient
 
                 task.Id = agv.Id;
 
-                F_DataCenter.MTask.IStartTask(task);
+                F_DataCenter.MTask.IStartTask(task,agv.Id+toEndWaitMsg);
 
-                sendServerLog(agv.Id + "从窑头卸载点到窑尾装载等待区");
+                sendServerLog(agv.Id + toEndWaitMsg);
 
-                LogFactory.LogDispatch(agv.Id, "接货", "从窑头卸载点到窑尾装载等待区");
+                LogFactory.LogDispatch(agv.Id, "接货", toEndWaitMsg);
 
             }
         }
 
+        private string toHeadWaitMsg = "初始化，回到窑头卸载等待区";
         /// <summary>
         /// 如果agv有货 回到卸载等待区 ，或者回到卸载点
         /// </summary>
         private void InitToHeadWait()
         {
-            Thread.Sleep(5000);
-            List<F_AGV> agvs = F_DataCenter.MDev.IGetDevNotOnWaitSite();
+            //Thread.Sleep(5000);
+
+            List<F_AGV> agvs = F_DataCenter.MDev.IGetDevNotOnWaitSite(agvid);
 
             if (agvs != null)
             {
@@ -311,11 +344,11 @@ namespace KEDAClient
 
                         task.Id = agv.Id;
 
-                        F_DataCenter.MTask.IStartTask(task);
+                        F_DataCenter.MTask.IStartTask(task,agv.Id+toHeadWaitMsg);
 
-                        sendServerLog(agv.Id + ",初始化，回到窑头卸载等待区");
+                        sendServerLog(agv.Id + toHeadWaitMsg);
 
-                        LogFactory.LogDispatch(agv.Id, "车辆初始化", "回到窑头卸载等待区");
+                        LogFactory.LogDispatch(agv.Id, "车辆初始化", toHeadWaitMsg);
 
                     }
                     //else
@@ -339,13 +372,15 @@ namespace KEDAClient
             }
         }
 
+        private string initToEndWaitMsg = "初始化,回到窑尾装载等待区";
         /// <summary>
         /// 如果agv没货 回到装载等待区，或者处于窑尾等待点和装载点之间的车去到装载点
         /// </summary>
         private void InitToEndWait()
         {
-            Thread.Sleep(5000);
-            List<F_AGV> agvs = F_DataCenter.MDev.IGetDevNotLoadOnWaitSite();
+            //Thread.Sleep(5000);
+
+            List<F_AGV> agvs = F_DataCenter.MDev.IGetDevNotLoadOnWaitSite(agvid);
 
             if (agvs != null)
             {
@@ -358,11 +393,11 @@ namespace KEDAClient
 
                         task.Id = agv.Id;
 
-                        F_DataCenter.MTask.IStartTask(task);
+                        F_DataCenter.MTask.IStartTask(task,agv.Id+initToEndWaitMsg);
 
-                        sendServerLog(agv.Id + "初始化,回到窑尾装载等待区");
+                        sendServerLog(agv.Id + initToEndWaitMsg);
 
-                        LogFactory.LogDispatch(agv.Id, "车辆初始化", "回到窑尾装载等待区");
+                        LogFactory.LogDispatch(agv.Id, "车辆初始化", initToEndWaitMsg);
 
                     }
                     //else
@@ -386,6 +421,8 @@ namespace KEDAClient
             }
         }
 
+
+        private string PlcEndChargeMsg = "去到窑尾充电点充电";
         /// <summary>
         /// 窑尾等待区的AGV去充电
         /// </summary>
@@ -414,11 +451,11 @@ namespace KEDAClient
 
                 task.Id = agv.Id;
 
-                F_DataCenter.MTask.IStartTask(task);
+                F_DataCenter.MTask.IStartTask(task,agv.Id+ PlcEndChargeMsg);
 
-                sendServerLog(agv.Id + ",去到窑尾充电点充电");
+                sendServerLog(agv.Id + PlcEndChargeMsg);
 
-                LogFactory.LogDispatch(agv.Id, "充电", "去到窑尾充电点充电");
+                LogFactory.LogDispatch(agv.Id, "充电", PlcEndChargeMsg);
 
             }
             else
@@ -434,6 +471,8 @@ namespace KEDAClient
             }
         }
 
+
+        private string PlcHeadChargeMsg = " 去到窑头充电点充电";
         /// <summary>
         /// 窑头卸载区的AGV去充电
         /// </summary>
@@ -462,11 +501,11 @@ namespace KEDAClient
 
                 _plcHead.ChargeAgv = agv.Id;
 
-                F_DataCenter.MTask.IStartTask(task);
+                F_DataCenter.MTask.IStartTask(task,agv.Id+PlcHeadChargeMsg);
 
-                sendServerLog(agv.Id + ",去到窑头充电点充电");
+                sendServerLog(agv.Id + PlcHeadChargeMsg);
 
-                LogFactory.LogDispatch(agv.Id, "充电", "去到窑头充电点充电");
+                LogFactory.LogDispatch(agv.Id, "充电", PlcHeadChargeMsg);
 
             }
             else
@@ -476,6 +515,7 @@ namespace KEDAClient
             }
         }
 
+        private string PlcEndChargeSucMsg ="充电完成，派充电完成的车去接货";
         /// <summary>
         ///窑尾充电点有充电完成的AGV
         ///优先派充电完成的车去接货
@@ -502,11 +542,11 @@ namespace KEDAClient
 
                     task.Id = agv.Id;
 
-                    F_DataCenter.MTask.IStartTask(task);
+                    F_DataCenter.MTask.IStartTask(task, agv.Id + PlcEndChargeSucMsg);
 
-                    sendServerLog(agv.Id + ",充电完成，派充电完成的车去接货");
+                    sendServerLog(agv.Id + PlcEndChargeSucMsg);
 
-                    LogFactory.LogDispatch(agv.Id, "充电完成", "派充电完成的车去接货");
+                    LogFactory.LogDispatch(agv.Id, "充电完成", PlcEndChargeSucMsg);
 
                 }
             }
@@ -516,6 +556,8 @@ namespace KEDAClient
             }
         }
 
+
+        private string PlcHeadChargeSucMsg = "充电完成，派充电完成的车去卸货";
         /// <summary>
         ///窑头充电点有充电完成的AGV
         ///优先派充电完成的车去卸货
@@ -544,11 +586,11 @@ namespace KEDAClient
 
                     task.Id = agv.Id;
 
-                    F_DataCenter.MTask.IStartTask(task);
+                    F_DataCenter.MTask.IStartTask(task, agv.Id + PlcHeadChargeSucMsg);
 
-                    sendServerLog(agv.Id + ",充电完成，派充电完成的车去卸货");
+                    sendServerLog(agv.Id + PlcHeadChargeSucMsg);
 
-                    LogFactory.LogDispatch(agv.Id, "充电完成", "派充电完成的车去卸货");
+                    LogFactory.LogDispatch(agv.Id, "充电完成", PlcHeadChargeSucMsg);
 
                 }
             }
