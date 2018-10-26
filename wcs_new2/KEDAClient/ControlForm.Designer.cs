@@ -32,6 +32,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlForm));
             this.imageRS = new System.Windows.Forms.ImageList(this.components);
             this.panel3 = new System.Windows.Forms.Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.agvListBox = new System.Windows.Forms.ListBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.timerForListRefresh = new System.Windows.Forms.Timer(this.components);
             this.mainTabControl = new KEDAClient.TabControlEx();
             this.controlPage = new System.Windows.Forms.TabPage();
             this.AgvInitBtn = new System.Windows.Forms.Button();
@@ -83,7 +89,6 @@
             this.testPage = new System.Windows.Forms.TabPage();
             this.panel8 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
-            this.panel4 = new System.Windows.Forms.Panel();
             this.tabControlEx1 = new KEDAClient.TabControlEx();
             this.taskPages = new System.Windows.Forms.TabPage();
             this.currentTaskList = new System.Windows.Forms.ListView();
@@ -105,15 +110,14 @@
             this.label23 = new System.Windows.Forms.Label();
             this.headWaitInitBtn = new KEDAClient.SwitchButton();
             this.tailWaitInitBtn = new KEDAClient.SwitchButton();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.agvListBox = new System.Windows.Forms.ListBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel7 = new System.Windows.Forms.Panel();
             this.AutoGenerateTaskBtn = new KEDAClient.SwitchButton();
             this.InitAllBtn = new KEDAClient.SwitchButton();
             this.ExecuteTaskBtn = new KEDAClient.SwitchButton();
-            this.timerForListRefresh = new System.Windows.Forms.Timer(this.components);
             this.panel3.SuspendLayout();
+            this.panel4.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panel7.SuspendLayout();
             this.mainTabControl.SuspendLayout();
             this.controlPage.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -126,14 +130,10 @@
             this.tableLayoutPanel3.SuspendLayout();
             this.testPage.SuspendLayout();
             this.panel8.SuspendLayout();
-            this.panel4.SuspendLayout();
             this.tabControlEx1.SuspendLayout();
             this.taskPages.SuspendLayout();
             this.timeTaskPage.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.panel7.SuspendLayout();
             this.SuspendLayout();
             // 
             // imageRS
@@ -153,6 +153,74 @@
             this.panel3.Padding = new System.Windows.Forms.Padding(3);
             this.panel3.Size = new System.Drawing.Size(933, 812);
             this.panel3.TabIndex = 6;
+            // 
+            // panel4
+            // 
+            this.panel4.BackColor = System.Drawing.Color.Transparent;
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel4.Controls.Add(this.tabControlEx1);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel4.Location = new System.Drawing.Point(1134, 149);
+            this.panel4.Name = "panel4";
+            this.panel4.Padding = new System.Windows.Forms.Padding(3);
+            this.panel4.Size = new System.Drawing.Size(450, 812);
+            this.panel4.TabIndex = 7;
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.Transparent;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel2.Controls.Add(this.agvListBox);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel2.Location = new System.Drawing.Point(0, 149);
+            this.panel2.Name = "panel2";
+            this.panel2.Padding = new System.Windows.Forms.Padding(3);
+            this.panel2.Size = new System.Drawing.Size(201, 812);
+            this.panel2.TabIndex = 5;
+            // 
+            // agvListBox
+            // 
+            this.agvListBox.BackColor = System.Drawing.Color.DimGray;
+            this.agvListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.agvListBox.DisplayMember = "Id";
+            this.agvListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.agvListBox.FormattingEnabled = true;
+            this.agvListBox.ItemHeight = 21;
+            this.agvListBox.Location = new System.Drawing.Point(3, 3);
+            this.agvListBox.Margin = new System.Windows.Forms.Padding(5);
+            this.agvListBox.Name = "agvListBox";
+            this.agvListBox.Size = new System.Drawing.Size(191, 802);
+            this.agvListBox.TabIndex = 0;
+            this.agvListBox.ValueMember = "Id";
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add(this.panel7);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Padding = new System.Windows.Forms.Padding(3);
+            this.panel1.Size = new System.Drawing.Size(1584, 149);
+            this.panel1.TabIndex = 4;
+            // 
+            // panel7
+            // 
+            this.panel7.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.panel7.Controls.Add(this.AutoGenerateTaskBtn);
+            this.panel7.Controls.Add(this.InitAllBtn);
+            this.panel7.Controls.Add(this.ExecuteTaskBtn);
+            this.panel7.Location = new System.Drawing.Point(161, 10);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(1289, 119);
+            this.panel7.TabIndex = 9;
+            // 
+            // timerForListRefresh
+            // 
+            this.timerForListRefresh.Enabled = true;
+            this.timerForListRefresh.Interval = 500;
+            this.timerForListRefresh.Tick += new System.EventHandler(this.timerForListRefresh_Tick);
             // 
             // mainTabControl
             // 
@@ -688,7 +756,7 @@
             this.tableLayoutPanel3.ColumnCount = 3;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.30508F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.69492F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 220F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 224F));
             this.tableLayoutPanel3.Controls.Add(this.label4, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.textBox1, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.button2, 2, 0);
@@ -714,15 +782,15 @@
             // textBox1
             // 
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(180, 13);
+            this.textBox1.Location = new System.Drawing.Point(178, 13);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(183, 32);
+            this.textBox1.Size = new System.Drawing.Size(181, 32);
             this.textBox1.TabIndex = 3;
             // 
             // button2
             // 
             this.button2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button2.Location = new System.Drawing.Point(421, 10);
+            this.button2.Location = new System.Drawing.Point(419, 10);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(111, 38);
             this.button2.TabIndex = 4;
@@ -734,7 +802,7 @@
             this.editButton1.BackColor = System.Drawing.SystemColors.Window;
             this.editButton1.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.editButton1.ForeColor = System.Drawing.Color.White;
-            this.editButton1.Location = new System.Drawing.Point(372, 64);
+            this.editButton1.Location = new System.Drawing.Point(368, 64);
             this.editButton1.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.editButton1.Name = "editButton1";
             this.editButton1.Size = new System.Drawing.Size(150, 50);
@@ -779,18 +847,6 @@
             this.button1.TabIndex = 0;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
-            // 
-            // panel4
-            // 
-            this.panel4.BackColor = System.Drawing.Color.Transparent;
-            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel4.Controls.Add(this.tabControlEx1);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel4.Location = new System.Drawing.Point(1134, 149);
-            this.panel4.Name = "panel4";
-            this.panel4.Padding = new System.Windows.Forms.Padding(3);
-            this.panel4.Size = new System.Drawing.Size(450, 812);
-            this.panel4.TabIndex = 7;
             // 
             // tabControlEx1
             // 
@@ -1078,56 +1134,6 @@
             this.tailWaitInitBtn.TextName = null;
             this.tailWaitInitBtn.TextStartPoint = new System.Drawing.Point(0, 0);
             // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.Transparent;
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel2.Controls.Add(this.agvListBox);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel2.Location = new System.Drawing.Point(0, 149);
-            this.panel2.Name = "panel2";
-            this.panel2.Padding = new System.Windows.Forms.Padding(3);
-            this.panel2.Size = new System.Drawing.Size(201, 812);
-            this.panel2.TabIndex = 5;
-            // 
-            // agvListBox
-            // 
-            this.agvListBox.BackColor = System.Drawing.Color.DimGray;
-            this.agvListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.agvListBox.DisplayMember = "Id";
-            this.agvListBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.agvListBox.FormattingEnabled = true;
-            this.agvListBox.ItemHeight = 21;
-            this.agvListBox.Location = new System.Drawing.Point(3, 3);
-            this.agvListBox.Margin = new System.Windows.Forms.Padding(5);
-            this.agvListBox.Name = "agvListBox";
-            this.agvListBox.Size = new System.Drawing.Size(191, 802);
-            this.agvListBox.TabIndex = 0;
-            this.agvListBox.ValueMember = "Id";
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.Transparent;
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel1.Controls.Add(this.panel7);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(3);
-            this.panel1.Size = new System.Drawing.Size(1584, 149);
-            this.panel1.TabIndex = 4;
-            // 
-            // panel7
-            // 
-            this.panel7.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.panel7.Controls.Add(this.AutoGenerateTaskBtn);
-            this.panel7.Controls.Add(this.InitAllBtn);
-            this.panel7.Controls.Add(this.ExecuteTaskBtn);
-            this.panel7.Location = new System.Drawing.Point(161, 10);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(1289, 119);
-            this.panel7.TabIndex = 9;
-            // 
             // AutoGenerateTaskBtn
             // 
             this.AutoGenerateTaskBtn.BackColor = System.Drawing.Color.Transparent;
@@ -1143,7 +1149,7 @@
             this.AutoGenerateTaskBtn.TabIndex = 6;
             this.AutoGenerateTaskBtn.TextName = "生成任务";
             this.AutoGenerateTaskBtn.TextStartPoint = new System.Drawing.Point(18, 10);
-            this.AutoGenerateTaskBtn.Load += new System.EventHandler(this.AutoGenerateTaskBtn_Load);
+            this.AutoGenerateTaskBtn.Click += new System.EventHandler(this.AutoGenerateTaskBtn_Click);
             // 
             // InitAllBtn
             // 
@@ -1160,7 +1166,7 @@
             this.InitAllBtn.TabIndex = 8;
             this.InitAllBtn.TextName = "初始化";
             this.InitAllBtn.TextStartPoint = new System.Drawing.Point(30, 10);
-            this.InitAllBtn.Load += new System.EventHandler(this.InitAllBtn_Load);
+            this.InitAllBtn.Click += new System.EventHandler(this.InitAllBtn_Click);
             // 
             // ExecuteTaskBtn
             // 
@@ -1177,10 +1183,7 @@
             this.ExecuteTaskBtn.TabIndex = 7;
             this.ExecuteTaskBtn.TextName = "执行任务";
             this.ExecuteTaskBtn.TextStartPoint = new System.Drawing.Point(18, 10);
-            // 
-            // timerForListRefresh
-            // 
-            this.timerForListRefresh.Tick += new System.EventHandler(this.timerForListRefresh_Tick);
+            this.ExecuteTaskBtn.Click += new System.EventHandler(this.ExecuteTaskBtn_Click);
             // 
             // ControlForm
             // 
@@ -1199,6 +1202,10 @@
             this.Text = "行车调度工具";
             this.Load += new System.EventHandler(this.ControlForm_Load);
             this.panel3.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel7.ResumeLayout(false);
             this.mainTabControl.ResumeLayout(false);
             this.controlPage.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
@@ -1216,15 +1223,11 @@
             this.tableLayoutPanel3.PerformLayout();
             this.testPage.ResumeLayout(false);
             this.panel8.ResumeLayout(false);
-            this.panel4.ResumeLayout(false);
             this.tabControlEx1.ResumeLayout(false);
             this.taskPages.ResumeLayout(false);
             this.timeTaskPage.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel7.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

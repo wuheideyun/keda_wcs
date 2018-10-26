@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FLBasicHelper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using WcfHelper;
 
 namespace KEDAClient
 {
@@ -23,13 +25,13 @@ namespace KEDAClient
         public ControlForm()
         {
             InitializeComponent();
-            
+            InitPara();
+            F_DataCenter.Init(SynchronizationContext.Current, listBoxOutput);
         }
 
         private void ControlForm_Load(object sender, EventArgs e)
         {
-
-            F_DataCenter.Init(SynchronizationContext.Current, listBoxOutput);
+            
             ListView_Init();
         }
 
@@ -42,17 +44,6 @@ namespace KEDAClient
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-
-        }
-
-        /// <summary>
-        /// 自动生成任务
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void AutoGenerateTaskBtn_Load(object sender, EventArgs e)
-        {
-            
 
         }
 
@@ -147,20 +138,7 @@ namespace KEDAClient
             }
         }
 
-        /// <summary>
-        /// 初始化任务，查找所有AGV需要初始化的指派任务
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void InitAllBtn_Load(object sender, EventArgs e)
-        {
-            if (InitAllBtn.Checked)
-            {
-                F_DataCenter.MLogic.InitAgv();
-                InitAllBtn.Checked = false;
-                MessageBox.Show("初始化了全部AGV");
-            }
-        }
+
 
         /// <summary>
         /// 初始化指定的AGV
@@ -170,6 +148,72 @@ namespace KEDAClient
         private void AgvInitBtn_Click(object sender, EventArgs e)
         {
             
+        }
+        /// <summary>
+        /// 自动生成任务
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AutoGenerateTaskBtn_Click(object sender, EventArgs e)
+        {
+            if (AutoGenerateTaskBtn.Checked)
+            {
+                ParamControl.Is_AutoAddTask = true;
+            }
+            else
+            {
+                ParamControl.Is_AutoAddTask = false;
+            }
+        }
+
+        /// <summary>
+        /// 自动执行任务
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ExecuteTaskBtn_Click(object sender, EventArgs e)
+        {
+            if (ExecuteTaskBtn.Checked)
+            {
+                ParamControl.Is_AutoExecuteTask = true;
+
+            }
+            else
+            {
+                ParamControl.Is_AutoExecuteTask = false;
+            }
+        }
+
+        /// <summary>
+        /// 初始化任务，查找所有AGV需要初始化的指派任务
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void InitAllBtn_Click(object sender, EventArgs e)
+        {
+
+            if (InitAllBtn.Checked)
+            {
+                F_DataCenter.MLogic.InitAgv();
+                InitAllBtn.Checked = false;
+                MessageBox.Show("初始化了全部AGV");
+            }
+        }
+
+
+        /// <summary>
+        /// 服务端IP地址
+        /// </summary>
+        private string _severIp = "";
+
+        /// <summary>
+        ///  初始化参数
+        /// </summary>
+        public void InitPara()
+        {
+            _severIp = "127.0.0.1";
+
+            WcfMainHelper.InitPara(_severIp, "", "");
         }
     }
 }
