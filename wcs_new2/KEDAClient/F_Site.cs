@@ -40,6 +40,12 @@ namespace KEDAClient
 
         public static int 空闲 = 9;
 
+        public static int 在轨道上 = 22;
+
+        public static int 交管状态 = 35;
+
+        public static int 交管设备 = 36;
+
     }
 
     public class ErrorType

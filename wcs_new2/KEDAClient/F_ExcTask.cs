@@ -138,7 +138,7 @@ namespace KEDAClient
         /// <summary>
         /// 任务完成
         /// </summary>
-        private void ISetTaskSuc()
+        public void ISetTaskSuc()
         {
             if (_plc != null)
             {
@@ -190,6 +190,7 @@ namespace KEDAClient
             }
             else
             {
+
                 ///确定此时任务的AGV
                 if (_agv == null) { _agv = new F_AGV(_taskDispatch.Dev); }
 
@@ -414,6 +415,21 @@ namespace KEDAClient
                     LogFactory.LogAdd(LOGTYPE.FINISH, exit.Id, exit.GetAgvId(), "调度完成", exit.GetTaskInfo());//任务完成日志
                     PublicDataContorl.TaskIsSucc(exit.NO);
                     _taskList.Remove(exit);
+                }
+            }
+        }
+
+        public void StopTask(int no)
+        {
+            lock (_ans)
+            {
+                F_ExcTask excTask = _taskList.Find(c => { return c.NO == no; });
+                if (excTask != null && _taskList.Contains(excTask))
+                {
+                    LogFactory.LogAdd(LOGTYPE.FINISH, excTask.Id, (excTask.GetAgvId()==null ?"": excTask.GetAgvId()), "调度终止", excTask.GetTaskInfo());//任务完成日志
+                    PublicDataContorl.TaskIsSucc(excTask.NO);
+                    excTask.ISetTaskSuc();
+                    _taskList.Remove(excTask);
                 }
             }
         }

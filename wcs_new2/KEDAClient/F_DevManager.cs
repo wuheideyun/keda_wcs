@@ -302,6 +302,73 @@ namespace KEDAClient
         {
             if (_thread != null) _thread.Abort();
         }
+
+        /// <summary>
+        /// 获取设备状态
+        /// </summary>
+        /// <returns></returns>
+        public List<DevData> GetDevData()
+        {
+            List<DevData> list = new List<DevData>();
+            String status = "";
+            lock (_ans)
+            {
+                List<DeviceBackImf> devs = _devList.FindAll(c => { return c.DevType == "Magnet_Basic";});
+                //&& c.ProtyList[ConstSetBA.空闲].RValue == "True"
+                foreach (var item in devs)
+                {
+                    if (!item.IsAlive)
+                    {
+                        status = "离线";
+                    }
+                    else if (item.ProtyList[ConstSetBA.在轨道上].RValue == "0")
+                    {
+                        status = "脱轨";
+                    }
+                    else if (item.ProtyList[ConstSetBA.交管状态].RValue == "True")
+                    {
+                        status = "被交管("+ item.ProtyList[ConstSetBA.交管设备].RValue+")";
+                    }
+                    else if (item.ProtyList[ConstSetBA.空闲].RValue == "True")
+                    {
+                        status = "空闲";
+                    }
+                    else
+                    {
+                        status = "任务中";
+                    }
+
+                    list.Add(new DevData(item.DevId, status));
+                }
+
+                return list;
+            }
+        }
+        
     }
 
+    /// <summary>
+    /// 保存简单的设备信息
+    /// </summary>
+    public class DevData
+    {
+        private String _devid;
+        private String _status;
+
+        public String DevID
+        {
+            get { return _devid; }
+        }
+
+        public String Status
+        {
+            get { return _status; }
+        }
+
+        public DevData(String devid,String status)
+        {
+            _devid = devid;
+            _status = status;
+        }
+    }
 }

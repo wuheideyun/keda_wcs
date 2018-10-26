@@ -28,6 +28,17 @@ namespace KEDAClient
         public static bool Do_TailCharge = true;
 
         /// <summary>
+        /// 是否执行窑头充电完成回去等待点的任务
+        /// </summary>
+        public static bool Do_HeadChargeSucc = true;
+
+        /// <summary>
+        /// 是否执行窑尾充电完成回去等待点的任务
+        /// </summary>
+        public static bool Do_TailChargeSucc = true;
+        
+
+        /// <summary>
         /// 是否执行窑头卸货任务
         /// </summary>
         public static bool Do_HeadUnload = true;
@@ -102,6 +113,12 @@ namespace KEDAClient
                 _taskDatas.Remove(task);
             }
         }
+
+        public static void StopTask(int no)
+        {
+            F_DataCenter.MTask.StopTask(no);
+        }
+
         /// <summary>
         /// 添加任务
         /// </summary>
@@ -111,6 +128,10 @@ namespace KEDAClient
             _taskDatas.Add(task);
         }
 
+        public static void UpdateDispatchID()
+        {
+
+        }
         
     }
 
