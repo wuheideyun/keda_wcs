@@ -2069,7 +2069,7 @@ namespace KEDAClient
                 string back;
 
                 if (WcfMainHelper.StartDispatch(dis,out back))
-                {                         
+                {
                     //记录agv状态
                     agvStatus[vehicleslist.FocusedItem.Text] = "charge";
                     SetOutputMsg2("AGV充电");

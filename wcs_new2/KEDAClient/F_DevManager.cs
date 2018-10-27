@@ -303,47 +303,29 @@ namespace KEDAClient
             if (_thread != null) _thread.Abort();
         }
 
+
+        private List<DevData> list = new List<DevData>();
+        private String status = "";
         /// <summary>
         /// 获取设备状态
         /// </summary>
         /// <returns></returns>
         public List<DevData> GetDevData()
         {
-            List<DevData> list = new List<DevData>();
-            String status = "";
+            list.Clear();
             lock (_ans)
             {
-                List<DeviceBackImf> devs = _devList.FindAll(c => { return c.DevType == "Magnet_Basic";});
+                //List<DeviceBackImf> devs = _devList.FindAll(c => { return true||c.DevType == "Magnet_Basic";});
                 //&& c.ProtyList[ConstSetBA.空闲].RValue == "True"
-                foreach (var item in devs)
+                foreach (var item in _devList)
                 {
-                    if (!item.IsAlive)
-                    {
-                        status = "离线";
-                    }
-                    else if (item.ProtyList[ConstSetBA.在轨道上].RValue == "0")
-                    {
-                        status = "脱轨";
-                    }
-                    else if (item.ProtyList[ConstSetBA.交管状态].RValue == "True")
-                    {
-                        status = "被交管("+ item.ProtyList[ConstSetBA.交管设备].RValue+")";
-                    }
-                    else if (item.ProtyList[ConstSetBA.空闲].RValue == "True")
-                    {
-                        status = "空闲";
-                    }
-                    else
-                    {
-                        status = "任务中";
-                    }
-
-                    list.Add(new DevData(item.DevId, status));
+                    list.Add(new DevData(item.DevId, AGV.GetDevStatus(item)));
                 }
-
                 return list;
             }
         }
+
+        
         
     }
 

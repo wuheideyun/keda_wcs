@@ -46,6 +46,8 @@ namespace KEDAClient
 
         public static int 交管设备 = 36;
 
+       
+
     }
 
     public class ErrorType

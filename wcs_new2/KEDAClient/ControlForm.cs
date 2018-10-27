@@ -21,6 +21,24 @@ namespace KEDAClient
         KEDAForm monitorForm;
 
         /// <summary>
+        /// 保存Listview选中的index
+        /// </summary>
+        private int _agvListIndex = -1, _currentTaskIndex = -1;
+        /// <summary>
+        /// 保存listview选中的文字
+        /// </summary>
+        private String _agvListText, _currentTaskText;
+
+        /// <summary>
+        /// 选中的AGV名称
+        /// </summary>
+        private String _agvSelectName = "";
+
+        /// <summary>
+        /// AGV信息
+        /// </summary>
+        private AGV _agv;
+        /// <summary>
         /// 构造函数
         /// </summary>
         public ControlForm()
@@ -58,24 +76,23 @@ namespace KEDAClient
         /// </summary>
         private void ListView_Init()
         {
-            //调度任务列表
-            currentTaskList.Columns.Add("ID", 50, HorizontalAlignment.Center);
-            currentTaskList.Columns.Add("任务", 150, HorizontalAlignment.Center);
-            currentTaskList.Columns.Add("路径", 100, HorizontalAlignment.Center);
-
-            currentTaskList.View = System.Windows.Forms.View.Details;
-
-
             //Agv列表
-            agvList.Columns.Add("AGV名称", 80, HorizontalAlignment.Center);
-            agvList.Columns.Add("状态", 100, HorizontalAlignment.Center);
+            agvList.Columns.Add("AGV", 80, HorizontalAlignment.Center);
+            agvList.Columns.Add("状态", 109, HorizontalAlignment.Center);
 
             agvList.View = System.Windows.Forms.View.Details;
+
+            //调度任务列表
+            currentTaskList.Columns.Add("ID", 0, HorizontalAlignment.Center);
+            currentTaskList.Columns.Add("任务", 340, HorizontalAlignment.Center);
+            currentTaskList.Columns.Add("路径", 80, HorizontalAlignment.Center);
+
+            currentTaskList.View = System.Windows.Forms.View.Details;
         }
 
         #endregion
 
-        #region ListView刷新
+        #region ListView刷新等
         /// <summary>
         /// ListBox的刷新线程
         /// </summary>
@@ -86,6 +103,8 @@ namespace KEDAClient
             timerForListRefresh.Enabled = false;
             AgvList_Refresh();
             CurrentTaskList_Refresh();
+            agvData_Refresh();
+            plcData_Refresh();
             timerForListRefresh.Enabled = true;
         }
 
@@ -102,12 +121,6 @@ namespace KEDAClient
                 return;
             }
 
-            String text = null;
-            
-            if (currentTaskList.FocusedItem != null)
-            {
-                text = currentTaskList.FocusedItem.Text;
-            }
             currentTaskList.BeginUpdate();
             currentTaskList.Items.Clear();
             foreach (var data in taskDatas)
@@ -121,13 +134,26 @@ namespace KEDAClient
             // 结束数据处理
             currentTaskList.EndUpdate();
 
-            if(text != null)
+            if(_currentTaskIndex != -1)
             {
-                int index = currentTaskList.Items.IndexOfKey(text);
-                if(index != -1)
+                if (currentTaskList.Items.Count > _currentTaskIndex && _currentTaskText.Equals(currentTaskList.Items[_currentTaskIndex].Text))
                 {
-                    currentTaskList.Items[index].Selected = true;
+                    currentTaskList.FocusedItem = currentTaskList.Items[_currentTaskIndex];
+                    currentTaskList.Items[_currentTaskIndex].BackColor = Color.LightGray;
+                    return;
                 }
+
+                foreach (ListViewItem item in currentTaskList.Items)
+                {
+                    if (item.Text.Equals(_currentTaskText))
+                    {
+                        currentTaskList.FocusedItem = item;
+                        currentTaskList.FocusedItem.BackColor = Color.LightGray;
+                        return;
+                    }
+                }
+                _currentTaskIndex = -1;
+                _currentTaskText = "";
             }
         }
 
@@ -144,32 +170,129 @@ namespace KEDAClient
                 return;
             }
 
-            String text = null;
-            if (agvList.FocusedItem != null) {
-                text = agvList.FocusedItem.Text;
-            }
             agvList.BeginUpdate();
             agvList.Items.Clear();
             foreach (var data in devDatas)
             {
                 ListViewItem item = new ListViewItem(data.DevID); // AGV名称
                 item.SubItems.Add(data.Status); //AGV状态
-
                 agvList.Items.Add(item);
             }
             // 结束数据处理
             agvList.EndUpdate();
 
-            if (text != null)
+            if (_agvListIndex != -1)
             {
-                int index = agvList.Items.IndexOfKey(text);
-                if (index != -1)
+                if(agvList.Items.Count>_agvListIndex &&_agvListText.Equals(agvList.Items[_agvListIndex].Text))
                 {
-                    agvList.Items[index].Selected = true;
+                    agvList.FocusedItem = agvList.Items[_agvListIndex];
+                    agvList.Items[_agvListIndex].BackColor = Color.LightGray;
+                    return;
+                }
+                
+                foreach(ListViewItem item in agvList.Items)
+                {
+                    if (item.Text.Equals(_agvListText))
+                    {
+                        agvList.FocusedItem = item;
+                        agvList.FocusedItem.BackColor = Color.LightGray;
+                        return;
+                    }
+                }
+                if(agvList.FocusedItem == null && agvList.Items.Count > 0)
+                {
+                    agvList.FocusedItem = agvList.Items[0];
+                    agvList.FocusedItem.BackColor = Color.LightGray;
+                }
+                else
+                {
+                    _agvListIndex = -1;
+                    _agvSelectName = "";
                 }
             }
         }
+        /// <summary>
+        /// Agv列表选择改变
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void agvList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (agvList.FocusedItem == null)
+            {
+                //_agvListIndex = -1;
+                //_agvListText = "";
+            }
+            else
+            {
+                _agvListIndex = agvList.FocusedItem.Index;
+                _agvListText = agvList.FocusedItem.Text;
+                agvList.FocusedItem.BackColor = Color.LightGray;
+                if (agvList.FocusedItem.Text.StartsWith("AGV")) {
+                    mainTabControl.SelectedIndex = 0;
+                    _agvSelectName = agvList.FocusedItem.Text;
+                    agvData_Refresh();
+                }
+                else
+                {
+                    mainTabControl.SelectedIndex = 1;
+                    plcData_Refresh();
+                }
+                
+            }
+        }
 
+
+        /// <summary>
+        /// 刷新Agv信息
+        /// </summary>
+        private void agvData_Refresh()
+        {
+            if (!_agvSelectName.Equals(""))
+            {
+                agvNameLab.Text = _agvSelectName;
+                _agv = new AGV(F_DataCenter.MDev.IGetDev(_agvSelectName));
+                AgvSiteLab.Text = _agv.Site();
+                AgvNowPoitLab.Text = _agv.NowPoint();
+                AgvStatusLab.Text = _agv.AgvStatus();
+                AgvAimLab.Text = _agv.Point();
+                AgvDirectionLab.Text = _agv.Direction();
+                AgvElectricityLab.Text = _agv.Electicity();
+                AgvSpeedLab.Text = _agv.Speed();
+                AgvFreeLab.Text = _agv.FreeStatus();
+                AgvStaMaterialLab.Text = _agv.Sta_Material();
+                AgvStaMonitorLab.Text = _agv.Sta_Monitor();
+                AgvTrafficLab.Text = _agv.Traffic();
+            }
+        }
+
+        /// <summary>
+        /// 刷新Plc信息
+        /// </summary>
+        private void plcData_Refresh()
+        {
+
+        }
+
+
+        /// <summary>
+        /// 当前任务列表
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void currentTaskList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (currentTaskList.FocusedItem == null)
+            {
+                _currentTaskIndex = -1;
+                _currentTaskText = "";
+            }
+            else
+            {
+                _currentTaskIndex = currentTaskList.FocusedItem.Index;
+                _currentTaskText = currentTaskList.FocusedItem.Text;
+            }
+        }
         #endregion
 
         #region 其他方法
@@ -278,14 +401,8 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void tailChargSucBtn_Click(object sender, EventArgs e)
         {
-            if (tailChargSucBtn.Checked)
-            {
-                ParamControl.Do_TailChargeSucc = true;
-            }
-            else
-            {
-                ParamControl.Do_TailChargeSucc = false;
-            }
+            ParamControl.Do_TailChargeSucc = tailChargSucBtn.Checked;
+
         }
 
         /// <summary>
@@ -295,14 +412,8 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void headChargeBtn_Click(object sender, EventArgs e)
         {
-            if (headChargeBtn.Checked)
-            {
-                ParamControl.Do_HeadCharge = true;
-            }
-            else
-            {
-                ParamControl.Do_HeadCharge = false;
-            }
+            ParamControl.Do_HeadCharge = headChargeBtn.Checked;
+
         }
         
         /// <summary>
@@ -312,14 +423,8 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void AutoGenerateTaskBtn_Click(object sender, EventArgs e)
         {
-            if (AutoGenerateTaskBtn.Checked)
-            {
-                ParamControl.Is_AutoAddTask = true;
-            }
-            else
-            {
-                ParamControl.Is_AutoAddTask = false;
-            }
+            ParamControl.Is_AutoAddTask = AutoGenerateTaskBtn.Checked;
+
         }
 
         /// <summary>
@@ -329,15 +434,8 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void ExecuteTaskBtn_Click(object sender, EventArgs e)
         {
-            if (ExecuteTaskBtn.Checked)
-            {
-                ParamControl.Is_AutoExecuteTask = true;
+            ParamControl.Is_AutoExecuteTask = ExecuteTaskBtn.Checked;
 
-            }
-            else
-            {
-                ParamControl.Is_AutoExecuteTask = false;
-            }
         }
 
         /// <summary>
@@ -347,14 +445,8 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void tailChargeBtn_Click(object sender, EventArgs e)
         {
-            if (tailChargeBtn.Checked)
-            {
-                ParamControl.Do_TailCharge = true;
-            }
-            else
-            {
-                ParamControl.Do_TailCharge = false;
-            }
+            ParamControl.Do_TailCharge = tailChargeBtn.Checked;
+
         }
 
         /// <summary>
@@ -364,14 +456,8 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void headUnloadBtn_Click(object sender, EventArgs e)
         {
-            if (headUnloadBtn.Checked)
-            {
-                ParamControl.Do_HeadUnload = true;
-            }
-            else
-            {
-                ParamControl.Do_HeadUnload = false;
-            }
+            ParamControl.Do_HeadUnload = headUnloadBtn.Checked;
+
         }
 
         /// <summary>
@@ -381,14 +467,8 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void tailLoadBtn_Click(object sender, EventArgs e)
         {
-            if (tailLoadBtn.Checked)
-            {
-                ParamControl.Do_TailLoad = true;
-            }
-            else
-            {
-                ParamControl.Do_TailLoad = false;
-            }
+            ParamControl.Do_TailLoad = tailLoadBtn.Checked;
+
         }
 
         /// <summary>
@@ -398,14 +478,8 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void headWaitBtn_Click(object sender, EventArgs e)
         {
-            if (headWaitBtn.Checked)
-            {
-                ParamControl.Do_ToHeadWait = true;
-            }
-            else
-            {
-                ParamControl.Do_ToHeadWait = false;
-            }
+            ParamControl.Do_ToHeadWait = headWaitBtn.Checked;
+
         }
 
         /// <summary>
@@ -415,14 +489,8 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void tailWaitBtn_Click(object sender, EventArgs e)
         {
-            if (tailWaitBtn.Checked)
-            {
-                ParamControl.Do_ToTailWait = true;
-            }
-            else
-            {
-                ParamControl.Do_ToTailWait = false;
-            }
+            ParamControl.Do_ToTailWait = tailWaitBtn.Checked;
+            
         }
 
         /// <summary>
@@ -432,14 +500,8 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void headWaitInitBtn_Click(object sender, EventArgs e)
         {
-            if (headWaitInitBtn.Checked)
-            {
-                ParamControl.Do_InitToHeadWait = true;
-            }
-            else
-            {
-                ParamControl.Do_InitToHeadWait = false;
-            }
+            ParamControl.Do_InitToHeadWait = headWaitInitBtn.Checked;
+
         }
 
         /// <summary>
@@ -449,14 +511,9 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void tailWaitInitBtn_Click(object sender, EventArgs e)
         {
-            if (tailWaitInitBtn.Checked)
-            {
-                ParamControl.Do_InitToTailWait = true;
-            }
-            else
-            {
-                ParamControl.Do_InitToTailWait = false;
-            }
+
+              ParamControl.Do_InitToTailWait = tailWaitInitBtn.Checked;
+
         }
         /// <summary>
         /// 是否执行窑头充电完成任务
@@ -465,15 +522,46 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void headChargSucBtn_Click(object sender, EventArgs e)
         {
-            if (headChargSucBtn.Checked)
-            {
-                ParamControl.Do_HeadChargeSucc = true;
-            }
-            else
-            {
-                ParamControl.Do_HeadChargeSucc = false;
-            }
+
+             ParamControl.Do_HeadChargeSucc = headChargSucBtn.Checked;
+
         }
+
+        /// <summary>
+        /// 控制是否全部打开任务
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void allOnOffBtn_Click(object sender, EventArgs e)
+        {
+                headChargeBtn.Checked = allOnOffBtn.Checked;
+                headChargSucBtn.Checked = allOnOffBtn.Checked;
+                headUnloadBtn.Checked = allOnOffBtn.Checked;
+                headWaitBtn.Checked = allOnOffBtn.Checked;
+                headWaitInitBtn.Checked = allOnOffBtn.Checked;
+
+                tailChargeBtn.Checked = allOnOffBtn.Checked;
+                tailChargSucBtn.Checked = allOnOffBtn.Checked;
+                tailLoadBtn.Checked = allOnOffBtn.Checked;
+                tailWaitBtn.Checked = allOnOffBtn.Checked;
+                tailWaitInitBtn.Checked = allOnOffBtn.Checked;
+
+
+                headChargeBtn_Click(sender, e);
+                headChargSucBtn_Click(sender, e);
+                headUnloadBtn_Click(sender, e);
+                headWaitBtn_Click(sender, e);
+                headWaitInitBtn_Click(sender, e); 
+
+                tailChargeBtn_Click(sender, e);
+                tailChargSucBtn_Click(sender, e);
+                tailLoadBtn_Click(sender, e);
+                tailWaitBtn_Click(sender, e);
+                tailWaitInitBtn_Click(sender, e);
+        }
+
         #endregion
+
+
     }
 }
