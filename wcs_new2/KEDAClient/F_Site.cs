@@ -10,6 +10,10 @@ namespace KEDAClient
     {
         public static String 窑尾装载等待区 = "33";
 
+        public static String 窑尾装载点的前一地标 = "21";
+
+        public static String 窑头卸载点的前一地标 = "24";
+
         public static String 窑尾装载点 = "11";
 
         public static String 窑头卸载等待区 = "32";
@@ -24,15 +28,19 @@ namespace KEDAClient
 
         public static String 窑头等待点和卸载点之间 = "22";
 
-        public static int   最低电量 = 70;
+        public static String 窑头交管解除点 = "23";
 
-        public static int   最低电量排序序号 = 3;
+        public static String 窑尾交管解除点 = "22";
+
+        public static int 最低电量 = 70;
+
+        public static int 最低电量排序序号 = 3;
 
         public static String AGV有货 = "1";
 
         public static String AGV无货 = "2";
 
-        public static int 地标= 1;
+        public static int 地标 = 1;
 
         public static int 运行方向 = 4;
 
@@ -48,7 +56,7 @@ namespace KEDAClient
 
         public static int 交管设备 = 36;
 
-       
+
 
     }
 

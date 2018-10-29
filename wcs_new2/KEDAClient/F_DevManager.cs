@@ -200,40 +200,7 @@ namespace KEDAClient
             return null;
         }
 
-        /// <summary>
-        /// 获取不在窑头卸载等待区，并且有货的AGV
-        /// </summary>
-        /// <param name="site"></param>
-        /// <returns></returns>
-        public List<F_AGV> IGetDevNotOnWaitSite(String devid = null)
-        {
-            try
-            {
-                List<DeviceBackImf> devs = _devList.FindAll(c =>
-                {
-                    return c.DevType == "Magnet_Basic" && c.IsAlive
-                    && devid != null ? c.DevId == devid : true
-                    && c.ProtyList[ConstSetBA.地标].RValue != ConstSetBA.窑头卸载等待区
-                    && c.ProtyList[ConstSetBA.空闲].RValue == "True"
-                    //&& (c.ProtyList[ConstSetBA.货物状态].RValue == ConstSetBA.AGV有货 || c.ProtyList[ConstSetBA.货物状态].RValue == "未知")
-                    ;
-                });
-
-                if (devs != null)
-                {
-                    List<F_AGV> list = new List<F_AGV>();
-                    foreach (DeviceBackImf dev in devs)
-                    {
-                        list.Add(new F_AGV(dev.DevId));
-                    }
-                    return list;
-                }
-            }
-            catch { }
-
-            return null;
-        }
-
+        
         /// <summary>
         /// 获取所有正在线上工作的车辆电量信息，返回出于最低电量排序序号的那台车电量
         /// </summary>
@@ -286,21 +253,22 @@ namespace KEDAClient
         }
 
         /// <summary>
-        /// 获取不在窑尾装载等待区，并且没货的AGV
+        /// 获取不在窑头窑尾等待点、充电点的车
         /// </summary>
         /// <param name="site"></param>
         /// <returns></returns>
-        public List<F_AGV> IGetDevNotLoadOnWaitSite(String devid = null)
+        public List<F_AGV> InitGetDevNot(String devid = null)
         {
             try
             {
-                List<DeviceBackImf> devs = _devList.FindAll(c => { return c.IsAlive 
-                    && devid!=null ? c.DevId == devid : true
-                    && c.DevType == "Magnet_Basic"
-                    && c.ProtyList[ConstSetBA.空闲].RValue == "True"
-                    && c.ProtyList[ConstSetBA.地标].RValue != ConstSetBA.窑尾装载等待区 
-                    //&& (c.ProtyList[ConstSetBA.货物状态].RValue == ConstSetBA.AGV无货 || c.ProtyList[ConstSetBA.货物状态].RValue == "未知")
-                    ; });
+                List<DeviceBackImf> devs = _devList.FindAll(c =>
+                {
+                    return c.IsAlive && devid != null ? c.DevId == devid : true && c.DevType == "Magnet_Basic"
+                    //&& c.ProtyList[ConstSetBA.空闲].RValue == "True"
+                    && (c.ProtyList[ConstSetBA.地标].RValue != ConstSetBA.窑尾装载等待区 || c.ProtyList[ConstSetBA.地标].RValue != ConstSetBA.窑头卸载等待区
+                    && c.ProtyList[ConstSetBA.地标].RValue != ConstSetBA.接货充电点 || c.ProtyList[ConstSetBA.地标].RValue != ConstSetBA.卸货充电点)
+;
+                });
 
                 if (devs != null)
                 {
