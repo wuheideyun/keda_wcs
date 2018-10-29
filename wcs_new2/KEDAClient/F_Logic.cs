@@ -469,8 +469,7 @@ namespace KEDAClient
             // 让未上锁的、电量低于60且未充电的AGV去充电，且接货充电点没有AGV
             if (agv != null && agv.IsFree 
                 && !F_AGV.IsLock(agv.Id)
-                &&  agv.Electicity <= ConstSetBA.最低电量
-                && agv.Electicity <80
+                &&  agv.Electicity <= F_DataCenter.MDev.IGetDevElectricity()
                 && agv.ChargeStatus == EnumChargeStatus.未充电
                 && agv1 == null
                 && !_plcEnd.IsBatteryLock)
