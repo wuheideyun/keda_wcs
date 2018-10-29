@@ -235,6 +235,57 @@ namespace KEDAClient
         }
 
         /// <summary>
+        /// 获取所有正在线上工作的车辆电量信息，返回出于最低电量排序序号的那台车电量
+        /// </summary>
+        /// <param name="site"></param>
+        /// <returns></returns>
+        public int IGetDevElectricity()
+        {
+            try
+            {
+                //考虑范围只有正在作业的车辆，非作业车辆不纳入考虑
+                List<DeviceBackImf> devs = _devList.FindAll(c =>
+                {
+                    return c.DevType == "Magnet_Basic" && c.IsAlive
+                    && c.ProtyList[ErrorType.脱轨].RValue == "0"
+                    ;
+                });
+
+                List<int> list = new List<int>();
+
+                if (devs != null)
+                {
+                    foreach (DeviceBackImf dev in devs)
+                    {
+
+                        list.Add(new F_AGV(dev.DevId).Electicity);
+
+                    }
+
+                    list.Sort();
+
+                }
+
+                if(list.Count > ConstSetBA.最低电量排序序号)
+                {
+
+                     return list[ConstSetBA.最低电量排序序号];
+
+                }
+                else
+                {
+
+                    return ConstSetBA.最低电量;
+
+                }
+
+            }
+            catch { }
+
+            return ConstSetBA.最低电量;
+        }
+
+        /// <summary>
         /// 获取不在窑尾装载等待区，并且没货的AGV
         /// </summary>
         /// <param name="site"></param>
