@@ -34,6 +34,8 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.mainTabControl = new KEDAClient.TabControlEx();
             this.controlPage = new System.Windows.Forms.TabPage();
+            this.AgvNowPoitLab = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
             this.agvNameLab = new System.Windows.Forms.Label();
             this.AgvInitBtn = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
@@ -49,6 +51,8 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.AgvSpeedLab = new System.Windows.Forms.Label();
+            this.AgvStaMaterialLab = new System.Windows.Forms.Label();
             this.AgvDirectionLab = new System.Windows.Forms.Label();
             this.AgvTrafficLab = new System.Windows.Forms.Label();
             this.AgvFreeLab = new System.Windows.Forms.Label();
@@ -64,6 +68,9 @@
             this.AgvStatusLab = new System.Windows.Forms.Label();
             this.AgvElectricityLab = new System.Windows.Forms.Label();
             this.AgvAimLab = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.AgvStaMonitorLab = new System.Windows.Forms.Label();
             this.AgvClearSiteBtn = new System.Windows.Forms.Button();
             this.AgvBackwardBtn = new System.Windows.Forms.Button();
             this.AgvForwardBtn = new System.Windows.Forms.Button();
@@ -120,13 +127,7 @@
             this.InitAllBtn = new KEDAClient.SwitchButton();
             this.ExecuteTaskBtn = new KEDAClient.SwitchButton();
             this.timerForListRefresh = new System.Windows.Forms.Timer(this.components);
-            this.label28 = new System.Windows.Forms.Label();
-            this.label29 = new System.Windows.Forms.Label();
-            this.AgvStaMaterialLab = new System.Windows.Forms.Label();
-            this.AgvStaMonitorLab = new System.Windows.Forms.Label();
-            this.label30 = new System.Windows.Forms.Label();
-            this.AgvNowPoitLab = new System.Windows.Forms.Label();
-            this.AgvSpeedLab = new System.Windows.Forms.Label();
+            this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.panel3.SuspendLayout();
             this.mainTabControl.SuspendLayout();
             this.controlPage.SuspendLayout();
@@ -148,6 +149,8 @@
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel7.SuspendLayout();
+            this.toolStripContainer1.ContentPanel.SuspendLayout();
+            this.toolStripContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // imageRS
@@ -165,23 +168,25 @@
             this.panel3.Location = new System.Drawing.Point(201, 109);
             this.panel3.Name = "panel3";
             this.panel3.Padding = new System.Windows.Forms.Padding(3);
-            this.panel3.Size = new System.Drawing.Size(733, 732);
+            this.panel3.Size = new System.Drawing.Size(739, 746);
             this.panel3.TabIndex = 6;
             // 
             // mainTabControl
             // 
             this.mainTabControl.Alignment = System.Windows.Forms.TabAlignment.Right;
+            this.mainTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.mainTabControl.Controls.Add(this.controlPage);
             this.mainTabControl.Controls.Add(this.logPage);
             this.mainTabControl.Controls.Add(this.settingPage);
             this.mainTabControl.Controls.Add(this.testPage);
-            this.mainTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainTabControl.ItemSize = new System.Drawing.Size(100, 140);
             this.mainTabControl.Location = new System.Drawing.Point(3, 3);
             this.mainTabControl.Multiline = true;
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.SelectedIndex = 0;
-            this.mainTabControl.Size = new System.Drawing.Size(723, 722);
+            this.mainTabControl.Size = new System.Drawing.Size(749, 741);
             this.mainTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.mainTabControl.TabIndex = 2;
             // 
@@ -202,9 +207,31 @@
             this.controlPage.Location = new System.Drawing.Point(4, 4);
             this.controlPage.Name = "controlPage";
             this.controlPage.Padding = new System.Windows.Forms.Padding(3);
-            this.controlPage.Size = new System.Drawing.Size(575, 714);
+            this.controlPage.Size = new System.Drawing.Size(601, 733);
             this.controlPage.TabIndex = 0;
             this.controlPage.Text = "综合控制";
+            // 
+            // AgvNowPoitLab
+            // 
+            this.AgvNowPoitLab.AutoSize = true;
+            this.AgvNowPoitLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.AgvNowPoitLab.ForeColor = System.Drawing.Color.White;
+            this.AgvNowPoitLab.Location = new System.Drawing.Point(94, 108);
+            this.AgvNowPoitLab.Name = "AgvNowPoitLab";
+            this.AgvNowPoitLab.Size = new System.Drawing.Size(27, 27);
+            this.AgvNowPoitLab.TabIndex = 20;
+            this.AgvNowPoitLab.Text = "*";
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Font = new System.Drawing.Font("黑体", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label30.ForeColor = System.Drawing.Color.White;
+            this.label30.Location = new System.Drawing.Point(6, 100);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(88, 30);
+            this.label30.TabIndex = 19;
+            this.label30.Text = "站点:";
             // 
             // agvNameLab
             // 
@@ -229,12 +256,13 @@
             // 
             // panel6
             // 
+            this.panel6.AutoScroll = true;
             this.panel6.Controls.Add(this.tialPlcChargeLBtn);
             this.panel6.Controls.Add(this.TailPlcLockBtn);
             this.panel6.Controls.Add(this.label10);
             this.panel6.Controls.Add(this.label12);
             this.panel6.Controls.Add(this.label18);
-            this.panel6.Location = new System.Drawing.Point(333, 527);
+            this.panel6.Location = new System.Drawing.Point(333, 520);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(236, 191);
             this.panel6.TabIndex = 16;
@@ -307,7 +335,7 @@
             this.panel5.Controls.Add(this.label16);
             this.panel5.Controls.Add(this.label8);
             this.panel5.Controls.Add(this.label14);
-            this.panel5.Location = new System.Drawing.Point(41, 527);
+            this.panel5.Location = new System.Drawing.Point(41, 518);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(236, 193);
             this.panel5.TabIndex = 15;
@@ -414,6 +442,30 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(357, 468);
             this.tableLayoutPanel2.TabIndex = 10;
+            // 
+            // AgvSpeedLab
+            // 
+            this.AgvSpeedLab.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.AgvSpeedLab.AutoSize = true;
+            this.AgvSpeedLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.AgvSpeedLab.ForeColor = System.Drawing.Color.White;
+            this.AgvSpeedLab.Location = new System.Drawing.Point(266, 239);
+            this.AgvSpeedLab.Name = "AgvSpeedLab";
+            this.AgvSpeedLab.Size = new System.Drawing.Size(27, 27);
+            this.AgvSpeedLab.TabIndex = 27;
+            this.AgvSpeedLab.Text = "*";
+            // 
+            // AgvStaMaterialLab
+            // 
+            this.AgvStaMaterialLab.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.AgvStaMaterialLab.AutoSize = true;
+            this.AgvStaMaterialLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.AgvStaMaterialLab.ForeColor = System.Drawing.Color.White;
+            this.AgvStaMaterialLab.Location = new System.Drawing.Point(266, 331);
+            this.AgvStaMaterialLab.Name = "AgvStaMaterialLab";
+            this.AgvStaMaterialLab.Size = new System.Drawing.Size(27, 27);
+            this.AgvStaMaterialLab.TabIndex = 25;
+            this.AgvStaMaterialLab.Text = "*";
             // 
             // AgvDirectionLab
             // 
@@ -600,6 +652,42 @@
             this.AgvAimLab.TabIndex = 20;
             this.AgvAimLab.Text = "*";
             // 
+            // label28
+            // 
+            this.label28.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label28.AutoSize = true;
+            this.label28.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label28.ForeColor = System.Drawing.Color.White;
+            this.label28.Location = new System.Drawing.Point(3, 331);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(157, 27);
+            this.label28.TabIndex = 21;
+            this.label28.Text = "货物状态：";
+            // 
+            // label29
+            // 
+            this.label29.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label29.AutoSize = true;
+            this.label29.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label29.ForeColor = System.Drawing.Color.White;
+            this.label29.Location = new System.Drawing.Point(3, 377);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(157, 27);
+            this.label29.TabIndex = 22;
+            this.label29.Text = "电机状态：";
+            // 
+            // AgvStaMonitorLab
+            // 
+            this.AgvStaMonitorLab.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.AgvStaMonitorLab.AutoSize = true;
+            this.AgvStaMonitorLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.AgvStaMonitorLab.ForeColor = System.Drawing.Color.White;
+            this.AgvStaMonitorLab.Location = new System.Drawing.Point(266, 377);
+            this.AgvStaMonitorLab.Name = "AgvStaMonitorLab";
+            this.AgvStaMonitorLab.Size = new System.Drawing.Size(27, 27);
+            this.AgvStaMonitorLab.TabIndex = 26;
+            this.AgvStaMonitorLab.Text = "*";
+            // 
             // AgvClearSiteBtn
             // 
             this.AgvClearSiteBtn.Location = new System.Drawing.Point(41, 384);
@@ -617,6 +705,7 @@
             this.AgvBackwardBtn.TabIndex = 4;
             this.AgvBackwardBtn.Text = "后退";
             this.AgvBackwardBtn.UseVisualStyleBackColor = true;
+            this.AgvBackwardBtn.Click += new System.EventHandler(this.AgvBackwardBtn_Click);
             // 
             // AgvForwardBtn
             // 
@@ -626,16 +715,18 @@
             this.AgvForwardBtn.TabIndex = 3;
             this.AgvForwardBtn.Text = "前进";
             this.AgvForwardBtn.UseVisualStyleBackColor = true;
+            this.AgvForwardBtn.Click += new System.EventHandler(this.AgvForwardBtn_Click);
             // 
             // AgvStopBtn
             // 
-            this.AgvStopBtn.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.AgvStopBtn.Font = new System.Drawing.Font("宋体", 16F);
             this.AgvStopBtn.Location = new System.Drawing.Point(41, 151);
             this.AgvStopBtn.Name = "AgvStopBtn";
             this.AgvStopBtn.Size = new System.Drawing.Size(100, 53);
             this.AgvStopBtn.TabIndex = 2;
             this.AgvStopBtn.Text = "停止";
             this.AgvStopBtn.UseVisualStyleBackColor = true;
+            this.AgvStopBtn.Click += new System.EventHandler(this.AgvStopBtn_Click);
             // 
             // logPage
             // 
@@ -643,7 +734,7 @@
             this.logPage.Controls.Add(this.listBoxOutput);
             this.logPage.Location = new System.Drawing.Point(4, 4);
             this.logPage.Name = "logPage";
-            this.logPage.Size = new System.Drawing.Size(575, 714);
+            this.logPage.Size = new System.Drawing.Size(601, 733);
             this.logPage.TabIndex = 3;
             this.logPage.Text = "日志记录";
             // 
@@ -656,7 +747,7 @@
             this.listBoxOutput.HorizontalScrollbar = true;
             this.listBoxOutput.Location = new System.Drawing.Point(0, 0);
             this.listBoxOutput.Name = "listBoxOutput";
-            this.listBoxOutput.Size = new System.Drawing.Size(575, 714);
+            this.listBoxOutput.Size = new System.Drawing.Size(601, 733);
             this.listBoxOutput.TabIndex = 10;
             // 
             // settingPage
@@ -666,7 +757,7 @@
             this.settingPage.Location = new System.Drawing.Point(4, 4);
             this.settingPage.Name = "settingPage";
             this.settingPage.Padding = new System.Windows.Forms.Padding(3);
-            this.settingPage.Size = new System.Drawing.Size(575, 714);
+            this.settingPage.Size = new System.Drawing.Size(601, 733);
             this.settingPage.TabIndex = 2;
             this.settingPage.Text = "参数配置";
             // 
@@ -677,7 +768,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(3, 3);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(569, 708);
+            this.panel9.Size = new System.Drawing.Size(595, 727);
             this.panel9.TabIndex = 2;
             // 
             // panel10
@@ -707,7 +798,7 @@
             this.tableLayoutPanel3.ColumnCount = 3;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.30508F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.69492F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 245F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 249F));
             this.tableLayoutPanel3.Controls.Add(this.label4, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.textBox1, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.button2, 2, 0);
@@ -733,15 +824,15 @@
             // textBox1
             // 
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(168, 13);
+            this.textBox1.Location = new System.Drawing.Point(166, 13);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(170, 32);
+            this.textBox1.Size = new System.Drawing.Size(168, 32);
             this.textBox1.TabIndex = 3;
             // 
             // button2
             // 
             this.button2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button2.Location = new System.Drawing.Point(408, 10);
+            this.button2.Location = new System.Drawing.Point(406, 10);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(111, 38);
             this.button2.TabIndex = 4;
@@ -753,7 +844,7 @@
             this.editButton1.BackColor = System.Drawing.SystemColors.Window;
             this.editButton1.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.editButton1.ForeColor = System.Drawing.Color.White;
-            this.editButton1.Location = new System.Drawing.Point(347, 64);
+            this.editButton1.Location = new System.Drawing.Point(343, 64);
             this.editButton1.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.editButton1.Name = "editButton1";
             this.editButton1.Size = new System.Drawing.Size(150, 50);
@@ -777,7 +868,7 @@
             this.testPage.Location = new System.Drawing.Point(4, 4);
             this.testPage.Name = "testPage";
             this.testPage.Padding = new System.Windows.Forms.Padding(3);
-            this.testPage.Size = new System.Drawing.Size(575, 714);
+            this.testPage.Size = new System.Drawing.Size(601, 733);
             this.testPage.TabIndex = 4;
             this.testPage.Text = "测试配置";
             // 
@@ -787,7 +878,7 @@
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(3, 3);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(569, 708);
+            this.panel8.Size = new System.Drawing.Size(595, 727);
             this.panel8.TabIndex = 0;
             // 
             // button1
@@ -805,10 +896,10 @@
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel4.Controls.Add(this.tabControlEx1);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel4.Location = new System.Drawing.Point(934, 109);
+            this.panel4.Location = new System.Drawing.Point(940, 109);
             this.panel4.Name = "panel4";
             this.panel4.Padding = new System.Windows.Forms.Padding(3);
-            this.panel4.Size = new System.Drawing.Size(450, 732);
+            this.panel4.Size = new System.Drawing.Size(450, 746);
             this.panel4.TabIndex = 7;
             // 
             // tabControlEx1
@@ -820,7 +911,7 @@
             this.tabControlEx1.Location = new System.Drawing.Point(3, 3);
             this.tabControlEx1.Name = "tabControlEx1";
             this.tabControlEx1.SelectedIndex = 0;
-            this.tabControlEx1.Size = new System.Drawing.Size(440, 722);
+            this.tabControlEx1.Size = new System.Drawing.Size(440, 736);
             this.tabControlEx1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControlEx1.TabIndex = 3;
             // 
@@ -832,14 +923,15 @@
             this.taskPages.Location = new System.Drawing.Point(4, 64);
             this.taskPages.Name = "taskPages";
             this.taskPages.Padding = new System.Windows.Forms.Padding(3);
-            this.taskPages.Size = new System.Drawing.Size(432, 654);
+            this.taskPages.Size = new System.Drawing.Size(432, 668);
             this.taskPages.TabIndex = 0;
             this.taskPages.Text = "当前任务";
             // 
             // taskStopBtn
             // 
+            this.taskStopBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.taskStopBtn.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.taskStopBtn.Location = new System.Drawing.Point(3, 610);
+            this.taskStopBtn.Location = new System.Drawing.Point(3, 624);
             this.taskStopBtn.Name = "taskStopBtn";
             this.taskStopBtn.Size = new System.Drawing.Size(426, 41);
             this.taskStopBtn.TabIndex = 2;
@@ -870,7 +962,7 @@
             this.timeTaskPage.Location = new System.Drawing.Point(4, 64);
             this.timeTaskPage.Name = "timeTaskPage";
             this.timeTaskPage.Padding = new System.Windows.Forms.Padding(3);
-            this.timeTaskPage.Size = new System.Drawing.Size(432, 654);
+            this.timeTaskPage.Size = new System.Drawing.Size(432, 668);
             this.timeTaskPage.TabIndex = 1;
             this.timeTaskPage.Text = "定时任务";
             // 
@@ -903,7 +995,7 @@
             this.tableLayoutPanel1.Controls.Add(this.tailChargSucBtn, 1, 10);
             this.tableLayoutPanel1.Controls.Add(this.label27, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.allOnOffBtn, 1, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 27);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 34);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 11;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -1238,7 +1330,7 @@
             this.panel2.Location = new System.Drawing.Point(0, 109);
             this.panel2.Name = "panel2";
             this.panel2.Padding = new System.Windows.Forms.Padding(3);
-            this.panel2.Size = new System.Drawing.Size(201, 732);
+            this.panel2.Size = new System.Drawing.Size(201, 746);
             this.panel2.TabIndex = 5;
             // 
             // agvList
@@ -1254,7 +1346,7 @@
             this.agvList.Location = new System.Drawing.Point(3, 3);
             this.agvList.MultiSelect = false;
             this.agvList.Name = "agvList";
-            this.agvList.Size = new System.Drawing.Size(191, 722);
+            this.agvList.Size = new System.Drawing.Size(191, 736);
             this.agvList.TabIndex = 1;
             this.agvList.UseCompatibleStateImageBehavior = false;
             this.agvList.View = System.Windows.Forms.View.Details;
@@ -1269,7 +1361,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(3);
-            this.panel1.Size = new System.Drawing.Size(1384, 109);
+            this.panel1.Size = new System.Drawing.Size(1390, 109);
             this.panel1.TabIndex = 4;
             // 
             // panel7
@@ -1278,7 +1370,7 @@
             this.panel7.Controls.Add(this.AutoGenerateTaskBtn);
             this.panel7.Controls.Add(this.InitAllBtn);
             this.panel7.Controls.Add(this.ExecuteTaskBtn);
-            this.panel7.Location = new System.Drawing.Point(61, -10);
+            this.panel7.Location = new System.Drawing.Point(64, -10);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(1289, 119);
             this.panel7.TabIndex = 9;
@@ -1340,98 +1432,33 @@
             this.timerForListRefresh.Interval = 500;
             this.timerForListRefresh.Tick += new System.EventHandler(this.timerForListRefresh_Tick);
             // 
-            // label28
+            // toolStripContainer1
             // 
-            this.label28.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label28.AutoSize = true;
-            this.label28.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label28.ForeColor = System.Drawing.Color.White;
-            this.label28.Location = new System.Drawing.Point(3, 331);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(157, 27);
-            this.label28.TabIndex = 21;
-            this.label28.Text = "货物状态：";
             // 
-            // label29
+            // toolStripContainer1.ContentPanel
             // 
-            this.label29.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label29.AutoSize = true;
-            this.label29.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label29.ForeColor = System.Drawing.Color.White;
-            this.label29.Location = new System.Drawing.Point(3, 377);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(157, 27);
-            this.label29.TabIndex = 22;
-            this.label29.Text = "电机状态：";
-            // 
-            // AgvStaMaterialLab
-            // 
-            this.AgvStaMaterialLab.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.AgvStaMaterialLab.AutoSize = true;
-            this.AgvStaMaterialLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.AgvStaMaterialLab.ForeColor = System.Drawing.Color.White;
-            this.AgvStaMaterialLab.Location = new System.Drawing.Point(266, 331);
-            this.AgvStaMaterialLab.Name = "AgvStaMaterialLab";
-            this.AgvStaMaterialLab.Size = new System.Drawing.Size(27, 27);
-            this.AgvStaMaterialLab.TabIndex = 25;
-            this.AgvStaMaterialLab.Text = "*";
-            // 
-            // AgvStaMonitorLab
-            // 
-            this.AgvStaMonitorLab.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.AgvStaMonitorLab.AutoSize = true;
-            this.AgvStaMonitorLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.AgvStaMonitorLab.ForeColor = System.Drawing.Color.White;
-            this.AgvStaMonitorLab.Location = new System.Drawing.Point(266, 377);
-            this.AgvStaMonitorLab.Name = "AgvStaMonitorLab";
-            this.AgvStaMonitorLab.Size = new System.Drawing.Size(27, 27);
-            this.AgvStaMonitorLab.TabIndex = 26;
-            this.AgvStaMonitorLab.Text = "*";
-            // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.Font = new System.Drawing.Font("黑体", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label30.ForeColor = System.Drawing.Color.White;
-            this.label30.Location = new System.Drawing.Point(6, 100);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(88, 30);
-            this.label30.TabIndex = 19;
-            this.label30.Text = "站点:";
-            // 
-            // AgvNowPoitLab
-            // 
-            this.AgvNowPoitLab.AutoSize = true;
-            this.AgvNowPoitLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.AgvNowPoitLab.ForeColor = System.Drawing.Color.White;
-            this.AgvNowPoitLab.Location = new System.Drawing.Point(94, 108);
-            this.AgvNowPoitLab.Name = "AgvNowPoitLab";
-            this.AgvNowPoitLab.Size = new System.Drawing.Size(27, 27);
-            this.AgvNowPoitLab.TabIndex = 20;
-            this.AgvNowPoitLab.Text = "*";
-            // 
-            // AgvSpeedLab
-            // 
-            this.AgvSpeedLab.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.AgvSpeedLab.AutoSize = true;
-            this.AgvSpeedLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.AgvSpeedLab.ForeColor = System.Drawing.Color.White;
-            this.AgvSpeedLab.Location = new System.Drawing.Point(266, 239);
-            this.AgvSpeedLab.Name = "AgvSpeedLab";
-            this.AgvSpeedLab.Size = new System.Drawing.Size(27, 27);
-            this.AgvSpeedLab.TabIndex = 27;
-            this.AgvSpeedLab.Text = "*";
+            this.toolStripContainer1.ContentPanel.AutoScroll = true;
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel3);
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel4);
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel2);
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel1);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(1390, 855);
+            this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
+            this.toolStripContainer1.Name = "toolStripContainer1";
+            this.toolStripContainer1.Size = new System.Drawing.Size(1390, 880);
+            this.toolStripContainer1.TabIndex = 8;
+            this.toolStripContainer1.Text = "toolStripContainer1";
             // 
             // ControlForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
+            this.AutoScrollMinSize = new System.Drawing.Size(1390, 880);
             this.BackColor = System.Drawing.Color.DimGray;
-            this.ClientSize = new System.Drawing.Size(1384, 841);
-            this.Controls.Add(this.panel3);
-            this.Controls.Add(this.panel4);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel1);
+            this.ClientSize = new System.Drawing.Size(1370, 590);
+            this.Controls.Add(this.toolStripContainer1);
             this.Font = new System.Drawing.Font("宋体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(5);
@@ -1466,6 +1493,9 @@
             this.panel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
+            this.toolStripContainer1.ContentPanel.ResumeLayout(false);
+            this.toolStripContainer1.ResumeLayout(false);
+            this.toolStripContainer1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1568,5 +1598,6 @@
         private System.Windows.Forms.Label AgvNowPoitLab;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Label AgvSpeedLab;
+        private System.Windows.Forms.ToolStripContainer toolStripContainer1;
     }
 }

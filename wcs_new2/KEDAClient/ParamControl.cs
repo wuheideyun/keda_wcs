@@ -37,7 +37,7 @@ namespace KEDAClient
         /// 是否执行窑尾充电完成回去等待点的任务
         /// </summary>
         public static bool Do_TailChargeSucc = true;
-        
+
 
         /// <summary>
         /// 是否执行窑头卸货任务
@@ -109,7 +109,7 @@ namespace KEDAClient
         public static void TaskIsSucc(int no)
         {
             TaskData task = _taskDatas.Find(c => { return c.NO == no; });
-            if(task != null)
+            if (task != null)
             {
                 _taskDatas.Remove(task);
             }
@@ -133,7 +133,7 @@ namespace KEDAClient
         {
 
         }
-        
+
     }
     /// <summary>
     /// 用于获取AGV的详细信息
@@ -205,7 +205,27 @@ namespace KEDAClient
         /// <returns></returns>
         public String Direction()
         {
-            return GetRValue("0005");
+            try
+            {
+                int status = Convert.ToInt32(GetRValue("0005"));
+                switch (status)
+                {
+                    case 0:
+                        _value = "前进";
+                        break;
+                    case 1:
+                        _value = "后退";
+                        break;
+                    default:
+                        _value = "未知";
+                        break;
+                }
+            }
+            catch
+            {
+                _value = "未知";
+            }
+            return _value;
         }
 
         /// <summary>
@@ -216,7 +236,7 @@ namespace KEDAClient
         {
             return GetRValue("0008");
         }
-        
+
         /// <summary>
         /// 空闲状态
         /// </summary>
@@ -250,7 +270,8 @@ namespace KEDAClient
         /// <returns></returns>
         public String Sta_Material()
         {
-            try {
+            try
+            {
                 int status = Convert.ToInt32(GetRValue("0036"));
                 switch (status)
                 {
@@ -314,7 +335,7 @@ namespace KEDAClient
         public String IsReady()
         {
             _value = GetRValue("0028");
-            return !_value.Equals("")&& _value.Equals("0") ? "未准备":"已准备" ;
+            return !_value.Equals("") && _value.Equals("0") ? "未准备" : "已准备";
         }
 
         /// <summary>
@@ -352,6 +373,10 @@ namespace KEDAClient
             {
                 status = "脱轨";
             }
+            else if (item.ProtyList[ConstSetBA.运行状态].RValue == "2")
+            {
+                status = "障碍物";
+            }
             else if (item.ProtyList[ConstSetBA.交管状态].RValue == "True")
             {
                 status = "被交管(" + item.ProtyList[ConstSetBA.交管设备].RValue + ")";
@@ -359,6 +384,10 @@ namespace KEDAClient
             else if (item.ProtyList[ConstSetBA.空闲].RValue == "True" && !F_DataCenter.MDev.IsDevInDispath(item.DevId))
             {
                 status = "空闲";
+            }
+            else if (item.ProtyList[ConstSetBA.充电状态].RValue == "1")
+            {
+                status = "充电中";
             }
             else
             {
@@ -420,12 +449,12 @@ namespace KEDAClient
         /// <param name="no"></param>
         /// <param name="msg"></param>
         /// <param name="sitemsg"></param>
-        public TaskData(int no,String msg,String sitemsg)
+        public TaskData(int no, String msg, String sitemsg)
         {
             _no = no;
             _msg = msg;
             _sitemsg = sitemsg;
         }
-        
+
     }
 }

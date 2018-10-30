@@ -40,13 +40,16 @@ namespace KEDAClient
 
         public static String AGV无货 = "2";
 
+
+        public static int 运行状态 = 0;
+
         public static int 地标 = 1;
 
         public static int 运行方向 = 4;
 
         public static int 充电状态 = 7;
 
-        public static int 货物状态 = 26;
+        public static int 货物状态 = 28;
 
         public static int 空闲 = 9;
 

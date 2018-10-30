@@ -1,4 +1,6 @@
-﻿using FLBasicHelper;
+﻿using DataContract;
+using FLBasicHelper;
+using FLCommonInterfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -38,6 +40,12 @@ namespace KEDAClient
         /// AGV信息
         /// </summary>
         private AGV _agv;
+
+        /// <summary>
+        /// 设备ID与自身状态对应关系(车辆）：状态值：stop、forwardmove、backmove
+        /// </summary>
+        Dictionary<string, string> agvStatus = new Dictionary<string, string>();
+
         /// <summary>
         /// 构造函数
         /// </summary>
@@ -52,7 +60,6 @@ namespace KEDAClient
 
         private void ControlForm_Load(object sender, EventArgs e)
         {
-            
             ListView_Init();
         }
 
@@ -88,6 +95,13 @@ namespace KEDAClient
             currentTaskList.Columns.Add("路径", 80, HorizontalAlignment.Center);
 
             currentTaskList.View = System.Windows.Forms.View.Details;
+
+
+            List<DeviceBackImf> devDatas = WcfMainHelper.GetDevList();
+            foreach (var data in devDatas)
+            {
+                agvStatus.Add(data.DevId, "stop");
+            }
         }
 
         #endregion
@@ -134,7 +148,7 @@ namespace KEDAClient
             // 结束数据处理
             currentTaskList.EndUpdate();
 
-            if(_currentTaskIndex != -1)
+            if (_currentTaskIndex != -1)
             {
                 if (currentTaskList.Items.Count > _currentTaskIndex && _currentTaskText.Equals(currentTaskList.Items[_currentTaskIndex].Text))
                 {
@@ -183,14 +197,14 @@ namespace KEDAClient
 
             if (_agvListIndex != -1)
             {
-                if(agvList.Items.Count>_agvListIndex &&_agvListText.Equals(agvList.Items[_agvListIndex].Text))
+                if (agvList.Items.Count > _agvListIndex && _agvListText.Equals(agvList.Items[_agvListIndex].Text))
                 {
                     agvList.FocusedItem = agvList.Items[_agvListIndex];
                     agvList.Items[_agvListIndex].BackColor = Color.LightGray;
                     return;
                 }
-                
-                foreach(ListViewItem item in agvList.Items)
+
+                foreach (ListViewItem item in agvList.Items)
                 {
                     if (item.Text.Equals(_agvListText))
                     {
@@ -199,7 +213,7 @@ namespace KEDAClient
                         return;
                     }
                 }
-                if(agvList.FocusedItem == null && agvList.Items.Count > 0)
+                if (agvList.FocusedItem == null && agvList.Items.Count > 0)
                 {
                     agvList.FocusedItem = agvList.Items[0];
                     agvList.FocusedItem.BackColor = Color.LightGray;
@@ -228,17 +242,52 @@ namespace KEDAClient
                 _agvListIndex = agvList.FocusedItem.Index;
                 _agvListText = agvList.FocusedItem.Text;
                 agvList.FocusedItem.BackColor = Color.LightGray;
-                if (agvList.FocusedItem.Text.StartsWith("AGV")) {
+                if (agvList.FocusedItem.Text.StartsWith("AGV"))
+                {
                     mainTabControl.SelectedIndex = 0;
                     _agvSelectName = agvList.FocusedItem.Text;
                     agvData_Refresh();
+
+                    string status = agvStatus[agvList.FocusedItem.Text];
+
+                    if (AgvStatusLab.Text == "在线")
+                    {
+                        if (status == "forwardmove")
+                        {
+                            AgvForwardBtn.Enabled = false;
+                            AgvBackwardBtn.Enabled = true;
+                            AgvStopBtn.Enabled = true;
+                        }
+                        else if (status == "backmove")
+                        {
+                            AgvForwardBtn.Enabled = true;
+                            AgvBackwardBtn.Enabled = false;
+                            AgvStopBtn.Enabled = true;
+                        }
+                        else if (status == "stop")
+                        {
+                            AgvForwardBtn.Enabled = true;
+                            AgvBackwardBtn.Enabled = true;
+                            AgvStopBtn.Enabled = true;
+                        }
+                        AgvClearSiteBtn.Enabled = true;
+                        AgvInitBtn.Enabled = true;
+                    }
+                    else if (AgvStatusLab.Text == "离线")
+                    {
+                        AgvForwardBtn.Enabled = false;
+                        AgvBackwardBtn.Enabled = false;
+                        AgvStopBtn.Enabled = false;
+                        AgvClearSiteBtn.Enabled = false;
+                        AgvInitBtn.Enabled = false;
+                    }
                 }
                 else
                 {
                     mainTabControl.SelectedIndex = 1;
                     plcData_Refresh();
                 }
-                
+
             }
         }
 
@@ -370,6 +419,106 @@ namespace KEDAClient
             MessageBox.Show(agvList.FocusedItem.Text + "已经初始化！");
         }
 
+        /// <summary>
+        /// 停止车辆
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AgvStopBtn_Click(object sender, EventArgs e)
+        {
+            if (AgvBackwardBtn.Enabled == false || AgvForwardBtn.Enabled == false)
+            {
+                StopAGV();
+                //记录agv状态
+                agvStatus[agvList.FocusedItem.Text] = "stop";
+            }
+            else
+            {
+                MessageBox.Show("当前没有运行的车辆！");
+            }
+        }
+
+        /// <summary>
+        /// 构建停止函数
+        /// 使得前进、后退无法重复被操作
+        /// </summary>
+        public void StopAGV()
+        {
+            //WcfMainHelper.InitPara(_severIp, "", "");
+            // 1是快速停止、0是慢速
+            if (WcfMainHelper.SendOrder(agvList.FocusedItem.Text, new FControlOrder("停止", 2, 0)))
+            {
+                AgvForwardBtn.Enabled = true;
+                AgvBackwardBtn.Enabled = true;
+            }
+            else
+            {
+                MessageBox.Show("请尝试再操作一次", "提示");
+            }
+        }
+
+        /// <summary>
+        /// AGV前进
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AgvForwardBtn_Click(object sender, EventArgs e)
+        {
+            if (agvList.FocusedItem == null)
+            {
+                MessageBox.Show("请选中需要操作的车辆", "提示");
+                return;
+            }
+            else
+            {
+                if (!AgvBackwardBtn.Enabled)
+                {
+                    StopAGV();
+                }
+
+                if (WcfMainHelper.SendOrder(agvList.FocusedItem.Text, new FControlOrder("前进启动", 1, 1)))
+                {
+                    //记录agv状态
+                    agvStatus[agvList.FocusedItem.Text] = "forwardmove";
+                    AgvForwardBtn.Enabled = false;
+                }
+                else
+                {
+                    MessageBox.Show("请尝试再操作一次", "提示");
+                }
+            }
+        }
+
+        /// <summary>
+        /// AGV后退
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AgvBackwardBtn_Click(object sender, EventArgs e)
+        {
+            if (agvList.FocusedItem == null)
+            {
+                MessageBox.Show("请选中需要操作的车辆", "提示");
+                return;
+            }
+            else
+            {
+                if (!AgvForwardBtn.Enabled)
+                {
+                    StopAGV();
+                }
+                if (WcfMainHelper.SendOrder(agvList.FocusedItem.Text, new FControlOrder("后退", 1, 2)))
+                {
+                    //记录agv状态
+                    agvStatus[agvList.FocusedItem.Text] = "backmove";
+                    AgvBackwardBtn.Enabled = false;
+                }
+                else
+                {
+                    MessageBox.Show("请尝试再操作一次", "提示");
+                }
+            }
+        }
 
 
         #endregion
@@ -382,7 +531,7 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void taskStopBtn_Click(object sender, EventArgs e)
         {
-            if(currentTaskList.FocusedItem == null)
+            if (currentTaskList.FocusedItem == null)
             {
                 MessageBox.Show("请选择任务");
                 return;
@@ -415,7 +564,7 @@ namespace KEDAClient
             ParamControl.Do_HeadCharge = headChargeBtn.Checked;
 
         }
-        
+
         /// <summary>
         /// 自动生成任务
         /// </summary>
@@ -490,7 +639,7 @@ namespace KEDAClient
         private void tailWaitBtn_Click(object sender, EventArgs e)
         {
             ParamControl.Do_ToTailWait = tailWaitBtn.Checked;
-            
+
         }
 
         /// <summary>
@@ -512,9 +661,10 @@ namespace KEDAClient
         private void tailWaitInitBtn_Click(object sender, EventArgs e)
         {
 
-              ParamControl.Do_InitToTailWait = tailWaitInitBtn.Checked;
+            ParamControl.Do_InitToTailWait = tailWaitInitBtn.Checked;
 
         }
+
         /// <summary>
         /// 是否执行窑头充电完成任务
         /// </summary>
@@ -523,9 +673,10 @@ namespace KEDAClient
         private void headChargSucBtn_Click(object sender, EventArgs e)
         {
 
-             ParamControl.Do_HeadChargeSucc = headChargSucBtn.Checked;
+            ParamControl.Do_HeadChargeSucc = headChargSucBtn.Checked;
 
         }
+
 
         /// <summary>
         /// 控制是否全部打开任务
@@ -534,30 +685,30 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void allOnOffBtn_Click(object sender, EventArgs e)
         {
-                headChargeBtn.Checked = allOnOffBtn.Checked;
-                headChargSucBtn.Checked = allOnOffBtn.Checked;
-                headUnloadBtn.Checked = allOnOffBtn.Checked;
-                headWaitBtn.Checked = allOnOffBtn.Checked;
-                headWaitInitBtn.Checked = allOnOffBtn.Checked;
+            headChargeBtn.Checked = allOnOffBtn.Checked;
+            headChargSucBtn.Checked = allOnOffBtn.Checked;
+            headUnloadBtn.Checked = allOnOffBtn.Checked;
+            headWaitBtn.Checked = allOnOffBtn.Checked;
+            headWaitInitBtn.Checked = allOnOffBtn.Checked;
 
-                tailChargeBtn.Checked = allOnOffBtn.Checked;
-                tailChargSucBtn.Checked = allOnOffBtn.Checked;
-                tailLoadBtn.Checked = allOnOffBtn.Checked;
-                tailWaitBtn.Checked = allOnOffBtn.Checked;
-                tailWaitInitBtn.Checked = allOnOffBtn.Checked;
+            tailChargeBtn.Checked = allOnOffBtn.Checked;
+            tailChargSucBtn.Checked = allOnOffBtn.Checked;
+            tailLoadBtn.Checked = allOnOffBtn.Checked;
+            tailWaitBtn.Checked = allOnOffBtn.Checked;
+            tailWaitInitBtn.Checked = allOnOffBtn.Checked;
 
 
-                headChargeBtn_Click(sender, e);
-                headChargSucBtn_Click(sender, e);
-                headUnloadBtn_Click(sender, e);
-                headWaitBtn_Click(sender, e);
-                headWaitInitBtn_Click(sender, e); 
+            headChargeBtn_Click(sender, e);
+            headChargSucBtn_Click(sender, e);
+            headUnloadBtn_Click(sender, e);
+            headWaitBtn_Click(sender, e);
+            headWaitInitBtn_Click(sender, e);
 
-                tailChargeBtn_Click(sender, e);
-                tailChargSucBtn_Click(sender, e);
-                tailLoadBtn_Click(sender, e);
-                tailWaitBtn_Click(sender, e);
-                tailWaitInitBtn_Click(sender, e);
+            tailChargeBtn_Click(sender, e);
+            tailChargSucBtn_Click(sender, e);
+            tailLoadBtn_Click(sender, e);
+            tailWaitBtn_Click(sender, e);
+            tailWaitInitBtn_Click(sender, e);
         }
 
         #endregion
