@@ -125,7 +125,7 @@
             this.label27 = new System.Windows.Forms.Label();
             this.allOnOffBtn = new KEDAClient.SwitchButton();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.agvList = new System.Windows.Forms.ListView();
+            this.agvList = new KEDAClient.DoubleBufferListView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel7 = new System.Windows.Forms.Panel();
             this.AutoGenerateTaskBtn = new KEDAClient.SwitchButton();
@@ -1541,7 +1541,7 @@
             this.AutoScroll = true;
             this.AutoScrollMinSize = new System.Drawing.Size(1390, 880);
             this.BackColor = System.Drawing.Color.DimGray;
-            this.ClientSize = new System.Drawing.Size(1387, 607);
+            this.ClientSize = new System.Drawing.Size(1370, 607);
             this.Controls.Add(this.toolStripContainer1);
             this.Font = new System.Drawing.Font("宋体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1621,7 +1621,6 @@
         private SwitchButton headChargSucBtn;
         private SwitchButton tailChargSucBtn;
         private System.Windows.Forms.Button taskStopBtn;
-        private System.Windows.Forms.ListView agvList;
         private System.Windows.Forms.Label label27;
         private SwitchButton allOnOffBtn;
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
@@ -1688,5 +1687,6 @@
         private System.Windows.Forms.Label PlcLocationLab;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label plcNameLab;
+        private DoubleBufferListView agvList;
     }
 }

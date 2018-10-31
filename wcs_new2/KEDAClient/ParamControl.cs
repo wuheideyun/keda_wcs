@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace KEDAClient
 {
@@ -135,6 +136,8 @@ namespace KEDAClient
         }
 
     }
+
+
     /// <summary>
     /// 用于获取AGV的详细信息
     /// </summary>
@@ -370,7 +373,7 @@ namespace KEDAClient
             {
                 status = "离线";
             }
-            else if(item.DevType == "WK_PLC")
+            else if (item.DevType == "WK_PLC")
             {
                 status = "在线";
             }
@@ -402,6 +405,7 @@ namespace KEDAClient
         }
 
     }
+
 
     /// <summary>
     /// 用于获取PLC的详细信息
@@ -535,7 +539,7 @@ namespace KEDAClient
             {
                 status = "窑头";
             }
-            else if(item.DevId == "PLC02")
+            else if (item.DevId == "PLC02")
             {
                 status = "窑尾";
             }
@@ -548,6 +552,20 @@ namespace KEDAClient
 
     }
 
+
+    public class DoubleBufferListView : ListView
+    {
+        /// <summary>
+        /// 使用双缓冲：添加新类继承ListView 对其重写
+        /// </summary>
+        public DoubleBufferListView()
+        {
+            SetStyle(ControlStyles.DoubleBuffer |
+              ControlStyles.OptimizedDoubleBuffer |
+              ControlStyles.AllPaintingInWmPaint, true);
+            UpdateStyles();
+        }
+    }
 
     /// <summary>
     /// 保存任务信息
