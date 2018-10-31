@@ -140,15 +140,15 @@ namespace KEDAClient
     /// </summary>
     public class AGV
     {
-        private DataContract.DeviceBackImf _dev;
-        private DataContract.ProtyBackImf _devR;
+        private DeviceBackImf _dev;
+        private ProtyBackImf _devR;
         private String _value;
 
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="dev"></param>
-        public AGV(DataContract.DeviceBackImf dev)
+        public AGV(DeviceBackImf dev)
         {
             _dev = dev;
         }
@@ -190,6 +190,7 @@ namespace KEDAClient
             _devR = _dev.IGet(id);
             return _devR != null ? _devR.RValue : "";
         }
+
         /// <summary>
         /// 获取电量
         /// </summary>
@@ -369,6 +370,10 @@ namespace KEDAClient
             {
                 status = "离线";
             }
+            else if(item.DevType == "WK_PLC")
+            {
+                status = "在线";
+            }
             else if (item.ProtyList[ConstSetBA.在轨道上].RValue == "0")
             {
                 status = "脱轨";
@@ -395,6 +400,152 @@ namespace KEDAClient
             }
             return status;
         }
+
+    }
+
+    /// <summary>
+    /// 用于获取PLC的详细信息
+    /// </summary>
+    public class PLC
+    {
+        private DeviceBackImf _dev;
+        private ProtyBackImf _devR;
+        private String _value;
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="dev"></param>
+        public PLC(DeviceBackImf dev)
+        {
+            _dev = dev;
+        }
+
+        /// <summary>
+        /// 获取设备信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public String GetRValue(String id)
+        {
+            _devR = _dev.IGet(id);
+            return _devR != null ? _devR.RValue : "";
+        }
+
+        /// <summary>
+        /// 货物状态
+        /// </summary>
+        /// <returns></returns>
+        public String Sta_Material()
+        {
+            try
+            {
+                int status = Convert.ToInt32(GetRValue("0001"));
+                switch (status)
+                {
+                    case 1:
+                        _value = "有货";
+                        break;
+                    case 2:
+                        _value = "无货";
+                        break;
+                    case 3:
+                        _value = "传送中";
+                        break;
+                    default:
+                        _value = "未知";
+                        break;
+                }
+            }
+            catch
+            {
+                _value = "未知";
+            }
+            return _value;
+        }
+
+        /// <summary>
+        /// 电机状态
+        /// </summary>
+        /// <returns></returns>
+        public String Sta_Monitor()
+        {
+            try
+            {
+                int status = Convert.ToInt32(GetRValue("0002"));
+                switch (status)
+                {
+                    case 1:
+                        _value = "电机正转";
+                        break;
+                    case 2:
+                        _value = "电机反转";
+                        break;
+                    case 3:
+                        _value = "电机停止";
+                        break;
+                    default:
+                        _value = "未知";
+                        break;
+                }
+            }
+            catch
+            {
+                _value = "未知";
+            }
+            return _value;
+        }
+
+        /// <summary>
+        /// 故障状态
+        /// </summary>
+        /// <returns></returns>
+        public String Sta_Error()
+        {
+            return GetRValue("0003");
+        }
+
+        /// <summary>
+        /// 备用信息
+        /// </summary>
+        /// <returns></returns>
+        public String SpareInform()
+        {
+            return GetRValue("0004");
+        }
+
+        /// <summary>
+        /// PLC位置
+        /// </summary>
+        /// <returns></returns>
+        public String PLCLocat()
+        {
+            return PLC.GetDevLocat(_dev);
+        }
+
+        /// <summary>
+        /// 获取PLC位置
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public static String GetDevLocat(DeviceBackImf item)
+        {
+            String status = "";
+            if (item.DevId == "PLC01")
+            {
+                status = "窑头";
+            }
+            else if(item.DevId == "PLC02")
+            {
+                status = "窑尾";
+            }
+            else
+            {
+                status = "未知";
+            }
+            return status;
+        }
+
     }
 
 

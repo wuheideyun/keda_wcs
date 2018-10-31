@@ -32,6 +32,11 @@ namespace KEDAClient
         private String _agvListText, _currentTaskText;
 
         /// <summary>
+        /// 选中的PLC名称
+        /// </summary>
+        private String _plcSelectName = "";
+
+        /// <summary>
         /// 选中的AGV名称
         /// </summary>
         private String _agvSelectName = "";
@@ -40,6 +45,11 @@ namespace KEDAClient
         /// AGV信息
         /// </summary>
         private AGV _agv;
+
+        /// <summary>
+        /// PLC信息
+        /// </summary>
+        private PLC _plc;
 
         /// <summary>
         /// 设备ID与自身状态对应关系(车辆）：状态值：stop、forwardmove、backmove
@@ -222,6 +232,7 @@ namespace KEDAClient
                 {
                     _agvListIndex = -1;
                     _agvSelectName = "";
+                    _plcSelectName = "";
                 }
             }
         }
@@ -285,6 +296,7 @@ namespace KEDAClient
                 else
                 {
                     mainTabControl.SelectedIndex = 1;
+                    _plcSelectName = agvList.FocusedItem.Text;
                     plcData_Refresh();
                 }
 
@@ -320,7 +332,17 @@ namespace KEDAClient
         /// </summary>
         private void plcData_Refresh()
         {
-
+            if (!_plcSelectName.Equals(""))
+            {
+                plcNameLab.Text = _plcSelectName;
+                _plc = new PLC(F_DataCenter.MDev.IGetDev(_plcSelectName));
+                PlcLocationLab.Text = _plc.PLCLocat();
+                PlcStaMaterialLab.Text = _plc.Sta_Material();
+                PlcStaMonitorLab .Text =_plc.Sta_Monitor();
+                PlcErrorLab .Text = _plc.Sta_Error();
+                PlcSpareLab .Text = _plc.SpareInform ();
+                
+            }
         }
 
 
@@ -439,8 +461,7 @@ namespace KEDAClient
         }
 
         /// <summary>
-        /// 构建停止函数
-        /// 使得前进、后退无法重复被操作
+        /// 停止函数
         /// </summary>
         public void StopAGV()
         {

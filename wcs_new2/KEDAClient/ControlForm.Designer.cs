@@ -75,21 +75,26 @@
             this.AgvBackwardBtn = new System.Windows.Forms.Button();
             this.AgvForwardBtn = new System.Windows.Forms.Button();
             this.AgvStopBtn = new System.Windows.Forms.Button();
-            this.logPage = new System.Windows.Forms.TabPage();
-            this.listBoxOutput = new System.Windows.Forms.ListBox();
-            this.settingPage = new System.Windows.Forms.TabPage();
+            this.PLCPage = new System.Windows.Forms.TabPage();
             this.panel9 = new System.Windows.Forms.Panel();
             this.panel10 = new System.Windows.Forms.Panel();
-            this.label6 = new System.Windows.Forms.Label();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.editButton1 = new KEDAClient.EditButton();
-            this.monitorBtn = new System.Windows.Forms.Button();
+            this.PlcErrorLab = new System.Windows.Forms.Label();
+            this.PlcStaMaterialLab = new System.Windows.Forms.Label();
+            this.label38 = new System.Windows.Forms.Label();
+            this.label42 = new System.Windows.Forms.Label();
+            this.label43 = new System.Windows.Forms.Label();
+            this.label45 = new System.Windows.Forms.Label();
+            this.PlcStaMonitorLab = new System.Windows.Forms.Label();
+            this.PlcSpareLab = new System.Windows.Forms.Label();
+            this.PlcLocationLab = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.plcNameLab = new System.Windows.Forms.Label();
+            this.logPage = new System.Windows.Forms.TabPage();
+            this.listBoxOutput = new System.Windows.Forms.ListBox();
             this.testPage = new System.Windows.Forms.TabPage();
             this.panel8 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.monitorBtn = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
             this.tabControlEx1 = new KEDAClient.TabControlEx();
             this.taskPages = new System.Windows.Forms.TabPage();
@@ -134,11 +139,11 @@
             this.panel6.SuspendLayout();
             this.panel5.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
-            this.logPage.SuspendLayout();
-            this.settingPage.SuspendLayout();
+            this.PLCPage.SuspendLayout();
             this.panel9.SuspendLayout();
             this.panel10.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
+            this.logPage.SuspendLayout();
             this.testPage.SuspendLayout();
             this.panel8.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -178,8 +183,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.mainTabControl.Controls.Add(this.controlPage);
+            this.mainTabControl.Controls.Add(this.PLCPage);
             this.mainTabControl.Controls.Add(this.logPage);
-            this.mainTabControl.Controls.Add(this.settingPage);
             this.mainTabControl.Controls.Add(this.testPage);
             this.mainTabControl.ItemSize = new System.Drawing.Size(100, 140);
             this.mainTabControl.Location = new System.Drawing.Point(3, 3);
@@ -728,6 +733,195 @@
             this.AgvStopBtn.UseVisualStyleBackColor = true;
             this.AgvStopBtn.Click += new System.EventHandler(this.AgvStopBtn_Click);
             // 
+            // PLCPage
+            // 
+            this.PLCPage.BackColor = System.Drawing.Color.Transparent;
+            this.PLCPage.Controls.Add(this.panel9);
+            this.PLCPage.Font = new System.Drawing.Font("宋体", 16F);
+            this.PLCPage.Location = new System.Drawing.Point(4, 4);
+            this.PLCPage.Name = "PLCPage";
+            this.PLCPage.Padding = new System.Windows.Forms.Padding(3);
+            this.PLCPage.Size = new System.Drawing.Size(601, 733);
+            this.PLCPage.TabIndex = 2;
+            this.PLCPage.Text = "线边辊台";
+            // 
+            // panel9
+            // 
+            this.panel9.Controls.Add(this.panel10);
+            this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel9.Location = new System.Drawing.Point(3, 3);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(595, 727);
+            this.panel9.TabIndex = 2;
+            // 
+            // panel10
+            // 
+            this.panel10.Controls.Add(this.tableLayoutPanel3);
+            this.panel10.Controls.Add(this.PlcLocationLab);
+            this.panel10.Controls.Add(this.label6);
+            this.panel10.Controls.Add(this.plcNameLab);
+            this.panel10.Location = new System.Drawing.Point(3, 3);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(733, 391);
+            this.panel10.TabIndex = 3;
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 2;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 56.80473F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 43.19527F));
+            this.tableLayoutPanel3.Controls.Add(this.PlcErrorLab, 1, 2);
+            this.tableLayoutPanel3.Controls.Add(this.PlcStaMaterialLab, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.label38, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.label42, 0, 3);
+            this.tableLayoutPanel3.Controls.Add(this.label43, 0, 2);
+            this.tableLayoutPanel3.Controls.Add(this.label45, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.PlcStaMonitorLab, 1, 1);
+            this.tableLayoutPanel3.Controls.Add(this.PlcSpareLab, 1, 3);
+            this.tableLayoutPanel3.ForeColor = System.Drawing.Color.Black;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(196, 36);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 4;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(357, 267);
+            this.tableLayoutPanel3.TabIndex = 24;
+            // 
+            // PlcErrorLab
+            // 
+            this.PlcErrorLab.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.PlcErrorLab.AutoSize = true;
+            this.PlcErrorLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.PlcErrorLab.ForeColor = System.Drawing.Color.White;
+            this.PlcErrorLab.Location = new System.Drawing.Point(266, 151);
+            this.PlcErrorLab.Name = "PlcErrorLab";
+            this.PlcErrorLab.Size = new System.Drawing.Size(27, 27);
+            this.PlcErrorLab.TabIndex = 19;
+            this.PlcErrorLab.Text = "*";
+            // 
+            // PlcStaMaterialLab
+            // 
+            this.PlcStaMaterialLab.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.PlcStaMaterialLab.AutoSize = true;
+            this.PlcStaMaterialLab.BackColor = System.Drawing.Color.Transparent;
+            this.PlcStaMaterialLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.PlcStaMaterialLab.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.PlcStaMaterialLab.Location = new System.Drawing.Point(266, 19);
+            this.PlcStaMaterialLab.Name = "PlcStaMaterialLab";
+            this.PlcStaMaterialLab.Size = new System.Drawing.Size(27, 27);
+            this.PlcStaMaterialLab.TabIndex = 9;
+            this.PlcStaMaterialLab.Text = "*";
+            // 
+            // label38
+            // 
+            this.label38.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label38.AutoSize = true;
+            this.label38.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label38.ForeColor = System.Drawing.Color.White;
+            this.label38.Location = new System.Drawing.Point(3, 19);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(143, 27);
+            this.label38.TabIndex = 8;
+            this.label38.Text = "货物状态:";
+            // 
+            // label42
+            // 
+            this.label42.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label42.AutoSize = true;
+            this.label42.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label42.ForeColor = System.Drawing.Color.White;
+            this.label42.Location = new System.Drawing.Point(3, 219);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(157, 27);
+            this.label42.TabIndex = 4;
+            this.label42.Text = "备用信息：";
+            // 
+            // label43
+            // 
+            this.label43.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label43.AutoSize = true;
+            this.label43.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label43.ForeColor = System.Drawing.Color.White;
+            this.label43.Location = new System.Drawing.Point(3, 151);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(157, 27);
+            this.label43.TabIndex = 2;
+            this.label43.Text = "故障状态：";
+            // 
+            // label45
+            // 
+            this.label45.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label45.AutoSize = true;
+            this.label45.BackColor = System.Drawing.Color.Transparent;
+            this.label45.Cursor = System.Windows.Forms.Cursors.Default;
+            this.label45.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label45.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label45.Location = new System.Drawing.Point(3, 85);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(143, 27);
+            this.label45.TabIndex = 6;
+            this.label45.Text = "电机状态:";
+            // 
+            // PlcStaMonitorLab
+            // 
+            this.PlcStaMonitorLab.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.PlcStaMonitorLab.AutoSize = true;
+            this.PlcStaMonitorLab.BackColor = System.Drawing.Color.Transparent;
+            this.PlcStaMonitorLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.PlcStaMonitorLab.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.PlcStaMonitorLab.Location = new System.Drawing.Point(266, 85);
+            this.PlcStaMonitorLab.Name = "PlcStaMonitorLab";
+            this.PlcStaMonitorLab.Size = new System.Drawing.Size(27, 27);
+            this.PlcStaMonitorLab.TabIndex = 7;
+            this.PlcStaMonitorLab.Text = "*";
+            // 
+            // PlcSpareLab
+            // 
+            this.PlcSpareLab.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.PlcSpareLab.AutoSize = true;
+            this.PlcSpareLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.PlcSpareLab.ForeColor = System.Drawing.Color.White;
+            this.PlcSpareLab.Location = new System.Drawing.Point(266, 219);
+            this.PlcSpareLab.Name = "PlcSpareLab";
+            this.PlcSpareLab.Size = new System.Drawing.Size(27, 27);
+            this.PlcSpareLab.TabIndex = 16;
+            this.PlcSpareLab.Text = "*";
+            // 
+            // PlcLocationLab
+            // 
+            this.PlcLocationLab.AutoSize = true;
+            this.PlcLocationLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.PlcLocationLab.ForeColor = System.Drawing.Color.White;
+            this.PlcLocationLab.Location = new System.Drawing.Point(112, 102);
+            this.PlcLocationLab.Name = "PlcLocationLab";
+            this.PlcLocationLab.Size = new System.Drawing.Size(27, 27);
+            this.PlcLocationLab.TabIndex = 23;
+            this.PlcLocationLab.Text = "*";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("黑体", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label6.ForeColor = System.Drawing.Color.White;
+            this.label6.Location = new System.Drawing.Point(18, 99);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(88, 30);
+            this.label6.TabIndex = 22;
+            this.label6.Text = "位置:";
+            // 
+            // plcNameLab
+            // 
+            this.plcNameLab.AutoSize = true;
+            this.plcNameLab.Font = new System.Drawing.Font("黑体", 33F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.plcNameLab.ForeColor = System.Drawing.Color.White;
+            this.plcNameLab.Location = new System.Drawing.Point(15, 21);
+            this.plcNameLab.Name = "plcNameLab";
+            this.plcNameLab.Size = new System.Drawing.Size(152, 44);
+            this.plcNameLab.TabIndex = 21;
+            this.plcNameLab.Text = "PLC001";
+            // 
             // logPage
             // 
             this.logPage.BackColor = System.Drawing.Color.Transparent;
@@ -750,117 +944,6 @@
             this.listBoxOutput.Size = new System.Drawing.Size(601, 733);
             this.listBoxOutput.TabIndex = 10;
             // 
-            // settingPage
-            // 
-            this.settingPage.BackColor = System.Drawing.Color.Transparent;
-            this.settingPage.Controls.Add(this.panel9);
-            this.settingPage.Location = new System.Drawing.Point(4, 4);
-            this.settingPage.Name = "settingPage";
-            this.settingPage.Padding = new System.Windows.Forms.Padding(3);
-            this.settingPage.Size = new System.Drawing.Size(601, 733);
-            this.settingPage.TabIndex = 2;
-            this.settingPage.Text = "参数配置";
-            // 
-            // panel9
-            // 
-            this.panel9.Controls.Add(this.panel10);
-            this.panel9.Controls.Add(this.monitorBtn);
-            this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel9.Location = new System.Drawing.Point(3, 3);
-            this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(595, 727);
-            this.panel9.TabIndex = 2;
-            // 
-            // panel10
-            // 
-            this.panel10.Controls.Add(this.label6);
-            this.panel10.Controls.Add(this.tableLayoutPanel3);
-            this.panel10.Location = new System.Drawing.Point(3, 3);
-            this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(733, 375);
-            this.panel10.TabIndex = 3;
-            // 
-            // label6
-            // 
-            this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("黑体", 23F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(295, 19);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(146, 31);
-            this.label6.TabIndex = 5;
-            this.label6.Text = "参数配置";
-            // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel3.ColumnCount = 3;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.30508F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.69492F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 249F));
-            this.tableLayoutPanel3.Controls.Add(this.label4, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.textBox1, 1, 0);
-            this.tableLayoutPanel3.Controls.Add(this.button2, 2, 0);
-            this.tableLayoutPanel3.Controls.Add(this.editButton1, 2, 1);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(41, 70);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 2;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(587, 119);
-            this.tableLayoutPanel3.TabIndex = 4;
-            // 
-            // label4
-            // 
-            this.label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(3, 7);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(120, 44);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "充电最低电量：";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(166, 13);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(168, 32);
-            this.textBox1.TabIndex = 3;
-            // 
-            // button2
-            // 
-            this.button2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button2.Location = new System.Drawing.Point(406, 10);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(111, 38);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "修改";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // editButton1
-            // 
-            this.editButton1.BackColor = System.Drawing.SystemColors.Window;
-            this.editButton1.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.editButton1.ForeColor = System.Drawing.Color.White;
-            this.editButton1.Location = new System.Drawing.Point(343, 64);
-            this.editButton1.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
-            this.editButton1.Name = "editButton1";
-            this.editButton1.Size = new System.Drawing.Size(150, 50);
-            this.editButton1.TabIndex = 5;
-            // 
-            // monitorBtn
-            // 
-            this.monitorBtn.Location = new System.Drawing.Point(561, 463);
-            this.monitorBtn.Margin = new System.Windows.Forms.Padding(5);
-            this.monitorBtn.Name = "monitorBtn";
-            this.monitorBtn.Size = new System.Drawing.Size(137, 40);
-            this.monitorBtn.TabIndex = 1;
-            this.monitorBtn.Text = "打开控制平台";
-            this.monitorBtn.UseVisualStyleBackColor = true;
-            this.monitorBtn.Click += new System.EventHandler(this.monitorBtn_Click);
-            // 
             // testPage
             // 
             this.testPage.BackColor = System.Drawing.Color.Transparent;
@@ -874,21 +957,22 @@
             // 
             // panel8
             // 
-            this.panel8.Controls.Add(this.button1);
+            this.panel8.Controls.Add(this.monitorBtn);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(3, 3);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(595, 727);
             this.panel8.TabIndex = 0;
             // 
-            // button1
+            // monitorBtn
             // 
-            this.button1.Location = new System.Drawing.Point(59, 78);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(98, 41);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.monitorBtn.Location = new System.Drawing.Point(59, 78);
+            this.monitorBtn.Name = "monitorBtn";
+            this.monitorBtn.Size = new System.Drawing.Size(161, 43);
+            this.monitorBtn.TabIndex = 0;
+            this.monitorBtn.Text = "打开控制平台";
+            this.monitorBtn.UseVisualStyleBackColor = true;
+            this.monitorBtn.Click += new System.EventHandler(this.monitorBtn_Click);
             // 
             // panel4
             // 
@@ -1457,7 +1541,7 @@
             this.AutoScroll = true;
             this.AutoScrollMinSize = new System.Drawing.Size(1390, 880);
             this.BackColor = System.Drawing.Color.DimGray;
-            this.ClientSize = new System.Drawing.Size(1370, 590);
+            this.ClientSize = new System.Drawing.Size(1387, 607);
             this.Controls.Add(this.toolStripContainer1);
             this.Font = new System.Drawing.Font("宋体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1475,13 +1559,13 @@
             this.panel5.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
-            this.logPage.ResumeLayout(false);
-            this.settingPage.ResumeLayout(false);
+            this.PLCPage.ResumeLayout(false);
             this.panel9.ResumeLayout(false);
             this.panel10.ResumeLayout(false);
             this.panel10.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
+            this.logPage.ResumeLayout(false);
             this.testPage.ResumeLayout(false);
             this.panel8.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
@@ -1501,12 +1585,7 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button monitorBtn;
-        private System.Windows.Forms.TabPage controlPage;
         private System.Windows.Forms.ImageList imageRS;
-        private System.Windows.Forms.TabPage logPage;
-        private System.Windows.Forms.TabPage settingPage;
-        private TabControlEx mainTabControl;
         private TabControlEx tabControlEx1;
         private System.Windows.Forms.TabPage taskPages;
         private System.Windows.Forms.TabPage timeTaskPage;
@@ -1518,54 +1597,9 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private SwitchButton tailChargeBtn;
         private SwitchButton AutoGenerateTaskBtn;
-        private System.Windows.Forms.Label AgvSiteLab;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label AgvStatusLab;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button AgvClearSiteBtn;
-        private System.Windows.Forms.Button AgvBackwardBtn;
-        private System.Windows.Forms.Button AgvForwardBtn;
-        private System.Windows.Forms.Button AgvStopBtn;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.Label label16;
-        private SwitchButton HeadPlcLockBtn;
-        private SwitchButton tialPlcChargeLBtn;
-        private SwitchButton TailPlcLockBtn;
-        private SwitchButton HeadPlcChargeLBtn;
         private SwitchButton InitAllBtn;
         private SwitchButton ExecuteTaskBtn;
         private System.Windows.Forms.Panel panel7;
-        private System.Windows.Forms.Button AgvInitBtn;
-        private System.Windows.Forms.Label AgvDirectionLab;
-        private System.Windows.Forms.Label AgvTrafficLab;
-        private System.Windows.Forms.Label AgvFreeLab;
-        private System.Windows.Forms.Label AgvElectricityLab;
-        private System.Windows.Forms.Label AgvAimLab;
-        private System.Windows.Forms.Panel panel9;
-        private System.Windows.Forms.Panel panel10;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.TabPage testPage;
-        private System.Windows.Forms.Panel panel8;
-        private System.Windows.Forms.Button button1;
-        private EditButton editButton1;
-        private System.Windows.Forms.ListBox listBoxOutput;
         private System.Windows.Forms.Timer timerForListRefresh;
         private System.Windows.Forms.ListView currentTaskList;
         private SwitchButton headUnloadBtn;
@@ -1588,16 +1622,71 @@
         private SwitchButton tailChargSucBtn;
         private System.Windows.Forms.Button taskStopBtn;
         private System.Windows.Forms.ListView agvList;
-        private System.Windows.Forms.Label agvNameLab;
         private System.Windows.Forms.Label label27;
         private SwitchButton allOnOffBtn;
+        private System.Windows.Forms.ToolStripContainer toolStripContainer1;
+        private TabControlEx mainTabControl;
+        private System.Windows.Forms.TabPage controlPage;
+        private System.Windows.Forms.Label AgvNowPoitLab;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label agvNameLab;
+        private System.Windows.Forms.Button AgvInitBtn;
+        private System.Windows.Forms.Panel panel6;
+        private SwitchButton tialPlcChargeLBtn;
+        private SwitchButton TailPlcLockBtn;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Panel panel5;
+        private SwitchButton HeadPlcChargeLBtn;
+        private SwitchButton HeadPlcLockBtn;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.Label AgvSpeedLab;
         private System.Windows.Forms.Label AgvStaMaterialLab;
+        private System.Windows.Forms.Label AgvDirectionLab;
+        private System.Windows.Forms.Label AgvTrafficLab;
+        private System.Windows.Forms.Label AgvFreeLab;
+        private System.Windows.Forms.Label AgvSiteLab;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label AgvStatusLab;
+        private System.Windows.Forms.Label AgvElectricityLab;
+        private System.Windows.Forms.Label AgvAimLab;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.Label AgvStaMonitorLab;
-        private System.Windows.Forms.Label AgvNowPoitLab;
-        private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.Label AgvSpeedLab;
-        private System.Windows.Forms.ToolStripContainer toolStripContainer1;
+        private System.Windows.Forms.Button AgvClearSiteBtn;
+        private System.Windows.Forms.Button AgvBackwardBtn;
+        private System.Windows.Forms.Button AgvForwardBtn;
+        private System.Windows.Forms.Button AgvStopBtn;
+        private System.Windows.Forms.TabPage logPage;
+        private System.Windows.Forms.ListBox listBoxOutput;
+        private System.Windows.Forms.TabPage PLCPage;
+        private System.Windows.Forms.TabPage testPage;
+        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Button monitorBtn;
+        private System.Windows.Forms.Panel panel9;
+        private System.Windows.Forms.Panel panel10;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.Label PlcErrorLab;
+        private System.Windows.Forms.Label PlcStaMaterialLab;
+        private System.Windows.Forms.Label label38;
+        private System.Windows.Forms.Label label42;
+        private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.Label label45;
+        private System.Windows.Forms.Label PlcStaMonitorLab;
+        private System.Windows.Forms.Label PlcSpareLab;
+        private System.Windows.Forms.Label PlcLocationLab;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label plcNameLab;
     }
 }
