@@ -100,9 +100,9 @@ namespace KEDAClient
             agvList.View = System.Windows.Forms.View.Details;
 
             //调度任务列表
-            currentTaskList.Columns.Add("ID", 0, HorizontalAlignment.Center);
-            currentTaskList.Columns.Add("任务", 340, HorizontalAlignment.Center);
-            currentTaskList.Columns.Add("路径", 80, HorizontalAlignment.Center);
+            currentTaskList.Columns.Add("ID", 0, HorizontalAlignment.Left);
+            currentTaskList.Columns.Add("任务", 340, HorizontalAlignment.Left);
+            currentTaskList.Columns.Add("路径", 80, HorizontalAlignment.Left);
 
             currentTaskList.View = System.Windows.Forms.View.Details;
 
@@ -421,7 +421,27 @@ namespace KEDAClient
             }
         }
 
+        /// <summary>
+        /// 自动生成任务
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AutoGenerateTaskBtn_Click(object sender, EventArgs e)
+        {
+            ParamControl.Is_AutoAddTask = AutoGenerateTaskBtn.Checked;
 
+        }
+
+        /// <summary>
+        /// 自动执行任务
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ExecuteTaskBtn_Click(object sender, EventArgs e)
+        {
+            ParamControl.Is_AutoExecuteTask = ExecuteTaskBtn.Checked;
+
+        }
         #endregion
 
         #region AGV操作方法
@@ -562,7 +582,7 @@ namespace KEDAClient
         }
         #endregion
 
-        #region 任务启动配置
+        #region 定时任务配置
 
         /// <summary>
         /// 是否执行窑尾充电完成任务
@@ -585,28 +605,7 @@ namespace KEDAClient
             ParamControl.Do_HeadCharge = headChargeBtn.Checked;
 
         }
-
-        /// <summary>
-        /// 自动生成任务
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void AutoGenerateTaskBtn_Click(object sender, EventArgs e)
-        {
-            ParamControl.Is_AutoAddTask = AutoGenerateTaskBtn.Checked;
-
-        }
-
-        /// <summary>
-        /// 自动执行任务
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ExecuteTaskBtn_Click(object sender, EventArgs e)
-        {
-            ParamControl.Is_AutoExecuteTask = ExecuteTaskBtn.Checked;
-
-        }
+       
 
         /// <summary>
         /// 是否执行窑尾充电任务
@@ -662,50 +661,58 @@ namespace KEDAClient
             ParamControl.Do_ToTailWait = tailWaitBtn.Checked;
 
         }
-
+        
         /// <summary>
-        /// 是否执行去窑头等待点的初始任务
+        /// 是否执行窑头充电完成任务
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void headWaitInitBtn_Click(object sender, EventArgs e)
+        private void headChargSucBtn_Click(object sender, EventArgs e)
         {
-            ParamControl.Do_InitToHeadWait = headWaitInitBtn.Checked;
+
+            ParamControl.Do_HeadChargeSucc = headChargSucBtn.Checked;
 
         }
 
+
         /// <summary>
-        /// 是否执行去窑尾等待点的初始化任务
+        /// 控制是否全部打开任务
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void tailWaitInitBtn_Click(object sender, EventArgs e)
+        private void allOnOffBtn_Click(object sender, EventArgs e)
         {
+            headChargeBtn.Checked = allOnOffBtn.Checked;
+            headChargSucBtn.Checked = allOnOffBtn.Checked;
+            headUnloadBtn.Checked = allOnOffBtn.Checked;
+            headWaitBtn.Checked = allOnOffBtn.Checked;
 
-            ParamControl.Do_InitToTailWait = tailWaitInitBtn.Checked;
+            tailChargeBtn.Checked = allOnOffBtn.Checked;
+            tailChargSucBtn.Checked = allOnOffBtn.Checked;
+            tailLoadBtn.Checked = allOnOffBtn.Checked;
+            tailWaitBtn.Checked = allOnOffBtn.Checked;
 
+
+            headChargeBtn_Click(sender, e);
+            headChargSucBtn_Click(sender, e);
+            headUnloadBtn_Click(sender, e);
+            headWaitBtn_Click(sender, e);
+
+            tailChargeBtn_Click(sender, e);
+            tailChargSucBtn_Click(sender, e);
+            tailLoadBtn_Click(sender, e);
+            tailWaitBtn_Click(sender, e);
         }
 
+        #endregion
+
+        #region 测试配置
+
         /// <summary>
-        /// 是否忽略窑尾出货Agv和Plc的货物状态
+        /// 控制不能输入数字以外的字符
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void IgnoreTailStatusBtn_Click(object sender, EventArgs e)
-        {
-            ParamControl.Is_IgnoreTailUnloadStatus = IgnoreTailStatusBtn.Checked;
-        }
-
-        /// <summary>
-        /// 是否忽略窑头放料Agv和Plc的货物状态
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void IgnoreHeadStatusBtn_Click(object sender, EventArgs e)
-        {
-            ParamControl.Is_IgnoreHeadUnloadStatus = IgnoreHeadStatusBtn.Checked;
-        }
-
         private void headAgvPlcRunTimeBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar != 8 && !Char.IsDigit(e.KeyChar))//如果不是输入数字就不让输入
@@ -714,6 +721,11 @@ namespace KEDAClient
             }
         }
 
+        /// <summary>
+        /// 控制不能输入数字以外的字符
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tailAgvPlcRunTimeBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar != 8 && !Char.IsDigit(e.KeyChar))//如果不是输入数字就不让输入
@@ -743,7 +755,7 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void tailAgvPlcRunTimeBox_TextChanged(object sender, EventArgs e)
         {
-            if (tailAgvPlcRunTimeBox.Text.Equals("") || int.Parse(tailAgvPlcRunTimeBox.Text)<30)
+            if (tailAgvPlcRunTimeBox.Text.Equals("") || int.Parse(tailAgvPlcRunTimeBox.Text) < 30)
             {
                 tailAgvPlcRunTimeBox.Text = "30";
             }
@@ -770,6 +782,32 @@ namespace KEDAClient
         {
             ParamControl.Is_IgnoreTailStaStatus = IgnoreTailStaStatusBtn.Checked;
         }
+
+        #endregion
+
+        #region 任务配置
+
+        /// <summary>
+        /// 是否忽略窑尾出货Agv和Plc的货物状态
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void IgnoreTailStatusBtn_Click(object sender, EventArgs e)
+        {
+            ParamControl.Is_IgnoreTailUnloadStatus = IgnoreTailStatusBtn.Checked;
+        }
+
+        /// <summary>
+        /// 是否忽略窑头放料Agv和Plc的货物状态
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void IgnoreHeadStatusBtn_Click(object sender, EventArgs e)
+        {
+            ParamControl.Is_IgnoreHeadUnloadStatus = IgnoreHeadStatusBtn.Checked;
+        }
+
+       
 
         /// <summary>
         /// 窑头等 到 窑头卸  忽略窑头无货状态 让AGV过去窑头卸
@@ -810,56 +848,6 @@ namespace KEDAClient
         {
             ParamControl.IgnoreAgvLoadTask = IgAgvLoadTask.Checked;
         }
-
-       
-        /// <summary>
-        /// 是否执行窑头充电完成任务
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void headChargSucBtn_Click(object sender, EventArgs e)
-        {
-
-            ParamControl.Do_HeadChargeSucc = headChargSucBtn.Checked;
-
-        }
-
-
-        /// <summary>
-        /// 控制是否全部打开任务
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void allOnOffBtn_Click(object sender, EventArgs e)
-        {
-            headChargeBtn.Checked = allOnOffBtn.Checked;
-            headChargSucBtn.Checked = allOnOffBtn.Checked;
-            headUnloadBtn.Checked = allOnOffBtn.Checked;
-            headWaitBtn.Checked = allOnOffBtn.Checked;
-            headWaitInitBtn.Checked = allOnOffBtn.Checked;
-
-            tailChargeBtn.Checked = allOnOffBtn.Checked;
-            tailChargSucBtn.Checked = allOnOffBtn.Checked;
-            tailLoadBtn.Checked = allOnOffBtn.Checked;
-            tailWaitBtn.Checked = allOnOffBtn.Checked;
-            tailWaitInitBtn.Checked = allOnOffBtn.Checked;
-
-
-            headChargeBtn_Click(sender, e);
-            headChargSucBtn_Click(sender, e);
-            headUnloadBtn_Click(sender, e);
-            headWaitBtn_Click(sender, e);
-            headWaitInitBtn_Click(sender, e);
-
-            tailChargeBtn_Click(sender, e);
-            tailChargSucBtn_Click(sender, e);
-            tailLoadBtn_Click(sender, e);
-            tailWaitBtn_Click(sender, e);
-            tailWaitInitBtn_Click(sender, e);
-        }
-
         #endregion
-
-
     }
 }

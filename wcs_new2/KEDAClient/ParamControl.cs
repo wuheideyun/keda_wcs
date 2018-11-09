@@ -61,17 +61,6 @@ namespace KEDAClient
         public static bool Do_ToTailWait = true;
 
         /// <summary>
-        /// 是否执行初始化去窑头等待点的任务
-        /// </summary>
-        public static bool Do_InitToHeadWait = true;
-
-
-        /// <summary>
-        /// 是否执行初始化去窑尾等待点的任务
-        /// </summary>
-        public static bool Do_InitToTailWait = true;
-
-        /// <summary>
         /// 是否自动执行任务，和界面的执行任务进行对应，
         /// 如果启动 则启动后生成的任务都会自动执行，启动前的任务需要手动确认执行
         /// </summary>
