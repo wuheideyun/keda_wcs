@@ -771,6 +771,46 @@ namespace KEDAClient
             ParamControl.Is_IgnoreTailStaStatus = IgnoreTailStaStatusBtn.Checked;
         }
 
+        /// <summary>
+        /// 窑头等 到 窑头卸  忽略窑头无货状态 让AGV过去窑头卸
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void IgHeadUnLoadTask_Load(object sender, EventArgs e)
+        {
+            ParamControl.IgnoreHeadUnloadTask = IgHeadUnLoadTask.Checked;
+        }
+
+        /// <summary>
+        /// 窑头卸 到 窑尾等  忽略AGV的无货状态 让AGV过去窑尾等
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void IgAgvUnLoadTask_Load(object sender, EventArgs e)
+        {
+            ParamControl.IgnoreAgvUnloadTask = IgAgvUnLoadTask.Checked;
+        }
+
+        /// <summary>
+        /// 窑尾等 到 窑尾取  忽略窑尾有货状态 让AGV过去接货
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void IgTailLoadTask_Load(object sender, EventArgs e)
+        {
+            ParamControl.IgnoreTailLoadTask = IgTailLoadTask.Checked;
+        }
+
+        /// <summary>
+        /// 窑尾取 到 窑头等  忽略AGV有货状态 让AGV窑头等
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void IgAgvLoadTask_Load(object sender, EventArgs e)
+        {
+            ParamControl.IgnoreAgvLoadTask = IgAgvLoadTask.Checked;
+        }
+
 
 
         /// <summary>

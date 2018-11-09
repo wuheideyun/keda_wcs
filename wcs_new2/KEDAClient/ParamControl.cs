@@ -102,6 +102,9 @@ namespace KEDAClient
         /// </summary>
         public static bool Is_IgnoreTailStaStatus = false;
 
+        /// <summary>
+        /// 忽略窑头放料Agv和Plc的货物状态是发送点击启动时间
+        /// </summary>
         private static int _IgnoreHeadUnloadSecond = 30;
         /// <summary>
         /// 忽略窑头放料Agv和Plc的货物状态是发送点击启动时间
@@ -118,6 +121,9 @@ namespace KEDAClient
             }
         }
 
+        /// <summary>
+        /// 忽略窑尾出货Agv和Plc的货物状态是发送电机启动时间
+        /// </summary>
         private static int _IgnoreTailUnloadSecond = 30;
         /// <summary>
         /// 忽略窑尾出货Agv和Plc的货物状态是发送电机启动时间
@@ -133,6 +139,27 @@ namespace KEDAClient
                 _IgnoreTailUnloadSecond = value;
             }
         }
+
+        /// <summary>
+        /// 窑头等 到 窑头卸  忽略窑头无货状态 让AGV过去窑头卸
+        /// </summary>
+        public static bool IgnoreHeadUnloadTask = false;
+
+        /// <summary>
+        /// 窑头卸 到 窑尾等  忽略AGV的无货状态 让AGV过去窑尾等
+        /// </summary>
+        public static bool IgnoreAgvUnloadTask = false;
+
+        /// <summary>
+        /// 窑尾等 到 窑尾取  忽略窑尾有货状态 让AGV过去接货
+        /// </summary>
+        public static bool IgnoreTailLoadTask = false;
+
+        /// <summary>
+        /// 窑尾取 到 窑头等  忽略AGV有货状态 让AGV窑头等
+        /// </summary>
+        public static bool IgnoreAgvLoadTask = false;
+
     }
 
     /// <summary>
