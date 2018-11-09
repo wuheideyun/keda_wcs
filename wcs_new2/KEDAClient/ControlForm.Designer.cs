@@ -119,6 +119,25 @@
             this.label35 = new System.Windows.Forms.Label();
             this.label36 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.taskconfPage = new System.Windows.Forms.TabPage();
+            this.panel13 = new System.Windows.Forms.Panel();
+            this.panel15 = new System.Windows.Forms.Panel();
+            this.IgAgvLoadTask = new KEDAClient.SwitchButton();
+            this.IgTailLoadTask = new KEDAClient.SwitchButton();
+            this.label44 = new System.Windows.Forms.Label();
+            this.label41 = new System.Windows.Forms.Label();
+            this.IgAgvUnLoadTask = new KEDAClient.SwitchButton();
+            this.label40 = new System.Windows.Forms.Label();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label49 = new System.Windows.Forms.Label();
+            this.label53 = new System.Windows.Forms.Label();
+            this.label52 = new System.Windows.Forms.Label();
+            this.IgHeadUnLoadTask = new KEDAClient.SwitchButton();
+            this.label50 = new System.Windows.Forms.Label();
+            this.label51 = new System.Windows.Forms.Label();
             this.tabControlEx1 = new KEDAClient.TabControlEx();
             this.taskPages = new System.Windows.Forms.TabPage();
             this.taskStopBtn = new System.Windows.Forms.Button();
@@ -151,25 +170,6 @@
             this.AutoGenerateTaskBtn = new KEDAClient.SwitchButton();
             this.InitAllBtn = new KEDAClient.SwitchButton();
             this.ExecuteTaskBtn = new KEDAClient.SwitchButton();
-            this.taskconfPage = new System.Windows.Forms.TabPage();
-            this.panel13 = new System.Windows.Forms.Panel();
-            this.panel15 = new System.Windows.Forms.Panel();
-            this.IgHeadUnLoadTask = new KEDAClient.SwitchButton();
-            this.label50 = new System.Windows.Forms.Label();
-            this.label51 = new System.Windows.Forms.Label();
-            this.label52 = new System.Windows.Forms.Label();
-            this.label53 = new System.Windows.Forms.Label();
-            this.label49 = new System.Windows.Forms.Label();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label40 = new System.Windows.Forms.Label();
-            this.IgAgvUnLoadTask = new KEDAClient.SwitchButton();
-            this.label41 = new System.Windows.Forms.Label();
-            this.label44 = new System.Windows.Forms.Label();
-            this.IgTailLoadTask = new KEDAClient.SwitchButton();
-            this.IgAgvLoadTask = new KEDAClient.SwitchButton();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -191,10 +191,6 @@
             this.panel8.SuspendLayout();
             this.panel12.SuspendLayout();
             this.panel11.SuspendLayout();
-            this.tabControlEx1.SuspendLayout();
-            this.taskPages.SuspendLayout();
-            this.timeTaskPage.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
             this.taskconfPage.SuspendLayout();
             this.panel13.SuspendLayout();
             this.panel15.SuspendLayout();
@@ -202,6 +198,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.tabControlEx1.SuspendLayout();
+            this.taskPages.SuspendLayout();
+            this.timeTaskPage.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // imageRS
@@ -219,7 +219,7 @@
             this.panel3.Location = new System.Drawing.Point(201, 109);
             this.panel3.Name = "panel3";
             this.panel3.Padding = new System.Windows.Forms.Padding(3);
-            this.panel3.Size = new System.Drawing.Size(804, 746);
+            this.panel3.Size = new System.Drawing.Size(821, 746);
             this.panel3.TabIndex = 6;
             // 
             // panel4
@@ -228,7 +228,7 @@
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel4.Controls.Add(this.tabControlEx1);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel4.Location = new System.Drawing.Point(1005, 109);
+            this.panel4.Location = new System.Drawing.Point(1022, 109);
             this.panel4.Name = "panel4";
             this.panel4.Padding = new System.Windows.Forms.Padding(3);
             this.panel4.Size = new System.Drawing.Size(450, 746);
@@ -255,7 +255,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(3);
-            this.panel1.Size = new System.Drawing.Size(1455, 109);
+            this.panel1.Size = new System.Drawing.Size(1472, 109);
             this.panel1.TabIndex = 4;
             // 
             // panel7
@@ -264,7 +264,7 @@
             this.panel7.Controls.Add(this.AutoGenerateTaskBtn);
             this.panel7.Controls.Add(this.InitAllBtn);
             this.panel7.Controls.Add(this.ExecuteTaskBtn);
-            this.panel7.Location = new System.Drawing.Point(96, -10);
+            this.panel7.Location = new System.Drawing.Point(105, -10);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(1289, 119);
             this.panel7.TabIndex = 9;
@@ -285,11 +285,11 @@
             this.toolStripContainer1.ContentPanel.Controls.Add(this.panel4);
             this.toolStripContainer1.ContentPanel.Controls.Add(this.panel2);
             this.toolStripContainer1.ContentPanel.Controls.Add(this.panel1);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(1455, 855);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(1472, 855);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer1.Name = "toolStripContainer1";
-            this.toolStripContainer1.Size = new System.Drawing.Size(1455, 880);
+            this.toolStripContainer1.Size = new System.Drawing.Size(1472, 880);
             this.toolStripContainer1.TabIndex = 8;
             this.toolStripContainer1.Text = "toolStripContainer1";
             // 
@@ -310,7 +310,7 @@
             this.mainTabControl.Multiline = true;
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.SelectedIndex = 0;
-            this.mainTabControl.Size = new System.Drawing.Size(814, 741);
+            this.mainTabControl.Size = new System.Drawing.Size(831, 741);
             this.mainTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.mainTabControl.TabIndex = 2;
             // 
@@ -331,7 +331,7 @@
             this.controlPage.Location = new System.Drawing.Point(4, 4);
             this.controlPage.Name = "controlPage";
             this.controlPage.Padding = new System.Windows.Forms.Padding(3);
-            this.controlPage.Size = new System.Drawing.Size(666, 733);
+            this.controlPage.Size = new System.Drawing.Size(700, 733);
             this.controlPage.TabIndex = 0;
             this.controlPage.Text = "综合控制";
             // 
@@ -860,7 +860,7 @@
             this.PLCPage.Location = new System.Drawing.Point(4, 4);
             this.PLCPage.Name = "PLCPage";
             this.PLCPage.Padding = new System.Windows.Forms.Padding(3);
-            this.PLCPage.Size = new System.Drawing.Size(649, 733);
+            this.PLCPage.Size = new System.Drawing.Size(683, 733);
             this.PLCPage.TabIndex = 2;
             this.PLCPage.Text = "线边辊台";
             // 
@@ -870,7 +870,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(3, 3);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(643, 727);
+            this.panel9.Size = new System.Drawing.Size(677, 727);
             this.panel9.TabIndex = 2;
             // 
             // panel10
@@ -1047,7 +1047,7 @@
             this.logPage.Controls.Add(this.listBoxOutput);
             this.logPage.Location = new System.Drawing.Point(4, 4);
             this.logPage.Name = "logPage";
-            this.logPage.Size = new System.Drawing.Size(649, 733);
+            this.logPage.Size = new System.Drawing.Size(683, 733);
             this.logPage.TabIndex = 3;
             this.logPage.Text = "日志记录";
             // 
@@ -1060,7 +1060,7 @@
             this.listBoxOutput.HorizontalScrollbar = true;
             this.listBoxOutput.Location = new System.Drawing.Point(0, 0);
             this.listBoxOutput.Name = "listBoxOutput";
-            this.listBoxOutput.Size = new System.Drawing.Size(649, 733);
+            this.listBoxOutput.Size = new System.Drawing.Size(683, 733);
             this.listBoxOutput.TabIndex = 10;
             // 
             // testPage
@@ -1070,7 +1070,7 @@
             this.testPage.Location = new System.Drawing.Point(4, 4);
             this.testPage.Name = "testPage";
             this.testPage.Padding = new System.Windows.Forms.Padding(3);
-            this.testPage.Size = new System.Drawing.Size(649, 733);
+            this.testPage.Size = new System.Drawing.Size(683, 733);
             this.testPage.TabIndex = 4;
             this.testPage.Text = "测试配置";
             // 
@@ -1081,7 +1081,7 @@
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(3, 3);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(643, 727);
+            this.panel8.Size = new System.Drawing.Size(677, 727);
             this.panel8.TabIndex = 0;
             // 
             // panel12
@@ -1112,7 +1112,7 @@
             this.IgnoreTailStaStatusBtn.TabIndex = 16;
             this.IgnoreTailStaStatusBtn.TextName = null;
             this.IgnoreTailStaStatusBtn.TextStartPoint = new System.Drawing.Point(0, 0);
-            this.IgnoreTailStaStatusBtn.Load += new System.EventHandler(this.IgnoreTailStaStatusBtn_Load);
+            this.IgnoreTailStaStatusBtn.Click += new System.EventHandler(this.IgnoreTailStaStatusBtn_Click);
             // 
             // switchButton2
             // 
@@ -1174,7 +1174,7 @@
             this.IgnoreTailStatusBtn.TabIndex = 3;
             this.IgnoreTailStatusBtn.TextName = null;
             this.IgnoreTailStatusBtn.TextStartPoint = new System.Drawing.Point(0, 0);
-            this.IgnoreTailStatusBtn.Load += new System.EventHandler(this.IgnoreTailStatusBtn_Load);
+            this.IgnoreTailStatusBtn.Click += new System.EventHandler(this.IgnoreTailStatusBtn_Click);
             // 
             // label33
             // 
@@ -1227,7 +1227,7 @@
             this.IgnoreHeadStaStatusBtn.TabIndex = 13;
             this.IgnoreHeadStaStatusBtn.TextName = null;
             this.IgnoreHeadStaStatusBtn.TextStartPoint = new System.Drawing.Point(0, 0);
-            this.IgnoreHeadStaStatusBtn.Load += new System.EventHandler(this.IgnoreHeadStaStatusBtn_Load);
+            this.IgnoreHeadStaStatusBtn.Click += new System.EventHandler(this.IgnoreHeadStaStatusBtn_Click);
             // 
             // label37
             // 
@@ -1276,7 +1276,7 @@
             this.IgnoreHeadStatusBtn.TabIndex = 10;
             this.IgnoreHeadStatusBtn.TextName = null;
             this.IgnoreHeadStatusBtn.TextStartPoint = new System.Drawing.Point(0, 0);
-            this.IgnoreHeadStatusBtn.Load += new System.EventHandler(this.IgnoreHeadStatusBtn_Load);
+            this.IgnoreHeadStatusBtn.Click += new System.EventHandler(this.IgnoreHeadStatusBtn_Click);
             // 
             // headAgvPlcRunTimeBox
             // 
@@ -1321,6 +1321,237 @@
             this.label4.Size = new System.Drawing.Size(126, 22);
             this.label4.TabIndex = 0;
             this.label4.Text = "窑头(放料)";
+            // 
+            // taskconfPage
+            // 
+            this.taskconfPage.BackColor = System.Drawing.Color.Transparent;
+            this.taskconfPage.Controls.Add(this.panel13);
+            this.taskconfPage.Location = new System.Drawing.Point(4, 4);
+            this.taskconfPage.Name = "taskconfPage";
+            this.taskconfPage.Size = new System.Drawing.Size(683, 733);
+            this.taskconfPage.TabIndex = 5;
+            this.taskconfPage.Text = "任务配置";
+            // 
+            // panel13
+            // 
+            this.panel13.BackColor = System.Drawing.Color.Transparent;
+            this.panel13.Controls.Add(this.panel15);
+            this.panel13.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel13.Location = new System.Drawing.Point(0, 0);
+            this.panel13.Name = "panel13";
+            this.panel13.Size = new System.Drawing.Size(683, 733);
+            this.panel13.TabIndex = 1;
+            // 
+            // panel15
+            // 
+            this.panel15.Controls.Add(this.IgAgvLoadTask);
+            this.panel15.Controls.Add(this.IgTailLoadTask);
+            this.panel15.Controls.Add(this.label44);
+            this.panel15.Controls.Add(this.label41);
+            this.panel15.Controls.Add(this.IgAgvUnLoadTask);
+            this.panel15.Controls.Add(this.label40);
+            this.panel15.Controls.Add(this.pictureBox4);
+            this.panel15.Controls.Add(this.pictureBox3);
+            this.panel15.Controls.Add(this.pictureBox2);
+            this.panel15.Controls.Add(this.pictureBox1);
+            this.panel15.Controls.Add(this.label49);
+            this.panel15.Controls.Add(this.label53);
+            this.panel15.Controls.Add(this.label52);
+            this.panel15.Controls.Add(this.IgHeadUnLoadTask);
+            this.panel15.Controls.Add(this.label50);
+            this.panel15.Controls.Add(this.label51);
+            this.panel15.Location = new System.Drawing.Point(12, 3);
+            this.panel15.Name = "panel15";
+            this.panel15.Size = new System.Drawing.Size(637, 685);
+            this.panel15.TabIndex = 1;
+            // 
+            // IgAgvLoadTask
+            // 
+            this.IgAgvLoadTask.BackColor = System.Drawing.Color.Transparent;
+            this.IgAgvLoadTask.Checked = false;
+            this.IgAgvLoadTask.CheckStyleX = KEDAClient.CheckStyle.style1;
+            this.IgAgvLoadTask.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.IgAgvLoadTask.Location = new System.Drawing.Point(179, 531);
+            this.IgAgvLoadTask.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.IgAgvLoadTask.Name = "IgAgvLoadTask";
+            this.IgAgvLoadTask.Size = new System.Drawing.Size(87, 27);
+            this.IgAgvLoadTask.TabIndex = 28;
+            this.IgAgvLoadTask.TextName = null;
+            this.IgAgvLoadTask.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.IgAgvLoadTask.Click += new System.EventHandler(this.IgAgvLoadTask_Click);
+            // 
+            // IgTailLoadTask
+            // 
+            this.IgTailLoadTask.BackColor = System.Drawing.Color.Transparent;
+            this.IgTailLoadTask.Checked = false;
+            this.IgTailLoadTask.CheckStyleX = KEDAClient.CheckStyle.style1;
+            this.IgTailLoadTask.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.IgTailLoadTask.Location = new System.Drawing.Point(533, 531);
+            this.IgTailLoadTask.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.IgTailLoadTask.Name = "IgTailLoadTask";
+            this.IgTailLoadTask.Size = new System.Drawing.Size(87, 27);
+            this.IgTailLoadTask.TabIndex = 27;
+            this.IgTailLoadTask.TextName = null;
+            this.IgTailLoadTask.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.IgTailLoadTask.Click += new System.EventHandler(this.IgTailLoadTask_Click);
+            // 
+            // label44
+            // 
+            this.label44.AutoSize = true;
+            this.label44.Font = new System.Drawing.Font("黑体", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label44.ForeColor = System.Drawing.Color.White;
+            this.label44.Location = new System.Drawing.Point(19, 536);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(158, 19);
+            this.label44.TabIndex = 26;
+            this.label44.Text = "不判断AGV有货:";
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Font = new System.Drawing.Font("黑体", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label41.ForeColor = System.Drawing.Color.White;
+            this.label41.Location = new System.Drawing.Point(373, 534);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(167, 19);
+            this.label41.TabIndex = 25;
+            this.label41.Text = "不判断窑尾有货:";
+            // 
+            // IgAgvUnLoadTask
+            // 
+            this.IgAgvUnLoadTask.BackColor = System.Drawing.Color.Transparent;
+            this.IgAgvUnLoadTask.Checked = false;
+            this.IgAgvUnLoadTask.CheckStyleX = KEDAClient.CheckStyle.style1;
+            this.IgAgvUnLoadTask.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.IgAgvUnLoadTask.Location = new System.Drawing.Point(533, 163);
+            this.IgAgvUnLoadTask.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.IgAgvUnLoadTask.Name = "IgAgvUnLoadTask";
+            this.IgAgvUnLoadTask.Size = new System.Drawing.Size(87, 27);
+            this.IgAgvUnLoadTask.TabIndex = 24;
+            this.IgAgvUnLoadTask.TextName = null;
+            this.IgAgvUnLoadTask.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.IgAgvUnLoadTask.Click += new System.EventHandler(this.IgAgvUnLoadTask_Click);
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Font = new System.Drawing.Font("黑体", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label40.ForeColor = System.Drawing.Color.White;
+            this.label40.Location = new System.Drawing.Point(374, 168);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(158, 19);
+            this.label40.TabIndex = 23;
+            this.label40.Text = "不判断AGV无货:";
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Image = global::KEDAClient.Properties.Resources.arrow_up;
+            this.pictureBox4.Location = new System.Drawing.Point(126, 319);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(38, 37);
+            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox4.TabIndex = 22;
+            this.pictureBox4.TabStop = false;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Image = global::KEDAClient.Properties.Resources.arrow_rigth;
+            this.pictureBox3.Location = new System.Drawing.Point(285, 103);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(41, 36);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox3.TabIndex = 21;
+            this.pictureBox3.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::KEDAClient.Properties.Resources.arrow_left;
+            this.pictureBox2.Location = new System.Drawing.Point(286, 452);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(41, 36);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox2.TabIndex = 20;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::KEDAClient.Properties.Resources.arrow;
+            this.pictureBox1.Location = new System.Drawing.Point(480, 319);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(38, 37);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 19;
+            this.pictureBox1.TabStop = false;
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label49.ForeColor = System.Drawing.Color.GreenYellow;
+            this.label49.Location = new System.Drawing.Point(19, 455);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(219, 22);
+            this.label49.TabIndex = 16;
+            this.label49.Text = "4)窑尾取 去 窑头等";
+            // 
+            // label53
+            // 
+            this.label53.AutoSize = true;
+            this.label53.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label53.ForeColor = System.Drawing.Color.GreenYellow;
+            this.label53.Location = new System.Drawing.Point(375, 108);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(219, 22);
+            this.label53.TabIndex = 15;
+            this.label53.Text = "2)窑头卸 去 窑尾等";
+            // 
+            // label52
+            // 
+            this.label52.AutoSize = true;
+            this.label52.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label52.ForeColor = System.Drawing.Color.GreenYellow;
+            this.label52.Location = new System.Drawing.Point(19, 108);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(219, 22);
+            this.label52.TabIndex = 14;
+            this.label52.Text = "1)窑头等 去 窑头卸";
+            // 
+            // IgHeadUnLoadTask
+            // 
+            this.IgHeadUnLoadTask.BackColor = System.Drawing.Color.Transparent;
+            this.IgHeadUnLoadTask.Checked = false;
+            this.IgHeadUnLoadTask.CheckStyleX = KEDAClient.CheckStyle.style1;
+            this.IgHeadUnLoadTask.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.IgHeadUnLoadTask.Location = new System.Drawing.Point(195, 164);
+            this.IgHeadUnLoadTask.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.IgHeadUnLoadTask.Name = "IgHeadUnLoadTask";
+            this.IgHeadUnLoadTask.Size = new System.Drawing.Size(87, 27);
+            this.IgHeadUnLoadTask.TabIndex = 10;
+            this.IgHeadUnLoadTask.TextName = null;
+            this.IgHeadUnLoadTask.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.IgHeadUnLoadTask.Click += new System.EventHandler(this.IgHeadUnLoadTask_Click);
+            // 
+            // label50
+            // 
+            this.label50.AutoSize = true;
+            this.label50.Font = new System.Drawing.Font("黑体", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label50.ForeColor = System.Drawing.Color.White;
+            this.label50.Location = new System.Drawing.Point(27, 168);
+            this.label50.Name = "label50";
+            this.label50.Size = new System.Drawing.Size(167, 19);
+            this.label50.TabIndex = 6;
+            this.label50.Text = "不判断窑头无货:";
+            // 
+            // label51
+            // 
+            this.label51.AutoSize = true;
+            this.label51.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label51.ForeColor = System.Drawing.Color.GreenYellow;
+            this.label51.Location = new System.Drawing.Point(375, 457);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(219, 22);
+            this.label51.TabIndex = 0;
+            this.label51.Text = "3)窑尾等 去 窑尾取";
             // 
             // tabControlEx1
             // 
@@ -1811,237 +2042,6 @@
             this.ExecuteTaskBtn.TextStartPoint = new System.Drawing.Point(6, 10);
             this.ExecuteTaskBtn.Click += new System.EventHandler(this.ExecuteTaskBtn_Click);
             // 
-            // taskconfPage
-            // 
-            this.taskconfPage.BackColor = System.Drawing.Color.Transparent;
-            this.taskconfPage.Controls.Add(this.panel13);
-            this.taskconfPage.Location = new System.Drawing.Point(4, 4);
-            this.taskconfPage.Name = "taskconfPage";
-            this.taskconfPage.Size = new System.Drawing.Size(666, 733);
-            this.taskconfPage.TabIndex = 5;
-            this.taskconfPage.Text = "任务配置";
-            // 
-            // panel13
-            // 
-            this.panel13.BackColor = System.Drawing.Color.Transparent;
-            this.panel13.Controls.Add(this.panel15);
-            this.panel13.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel13.Location = new System.Drawing.Point(0, 0);
-            this.panel13.Name = "panel13";
-            this.panel13.Size = new System.Drawing.Size(666, 733);
-            this.panel13.TabIndex = 1;
-            // 
-            // panel15
-            // 
-            this.panel15.Controls.Add(this.IgAgvLoadTask);
-            this.panel15.Controls.Add(this.IgTailLoadTask);
-            this.panel15.Controls.Add(this.label44);
-            this.panel15.Controls.Add(this.label41);
-            this.panel15.Controls.Add(this.IgAgvUnLoadTask);
-            this.panel15.Controls.Add(this.label40);
-            this.panel15.Controls.Add(this.pictureBox4);
-            this.panel15.Controls.Add(this.pictureBox3);
-            this.panel15.Controls.Add(this.pictureBox2);
-            this.panel15.Controls.Add(this.pictureBox1);
-            this.panel15.Controls.Add(this.label49);
-            this.panel15.Controls.Add(this.label53);
-            this.panel15.Controls.Add(this.label52);
-            this.panel15.Controls.Add(this.IgHeadUnLoadTask);
-            this.panel15.Controls.Add(this.label50);
-            this.panel15.Controls.Add(this.label51);
-            this.panel15.Location = new System.Drawing.Point(12, 3);
-            this.panel15.Name = "panel15";
-            this.panel15.Size = new System.Drawing.Size(637, 685);
-            this.panel15.TabIndex = 1;
-            // 
-            // IgHeadUnLoadTask
-            // 
-            this.IgHeadUnLoadTask.BackColor = System.Drawing.Color.Transparent;
-            this.IgHeadUnLoadTask.Checked = false;
-            this.IgHeadUnLoadTask.CheckStyleX = KEDAClient.CheckStyle.style1;
-            this.IgHeadUnLoadTask.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.IgHeadUnLoadTask.Location = new System.Drawing.Point(195, 164);
-            this.IgHeadUnLoadTask.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
-            this.IgHeadUnLoadTask.Name = "IgHeadUnLoadTask";
-            this.IgHeadUnLoadTask.Size = new System.Drawing.Size(87, 27);
-            this.IgHeadUnLoadTask.TabIndex = 10;
-            this.IgHeadUnLoadTask.TextName = null;
-            this.IgHeadUnLoadTask.TextStartPoint = new System.Drawing.Point(0, 0);
-            this.IgHeadUnLoadTask.Load += new System.EventHandler(this.IgHeadUnLoadTask_Load);
-            // 
-            // label50
-            // 
-            this.label50.AutoSize = true;
-            this.label50.Font = new System.Drawing.Font("黑体", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label50.ForeColor = System.Drawing.Color.White;
-            this.label50.Location = new System.Drawing.Point(27, 168);
-            this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(167, 19);
-            this.label50.TabIndex = 6;
-            this.label50.Text = "不判断窑头无货:";
-            // 
-            // label51
-            // 
-            this.label51.AutoSize = true;
-            this.label51.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label51.ForeColor = System.Drawing.Color.GreenYellow;
-            this.label51.Location = new System.Drawing.Point(375, 457);
-            this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(219, 22);
-            this.label51.TabIndex = 0;
-            this.label51.Text = "3)窑尾等 去 窑尾取";
-            // 
-            // label52
-            // 
-            this.label52.AutoSize = true;
-            this.label52.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label52.ForeColor = System.Drawing.Color.GreenYellow;
-            this.label52.Location = new System.Drawing.Point(19, 108);
-            this.label52.Name = "label52";
-            this.label52.Size = new System.Drawing.Size(219, 22);
-            this.label52.TabIndex = 14;
-            this.label52.Text = "1)窑头等 去 窑头卸";
-            // 
-            // label53
-            // 
-            this.label53.AutoSize = true;
-            this.label53.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label53.ForeColor = System.Drawing.Color.GreenYellow;
-            this.label53.Location = new System.Drawing.Point(375, 108);
-            this.label53.Name = "label53";
-            this.label53.Size = new System.Drawing.Size(219, 22);
-            this.label53.TabIndex = 15;
-            this.label53.Text = "2)窑头卸 去 窑尾等";
-            // 
-            // label49
-            // 
-            this.label49.AutoSize = true;
-            this.label49.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label49.ForeColor = System.Drawing.Color.GreenYellow;
-            this.label49.Location = new System.Drawing.Point(19, 455);
-            this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(219, 22);
-            this.label49.TabIndex = 16;
-            this.label49.Text = "4)窑尾取 去 窑头等";
-            // 
-            // pictureBox4
-            // 
-            this.pictureBox4.Image = global::KEDAClient.Properties.Resources.arrow_up;
-            this.pictureBox4.Location = new System.Drawing.Point(126, 319);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(38, 37);
-            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox4.TabIndex = 22;
-            this.pictureBox4.TabStop = false;
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Image = global::KEDAClient.Properties.Resources.arrow_rigth;
-            this.pictureBox3.Location = new System.Drawing.Point(285, 103);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(41, 36);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox3.TabIndex = 21;
-            this.pictureBox3.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = global::KEDAClient.Properties.Resources.arrow_left;
-            this.pictureBox2.Location = new System.Drawing.Point(286, 452);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(41, 36);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 20;
-            this.pictureBox2.TabStop = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::KEDAClient.Properties.Resources.arrow;
-            this.pictureBox1.Location = new System.Drawing.Point(480, 319);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(38, 37);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 19;
-            this.pictureBox1.TabStop = false;
-            // 
-            // label40
-            // 
-            this.label40.AutoSize = true;
-            this.label40.Font = new System.Drawing.Font("黑体", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label40.ForeColor = System.Drawing.Color.White;
-            this.label40.Location = new System.Drawing.Point(374, 168);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(158, 19);
-            this.label40.TabIndex = 23;
-            this.label40.Text = "不判断AGV无货:";
-            // 
-            // IgAgvUnLoadTask
-            // 
-            this.IgAgvUnLoadTask.BackColor = System.Drawing.Color.Transparent;
-            this.IgAgvUnLoadTask.Checked = false;
-            this.IgAgvUnLoadTask.CheckStyleX = KEDAClient.CheckStyle.style1;
-            this.IgAgvUnLoadTask.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.IgAgvUnLoadTask.Location = new System.Drawing.Point(533, 163);
-            this.IgAgvUnLoadTask.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
-            this.IgAgvUnLoadTask.Name = "IgAgvUnLoadTask";
-            this.IgAgvUnLoadTask.Size = new System.Drawing.Size(87, 27);
-            this.IgAgvUnLoadTask.TabIndex = 24;
-            this.IgAgvUnLoadTask.TextName = null;
-            this.IgAgvUnLoadTask.TextStartPoint = new System.Drawing.Point(0, 0);
-            this.IgAgvUnLoadTask.Load += new System.EventHandler(this.IgAgvUnLoadTask_Load);
-            // 
-            // label41
-            // 
-            this.label41.AutoSize = true;
-            this.label41.Font = new System.Drawing.Font("黑体", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label41.ForeColor = System.Drawing.Color.White;
-            this.label41.Location = new System.Drawing.Point(373, 534);
-            this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(167, 19);
-            this.label41.TabIndex = 25;
-            this.label41.Text = "不判断窑尾有货:";
-            // 
-            // label44
-            // 
-            this.label44.AutoSize = true;
-            this.label44.Font = new System.Drawing.Font("黑体", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label44.ForeColor = System.Drawing.Color.White;
-            this.label44.Location = new System.Drawing.Point(19, 536);
-            this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(158, 19);
-            this.label44.TabIndex = 26;
-            this.label44.Text = "不判断AGV有货:";
-            // 
-            // IgTailLoadTask
-            // 
-            this.IgTailLoadTask.BackColor = System.Drawing.Color.Transparent;
-            this.IgTailLoadTask.Checked = false;
-            this.IgTailLoadTask.CheckStyleX = KEDAClient.CheckStyle.style1;
-            this.IgTailLoadTask.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.IgTailLoadTask.Location = new System.Drawing.Point(533, 531);
-            this.IgTailLoadTask.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
-            this.IgTailLoadTask.Name = "IgTailLoadTask";
-            this.IgTailLoadTask.Size = new System.Drawing.Size(87, 27);
-            this.IgTailLoadTask.TabIndex = 27;
-            this.IgTailLoadTask.TextName = null;
-            this.IgTailLoadTask.TextStartPoint = new System.Drawing.Point(0, 0);
-            this.IgTailLoadTask.Load += new System.EventHandler(this.IgTailLoadTask_Load);
-            // 
-            // IgAgvLoadTask
-            // 
-            this.IgAgvLoadTask.BackColor = System.Drawing.Color.Transparent;
-            this.IgAgvLoadTask.Checked = false;
-            this.IgAgvLoadTask.CheckStyleX = KEDAClient.CheckStyle.style1;
-            this.IgAgvLoadTask.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.IgAgvLoadTask.Location = new System.Drawing.Point(179, 531);
-            this.IgAgvLoadTask.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
-            this.IgAgvLoadTask.Name = "IgAgvLoadTask";
-            this.IgAgvLoadTask.Size = new System.Drawing.Size(87, 27);
-            this.IgAgvLoadTask.TabIndex = 28;
-            this.IgAgvLoadTask.TextName = null;
-            this.IgAgvLoadTask.TextStartPoint = new System.Drawing.Point(0, 0);
-            this.IgAgvLoadTask.Load += new System.EventHandler(this.IgAgvLoadTask_Load);
-            // 
             // ControlForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 21F);
@@ -2049,7 +2049,7 @@
             this.AutoScroll = true;
             this.AutoScrollMinSize = new System.Drawing.Size(1390, 880);
             this.BackColor = System.Drawing.Color.DimGray;
-            this.ClientSize = new System.Drawing.Size(1472, 790);
+            this.ClientSize = new System.Drawing.Size(1489, 790);
             this.Controls.Add(this.toolStripContainer1);
             this.Font = new System.Drawing.Font("宋体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -2087,11 +2087,6 @@
             this.panel12.PerformLayout();
             this.panel11.ResumeLayout(false);
             this.panel11.PerformLayout();
-            this.tabControlEx1.ResumeLayout(false);
-            this.taskPages.ResumeLayout(false);
-            this.timeTaskPage.ResumeLayout(false);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
             this.taskconfPage.ResumeLayout(false);
             this.panel13.ResumeLayout(false);
             this.panel15.ResumeLayout(false);
@@ -2100,6 +2095,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.tabControlEx1.ResumeLayout(false);
+            this.taskPages.ResumeLayout(false);
+            this.timeTaskPage.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }

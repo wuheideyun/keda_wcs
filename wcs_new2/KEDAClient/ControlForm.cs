@@ -691,7 +691,7 @@ namespace KEDAClient
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void IgnoreTailStatusBtn_Load(object sender, EventArgs e)
+        private void IgnoreTailStatusBtn_Click(object sender, EventArgs e)
         {
             ParamControl.Is_IgnoreTailUnloadStatus = IgnoreTailStatusBtn.Checked;
         }
@@ -701,7 +701,7 @@ namespace KEDAClient
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void IgnoreHeadStatusBtn_Load(object sender, EventArgs e)
+        private void IgnoreHeadStatusBtn_Click(object sender, EventArgs e)
         {
             ParamControl.Is_IgnoreHeadUnloadStatus = IgnoreHeadStatusBtn.Checked;
         }
@@ -755,7 +755,7 @@ namespace KEDAClient
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void IgnoreHeadStaStatusBtn_Load(object sender, EventArgs e)
+        private void IgnoreHeadStaStatusBtn_Click(object sender, EventArgs e)
         {
             ParamControl.Is_IgnoreHeadStaStatus = IgnoreHeadStaStatusBtn.Checked;
 
@@ -766,7 +766,7 @@ namespace KEDAClient
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void IgnoreTailStaStatusBtn_Load(object sender, EventArgs e)
+        private void IgnoreTailStaStatusBtn_Click(object sender, EventArgs e)
         {
             ParamControl.Is_IgnoreTailStaStatus = IgnoreTailStaStatusBtn.Checked;
         }
@@ -776,7 +776,7 @@ namespace KEDAClient
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void IgHeadUnLoadTask_Load(object sender, EventArgs e)
+        private void IgHeadUnLoadTask_Click(object sender, EventArgs e)
         {
             ParamControl.IgnoreHeadUnloadTask = IgHeadUnLoadTask.Checked;
         }
@@ -786,7 +786,7 @@ namespace KEDAClient
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void IgAgvUnLoadTask_Load(object sender, EventArgs e)
+        private void IgAgvUnLoadTask_Click(object sender, EventArgs e)
         {
             ParamControl.IgnoreAgvUnloadTask = IgAgvUnLoadTask.Checked;
         }
@@ -796,7 +796,7 @@ namespace KEDAClient
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void IgTailLoadTask_Load(object sender, EventArgs e)
+        private void IgTailLoadTask_Click(object sender, EventArgs e)
         {
             ParamControl.IgnoreTailLoadTask = IgTailLoadTask.Checked;
         }
@@ -806,13 +806,12 @@ namespace KEDAClient
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void IgAgvLoadTask_Load(object sender, EventArgs e)
+        private void IgAgvLoadTask_Click(object sender, EventArgs e)
         {
             ParamControl.IgnoreAgvLoadTask = IgAgvLoadTask.Checked;
         }
 
-
-
+       
         /// <summary>
         /// 是否执行窑头充电完成任务
         /// </summary>
