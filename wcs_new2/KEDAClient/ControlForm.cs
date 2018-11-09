@@ -687,6 +687,93 @@ namespace KEDAClient
         }
 
         /// <summary>
+        /// 是否忽略窑尾出货Agv和Plc的货物状态
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void IgnoreTailStatusBtn_Load(object sender, EventArgs e)
+        {
+            ParamControl.Is_IgnoreTailUnloadStatus = IgnoreTailStatusBtn.Checked;
+        }
+
+        /// <summary>
+        /// 是否忽略窑头放料Agv和Plc的货物状态
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void IgnoreHeadStatusBtn_Load(object sender, EventArgs e)
+        {
+            ParamControl.Is_IgnoreHeadUnloadStatus = IgnoreHeadStatusBtn.Checked;
+        }
+
+        private void headAgvPlcRunTimeBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar != 8 && !Char.IsDigit(e.KeyChar))//如果不是输入数字就不让输入
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void tailAgvPlcRunTimeBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar != 8 && !Char.IsDigit(e.KeyChar))//如果不是输入数字就不让输入
+            {
+                e.Handled = true;
+            }
+        }
+
+        /// <summary>
+        /// 窑头电机运行发送时间输入框
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void headAgvPlcRunTimeBox_TextChanged(object sender, EventArgs e)
+        {
+            if (headAgvPlcRunTimeBox.Text.Equals("") || int.Parse(headAgvPlcRunTimeBox.Text) < 30)
+            {
+                headAgvPlcRunTimeBox.Text = "30";
+            }
+            ParamControl.IgnoreHeadUnloadSecond = int.Parse(headAgvPlcRunTimeBox.Text);
+        }
+
+        /// <summary>
+        /// 窑尾电机运行发送时间输入框
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tailAgvPlcRunTimeBox_TextChanged(object sender, EventArgs e)
+        {
+            if (tailAgvPlcRunTimeBox.Text.Equals("") || int.Parse(tailAgvPlcRunTimeBox.Text)<30)
+            {
+                tailAgvPlcRunTimeBox.Text = "30";
+            }
+            ParamControl.IgnoreTailUnloadSecond = int.Parse(tailAgvPlcRunTimeBox.Text);
+        }
+
+        /// <summary>
+        /// 是否忽略窑头放料Agv棍台电机状态
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void IgnoreHeadStaStatusBtn_Load(object sender, EventArgs e)
+        {
+            ParamControl.Is_IgnoreHeadStaStatus = IgnoreHeadStaStatusBtn.Checked;
+
+        }
+
+        /// <summary>
+        /// 是否忽略窑尾出货Agv棍台电机状态
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void IgnoreTailStaStatusBtn_Load(object sender, EventArgs e)
+        {
+            ParamControl.Is_IgnoreTailStaStatus = IgnoreTailStaStatusBtn.Checked;
+        }
+
+
+
+        /// <summary>
         /// 是否执行窑头充电完成任务
         /// </summary>
         /// <param name="sender"></param>

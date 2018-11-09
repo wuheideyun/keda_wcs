@@ -66,6 +66,11 @@ namespace KEDAClient
         FDispatchBackImf _taskDispatch = null;
 
         /// <summary>
+        /// 电机开始启动时间
+        /// </summary>
+        private DateTime BeginTime;
+
+        /// <summary>
         /// 对象的唯一标识
         /// </summary>
         public int NO
@@ -144,7 +149,7 @@ namespace KEDAClient
             {
                 _plc.IsLock = false;
 
-                if(_plc.ChargeAgv == _agv.Id)
+                if(_agv !=null && _plc.ChargeAgv == _agv.Id)
                 {
 
                     if (_plc.IsBatteryLock)
@@ -158,6 +163,23 @@ namespace KEDAClient
 
             if (_taskDispatch != null) { if (WcfMainHelper.CtrDispatch(_taskDispatch.Id, EnumCtrType.Stop)) { _isSuc = true; } }
             
+        }
+        /// <summary>
+        /// 发送窑头电机启动时间是否完成
+        /// </summary>
+        /// <returns></returns>
+        public bool IsHeadRunTimeFinish()
+        {
+            return (DateTime.Now - BeginTime).TotalSeconds > ParamControl.IgnoreHeadUnloadSecond;
+        }       
+        
+        /// <summary>
+        /// 发送窑尾电机启动时间是否完成
+        /// </summary>
+        /// <returns></returns>
+        public bool IsTailRunTimeFinish()
+        {
+            return (DateTime.Now - BeginTime).TotalSeconds > ParamControl.IgnoreTailUnloadSecond;
         }
 
         /// <summary>
@@ -197,32 +219,33 @@ namespace KEDAClient
                 ///此次调度任务已经完成
                 if (_taskDispatch.Statue == EnumResultType.Suc)
                 {
-
-                    if (_operType == EnumOper.取货)
+                    
+                    if (_operType == EnumOper.取货)       //窑尾
                     {
                         ///当前AGV的到达的地标 与 棍台绑定地标一致
                         if (_agv.Site == _plc.Site)
                         {
-
-                            if (//_plc.Sta_Material == EnumSta_Material.有货 && 
-                            (_agv.Sta_Material == EnumSta_Material.无货 || _agv.Sta_Material == EnumSta_Material.传送中)&&
-                            true)
+                            //如果界面打开忽略《窑尾》AGV货物状态和Plc货物状态则 直接发送棍台转动命令
+                            if (ParamControl.Is_IgnoreTailUnloadStatus ||
+                                ( _plc.Sta_Material == EnumSta_Material.有货 
+                                && (_agv.Sta_Material == EnumSta_Material.无货 || _agv.Sta_Material == EnumSta_Material.传送中)))
                             {
+                                if (BeginTime == null) BeginTime = System.DateTime.Now;
                                 _agv.SendOrdr(EnumType.上料操作, EnumPara.agv上料启动);
 
                                 _plc.SendOrdr(EnumType.下料操作, EnumPara.窑尾辊台允许下料);
                             }
 
-
-                            if (//_plc.Sta_Material == EnumSta_Material.无货 &&
-                               // _agv.Sta_Material == EnumSta_Material.有货 &&
-                                true)
+                            //如果界面打开忽略《窑尾》AGV货物状态，并且上面已经发送了指定时间的棍台转动时间
+                            if ((ParamControl.Is_IgnoreTailUnloadStatus && IsTailRunTimeFinish())|| 
+                                (_plc.Sta_Material == EnumSta_Material.无货 && _agv.Sta_Material == EnumSta_Material.有货))
                             {
                                 _agv.SendOrdr(EnumType.上料操作, EnumPara.agv辊台停止);
 
                                 _plc.SendOrdr(EnumType.下料操作, EnumPara.窑头辊台上料完成);
 
-                                if (true &&
+                                //如果界面打开忽略《窑尾》AGV棍台状态，则进去结束任务
+                                if (ParamControl.Is_IgnoreTailStaStatus ||
                                     _agv.Sta_Monitor == EnumSta_Monitor.电机停止
                                     )
                                 {                            
@@ -232,35 +255,35 @@ namespace KEDAClient
                         }
                         return "";
                     }
-                    else if (_operType == EnumOper.放货)
+                    else if (_operType == EnumOper.放货)      //窑头
                     {
                         ///当前AGV的到达的地标 与 棍台绑定地标一致
                         if (_agv.Site == _plc.Site)
                         {
-
-
-                            if (//(_plc.Sta_Material == EnumSta_Material.有货 || _plc.Sta_Material == EnumSta_Material.无货 )&&
-                                (_agv.Sta_Material == EnumSta_Material.传送中 || _agv.Sta_Material == EnumSta_Material.有货) &&
-                                true)
+                            //如果界面打开忽略《窑头》AGV货物状态和Plc货物状态则 直接发送棍台转动命令
+                            if (ParamControl.Is_IgnoreHeadUnloadStatus || 
+                                ((_plc.Sta_Material == EnumSta_Material.有货 || _plc.Sta_Material == EnumSta_Material.无货 )&&
+                                (_agv.Sta_Material == EnumSta_Material.传送中 || _agv.Sta_Material == EnumSta_Material.有货)))
                             {
+                                if (BeginTime == null) BeginTime = System.DateTime.Now;
                                 _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台上料中);
 
                                 _agv.SendOrdr(EnumType.下料操作, EnumPara.agv下料启动);
 
                             }
 
-
-                            if (//_plc.Sta_Material == EnumSta_Material.有货 && 
-                               //_agv.Sta_Material == EnumSta_Material.无货 &&
-                               true)
+                            //如果界面打开忽略《窑头》AGV货物状态，并且上面已经发送了指定时间的棍台转动时间
+                            if ((ParamControl.Is_IgnoreHeadUnloadStatus && IsHeadRunTimeFinish()) || 
+                                (_plc.Sta_Material == EnumSta_Material.有货 && 
+                               _agv.Sta_Material == EnumSta_Material.无货))
                             {
                                 _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台上料完成);
 
                                 _agv.SendOrdr(EnumType.下料操作, EnumPara.agv辊台停止);
 
-
-                                if (true
-                                    && _agv.Sta_Monitor == EnumSta_Monitor.电机停止
+                                //如果界面打开忽略《窑头》AGV棍台状态，则进去结束任务
+                                if (ParamControl.Is_IgnoreHeadStaStatus ||
+                                    _agv.Sta_Monitor == EnumSta_Monitor.电机停止
                                     )
                                 {                               
                                     ISetTaskSuc();

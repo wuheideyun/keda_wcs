@@ -32,6 +32,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlForm));
             this.imageRS = new System.Windows.Forms.ImageList(this.components);
             this.panel3 = new System.Windows.Forms.Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.timerForListRefresh = new System.Windows.Forms.Timer(this.components);
+            this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.mainTabControl = new KEDAClient.TabControlEx();
             this.controlPage = new System.Windows.Forms.TabPage();
             this.AgvNowPoitLab = new System.Windows.Forms.Label();
@@ -94,8 +100,25 @@
             this.listBoxOutput = new System.Windows.Forms.ListBox();
             this.testPage = new System.Windows.Forms.TabPage();
             this.panel8 = new System.Windows.Forms.Panel();
+            this.panel12 = new System.Windows.Forms.Panel();
+            this.IgnoreTailStaStatusBtn = new KEDAClient.SwitchButton();
+            this.switchButton2 = new KEDAClient.SwitchButton();
+            this.label39 = new System.Windows.Forms.Label();
+            this.tailAgvPlcRunTimeBox = new System.Windows.Forms.TextBox();
+            this.label34 = new System.Windows.Forms.Label();
+            this.IgnoreTailStatusBtn = new KEDAClient.SwitchButton();
+            this.label33 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.panel11 = new System.Windows.Forms.Panel();
+            this.IgnoreHeadStaStatusBtn = new KEDAClient.SwitchButton();
+            this.label37 = new System.Windows.Forms.Label();
             this.monitorBtn = new System.Windows.Forms.Button();
-            this.panel4 = new System.Windows.Forms.Panel();
+            this.label31 = new System.Windows.Forms.Label();
+            this.IgnoreHeadStatusBtn = new KEDAClient.SwitchButton();
+            this.headAgvPlcRunTimeBox = new System.Windows.Forms.TextBox();
+            this.label35 = new System.Windows.Forms.Label();
+            this.label36 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.tabControlEx1 = new KEDAClient.TabControlEx();
             this.taskPages = new System.Windows.Forms.TabPage();
             this.taskStopBtn = new System.Windows.Forms.Button();
@@ -124,16 +147,17 @@
             this.tailChargSucBtn = new KEDAClient.SwitchButton();
             this.label27 = new System.Windows.Forms.Label();
             this.allOnOffBtn = new KEDAClient.SwitchButton();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.agvList = new KEDAClient.DoubleBufferListView();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel7 = new System.Windows.Forms.Panel();
             this.AutoGenerateTaskBtn = new KEDAClient.SwitchButton();
             this.InitAllBtn = new KEDAClient.SwitchButton();
             this.ExecuteTaskBtn = new KEDAClient.SwitchButton();
-            this.timerForListRefresh = new System.Windows.Forms.Timer(this.components);
-            this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.panel3.SuspendLayout();
+            this.panel4.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panel7.SuspendLayout();
+            this.toolStripContainer1.ContentPanel.SuspendLayout();
+            this.toolStripContainer1.SuspendLayout();
             this.mainTabControl.SuspendLayout();
             this.controlPage.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -146,16 +170,12 @@
             this.logPage.SuspendLayout();
             this.testPage.SuspendLayout();
             this.panel8.SuspendLayout();
-            this.panel4.SuspendLayout();
+            this.panel12.SuspendLayout();
+            this.panel11.SuspendLayout();
             this.tabControlEx1.SuspendLayout();
             this.taskPages.SuspendLayout();
             this.timeTaskPage.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.panel7.SuspendLayout();
-            this.toolStripContainer1.ContentPanel.SuspendLayout();
-            this.toolStripContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // imageRS
@@ -173,8 +193,79 @@
             this.panel3.Location = new System.Drawing.Point(201, 109);
             this.panel3.Name = "panel3";
             this.panel3.Padding = new System.Windows.Forms.Padding(3);
-            this.panel3.Size = new System.Drawing.Size(739, 746);
+            this.panel3.Size = new System.Drawing.Size(753, 746);
             this.panel3.TabIndex = 6;
+            // 
+            // panel4
+            // 
+            this.panel4.BackColor = System.Drawing.Color.Transparent;
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel4.Controls.Add(this.tabControlEx1);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel4.Location = new System.Drawing.Point(954, 109);
+            this.panel4.Name = "panel4";
+            this.panel4.Padding = new System.Windows.Forms.Padding(3);
+            this.panel4.Size = new System.Drawing.Size(450, 746);
+            this.panel4.TabIndex = 7;
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.Transparent;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel2.Controls.Add(this.agvList);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel2.Location = new System.Drawing.Point(0, 109);
+            this.panel2.Name = "panel2";
+            this.panel2.Padding = new System.Windows.Forms.Padding(3);
+            this.panel2.Size = new System.Drawing.Size(201, 746);
+            this.panel2.TabIndex = 5;
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add(this.panel7);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Padding = new System.Windows.Forms.Padding(3);
+            this.panel1.Size = new System.Drawing.Size(1404, 109);
+            this.panel1.TabIndex = 4;
+            // 
+            // panel7
+            // 
+            this.panel7.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.panel7.Controls.Add(this.AutoGenerateTaskBtn);
+            this.panel7.Controls.Add(this.InitAllBtn);
+            this.panel7.Controls.Add(this.ExecuteTaskBtn);
+            this.panel7.Location = new System.Drawing.Point(71, -10);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(1289, 119);
+            this.panel7.TabIndex = 9;
+            // 
+            // timerForListRefresh
+            // 
+            this.timerForListRefresh.Enabled = true;
+            this.timerForListRefresh.Interval = 500;
+            this.timerForListRefresh.Tick += new System.EventHandler(this.timerForListRefresh_Tick);
+            // 
+            // toolStripContainer1
+            // 
+            // 
+            // toolStripContainer1.ContentPanel
+            // 
+            this.toolStripContainer1.ContentPanel.AutoScroll = true;
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel3);
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel4);
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel2);
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel1);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(1404, 855);
+            this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
+            this.toolStripContainer1.Name = "toolStripContainer1";
+            this.toolStripContainer1.Size = new System.Drawing.Size(1404, 880);
+            this.toolStripContainer1.TabIndex = 8;
+            this.toolStripContainer1.Text = "toolStripContainer1";
             // 
             // mainTabControl
             // 
@@ -186,12 +277,13 @@
             this.mainTabControl.Controls.Add(this.PLCPage);
             this.mainTabControl.Controls.Add(this.logPage);
             this.mainTabControl.Controls.Add(this.testPage);
+            this.mainTabControl.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.mainTabControl.ItemSize = new System.Drawing.Size(100, 140);
             this.mainTabControl.Location = new System.Drawing.Point(3, 3);
             this.mainTabControl.Multiline = true;
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.SelectedIndex = 0;
-            this.mainTabControl.Size = new System.Drawing.Size(749, 741);
+            this.mainTabControl.Size = new System.Drawing.Size(763, 741);
             this.mainTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.mainTabControl.TabIndex = 2;
             // 
@@ -212,7 +304,7 @@
             this.controlPage.Location = new System.Drawing.Point(4, 4);
             this.controlPage.Name = "controlPage";
             this.controlPage.Padding = new System.Windows.Forms.Padding(3);
-            this.controlPage.Size = new System.Drawing.Size(601, 733);
+            this.controlPage.Size = new System.Drawing.Size(632, 733);
             this.controlPage.TabIndex = 0;
             this.controlPage.Text = "综合控制";
             // 
@@ -741,7 +833,7 @@
             this.PLCPage.Location = new System.Drawing.Point(4, 4);
             this.PLCPage.Name = "PLCPage";
             this.PLCPage.Padding = new System.Windows.Forms.Padding(3);
-            this.PLCPage.Size = new System.Drawing.Size(601, 733);
+            this.PLCPage.Size = new System.Drawing.Size(615, 733);
             this.PLCPage.TabIndex = 2;
             this.PLCPage.Text = "线边辊台";
             // 
@@ -751,7 +843,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(3, 3);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(595, 727);
+            this.panel9.Size = new System.Drawing.Size(609, 727);
             this.panel9.TabIndex = 2;
             // 
             // panel10
@@ -928,7 +1020,7 @@
             this.logPage.Controls.Add(this.listBoxOutput);
             this.logPage.Location = new System.Drawing.Point(4, 4);
             this.logPage.Name = "logPage";
-            this.logPage.Size = new System.Drawing.Size(601, 733);
+            this.logPage.Size = new System.Drawing.Size(615, 733);
             this.logPage.TabIndex = 3;
             this.logPage.Text = "日志记录";
             // 
@@ -941,7 +1033,7 @@
             this.listBoxOutput.HorizontalScrollbar = true;
             this.listBoxOutput.Location = new System.Drawing.Point(0, 0);
             this.listBoxOutput.Name = "listBoxOutput";
-            this.listBoxOutput.Size = new System.Drawing.Size(601, 733);
+            this.listBoxOutput.Size = new System.Drawing.Size(615, 733);
             this.listBoxOutput.TabIndex = 10;
             // 
             // testPage
@@ -951,40 +1043,257 @@
             this.testPage.Location = new System.Drawing.Point(4, 4);
             this.testPage.Name = "testPage";
             this.testPage.Padding = new System.Windows.Forms.Padding(3);
-            this.testPage.Size = new System.Drawing.Size(601, 733);
+            this.testPage.Size = new System.Drawing.Size(615, 733);
             this.testPage.TabIndex = 4;
             this.testPage.Text = "测试配置";
             // 
             // panel8
             // 
-            this.panel8.Controls.Add(this.monitorBtn);
+            this.panel8.Controls.Add(this.panel12);
+            this.panel8.Controls.Add(this.panel11);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(3, 3);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(595, 727);
+            this.panel8.Size = new System.Drawing.Size(609, 727);
             this.panel8.TabIndex = 0;
+            // 
+            // panel12
+            // 
+            this.panel12.Controls.Add(this.IgnoreTailStaStatusBtn);
+            this.panel12.Controls.Add(this.switchButton2);
+            this.panel12.Controls.Add(this.label39);
+            this.panel12.Controls.Add(this.tailAgvPlcRunTimeBox);
+            this.panel12.Controls.Add(this.label34);
+            this.panel12.Controls.Add(this.IgnoreTailStatusBtn);
+            this.panel12.Controls.Add(this.label33);
+            this.panel12.Controls.Add(this.label32);
+            this.panel12.Location = new System.Drawing.Point(3, 294);
+            this.panel12.Name = "panel12";
+            this.panel12.Size = new System.Drawing.Size(573, 246);
+            this.panel12.TabIndex = 2;
+            // 
+            // IgnoreTailStaStatusBtn
+            // 
+            this.IgnoreTailStaStatusBtn.BackColor = System.Drawing.Color.Transparent;
+            this.IgnoreTailStaStatusBtn.Checked = false;
+            this.IgnoreTailStaStatusBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
+            this.IgnoreTailStaStatusBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.IgnoreTailStaStatusBtn.Location = new System.Drawing.Point(342, 185);
+            this.IgnoreTailStaStatusBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.IgnoreTailStaStatusBtn.Name = "IgnoreTailStaStatusBtn";
+            this.IgnoreTailStaStatusBtn.Size = new System.Drawing.Size(87, 27);
+            this.IgnoreTailStaStatusBtn.TabIndex = 16;
+            this.IgnoreTailStaStatusBtn.TextName = null;
+            this.IgnoreTailStaStatusBtn.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.IgnoreTailStaStatusBtn.Load += new System.EventHandler(this.IgnoreTailStaStatusBtn_Load);
+            // 
+            // switchButton2
+            // 
+            this.switchButton2.BackColor = System.Drawing.Color.Transparent;
+            this.switchButton2.Checked = false;
+            this.switchButton2.CheckStyleX = KEDAClient.CheckStyle.style1;
+            this.switchButton2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.switchButton2.Location = new System.Drawing.Point(1149, 508);
+            this.switchButton2.Margin = new System.Windows.Forms.Padding(20, 16, 20, 16);
+            this.switchButton2.Name = "switchButton2";
+            this.switchButton2.Size = new System.Drawing.Size(293, 82);
+            this.switchButton2.TabIndex = 15;
+            this.switchButton2.TextName = null;
+            this.switchButton2.TextStartPoint = new System.Drawing.Point(0, 0);
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Font = new System.Drawing.Font("黑体", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label39.ForeColor = System.Drawing.Color.White;
+            this.label39.Location = new System.Drawing.Point(17, 185);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(315, 19);
+            this.label39.TabIndex = 14;
+            this.label39.Text = "忽略AGV棍台停止状态完成任务：\r\n";
+            // 
+            // tailAgvPlcRunTimeBox
+            // 
+            this.tailAgvPlcRunTimeBox.Location = new System.Drawing.Point(342, 128);
+            this.tailAgvPlcRunTimeBox.Name = "tailAgvPlcRunTimeBox";
+            this.tailAgvPlcRunTimeBox.Size = new System.Drawing.Size(100, 32);
+            this.tailAgvPlcRunTimeBox.TabIndex = 5;
+            this.tailAgvPlcRunTimeBox.Text = "30";
+            this.tailAgvPlcRunTimeBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tailAgvPlcRunTimeBox.TextChanged += new System.EventHandler(this.tailAgvPlcRunTimeBox_TextChanged);
+            this.tailAgvPlcRunTimeBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tailAgvPlcRunTimeBox_KeyPress);
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Font = new System.Drawing.Font("黑体", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label34.ForeColor = System.Drawing.Color.White;
+            this.label34.Location = new System.Drawing.Point(18, 133);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(266, 19);
+            this.label34.TabIndex = 4;
+            this.label34.Text = "发送AGV/PLC滚动时间(s)：";
+            // 
+            // IgnoreTailStatusBtn
+            // 
+            this.IgnoreTailStatusBtn.BackColor = System.Drawing.Color.Transparent;
+            this.IgnoreTailStatusBtn.Checked = false;
+            this.IgnoreTailStatusBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
+            this.IgnoreTailStatusBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.IgnoreTailStatusBtn.Location = new System.Drawing.Point(342, 64);
+            this.IgnoreTailStatusBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.IgnoreTailStatusBtn.Name = "IgnoreTailStatusBtn";
+            this.IgnoreTailStatusBtn.Size = new System.Drawing.Size(87, 27);
+            this.IgnoreTailStatusBtn.TabIndex = 3;
+            this.IgnoreTailStatusBtn.TextName = null;
+            this.IgnoreTailStatusBtn.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.IgnoreTailStatusBtn.Load += new System.EventHandler(this.IgnoreTailStatusBtn_Load);
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Font = new System.Drawing.Font("黑体", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label33.ForeColor = System.Drawing.Color.White;
+            this.label33.Location = new System.Drawing.Point(17, 72);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(243, 19);
+            this.label33.TabIndex = 2;
+            this.label33.Text = "忽略AGV和PLC货物状态：";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label32.ForeColor = System.Drawing.Color.HotPink;
+            this.label32.Location = new System.Drawing.Point(17, 18);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(126, 22);
+            this.label32.TabIndex = 1;
+            this.label32.Text = "窑尾(出货)";
+            // 
+            // panel11
+            // 
+            this.panel11.Controls.Add(this.IgnoreHeadStaStatusBtn);
+            this.panel11.Controls.Add(this.label37);
+            this.panel11.Controls.Add(this.monitorBtn);
+            this.panel11.Controls.Add(this.label31);
+            this.panel11.Controls.Add(this.IgnoreHeadStatusBtn);
+            this.panel11.Controls.Add(this.headAgvPlcRunTimeBox);
+            this.panel11.Controls.Add(this.label35);
+            this.panel11.Controls.Add(this.label36);
+            this.panel11.Controls.Add(this.label4);
+            this.panel11.Location = new System.Drawing.Point(3, 15);
+            this.panel11.Name = "panel11";
+            this.panel11.Size = new System.Drawing.Size(573, 273);
+            this.panel11.TabIndex = 1;
+            // 
+            // IgnoreHeadStaStatusBtn
+            // 
+            this.IgnoreHeadStaStatusBtn.BackColor = System.Drawing.Color.Transparent;
+            this.IgnoreHeadStaStatusBtn.Checked = false;
+            this.IgnoreHeadStaStatusBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
+            this.IgnoreHeadStaStatusBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.IgnoreHeadStaStatusBtn.Location = new System.Drawing.Point(342, 208);
+            this.IgnoreHeadStaStatusBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.IgnoreHeadStaStatusBtn.Name = "IgnoreHeadStaStatusBtn";
+            this.IgnoreHeadStaStatusBtn.Size = new System.Drawing.Size(87, 27);
+            this.IgnoreHeadStaStatusBtn.TabIndex = 13;
+            this.IgnoreHeadStaStatusBtn.TextName = null;
+            this.IgnoreHeadStaStatusBtn.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.IgnoreHeadStaStatusBtn.Load += new System.EventHandler(this.IgnoreHeadStaStatusBtn_Load);
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Font = new System.Drawing.Font("黑体", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label37.ForeColor = System.Drawing.Color.White;
+            this.label37.Location = new System.Drawing.Point(18, 211);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(315, 19);
+            this.label37.TabIndex = 12;
+            this.label37.Text = "忽略AGV棍台停止状态完成任务：\r\n";
             // 
             // monitorBtn
             // 
-            this.monitorBtn.Location = new System.Drawing.Point(59, 78);
+            this.monitorBtn.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.monitorBtn.Location = new System.Drawing.Point(497, 13);
             this.monitorBtn.Name = "monitorBtn";
-            this.monitorBtn.Size = new System.Drawing.Size(161, 43);
+            this.monitorBtn.Size = new System.Drawing.Size(58, 40);
             this.monitorBtn.TabIndex = 0;
             this.monitorBtn.Text = "打开控制平台";
             this.monitorBtn.UseVisualStyleBackColor = true;
             this.monitorBtn.Click += new System.EventHandler(this.monitorBtn_Click);
             // 
-            // panel4
+            // label31
             // 
-            this.panel4.BackColor = System.Drawing.Color.Transparent;
-            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel4.Controls.Add(this.tabControlEx1);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel4.Location = new System.Drawing.Point(940, 109);
-            this.panel4.Name = "panel4";
-            this.panel4.Padding = new System.Windows.Forms.Padding(3);
-            this.panel4.Size = new System.Drawing.Size(450, 746);
-            this.panel4.TabIndex = 7;
+            this.label31.AutoSize = true;
+            this.label31.Font = new System.Drawing.Font("黑体", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label31.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.label31.Location = new System.Drawing.Point(19, 123);
+            this.label31.Name = "label31";
+            this.label31.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label31.Size = new System.Drawing.Size(457, 28);
+            this.label31.TabIndex = 11;
+            this.label31.Text = "注：忽略开启后，将发送指定滚动时间后，进入发送电机停止命令，\r\n然后电机能够正常停止后完成任务\r\n";
+            // 
+            // IgnoreHeadStatusBtn
+            // 
+            this.IgnoreHeadStatusBtn.BackColor = System.Drawing.Color.Transparent;
+            this.IgnoreHeadStatusBtn.Checked = false;
+            this.IgnoreHeadStatusBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
+            this.IgnoreHeadStatusBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.IgnoreHeadStatusBtn.Location = new System.Drawing.Point(342, 83);
+            this.IgnoreHeadStatusBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.IgnoreHeadStatusBtn.Name = "IgnoreHeadStatusBtn";
+            this.IgnoreHeadStatusBtn.Size = new System.Drawing.Size(87, 27);
+            this.IgnoreHeadStatusBtn.TabIndex = 10;
+            this.IgnoreHeadStatusBtn.TextName = null;
+            this.IgnoreHeadStatusBtn.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.IgnoreHeadStatusBtn.Load += new System.EventHandler(this.IgnoreHeadStatusBtn_Load);
+            // 
+            // headAgvPlcRunTimeBox
+            // 
+            this.headAgvPlcRunTimeBox.Location = new System.Drawing.Point(342, 154);
+            this.headAgvPlcRunTimeBox.Name = "headAgvPlcRunTimeBox";
+            this.headAgvPlcRunTimeBox.Size = new System.Drawing.Size(100, 32);
+            this.headAgvPlcRunTimeBox.TabIndex = 9;
+            this.headAgvPlcRunTimeBox.Text = "30";
+            this.headAgvPlcRunTimeBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.headAgvPlcRunTimeBox.TextChanged += new System.EventHandler(this.headAgvPlcRunTimeBox_TextChanged);
+            this.headAgvPlcRunTimeBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.headAgvPlcRunTimeBox_KeyPress);
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Font = new System.Drawing.Font("黑体", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label35.ForeColor = System.Drawing.Color.White;
+            this.label35.Location = new System.Drawing.Point(18, 160);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(266, 19);
+            this.label35.TabIndex = 8;
+            this.label35.Text = "发送AGV/PLC滚动时间(s)：";
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Font = new System.Drawing.Font("黑体", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label36.ForeColor = System.Drawing.Color.White;
+            this.label36.Location = new System.Drawing.Point(17, 91);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(243, 19);
+            this.label36.TabIndex = 6;
+            this.label36.Text = "忽略AGV和PLC货物状态：";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label4.ForeColor = System.Drawing.Color.GreenYellow;
+            this.label4.Location = new System.Drawing.Point(17, 13);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(126, 22);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "窑头(放料)";
             // 
             // tabControlEx1
             // 
@@ -1405,18 +1714,6 @@
             this.allOnOffBtn.TextStartPoint = new System.Drawing.Point(0, 0);
             this.allOnOffBtn.Click += new System.EventHandler(this.allOnOffBtn_Click);
             // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.Transparent;
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel2.Controls.Add(this.agvList);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel2.Location = new System.Drawing.Point(0, 109);
-            this.panel2.Name = "panel2";
-            this.panel2.Padding = new System.Windows.Forms.Padding(3);
-            this.panel2.Size = new System.Drawing.Size(201, 746);
-            this.panel2.TabIndex = 5;
-            // 
             // agvList
             // 
             this.agvList.Activation = System.Windows.Forms.ItemActivation.OneClick;
@@ -1435,29 +1732,6 @@
             this.agvList.UseCompatibleStateImageBehavior = false;
             this.agvList.View = System.Windows.Forms.View.Details;
             this.agvList.SelectedIndexChanged += new System.EventHandler(this.agvList_SelectedIndexChanged);
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.Transparent;
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel1.Controls.Add(this.panel7);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(3);
-            this.panel1.Size = new System.Drawing.Size(1390, 109);
-            this.panel1.TabIndex = 4;
-            // 
-            // panel7
-            // 
-            this.panel7.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.panel7.Controls.Add(this.AutoGenerateTaskBtn);
-            this.panel7.Controls.Add(this.InitAllBtn);
-            this.panel7.Controls.Add(this.ExecuteTaskBtn);
-            this.panel7.Location = new System.Drawing.Point(64, -10);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(1289, 119);
-            this.panel7.TabIndex = 9;
             // 
             // AutoGenerateTaskBtn
             // 
@@ -1510,30 +1784,6 @@
             this.ExecuteTaskBtn.TextStartPoint = new System.Drawing.Point(6, 10);
             this.ExecuteTaskBtn.Click += new System.EventHandler(this.ExecuteTaskBtn_Click);
             // 
-            // timerForListRefresh
-            // 
-            this.timerForListRefresh.Enabled = true;
-            this.timerForListRefresh.Interval = 500;
-            this.timerForListRefresh.Tick += new System.EventHandler(this.timerForListRefresh_Tick);
-            // 
-            // toolStripContainer1
-            // 
-            // 
-            // toolStripContainer1.ContentPanel
-            // 
-            this.toolStripContainer1.ContentPanel.AutoScroll = true;
-            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel3);
-            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel4);
-            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel2);
-            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel1);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(1390, 855);
-            this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
-            this.toolStripContainer1.Name = "toolStripContainer1";
-            this.toolStripContainer1.Size = new System.Drawing.Size(1390, 880);
-            this.toolStripContainer1.TabIndex = 8;
-            this.toolStripContainer1.Text = "toolStripContainer1";
-            // 
             // ControlForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 21F);
@@ -1541,7 +1791,7 @@
             this.AutoScroll = true;
             this.AutoScrollMinSize = new System.Drawing.Size(1390, 880);
             this.BackColor = System.Drawing.Color.DimGray;
-            this.ClientSize = new System.Drawing.Size(1370, 607);
+            this.ClientSize = new System.Drawing.Size(1421, 790);
             this.Controls.Add(this.toolStripContainer1);
             this.Font = new System.Drawing.Font("宋体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1550,6 +1800,13 @@
             this.Text = "行车调度工具";
             this.Load += new System.EventHandler(this.ControlForm_Load);
             this.panel3.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel7.ResumeLayout(false);
+            this.toolStripContainer1.ContentPanel.ResumeLayout(false);
+            this.toolStripContainer1.ResumeLayout(false);
+            this.toolStripContainer1.PerformLayout();
             this.mainTabControl.ResumeLayout(false);
             this.controlPage.ResumeLayout(false);
             this.controlPage.PerformLayout();
@@ -1568,18 +1825,15 @@
             this.logPage.ResumeLayout(false);
             this.testPage.ResumeLayout(false);
             this.panel8.ResumeLayout(false);
-            this.panel4.ResumeLayout(false);
+            this.panel12.ResumeLayout(false);
+            this.panel12.PerformLayout();
+            this.panel11.ResumeLayout(false);
+            this.panel11.PerformLayout();
             this.tabControlEx1.ResumeLayout(false);
             this.taskPages.ResumeLayout(false);
             this.timeTaskPage.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel7.ResumeLayout(false);
-            this.toolStripContainer1.ContentPanel.ResumeLayout(false);
-            this.toolStripContainer1.ResumeLayout(false);
-            this.toolStripContainer1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1688,5 +1942,23 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label plcNameLab;
         private DoubleBufferListView agvList;
+        private System.Windows.Forms.Panel panel11;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Panel panel12;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.Label label34;
+        private SwitchButton IgnoreTailStatusBtn;
+        private System.Windows.Forms.TextBox tailAgvPlcRunTimeBox;
+        private SwitchButton IgnoreHeadStatusBtn;
+        private System.Windows.Forms.TextBox headAgvPlcRunTimeBox;
+        private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.Label label31;
+        private SwitchButton IgnoreTailStaStatusBtn;
+        private SwitchButton switchButton2;
+        private System.Windows.Forms.Label label39;
+        private SwitchButton IgnoreHeadStaStatusBtn;
+        private System.Windows.Forms.Label label37;
     }
 }

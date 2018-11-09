@@ -82,7 +82,57 @@ namespace KEDAClient
         /// </summary>
         public static bool Is_AutoAddTask = false;
 
+        /// <summary>
+        /// 是否忽略窑头放料Agv和Plc的货物状态
+        /// </summary>
+        public static bool Is_IgnoreHeadUnloadStatus = false;
 
+        /// <summary>
+        /// 是否忽略窑尾出货Agv和Plc的货物状态
+        /// </summary>
+        public static bool Is_IgnoreTailUnloadStatus = false;        
+        
+        /// <summary>
+        /// 是否忽略窑头放料Agv棍台电机状态
+        /// </summary>
+        public static bool Is_IgnoreHeadStaStatus = false;
+
+        /// <summary>
+        /// 是否忽略窑尾出货Agv棍台电机状态
+        /// </summary>
+        public static bool Is_IgnoreTailStaStatus = false;
+
+        private static int _IgnoreHeadUnloadSecond = 30;
+        /// <summary>
+        /// 忽略窑头放料Agv和Plc的货物状态是发送点击启动时间
+        /// </summary>
+        public static int IgnoreHeadUnloadSecond
+        {
+            get
+            {   //最小30秒
+                return _IgnoreHeadUnloadSecond < 30 ? 30 : _IgnoreHeadUnloadSecond;
+            }
+            set
+            {
+                _IgnoreHeadUnloadSecond = value;
+            }
+        }
+
+        private static int _IgnoreTailUnloadSecond = 30;
+        /// <summary>
+        /// 忽略窑尾出货Agv和Plc的货物状态是发送电机启动时间
+        /// </summary>
+        public static int IgnoreTailUnloadSecond
+        {
+            get
+            {   //最小30秒
+                return _IgnoreTailUnloadSecond < 30 ? 30 : _IgnoreTailUnloadSecond;
+            }
+            set
+            {
+                _IgnoreTailUnloadSecond = value;
+            }
+        }
     }
 
     /// <summary>
