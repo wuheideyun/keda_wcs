@@ -32,12 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlForm));
             this.imageRS = new System.Windows.Forms.ImageList(this.components);
             this.panel3 = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel7 = new System.Windows.Forms.Panel();
-            this.timerForListRefresh = new System.Windows.Forms.Timer(this.components);
-            this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.mainTabControl = new KEDAClient.TabControlEx();
             this.controlPage = new System.Windows.Forms.TabPage();
             this.AgvNowPoitLab = new System.Windows.Forms.Label();
@@ -138,6 +132,7 @@
             this.IgHeadUnLoadTask = new KEDAClient.SwitchButton();
             this.label50 = new System.Windows.Forms.Label();
             this.label51 = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
             this.tabControlEx1 = new KEDAClient.TabControlEx();
             this.taskPages = new System.Windows.Forms.TabPage();
             this.taskStopBtn = new System.Windows.Forms.Button();
@@ -165,17 +160,15 @@
             this.tailChargSucBtn = new KEDAClient.SwitchButton();
             this.label46 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.agvList = new KEDAClient.DoubleBufferListView();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.AutoGenerateTaskBtn = new KEDAClient.SwitchButton();
             this.InitAllBtn = new KEDAClient.SwitchButton();
             this.ExecuteTaskBtn = new KEDAClient.SwitchButton();
+            this.timerForListRefresh = new System.Windows.Forms.Timer(this.components);
+            this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.panel3.SuspendLayout();
-            this.panel4.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.panel7.SuspendLayout();
-            this.toolStripContainer1.ContentPanel.SuspendLayout();
-            this.toolStripContainer1.SuspendLayout();
             this.mainTabControl.SuspendLayout();
             this.controlPage.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -197,10 +190,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panel4.SuspendLayout();
             this.tabControlEx1.SuspendLayout();
             this.taskPages.SuspendLayout();
             this.timeTaskPage.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.toolStripContainer1.ContentPanel.SuspendLayout();
+            this.toolStripContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // imageRS
@@ -215,82 +213,11 @@
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel3.Controls.Add(this.mainTabControl);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(201, 109);
+            this.panel3.Location = new System.Drawing.Point(201, 72);
             this.panel3.Name = "panel3";
             this.panel3.Padding = new System.Windows.Forms.Padding(3);
-            this.panel3.Size = new System.Drawing.Size(821, 746);
+            this.panel3.Size = new System.Drawing.Size(633, 664);
             this.panel3.TabIndex = 6;
-            // 
-            // panel4
-            // 
-            this.panel4.BackColor = System.Drawing.Color.Transparent;
-            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel4.Controls.Add(this.tabControlEx1);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel4.Location = new System.Drawing.Point(1022, 109);
-            this.panel4.Name = "panel4";
-            this.panel4.Padding = new System.Windows.Forms.Padding(3);
-            this.panel4.Size = new System.Drawing.Size(450, 746);
-            this.panel4.TabIndex = 7;
-            // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.Transparent;
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel2.Controls.Add(this.agvList);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel2.Location = new System.Drawing.Point(0, 109);
-            this.panel2.Name = "panel2";
-            this.panel2.Padding = new System.Windows.Forms.Padding(3);
-            this.panel2.Size = new System.Drawing.Size(201, 746);
-            this.panel2.TabIndex = 5;
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.Transparent;
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel1.Controls.Add(this.panel7);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(3);
-            this.panel1.Size = new System.Drawing.Size(1472, 109);
-            this.panel1.TabIndex = 4;
-            // 
-            // panel7
-            // 
-            this.panel7.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.panel7.Controls.Add(this.AutoGenerateTaskBtn);
-            this.panel7.Controls.Add(this.InitAllBtn);
-            this.panel7.Controls.Add(this.ExecuteTaskBtn);
-            this.panel7.Location = new System.Drawing.Point(105, -10);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(1289, 119);
-            this.panel7.TabIndex = 9;
-            // 
-            // timerForListRefresh
-            // 
-            this.timerForListRefresh.Enabled = true;
-            this.timerForListRefresh.Interval = 500;
-            this.timerForListRefresh.Tick += new System.EventHandler(this.timerForListRefresh_Tick);
-            // 
-            // toolStripContainer1
-            // 
-            // 
-            // toolStripContainer1.ContentPanel
-            // 
-            this.toolStripContainer1.ContentPanel.AutoScroll = true;
-            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel3);
-            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel4);
-            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel2);
-            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel1);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(1472, 855);
-            this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
-            this.toolStripContainer1.Name = "toolStripContainer1";
-            this.toolStripContainer1.Size = new System.Drawing.Size(1472, 880);
-            this.toolStripContainer1.TabIndex = 8;
-            this.toolStripContainer1.Text = "toolStripContainer1";
             // 
             // mainTabControl
             // 
@@ -309,7 +236,7 @@
             this.mainTabControl.Multiline = true;
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.SelectedIndex = 0;
-            this.mainTabControl.Size = new System.Drawing.Size(831, 741);
+            this.mainTabControl.Size = new System.Drawing.Size(643, 634);
             this.mainTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.mainTabControl.TabIndex = 2;
             // 
@@ -330,7 +257,7 @@
             this.controlPage.Location = new System.Drawing.Point(4, 4);
             this.controlPage.Name = "controlPage";
             this.controlPage.Padding = new System.Windows.Forms.Padding(3);
-            this.controlPage.Size = new System.Drawing.Size(700, 733);
+            this.controlPage.Size = new System.Drawing.Size(495, 626);
             this.controlPage.TabIndex = 0;
             this.controlPage.Text = "综合控制";
             // 
@@ -339,7 +266,7 @@
             this.AgvNowPoitLab.AutoSize = true;
             this.AgvNowPoitLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AgvNowPoitLab.ForeColor = System.Drawing.Color.White;
-            this.AgvNowPoitLab.Location = new System.Drawing.Point(94, 108);
+            this.AgvNowPoitLab.Location = new System.Drawing.Point(114, 81);
             this.AgvNowPoitLab.Name = "AgvNowPoitLab";
             this.AgvNowPoitLab.Size = new System.Drawing.Size(27, 27);
             this.AgvNowPoitLab.TabIndex = 20;
@@ -350,7 +277,7 @@
             this.label30.AutoSize = true;
             this.label30.Font = new System.Drawing.Font("黑体", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label30.ForeColor = System.Drawing.Color.White;
-            this.label30.Location = new System.Drawing.Point(6, 100);
+            this.label30.Location = new System.Drawing.Point(9, 78);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(88, 30);
             this.label30.TabIndex = 19;
@@ -361,7 +288,7 @@
             this.agvNameLab.AutoSize = true;
             this.agvNameLab.Font = new System.Drawing.Font("黑体", 33F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.agvNameLab.ForeColor = System.Drawing.Color.White;
-            this.agvNameLab.Location = new System.Drawing.Point(26, 33);
+            this.agvNameLab.Location = new System.Drawing.Point(6, 25);
             this.agvNameLab.Name = "agvNameLab";
             this.agvNameLab.Size = new System.Drawing.Size(152, 44);
             this.agvNameLab.TabIndex = 18;
@@ -369,9 +296,9 @@
             // 
             // AgvInitBtn
             // 
-            this.AgvInitBtn.Location = new System.Drawing.Point(41, 455);
+            this.AgvInitBtn.Location = new System.Drawing.Point(29, 376);
             this.AgvInitBtn.Name = "AgvInitBtn";
-            this.AgvInitBtn.Size = new System.Drawing.Size(100, 46);
+            this.AgvInitBtn.Size = new System.Drawing.Size(88, 46);
             this.AgvInitBtn.TabIndex = 17;
             this.AgvInitBtn.Text = "初始化";
             this.AgvInitBtn.UseVisualStyleBackColor = true;
@@ -385,9 +312,9 @@
             this.panel6.Controls.Add(this.label10);
             this.panel6.Controls.Add(this.label12);
             this.panel6.Controls.Add(this.label18);
-            this.panel6.Location = new System.Drawing.Point(333, 520);
+            this.panel6.Location = new System.Drawing.Point(259, 445);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(236, 191);
+            this.panel6.Size = new System.Drawing.Size(236, 170);
             this.panel6.TabIndex = 16;
             // 
             // tialPlcChargeLBtn
@@ -396,7 +323,7 @@
             this.tialPlcChargeLBtn.Checked = false;
             this.tialPlcChargeLBtn.CheckStyleX = KEDAClient.CheckStyle.style8;
             this.tialPlcChargeLBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.tialPlcChargeLBtn.Location = new System.Drawing.Point(144, 140);
+            this.tialPlcChargeLBtn.Location = new System.Drawing.Point(144, 117);
             this.tialPlcChargeLBtn.Margin = new System.Windows.Forms.Padding(20, 16, 20, 16);
             this.tialPlcChargeLBtn.Name = "tialPlcChargeLBtn";
             this.tialPlcChargeLBtn.Size = new System.Drawing.Size(81, 30);
@@ -410,7 +337,7 @@
             this.TailPlcLockBtn.Checked = false;
             this.TailPlcLockBtn.CheckStyleX = KEDAClient.CheckStyle.style8;
             this.TailPlcLockBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.TailPlcLockBtn.Location = new System.Drawing.Point(142, 79);
+            this.TailPlcLockBtn.Location = new System.Drawing.Point(144, 59);
             this.TailPlcLockBtn.Margin = new System.Windows.Forms.Padding(11, 9, 11, 9);
             this.TailPlcLockBtn.Name = "TailPlcLockBtn";
             this.TailPlcLockBtn.Size = new System.Drawing.Size(81, 30);
@@ -423,7 +350,7 @@
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label10.ForeColor = System.Drawing.Color.White;
-            this.label10.Location = new System.Drawing.Point(0, 83);
+            this.label10.Location = new System.Drawing.Point(3, 67);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(114, 22);
             this.label10.TabIndex = 15;
@@ -434,7 +361,7 @@
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("黑体", 23F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label12.ForeColor = System.Drawing.Color.White;
-            this.label12.Location = new System.Drawing.Point(73, 13);
+            this.label12.Location = new System.Drawing.Point(76, 10);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(80, 31);
             this.label12.TabIndex = 11;
@@ -445,7 +372,7 @@
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label18.ForeColor = System.Drawing.Color.White;
-            this.label18.Location = new System.Drawing.Point(3, 142);
+            this.label18.Location = new System.Drawing.Point(0, 125);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(137, 22);
             this.label18.TabIndex = 14;
@@ -458,9 +385,9 @@
             this.panel5.Controls.Add(this.label16);
             this.panel5.Controls.Add(this.label8);
             this.panel5.Controls.Add(this.label14);
-            this.panel5.Location = new System.Drawing.Point(41, 518);
+            this.panel5.Location = new System.Drawing.Point(14, 443);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(236, 193);
+            this.panel5.Size = new System.Drawing.Size(236, 172);
             this.panel5.TabIndex = 15;
             // 
             // HeadPlcChargeLBtn
@@ -469,7 +396,7 @@
             this.HeadPlcChargeLBtn.Checked = false;
             this.HeadPlcChargeLBtn.CheckStyleX = KEDAClient.CheckStyle.style8;
             this.HeadPlcChargeLBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.HeadPlcChargeLBtn.Location = new System.Drawing.Point(149, 140);
+            this.HeadPlcChargeLBtn.Location = new System.Drawing.Point(150, 127);
             this.HeadPlcChargeLBtn.Margin = new System.Windows.Forms.Padding(11, 9, 11, 9);
             this.HeadPlcChargeLBtn.Name = "HeadPlcChargeLBtn";
             this.HeadPlcChargeLBtn.Size = new System.Drawing.Size(81, 30);
@@ -483,7 +410,7 @@
             this.HeadPlcLockBtn.Checked = false;
             this.HeadPlcLockBtn.CheckStyleX = KEDAClient.CheckStyle.style8;
             this.HeadPlcLockBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.HeadPlcLockBtn.Location = new System.Drawing.Point(148, 83);
+            this.HeadPlcLockBtn.Location = new System.Drawing.Point(149, 61);
             this.HeadPlcLockBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.HeadPlcLockBtn.Name = "HeadPlcLockBtn";
             this.HeadPlcLockBtn.Size = new System.Drawing.Size(81, 30);
@@ -496,7 +423,7 @@
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label16.ForeColor = System.Drawing.Color.White;
-            this.label16.Location = new System.Drawing.Point(3, 85);
+            this.label16.Location = new System.Drawing.Point(3, 69);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(114, 22);
             this.label16.TabIndex = 15;
@@ -518,7 +445,7 @@
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label14.ForeColor = System.Drawing.Color.White;
-            this.label14.Location = new System.Drawing.Point(-4, 144);
+            this.label14.Location = new System.Drawing.Point(3, 127);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(137, 22);
             this.label14.TabIndex = 14;
@@ -551,7 +478,7 @@
             this.tableLayoutPanel2.Controls.Add(this.AgvStaMonitorLab, 1, 8);
             this.tableLayoutPanel2.Font = new System.Drawing.Font("黑体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tableLayoutPanel2.ForeColor = System.Drawing.Color.Black;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(184, 33);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(147, 16);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 10;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
@@ -564,7 +491,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(357, 468);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(326, 417);
             this.tableLayoutPanel2.TabIndex = 10;
             // 
             // AgvSpeedLab
@@ -573,7 +500,7 @@
             this.AgvSpeedLab.AutoSize = true;
             this.AgvSpeedLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AgvSpeedLab.ForeColor = System.Drawing.Color.White;
-            this.AgvSpeedLab.Location = new System.Drawing.Point(266, 239);
+            this.AgvSpeedLab.Location = new System.Drawing.Point(242, 212);
             this.AgvSpeedLab.Name = "AgvSpeedLab";
             this.AgvSpeedLab.Size = new System.Drawing.Size(27, 27);
             this.AgvSpeedLab.TabIndex = 27;
@@ -585,7 +512,7 @@
             this.AgvStaMaterialLab.AutoSize = true;
             this.AgvStaMaterialLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AgvStaMaterialLab.ForeColor = System.Drawing.Color.White;
-            this.AgvStaMaterialLab.Location = new System.Drawing.Point(266, 331);
+            this.AgvStaMaterialLab.Location = new System.Drawing.Point(242, 294);
             this.AgvStaMaterialLab.Name = "AgvStaMaterialLab";
             this.AgvStaMaterialLab.Size = new System.Drawing.Size(27, 27);
             this.AgvStaMaterialLab.TabIndex = 25;
@@ -597,7 +524,7 @@
             this.AgvDirectionLab.AutoSize = true;
             this.AgvDirectionLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AgvDirectionLab.ForeColor = System.Drawing.Color.White;
-            this.AgvDirectionLab.Location = new System.Drawing.Point(266, 147);
+            this.AgvDirectionLab.Location = new System.Drawing.Point(242, 130);
             this.AgvDirectionLab.Name = "AgvDirectionLab";
             this.AgvDirectionLab.Size = new System.Drawing.Size(27, 27);
             this.AgvDirectionLab.TabIndex = 19;
@@ -609,7 +536,7 @@
             this.AgvTrafficLab.AutoSize = true;
             this.AgvTrafficLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AgvTrafficLab.ForeColor = System.Drawing.Color.White;
-            this.AgvTrafficLab.Location = new System.Drawing.Point(266, 427);
+            this.AgvTrafficLab.Location = new System.Drawing.Point(242, 379);
             this.AgvTrafficLab.Name = "AgvTrafficLab";
             this.AgvTrafficLab.Size = new System.Drawing.Size(27, 27);
             this.AgvTrafficLab.TabIndex = 18;
@@ -621,7 +548,7 @@
             this.AgvFreeLab.AutoSize = true;
             this.AgvFreeLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AgvFreeLab.ForeColor = System.Drawing.Color.White;
-            this.AgvFreeLab.Location = new System.Drawing.Point(266, 285);
+            this.AgvFreeLab.Location = new System.Drawing.Point(242, 253);
             this.AgvFreeLab.Name = "AgvFreeLab";
             this.AgvFreeLab.Size = new System.Drawing.Size(27, 27);
             this.AgvFreeLab.TabIndex = 17;
@@ -634,7 +561,7 @@
             this.AgvSiteLab.BackColor = System.Drawing.Color.Transparent;
             this.AgvSiteLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AgvSiteLab.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.AgvSiteLab.Location = new System.Drawing.Point(266, 9);
+            this.AgvSiteLab.Location = new System.Drawing.Point(242, 7);
             this.AgvSiteLab.Name = "AgvSiteLab";
             this.AgvSiteLab.Size = new System.Drawing.Size(27, 27);
             this.AgvSiteLab.TabIndex = 9;
@@ -646,7 +573,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(3, 9);
+            this.label5.Location = new System.Drawing.Point(3, 7);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(85, 27);
             this.label5.TabIndex = 8;
@@ -658,7 +585,7 @@
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label17.ForeColor = System.Drawing.Color.White;
-            this.label17.Location = new System.Drawing.Point(3, 427);
+            this.label17.Location = new System.Drawing.Point(3, 379);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(143, 27);
             this.label17.TabIndex = 10;
@@ -670,7 +597,7 @@
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label15.ForeColor = System.Drawing.Color.White;
-            this.label15.Location = new System.Drawing.Point(3, 285);
+            this.label15.Location = new System.Drawing.Point(3, 253);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(143, 27);
             this.label15.TabIndex = 8;
@@ -683,7 +610,7 @@
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label13.ForeColor = System.Drawing.Color.White;
-            this.label13.Location = new System.Drawing.Point(3, 239);
+            this.label13.Location = new System.Drawing.Point(3, 212);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(99, 27);
             this.label13.TabIndex = 6;
@@ -695,7 +622,7 @@
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(3, 193);
+            this.label11.Location = new System.Drawing.Point(3, 171);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(157, 27);
             this.label11.TabIndex = 4;
@@ -707,7 +634,7 @@
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(3, 147);
+            this.label9.Location = new System.Drawing.Point(3, 130);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(157, 27);
             this.label9.TabIndex = 2;
@@ -719,7 +646,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(3, 101);
+            this.label7.Location = new System.Drawing.Point(3, 89);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(157, 27);
             this.label7.TabIndex = 0;
@@ -733,7 +660,7 @@
             this.label3.Cursor = System.Windows.Forms.Cursors.Default;
             this.label3.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label3.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label3.Location = new System.Drawing.Point(3, 55);
+            this.label3.Location = new System.Drawing.Point(3, 48);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(143, 27);
             this.label3.TabIndex = 6;
@@ -746,7 +673,7 @@
             this.AgvStatusLab.BackColor = System.Drawing.Color.Transparent;
             this.AgvStatusLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AgvStatusLab.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.AgvStatusLab.Location = new System.Drawing.Point(266, 55);
+            this.AgvStatusLab.Location = new System.Drawing.Point(242, 48);
             this.AgvStatusLab.Name = "AgvStatusLab";
             this.AgvStatusLab.Size = new System.Drawing.Size(27, 27);
             this.AgvStatusLab.TabIndex = 7;
@@ -758,7 +685,7 @@
             this.AgvElectricityLab.AutoSize = true;
             this.AgvElectricityLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AgvElectricityLab.ForeColor = System.Drawing.Color.White;
-            this.AgvElectricityLab.Location = new System.Drawing.Point(266, 193);
+            this.AgvElectricityLab.Location = new System.Drawing.Point(242, 171);
             this.AgvElectricityLab.Name = "AgvElectricityLab";
             this.AgvElectricityLab.Size = new System.Drawing.Size(27, 27);
             this.AgvElectricityLab.TabIndex = 16;
@@ -770,7 +697,7 @@
             this.AgvAimLab.AutoSize = true;
             this.AgvAimLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AgvAimLab.ForeColor = System.Drawing.Color.White;
-            this.AgvAimLab.Location = new System.Drawing.Point(266, 101);
+            this.AgvAimLab.Location = new System.Drawing.Point(242, 89);
             this.AgvAimLab.Name = "AgvAimLab";
             this.AgvAimLab.Size = new System.Drawing.Size(27, 27);
             this.AgvAimLab.TabIndex = 20;
@@ -782,7 +709,7 @@
             this.label28.AutoSize = true;
             this.label28.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label28.ForeColor = System.Drawing.Color.White;
-            this.label28.Location = new System.Drawing.Point(3, 331);
+            this.label28.Location = new System.Drawing.Point(3, 294);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(157, 27);
             this.label28.TabIndex = 21;
@@ -794,7 +721,7 @@
             this.label29.AutoSize = true;
             this.label29.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label29.ForeColor = System.Drawing.Color.White;
-            this.label29.Location = new System.Drawing.Point(3, 377);
+            this.label29.Location = new System.Drawing.Point(3, 335);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(157, 27);
             this.label29.TabIndex = 22;
@@ -806,7 +733,7 @@
             this.AgvStaMonitorLab.AutoSize = true;
             this.AgvStaMonitorLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AgvStaMonitorLab.ForeColor = System.Drawing.Color.White;
-            this.AgvStaMonitorLab.Location = new System.Drawing.Point(266, 377);
+            this.AgvStaMonitorLab.Location = new System.Drawing.Point(242, 335);
             this.AgvStaMonitorLab.Name = "AgvStaMonitorLab";
             this.AgvStaMonitorLab.Size = new System.Drawing.Size(27, 27);
             this.AgvStaMonitorLab.TabIndex = 26;
@@ -814,18 +741,19 @@
             // 
             // AgvClearSiteBtn
             // 
-            this.AgvClearSiteBtn.Location = new System.Drawing.Point(41, 384);
+            this.AgvClearSiteBtn.Location = new System.Drawing.Point(29, 299);
             this.AgvClearSiteBtn.Name = "AgvClearSiteBtn";
-            this.AgvClearSiteBtn.Size = new System.Drawing.Size(100, 53);
+            this.AgvClearSiteBtn.Size = new System.Drawing.Size(88, 53);
             this.AgvClearSiteBtn.TabIndex = 5;
             this.AgvClearSiteBtn.Text = "清除站点";
             this.AgvClearSiteBtn.UseVisualStyleBackColor = true;
+            this.AgvClearSiteBtn.Click += new System.EventHandler(this.AgvClearSiteBtn_Click);
             // 
             // AgvBackwardBtn
             // 
-            this.AgvBackwardBtn.Location = new System.Drawing.Point(41, 307);
+            this.AgvBackwardBtn.Location = new System.Drawing.Point(29, 243);
             this.AgvBackwardBtn.Name = "AgvBackwardBtn";
-            this.AgvBackwardBtn.Size = new System.Drawing.Size(100, 53);
+            this.AgvBackwardBtn.Size = new System.Drawing.Size(88, 41);
             this.AgvBackwardBtn.TabIndex = 4;
             this.AgvBackwardBtn.Text = "后退";
             this.AgvBackwardBtn.UseVisualStyleBackColor = true;
@@ -833,9 +761,9 @@
             // 
             // AgvForwardBtn
             // 
-            this.AgvForwardBtn.Location = new System.Drawing.Point(41, 230);
+            this.AgvForwardBtn.Location = new System.Drawing.Point(29, 187);
             this.AgvForwardBtn.Name = "AgvForwardBtn";
-            this.AgvForwardBtn.Size = new System.Drawing.Size(100, 53);
+            this.AgvForwardBtn.Size = new System.Drawing.Size(88, 39);
             this.AgvForwardBtn.TabIndex = 3;
             this.AgvForwardBtn.Text = "前进";
             this.AgvForwardBtn.UseVisualStyleBackColor = true;
@@ -844,9 +772,9 @@
             // AgvStopBtn
             // 
             this.AgvStopBtn.Font = new System.Drawing.Font("宋体", 16F);
-            this.AgvStopBtn.Location = new System.Drawing.Point(41, 151);
+            this.AgvStopBtn.Location = new System.Drawing.Point(29, 134);
             this.AgvStopBtn.Name = "AgvStopBtn";
-            this.AgvStopBtn.Size = new System.Drawing.Size(100, 53);
+            this.AgvStopBtn.Size = new System.Drawing.Size(88, 40);
             this.AgvStopBtn.TabIndex = 2;
             this.AgvStopBtn.Text = "停止";
             this.AgvStopBtn.UseVisualStyleBackColor = true;
@@ -860,7 +788,7 @@
             this.PLCPage.Location = new System.Drawing.Point(4, 4);
             this.PLCPage.Name = "PLCPage";
             this.PLCPage.Padding = new System.Windows.Forms.Padding(3);
-            this.PLCPage.Size = new System.Drawing.Size(683, 733);
+            this.PLCPage.Size = new System.Drawing.Size(495, 626);
             this.PLCPage.TabIndex = 2;
             this.PLCPage.Text = "线边辊台";
             // 
@@ -870,7 +798,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(3, 3);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(677, 727);
+            this.panel9.Size = new System.Drawing.Size(489, 620);
             this.panel9.TabIndex = 2;
             // 
             // panel10
@@ -898,14 +826,14 @@
             this.tableLayoutPanel3.Controls.Add(this.PlcStaMonitorLab, 1, 1);
             this.tableLayoutPanel3.Controls.Add(this.PlcSpareLab, 1, 3);
             this.tableLayoutPanel3.ForeColor = System.Drawing.Color.Black;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(196, 36);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(23, 143);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 4;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(357, 267);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(359, 220);
             this.tableLayoutPanel3.TabIndex = 24;
             // 
             // PlcErrorLab
@@ -914,7 +842,7 @@
             this.PlcErrorLab.AutoSize = true;
             this.PlcErrorLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.PlcErrorLab.ForeColor = System.Drawing.Color.White;
-            this.PlcErrorLab.Location = new System.Drawing.Point(266, 151);
+            this.PlcErrorLab.Location = new System.Drawing.Point(267, 124);
             this.PlcErrorLab.Name = "PlcErrorLab";
             this.PlcErrorLab.Size = new System.Drawing.Size(27, 27);
             this.PlcErrorLab.TabIndex = 19;
@@ -927,7 +855,7 @@
             this.PlcStaMaterialLab.BackColor = System.Drawing.Color.Transparent;
             this.PlcStaMaterialLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.PlcStaMaterialLab.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.PlcStaMaterialLab.Location = new System.Drawing.Point(266, 19);
+            this.PlcStaMaterialLab.Location = new System.Drawing.Point(267, 14);
             this.PlcStaMaterialLab.Name = "PlcStaMaterialLab";
             this.PlcStaMaterialLab.Size = new System.Drawing.Size(27, 27);
             this.PlcStaMaterialLab.TabIndex = 9;
@@ -939,7 +867,7 @@
             this.label38.AutoSize = true;
             this.label38.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label38.ForeColor = System.Drawing.Color.White;
-            this.label38.Location = new System.Drawing.Point(3, 19);
+            this.label38.Location = new System.Drawing.Point(3, 14);
             this.label38.Name = "label38";
             this.label38.Size = new System.Drawing.Size(143, 27);
             this.label38.TabIndex = 8;
@@ -951,7 +879,7 @@
             this.label42.AutoSize = true;
             this.label42.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label42.ForeColor = System.Drawing.Color.White;
-            this.label42.Location = new System.Drawing.Point(3, 219);
+            this.label42.Location = new System.Drawing.Point(3, 179);
             this.label42.Name = "label42";
             this.label42.Size = new System.Drawing.Size(157, 27);
             this.label42.TabIndex = 4;
@@ -963,7 +891,7 @@
             this.label43.AutoSize = true;
             this.label43.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label43.ForeColor = System.Drawing.Color.White;
-            this.label43.Location = new System.Drawing.Point(3, 151);
+            this.label43.Location = new System.Drawing.Point(3, 124);
             this.label43.Name = "label43";
             this.label43.Size = new System.Drawing.Size(157, 27);
             this.label43.TabIndex = 2;
@@ -977,7 +905,7 @@
             this.label45.Cursor = System.Windows.Forms.Cursors.Default;
             this.label45.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label45.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label45.Location = new System.Drawing.Point(3, 85);
+            this.label45.Location = new System.Drawing.Point(3, 69);
             this.label45.Name = "label45";
             this.label45.Size = new System.Drawing.Size(143, 27);
             this.label45.TabIndex = 6;
@@ -990,7 +918,7 @@
             this.PlcStaMonitorLab.BackColor = System.Drawing.Color.Transparent;
             this.PlcStaMonitorLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.PlcStaMonitorLab.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.PlcStaMonitorLab.Location = new System.Drawing.Point(266, 85);
+            this.PlcStaMonitorLab.Location = new System.Drawing.Point(267, 69);
             this.PlcStaMonitorLab.Name = "PlcStaMonitorLab";
             this.PlcStaMonitorLab.Size = new System.Drawing.Size(27, 27);
             this.PlcStaMonitorLab.TabIndex = 7;
@@ -1002,7 +930,7 @@
             this.PlcSpareLab.AutoSize = true;
             this.PlcSpareLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.PlcSpareLab.ForeColor = System.Drawing.Color.White;
-            this.PlcSpareLab.Location = new System.Drawing.Point(266, 219);
+            this.PlcSpareLab.Location = new System.Drawing.Point(267, 179);
             this.PlcSpareLab.Name = "PlcSpareLab";
             this.PlcSpareLab.Size = new System.Drawing.Size(27, 27);
             this.PlcSpareLab.TabIndex = 16;
@@ -1047,7 +975,7 @@
             this.logPage.Controls.Add(this.listBoxOutput);
             this.logPage.Location = new System.Drawing.Point(4, 4);
             this.logPage.Name = "logPage";
-            this.logPage.Size = new System.Drawing.Size(683, 733);
+            this.logPage.Size = new System.Drawing.Size(495, 626);
             this.logPage.TabIndex = 3;
             this.logPage.Text = "日志记录";
             // 
@@ -1060,7 +988,7 @@
             this.listBoxOutput.HorizontalScrollbar = true;
             this.listBoxOutput.Location = new System.Drawing.Point(0, 0);
             this.listBoxOutput.Name = "listBoxOutput";
-            this.listBoxOutput.Size = new System.Drawing.Size(683, 733);
+            this.listBoxOutput.Size = new System.Drawing.Size(495, 626);
             this.listBoxOutput.TabIndex = 10;
             // 
             // testPage
@@ -1070,7 +998,7 @@
             this.testPage.Location = new System.Drawing.Point(4, 4);
             this.testPage.Name = "testPage";
             this.testPage.Padding = new System.Windows.Forms.Padding(3);
-            this.testPage.Size = new System.Drawing.Size(683, 733);
+            this.testPage.Size = new System.Drawing.Size(495, 626);
             this.testPage.TabIndex = 4;
             this.testPage.Text = "测试配置";
             // 
@@ -1079,7 +1007,7 @@
             this.panel8.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.panel8.Controls.Add(this.panel12);
             this.panel8.Controls.Add(this.panel11);
-            this.panel8.Location = new System.Drawing.Point(3, 3);
+            this.panel8.Location = new System.Drawing.Point(3, -38);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(677, 727);
             this.panel8.TabIndex = 0;
@@ -1096,7 +1024,7 @@
             this.panel12.Controls.Add(this.label32);
             this.panel12.Location = new System.Drawing.Point(3, 294);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(508, 246);
+            this.panel12.Size = new System.Drawing.Size(483, 246);
             this.panel12.TabIndex = 2;
             // 
             // IgnoreTailStaStatusBtn
@@ -1211,7 +1139,7 @@
             this.panel11.Controls.Add(this.label4);
             this.panel11.Location = new System.Drawing.Point(3, 15);
             this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(508, 273);
+            this.panel11.Size = new System.Drawing.Size(483, 273);
             this.panel11.TabIndex = 1;
             // 
             // IgnoreHeadStaStatusBtn
@@ -1243,7 +1171,7 @@
             // monitorBtn
             // 
             this.monitorBtn.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.monitorBtn.Location = new System.Drawing.Point(434, 6);
+            this.monitorBtn.Location = new System.Drawing.Point(404, 26);
             this.monitorBtn.Name = "monitorBtn";
             this.monitorBtn.Size = new System.Drawing.Size(58, 40);
             this.monitorBtn.TabIndex = 0;
@@ -1328,7 +1256,7 @@
             this.taskconfPage.Controls.Add(this.panel13);
             this.taskconfPage.Location = new System.Drawing.Point(4, 4);
             this.taskconfPage.Name = "taskconfPage";
-            this.taskconfPage.Size = new System.Drawing.Size(683, 733);
+            this.taskconfPage.Size = new System.Drawing.Size(495, 626);
             this.taskconfPage.TabIndex = 5;
             this.taskconfPage.Text = "任务配置";
             // 
@@ -1339,7 +1267,7 @@
             this.panel13.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel13.Location = new System.Drawing.Point(0, 0);
             this.panel13.Name = "panel13";
-            this.panel13.Size = new System.Drawing.Size(683, 733);
+            this.panel13.Size = new System.Drawing.Size(495, 626);
             this.panel13.TabIndex = 1;
             // 
             // panel15
@@ -1360,9 +1288,10 @@
             this.panel15.Controls.Add(this.IgHeadUnLoadTask);
             this.panel15.Controls.Add(this.label50);
             this.panel15.Controls.Add(this.label51);
-            this.panel15.Location = new System.Drawing.Point(12, 3);
+            this.panel15.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel15.Location = new System.Drawing.Point(0, 0);
             this.panel15.Name = "panel15";
-            this.panel15.Size = new System.Drawing.Size(637, 685);
+            this.panel15.Size = new System.Drawing.Size(495, 626);
             this.panel15.TabIndex = 1;
             // 
             // IgAgvLoadTask
@@ -1371,7 +1300,7 @@
             this.IgAgvLoadTask.Checked = false;
             this.IgAgvLoadTask.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.IgAgvLoadTask.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.IgAgvLoadTask.Location = new System.Drawing.Point(179, 531);
+            this.IgAgvLoadTask.Location = new System.Drawing.Point(6, 449);
             this.IgAgvLoadTask.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.IgAgvLoadTask.Name = "IgAgvLoadTask";
             this.IgAgvLoadTask.Size = new System.Drawing.Size(87, 27);
@@ -1386,7 +1315,7 @@
             this.IgTailLoadTask.Checked = false;
             this.IgTailLoadTask.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.IgTailLoadTask.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.IgTailLoadTask.Location = new System.Drawing.Point(533, 531);
+            this.IgTailLoadTask.Location = new System.Drawing.Point(270, 449);
             this.IgTailLoadTask.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.IgTailLoadTask.Name = "IgTailLoadTask";
             this.IgTailLoadTask.Size = new System.Drawing.Size(87, 27);
@@ -1400,7 +1329,7 @@
             this.label44.AutoSize = true;
             this.label44.Font = new System.Drawing.Font("黑体", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label44.ForeColor = System.Drawing.Color.White;
-            this.label44.Location = new System.Drawing.Point(19, 536);
+            this.label44.Location = new System.Drawing.Point(3, 407);
             this.label44.Name = "label44";
             this.label44.Size = new System.Drawing.Size(158, 19);
             this.label44.TabIndex = 26;
@@ -1411,7 +1340,7 @@
             this.label41.AutoSize = true;
             this.label41.Font = new System.Drawing.Font("黑体", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label41.ForeColor = System.Drawing.Color.White;
-            this.label41.Location = new System.Drawing.Point(373, 534);
+            this.label41.Location = new System.Drawing.Point(266, 407);
             this.label41.Name = "label41";
             this.label41.Size = new System.Drawing.Size(167, 19);
             this.label41.TabIndex = 25;
@@ -1423,7 +1352,7 @@
             this.IgAgvUnLoadTask.Checked = false;
             this.IgAgvUnLoadTask.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.IgAgvUnLoadTask.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.IgAgvUnLoadTask.Location = new System.Drawing.Point(533, 163);
+            this.IgAgvUnLoadTask.Location = new System.Drawing.Point(270, 186);
             this.IgAgvUnLoadTask.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.IgAgvUnLoadTask.Name = "IgAgvUnLoadTask";
             this.IgAgvUnLoadTask.Size = new System.Drawing.Size(87, 27);
@@ -1437,7 +1366,7 @@
             this.label40.AutoSize = true;
             this.label40.Font = new System.Drawing.Font("黑体", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label40.ForeColor = System.Drawing.Color.White;
-            this.label40.Location = new System.Drawing.Point(374, 168);
+            this.label40.Location = new System.Drawing.Point(267, 145);
             this.label40.Name = "label40";
             this.label40.Size = new System.Drawing.Size(158, 19);
             this.label40.TabIndex = 23;
@@ -1446,7 +1375,7 @@
             // pictureBox4
             // 
             this.pictureBox4.Image = global::KEDAClient.Properties.Resources.arrow_up;
-            this.pictureBox4.Location = new System.Drawing.Point(126, 319);
+            this.pictureBox4.Location = new System.Drawing.Point(82, 258);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(38, 37);
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1456,7 +1385,7 @@
             // pictureBox3
             // 
             this.pictureBox3.Image = global::KEDAClient.Properties.Resources.arrow_rigth;
-            this.pictureBox3.Location = new System.Drawing.Point(285, 103);
+            this.pictureBox3.Location = new System.Drawing.Point(221, 96);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(41, 36);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1466,7 +1395,7 @@
             // pictureBox2
             // 
             this.pictureBox2.Image = global::KEDAClient.Properties.Resources.arrow_left;
-            this.pictureBox2.Location = new System.Drawing.Point(286, 452);
+            this.pictureBox2.Location = new System.Drawing.Point(219, 347);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(41, 36);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1476,7 +1405,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::KEDAClient.Properties.Resources.arrow;
-            this.pictureBox1.Location = new System.Drawing.Point(480, 319);
+            this.pictureBox1.Location = new System.Drawing.Point(337, 258);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(38, 37);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1488,7 +1417,7 @@
             this.label49.AutoSize = true;
             this.label49.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label49.ForeColor = System.Drawing.Color.GreenYellow;
-            this.label49.Location = new System.Drawing.Point(19, 455);
+            this.label49.Location = new System.Drawing.Point(-4, 354);
             this.label49.Name = "label49";
             this.label49.Size = new System.Drawing.Size(219, 22);
             this.label49.TabIndex = 16;
@@ -1499,7 +1428,7 @@
             this.label53.AutoSize = true;
             this.label53.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label53.ForeColor = System.Drawing.Color.GreenYellow;
-            this.label53.Location = new System.Drawing.Point(375, 108);
+            this.label53.Location = new System.Drawing.Point(266, 104);
             this.label53.Name = "label53";
             this.label53.Size = new System.Drawing.Size(219, 22);
             this.label53.TabIndex = 15;
@@ -1510,7 +1439,7 @@
             this.label52.AutoSize = true;
             this.label52.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label52.ForeColor = System.Drawing.Color.GreenYellow;
-            this.label52.Location = new System.Drawing.Point(19, 108);
+            this.label52.Location = new System.Drawing.Point(3, 104);
             this.label52.Name = "label52";
             this.label52.Size = new System.Drawing.Size(219, 22);
             this.label52.TabIndex = 14;
@@ -1522,7 +1451,7 @@
             this.IgHeadUnLoadTask.Checked = false;
             this.IgHeadUnLoadTask.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.IgHeadUnLoadTask.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.IgHeadUnLoadTask.Location = new System.Drawing.Point(195, 164);
+            this.IgHeadUnLoadTask.Location = new System.Drawing.Point(7, 186);
             this.IgHeadUnLoadTask.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.IgHeadUnLoadTask.Name = "IgHeadUnLoadTask";
             this.IgHeadUnLoadTask.Size = new System.Drawing.Size(87, 27);
@@ -1536,7 +1465,7 @@
             this.label50.AutoSize = true;
             this.label50.Font = new System.Drawing.Font("黑体", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label50.ForeColor = System.Drawing.Color.White;
-            this.label50.Location = new System.Drawing.Point(27, 168);
+            this.label50.Location = new System.Drawing.Point(4, 145);
             this.label50.Name = "label50";
             this.label50.Size = new System.Drawing.Size(167, 19);
             this.label50.TabIndex = 6;
@@ -1547,22 +1476,34 @@
             this.label51.AutoSize = true;
             this.label51.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label51.ForeColor = System.Drawing.Color.GreenYellow;
-            this.label51.Location = new System.Drawing.Point(375, 457);
+            this.label51.Location = new System.Drawing.Point(266, 354);
             this.label51.Name = "label51";
             this.label51.Size = new System.Drawing.Size(219, 22);
             this.label51.TabIndex = 0;
             this.label51.Text = "3)窑尾等 去 窑尾取";
+            // 
+            // panel4
+            // 
+            this.panel4.BackColor = System.Drawing.Color.Transparent;
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel4.Controls.Add(this.tabControlEx1);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel4.Location = new System.Drawing.Point(834, 72);
+            this.panel4.Name = "panel4";
+            this.panel4.Padding = new System.Windows.Forms.Padding(3);
+            this.panel4.Size = new System.Drawing.Size(350, 664);
+            this.panel4.TabIndex = 7;
             // 
             // tabControlEx1
             // 
             this.tabControlEx1.Controls.Add(this.taskPages);
             this.tabControlEx1.Controls.Add(this.timeTaskPage);
             this.tabControlEx1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControlEx1.ItemSize = new System.Drawing.Size(218, 60);
+            this.tabControlEx1.ItemSize = new System.Drawing.Size(168, 60);
             this.tabControlEx1.Location = new System.Drawing.Point(3, 3);
             this.tabControlEx1.Name = "tabControlEx1";
             this.tabControlEx1.SelectedIndex = 0;
-            this.tabControlEx1.Size = new System.Drawing.Size(440, 736);
+            this.tabControlEx1.Size = new System.Drawing.Size(340, 654);
             this.tabControlEx1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControlEx1.TabIndex = 3;
             // 
@@ -1574,7 +1515,7 @@
             this.taskPages.Location = new System.Drawing.Point(4, 64);
             this.taskPages.Name = "taskPages";
             this.taskPages.Padding = new System.Windows.Forms.Padding(3);
-            this.taskPages.Size = new System.Drawing.Size(432, 668);
+            this.taskPages.Size = new System.Drawing.Size(332, 586);
             this.taskPages.TabIndex = 0;
             this.taskPages.Text = "当前任务";
             // 
@@ -1582,9 +1523,9 @@
             // 
             this.taskStopBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.taskStopBtn.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.taskStopBtn.Location = new System.Drawing.Point(3, 624);
+            this.taskStopBtn.Location = new System.Drawing.Point(3, 542);
             this.taskStopBtn.Name = "taskStopBtn";
-            this.taskStopBtn.Size = new System.Drawing.Size(426, 41);
+            this.taskStopBtn.Size = new System.Drawing.Size(326, 41);
             this.taskStopBtn.TabIndex = 2;
             this.taskStopBtn.Text = "停止";
             this.taskStopBtn.UseVisualStyleBackColor = true;
@@ -1602,7 +1543,7 @@
             this.currentTaskList.GridLines = true;
             this.currentTaskList.Location = new System.Drawing.Point(3, 3);
             this.currentTaskList.Name = "currentTaskList";
-            this.currentTaskList.Size = new System.Drawing.Size(426, 573);
+            this.currentTaskList.Size = new System.Drawing.Size(326, 573);
             this.currentTaskList.TabIndex = 1;
             this.currentTaskList.UseCompatibleStateImageBehavior = false;
             this.currentTaskList.View = System.Windows.Forms.View.Details;
@@ -1615,7 +1556,7 @@
             this.timeTaskPage.Location = new System.Drawing.Point(4, 64);
             this.timeTaskPage.Name = "timeTaskPage";
             this.timeTaskPage.Padding = new System.Windows.Forms.Padding(3);
-            this.timeTaskPage.Size = new System.Drawing.Size(432, 668);
+            this.timeTaskPage.Size = new System.Drawing.Size(332, 586);
             this.timeTaskPage.TabIndex = 1;
             this.timeTaskPage.Text = "定时任务";
             // 
@@ -1624,8 +1565,8 @@
             this.tableLayoutPanel1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
             this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 59.84252F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40.15748F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 59.69697F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40.30303F));
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.headChargeBtn, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 3);
@@ -1636,7 +1577,6 @@
             this.tableLayoutPanel1.Controls.Add(this.label19, 0, 10);
             this.tableLayoutPanel1.Controls.Add(this.label20, 0, 8);
             this.tableLayoutPanel1.Controls.Add(this.headWaitBtn, 1, 11);
-            this.tableLayoutPanel1.Controls.Add(this.label27, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.allOnOffBtn, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.label22, 0, 9);
             this.tableLayoutPanel1.Controls.Add(this.tailWaitBtn, 1, 9);
@@ -1647,7 +1587,8 @@
             this.tableLayoutPanel1.Controls.Add(this.tailChargSucBtn, 1, 6);
             this.tableLayoutPanel1.Controls.Add(this.label46, 0, 7);
             this.tableLayoutPanel1.Controls.Add(this.label24, 0, 4);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 34);
+            this.tableLayoutPanel1.Controls.Add(this.label27, 0, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 6);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 12;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333333F));
@@ -1662,7 +1603,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333333F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333333F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333333F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(420, 484);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(330, 441);
             this.tableLayoutPanel1.TabIndex = 8;
             // 
             // label1
@@ -1671,7 +1612,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(3, 89);
+            this.label1.Location = new System.Drawing.Point(3, 79);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(186, 22);
             this.label1.TabIndex = 7;
@@ -1684,7 +1625,7 @@
             this.headChargeBtn.Checked = true;
             this.headChargeBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.headChargeBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.headChargeBtn.Location = new System.Drawing.Point(292, 87);
+            this.headChargeBtn.Location = new System.Drawing.Point(220, 77);
             this.headChargeBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.headChargeBtn.Name = "headChargeBtn";
             this.headChargeBtn.Size = new System.Drawing.Size(86, 26);
@@ -1699,7 +1640,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(3, 129);
+            this.label2.Location = new System.Drawing.Point(3, 115);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(186, 22);
             this.label2.TabIndex = 8;
@@ -1712,7 +1653,7 @@
             this.tailChargeBtn.Checked = true;
             this.tailChargeBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.tailChargeBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.tailChargeBtn.Location = new System.Drawing.Point(292, 127);
+            this.tailChargeBtn.Location = new System.Drawing.Point(220, 113);
             this.tailChargeBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.tailChargeBtn.Name = "tailChargeBtn";
             this.tailChargeBtn.Size = new System.Drawing.Size(86, 26);
@@ -1728,7 +1669,7 @@
             this.headUnloadBtn.Checked = true;
             this.headUnloadBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.headUnloadBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.headUnloadBtn.Location = new System.Drawing.Point(292, 327);
+            this.headUnloadBtn.Location = new System.Drawing.Point(220, 293);
             this.headUnloadBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.headUnloadBtn.Name = "headUnloadBtn";
             this.headUnloadBtn.Size = new System.Drawing.Size(86, 26);
@@ -1744,7 +1685,7 @@
             this.tailLoadBtn.Checked = true;
             this.tailLoadBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.tailLoadBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.tailLoadBtn.Location = new System.Drawing.Point(292, 407);
+            this.tailLoadBtn.Location = new System.Drawing.Point(220, 365);
             this.tailLoadBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.tailLoadBtn.Name = "tailLoadBtn";
             this.tailLoadBtn.Size = new System.Drawing.Size(86, 26);
@@ -1759,7 +1700,7 @@
             this.label21.AutoSize = true;
             this.label21.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label21.ForeColor = System.Drawing.Color.White;
-            this.label21.Location = new System.Drawing.Point(3, 451);
+            this.label21.Location = new System.Drawing.Point(3, 407);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(186, 22);
             this.label21.TabIndex = 14;
@@ -1772,7 +1713,7 @@
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label19.ForeColor = System.Drawing.Color.White;
-            this.label19.Location = new System.Drawing.Point(3, 409);
+            this.label19.Location = new System.Drawing.Point(3, 367);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(186, 22);
             this.label19.TabIndex = 10;
@@ -1784,7 +1725,7 @@
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label20.ForeColor = System.Drawing.Color.White;
-            this.label20.Location = new System.Drawing.Point(3, 329);
+            this.label20.Location = new System.Drawing.Point(3, 295);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(186, 22);
             this.label20.TabIndex = 11;
@@ -1797,7 +1738,7 @@
             this.headWaitBtn.Checked = true;
             this.headWaitBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.headWaitBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.headWaitBtn.Location = new System.Drawing.Point(292, 449);
+            this.headWaitBtn.Location = new System.Drawing.Point(220, 405);
             this.headWaitBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.headWaitBtn.Name = "headWaitBtn";
             this.headWaitBtn.Size = new System.Drawing.Size(86, 26);
@@ -1812,7 +1753,7 @@
             this.label27.AutoSize = true;
             this.label27.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label27.ForeColor = System.Drawing.Color.White;
-            this.label27.Location = new System.Drawing.Point(3, 6);
+            this.label27.Location = new System.Drawing.Point(3, 4);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(138, 27);
             this.label27.TabIndex = 25;
@@ -1825,7 +1766,7 @@
             this.allOnOffBtn.Checked = true;
             this.allOnOffBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.allOnOffBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.allOnOffBtn.Location = new System.Drawing.Point(292, 7);
+            this.allOnOffBtn.Location = new System.Drawing.Point(220, 5);
             this.allOnOffBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.allOnOffBtn.Name = "allOnOffBtn";
             this.allOnOffBtn.Size = new System.Drawing.Size(86, 26);
@@ -1840,7 +1781,7 @@
             this.label22.AutoSize = true;
             this.label22.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label22.ForeColor = System.Drawing.Color.White;
-            this.label22.Location = new System.Drawing.Point(3, 369);
+            this.label22.Location = new System.Drawing.Point(3, 331);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(186, 22);
             this.label22.TabIndex = 12;
@@ -1853,7 +1794,7 @@
             this.tailWaitBtn.Checked = true;
             this.tailWaitBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.tailWaitBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.tailWaitBtn.Location = new System.Drawing.Point(292, 367);
+            this.tailWaitBtn.Location = new System.Drawing.Point(220, 329);
             this.tailWaitBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.tailWaitBtn.Name = "tailWaitBtn";
             this.tailWaitBtn.Size = new System.Drawing.Size(86, 26);
@@ -1868,7 +1809,7 @@
             this.label23.AutoSize = true;
             this.label23.Font = new System.Drawing.Font("黑体", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label23.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.label23.Location = new System.Drawing.Point(3, 48);
+            this.label23.Location = new System.Drawing.Point(3, 42);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(110, 24);
             this.label23.TabIndex = 27;
@@ -1880,7 +1821,7 @@
             this.label25.AutoSize = true;
             this.label25.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label25.ForeColor = System.Drawing.Color.White;
-            this.label25.Location = new System.Drawing.Point(3, 209);
+            this.label25.Location = new System.Drawing.Point(3, 187);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(186, 22);
             this.label25.TabIndex = 21;
@@ -1893,7 +1834,7 @@
             this.headChargSucBtn.Checked = true;
             this.headChargSucBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.headChargSucBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.headChargSucBtn.Location = new System.Drawing.Point(292, 207);
+            this.headChargSucBtn.Location = new System.Drawing.Point(220, 185);
             this.headChargSucBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.headChargSucBtn.Name = "headChargSucBtn";
             this.headChargSucBtn.Size = new System.Drawing.Size(86, 26);
@@ -1908,7 +1849,7 @@
             this.label26.AutoSize = true;
             this.label26.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label26.ForeColor = System.Drawing.Color.White;
-            this.label26.Location = new System.Drawing.Point(3, 249);
+            this.label26.Location = new System.Drawing.Point(3, 223);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(186, 22);
             this.label26.TabIndex = 22;
@@ -1921,7 +1862,7 @@
             this.tailChargSucBtn.Checked = true;
             this.tailChargSucBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.tailChargSucBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.tailChargSucBtn.Location = new System.Drawing.Point(292, 247);
+            this.tailChargSucBtn.Location = new System.Drawing.Point(220, 221);
             this.tailChargSucBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.tailChargSucBtn.Name = "tailChargSucBtn";
             this.tailChargSucBtn.Size = new System.Drawing.Size(86, 26);
@@ -1936,7 +1877,7 @@
             this.label46.AutoSize = true;
             this.label46.Font = new System.Drawing.Font("黑体", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label46.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.label46.Location = new System.Drawing.Point(3, 288);
+            this.label46.Location = new System.Drawing.Point(3, 258);
             this.label46.Name = "label46";
             this.label46.Size = new System.Drawing.Size(110, 24);
             this.label46.TabIndex = 29;
@@ -1948,11 +1889,23 @@
             this.label24.AutoSize = true;
             this.label24.Font = new System.Drawing.Font("黑体", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label24.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.label24.Location = new System.Drawing.Point(3, 168);
+            this.label24.Location = new System.Drawing.Point(3, 150);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(110, 24);
             this.label24.TabIndex = 28;
             this.label24.Text = "充电完成";
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.Transparent;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel2.Controls.Add(this.agvList);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel2.Location = new System.Drawing.Point(0, 72);
+            this.panel2.Name = "panel2";
+            this.panel2.Padding = new System.Windows.Forms.Padding(3);
+            this.panel2.Size = new System.Drawing.Size(201, 664);
+            this.panel2.TabIndex = 5;
             // 
             // agvList
             // 
@@ -1967,11 +1920,25 @@
             this.agvList.Location = new System.Drawing.Point(3, 3);
             this.agvList.MultiSelect = false;
             this.agvList.Name = "agvList";
-            this.agvList.Size = new System.Drawing.Size(191, 736);
+            this.agvList.Size = new System.Drawing.Size(191, 654);
             this.agvList.TabIndex = 1;
             this.agvList.UseCompatibleStateImageBehavior = false;
             this.agvList.View = System.Windows.Forms.View.Details;
             this.agvList.SelectedIndexChanged += new System.EventHandler(this.agvList_SelectedIndexChanged);
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add(this.AutoGenerateTaskBtn);
+            this.panel1.Controls.Add(this.InitAllBtn);
+            this.panel1.Controls.Add(this.ExecuteTaskBtn);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Padding = new System.Windows.Forms.Padding(3);
+            this.panel1.Size = new System.Drawing.Size(1184, 72);
+            this.panel1.TabIndex = 4;
             // 
             // AutoGenerateTaskBtn
             // 
@@ -1979,12 +1946,12 @@
             this.AutoGenerateTaskBtn.Checked = false;
             this.AutoGenerateTaskBtn.CheckStyleX = KEDAClient.CheckStyle.style7;
             this.AutoGenerateTaskBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.AutoGenerateTaskBtn.Font = new System.Drawing.Font("隶书", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.AutoGenerateTaskBtn.Font = new System.Drawing.Font("隶书", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AutoGenerateTaskBtn.ForeColor = System.Drawing.Color.White;
-            this.AutoGenerateTaskBtn.Location = new System.Drawing.Point(106, 32);
-            this.AutoGenerateTaskBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.AutoGenerateTaskBtn.Location = new System.Drawing.Point(108, 2);
+            this.AutoGenerateTaskBtn.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.AutoGenerateTaskBtn.Name = "AutoGenerateTaskBtn";
-            this.AutoGenerateTaskBtn.Size = new System.Drawing.Size(182, 64);
+            this.AutoGenerateTaskBtn.Size = new System.Drawing.Size(156, 53);
             this.AutoGenerateTaskBtn.TabIndex = 6;
             this.AutoGenerateTaskBtn.TextName = "生成任务";
             this.AutoGenerateTaskBtn.TextStartPoint = new System.Drawing.Point(6, 10);
@@ -1996,12 +1963,12 @@
             this.InitAllBtn.Checked = false;
             this.InitAllBtn.CheckStyleX = KEDAClient.CheckStyle.style7;
             this.InitAllBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.InitAllBtn.Font = new System.Drawing.Font("隶书", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.InitAllBtn.Font = new System.Drawing.Font("隶书", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.InitAllBtn.ForeColor = System.Drawing.Color.Black;
-            this.InitAllBtn.Location = new System.Drawing.Point(856, 32);
-            this.InitAllBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.InitAllBtn.Location = new System.Drawing.Point(803, 2);
+            this.InitAllBtn.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.InitAllBtn.Name = "InitAllBtn";
-            this.InitAllBtn.Size = new System.Drawing.Size(182, 64);
+            this.InitAllBtn.Size = new System.Drawing.Size(156, 53);
             this.InitAllBtn.TabIndex = 8;
             this.InitAllBtn.TextName = "初始化";
             this.InitAllBtn.TextStartPoint = new System.Drawing.Point(16, 10);
@@ -2013,25 +1980,49 @@
             this.ExecuteTaskBtn.Checked = false;
             this.ExecuteTaskBtn.CheckStyleX = KEDAClient.CheckStyle.style7;
             this.ExecuteTaskBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ExecuteTaskBtn.Font = new System.Drawing.Font("隶书", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.ExecuteTaskBtn.Font = new System.Drawing.Font("隶书", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.ExecuteTaskBtn.ForeColor = System.Drawing.Color.White;
-            this.ExecuteTaskBtn.Location = new System.Drawing.Point(460, 32);
-            this.ExecuteTaskBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.ExecuteTaskBtn.Location = new System.Drawing.Point(467, 2);
+            this.ExecuteTaskBtn.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.ExecuteTaskBtn.Name = "ExecuteTaskBtn";
-            this.ExecuteTaskBtn.Size = new System.Drawing.Size(182, 64);
+            this.ExecuteTaskBtn.Size = new System.Drawing.Size(156, 53);
             this.ExecuteTaskBtn.TabIndex = 7;
             this.ExecuteTaskBtn.TextName = "执行任务";
             this.ExecuteTaskBtn.TextStartPoint = new System.Drawing.Point(6, 10);
+            this.ExecuteTaskBtn.Load += new System.EventHandler(this.ExecuteTaskBtn_Load);
             this.ExecuteTaskBtn.Click += new System.EventHandler(this.ExecuteTaskBtn_Click);
+            // 
+            // timerForListRefresh
+            // 
+            this.timerForListRefresh.Enabled = true;
+            this.timerForListRefresh.Interval = 500;
+            this.timerForListRefresh.Tick += new System.EventHandler(this.timerForListRefresh_Tick);
+            // 
+            // toolStripContainer1
+            // 
+            // 
+            // toolStripContainer1.ContentPanel
+            // 
+            this.toolStripContainer1.ContentPanel.AutoScroll = true;
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel3);
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel4);
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel2);
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel1);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(1184, 736);
+            this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
+            this.toolStripContainer1.Name = "toolStripContainer1";
+            this.toolStripContainer1.Size = new System.Drawing.Size(1184, 761);
+            this.toolStripContainer1.TabIndex = 8;
+            this.toolStripContainer1.Text = "toolStripContainer1";
             // 
             // ControlForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.AutoScrollMinSize = new System.Drawing.Size(1390, 880);
             this.BackColor = System.Drawing.Color.DimGray;
-            this.ClientSize = new System.Drawing.Size(1489, 790);
+            this.ClientSize = new System.Drawing.Size(1184, 761);
             this.Controls.Add(this.toolStripContainer1);
             this.Font = new System.Drawing.Font("宋体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -2040,13 +2031,6 @@
             this.Text = "行车调度工具";
             this.Load += new System.EventHandler(this.ControlForm_Load);
             this.panel3.ResumeLayout(false);
-            this.panel4.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel7.ResumeLayout(false);
-            this.toolStripContainer1.ContentPanel.ResumeLayout(false);
-            this.toolStripContainer1.ResumeLayout(false);
-            this.toolStripContainer1.PerformLayout();
             this.mainTabControl.ResumeLayout(false);
             this.controlPage.ResumeLayout(false);
             this.controlPage.PerformLayout();
@@ -2077,11 +2061,17 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.panel4.ResumeLayout(false);
             this.tabControlEx1.ResumeLayout(false);
             this.taskPages.ResumeLayout(false);
             this.timeTaskPage.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.toolStripContainer1.ContentPanel.ResumeLayout(false);
+            this.toolStripContainer1.ResumeLayout(false);
+            this.toolStripContainer1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2101,7 +2091,6 @@
         private SwitchButton AutoGenerateTaskBtn;
         private SwitchButton InitAllBtn;
         private SwitchButton ExecuteTaskBtn;
-        private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Timer timerForListRefresh;
         private System.Windows.Forms.ListView currentTaskList;
         private SwitchButton headUnloadBtn;

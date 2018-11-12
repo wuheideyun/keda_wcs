@@ -562,6 +562,17 @@ namespace KEDAClient
         }
 
 
+        private void ExecuteTaskBtn_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AgvClearSiteBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
         #endregion
 
         #region 任务操作
