@@ -149,7 +149,6 @@
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.headWaitBtn = new KEDAClient.SwitchButton();
-            this.label27 = new System.Windows.Forms.Label();
             this.allOnOffBtn = new KEDAClient.SwitchButton();
             this.label22 = new System.Windows.Forms.Label();
             this.tailWaitBtn = new KEDAClient.SwitchButton();
@@ -160,6 +159,7 @@
             this.tailChargSucBtn = new KEDAClient.SwitchButton();
             this.label46 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.agvList = new KEDAClient.DoubleBufferListView();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -1007,7 +1007,7 @@
             this.panel8.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.panel8.Controls.Add(this.panel12);
             this.panel8.Controls.Add(this.panel11);
-            this.panel8.Location = new System.Drawing.Point(3, -38);
+            this.panel8.Location = new System.Drawing.Point(3, -26);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(677, 727);
             this.panel8.TabIndex = 0;
@@ -1588,7 +1588,7 @@
             this.tableLayoutPanel1.Controls.Add(this.label46, 0, 7);
             this.tableLayoutPanel1.Controls.Add(this.label24, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.label27, 0, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 6);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 18);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 12;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333333F));
@@ -1747,18 +1747,6 @@
             this.headWaitBtn.TextStartPoint = new System.Drawing.Point(0, 0);
             this.headWaitBtn.Click += new System.EventHandler(this.headWaitBtn_Click);
             // 
-            // label27
-            // 
-            this.label27.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label27.AutoSize = true;
-            this.label27.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label27.ForeColor = System.Drawing.Color.White;
-            this.label27.Location = new System.Drawing.Point(3, 4);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(138, 27);
-            this.label27.TabIndex = 25;
-            this.label27.Text = "全开/全关";
-            // 
             // allOnOffBtn
             // 
             this.allOnOffBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -1894,6 +1882,18 @@
             this.label24.Size = new System.Drawing.Size(110, 24);
             this.label24.TabIndex = 28;
             this.label24.Text = "充电完成";
+            // 
+            // label27
+            // 
+            this.label27.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label27.AutoSize = true;
+            this.label27.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label27.ForeColor = System.Drawing.Color.White;
+            this.label27.Location = new System.Drawing.Point(3, 4);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(138, 27);
+            this.label27.TabIndex = 25;
+            this.label27.Text = "全开/全关";
             // 
             // panel2
             // 

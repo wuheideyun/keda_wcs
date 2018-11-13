@@ -101,13 +101,19 @@ namespace KEDAClient
 
             //调度任务列表
             currentTaskList.Columns.Add("ID", 0, HorizontalAlignment.Left);
-            currentTaskList.Columns.Add("任务", 340, HorizontalAlignment.Left);
-            currentTaskList.Columns.Add("路径", 80, HorizontalAlignment.Left);
+            currentTaskList.Columns.Add("任务", 220, HorizontalAlignment.Left);
+            currentTaskList.Columns.Add("路径", 100, HorizontalAlignment.Left);
 
             currentTaskList.View = System.Windows.Forms.View.Details;
 
 
             List<DeviceBackImf> devDatas = WcfMainHelper.GetDevList();
+            if (devDatas == null)
+            {
+                MessageBox.Show("请先启动服务");
+                Close();
+                return;
+            }
             foreach (var data in devDatas)
             {
                 agvStatus.Add(data.DevId, "stop");
