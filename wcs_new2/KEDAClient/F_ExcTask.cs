@@ -152,9 +152,9 @@ namespace KEDAClient
                 if(_agv !=null && _plc.ChargeAgv == _agv.Id)
                 {
 
-                    if (_plc.IsBatteryLock)
+                    if (_plc.IsEnterBatteryLock)
                     {
-                        _plc.IsBatteryLock = false;
+                        _plc.IsEnterBatteryLock = false;
                     }
 
                 }

@@ -20,9 +20,13 @@ namespace KEDAClient
 
         public static String 窑头卸载点 = "14";
 
-        public static String 接货充电点 = "51";
+        public static String 进窑尾充电站 = "51";
 
-        public static String 卸货充电点 = "52";
+        public static String 进窑头充电点 = "52";
+
+        public static String 出窑尾充电站 = "51";
+
+        public static String 出窑头充电点 = "52";
 
         public static String 窑尾等待点和装载点之间 = "23";
 
@@ -31,6 +35,8 @@ namespace KEDAClient
         public static String 窑头交管解除点 = "23";
 
         public static String 窑尾交管解除点 = "22";
+
+        public static String 窑尾对接完成点 = "22";
 
         public static int 最低电量 = 70;
 

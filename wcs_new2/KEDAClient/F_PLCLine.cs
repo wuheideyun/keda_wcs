@@ -97,9 +97,14 @@ namespace KEDAClient
         bool _isLock = false;
 
         /// <summary>
-        /// 充电站是否被锁
+        /// 进充电站是否被锁
         /// </summary>
-        bool _isBatteryLock = false;
+        bool _isEnterBatteryLock = false;
+
+        /// <summary>
+        /// 出充电站是否被锁
+        /// </summary>
+        bool _isExitBatteryLock = false;
 
         /// <summary>
         /// 充电车辆
@@ -192,12 +197,21 @@ namespace KEDAClient
         }
 
         /// <summary>
-        /// 充电桩是否被锁
+        /// 进窑头、窑尾充电桩是否被锁
         /// </summary>
-        public bool IsBatteryLock
+        public bool IsEnterBatteryLock
         {
-            get { return _isBatteryLock; }
-            set { _isBatteryLock = value; }
+            get { return _isEnterBatteryLock; }
+            set { _isEnterBatteryLock = value; }
+        }
+
+        /// <summary>
+        /// 出窑头、窑尾充电桩是否被锁
+        /// </summary>
+        public bool IsExitBatteryLock
+        {
+            get { return _isExitBatteryLock; }
+            set { _isExitBatteryLock = value; }
         }
 
         /// <summary>

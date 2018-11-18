@@ -66,6 +66,11 @@ namespace KEDAClient
         private bool _PlcHeadChargeSuc = false;
 
         /// <summary>
+        /// 窑尾可出站标志
+        /// </summary>
+        private bool _EndExitFlag = true;
+
+        /// <summary>
         /// 异常AGV
         /// </summary>
         Dictionary<string, int> dic = new Dictionary<string, int>();
@@ -304,50 +309,99 @@ namespace KEDAClient
             }
         }
 
-        private string TaskEndToHeadWaitMsg = "窑尾取 到 窑头卸";
+        private string TaskEndToEndSucMsg = "窑尾取 到 窑尾对接完成点";
+        private string TaskEndToExitBatteryMsg = "窑尾取 到 出窑尾充电站";
         private void TaskEndToHeadWait()
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(_plcEnd.Site);
+            F_AGV agv1 = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.出窑尾充电站);
 
             if (agv != null && agv.IsFree 
                 && !F_AGV.IsLock(agv.Id)
                 &&(ParamControl.IgnoreAgvLoadTask || agv.Sta_Material == EnumSta_Material.有货))
             {
-                F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, ConstSetBA.窑尾装载点, ConstSetBA.窑头卸载等待区);
+                // 判断窑尾可出站标志是否为True
+                if (_EndExitFlag)
+                {
+                    // 判断窑尾接货完成的车是否需要充电,且出窑尾充电站没有车、未被锁定
+                    if(agv.Electicity <= F_DataCenter.MDev.IGetDevElectricity() &&  agv1 == null && !_plcEnd.IsExitBatteryLock)
+                    {
+                        F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, ConstSetBA.窑尾装载点, ConstSetBA.出窑尾充电站);
 
-                F_AGV.AgvLock(agv.Id);
+                        F_AGV.AgvLock(agv.Id);
 
-                task.Id = agv.Id;
+                        task.Id = agv.Id;
 
-                F_DataCenter.MTask.IStartTask(task,agv.Id+ TaskEndToHeadWaitMsg);
+                        _plcEnd.IsExitBatteryLock = true;
 
-                sendServerLog(agv.Id + TaskEndToHeadWaitMsg);
+                        F_DataCenter.MTask.IStartTask(task, agv.Id + TaskEndToExitBatteryMsg);
 
-                LogFactory.LogDispatch(agv.Id, "AGV送货", TaskEndToHeadWaitMsg);
+                        sendServerLog(agv.Id + TaskEndToExitBatteryMsg);
 
+                        LogFactory.LogDispatch(agv.Id, "AGV出窑尾充电", TaskEndToExitBatteryMsg);
+                    }
+                    // 从窑尾到窑尾对接完成点
+                    F_ExcTask task1 = new F_ExcTask(null, EnumOper.无动作, ConstSetBA.窑尾装载点, ConstSetBA.窑尾对接完成点);
+
+                    F_AGV.AgvLock(agv.Id);
+
+                    task1.Id = agv.Id;
+
+                    _EndExitFlag = false;
+
+                    F_DataCenter.MTask.IStartTask(task1, agv.Id + TaskEndToEndSucMsg);
+
+                    sendServerLog(agv.Id + TaskEndToEndSucMsg);
+
+                    LogFactory.LogDispatch(agv.Id, "AGV窑尾取 到 窑尾对接完成点", TaskEndToEndSucMsg);
+                }              
             }
         }
 
-        private string PlcEndChargeMsg      = "窑尾等 到 窑尾充";
+        private string TaskEndSucToHeadWaitMsg = "窑尾对接完成点 到 窑头等";
+        /// <summary>
+        /// 窑尾对接完成点到窑头等待点
+        /// </summary>
+        private void TaskEndSucToHeadWait()
+        {
+            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.窑尾对接完成点);
+            if(agv != null && agv.IsFree  && !F_AGV.IsLock(agv.Id))
+            {
+                F_ExcTask task1 = new F_ExcTask(null, EnumOper.无动作, ConstSetBA.窑尾对接完成点, ConstSetBA.窑头卸载等待区);
+
+                F_AGV.AgvLock(agv.Id);
+
+                task1.Id = agv.Id;
+
+                F_DataCenter.MTask.IStartTask(task1, agv.Id + TaskEndSucToHeadWaitMsg);
+
+                sendServerLog(agv.Id + TaskEndSucToHeadWaitMsg);
+
+                LogFactory.LogDispatch(agv.Id, "AGV窑尾对接完成点到窑头等", TaskEndSucToHeadWaitMsg);
+            }
+
+        }
+
+        private string PlcEndChargeMsg  = "窑尾等 到 窑尾充";
         private void PlcEndCharge()
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.窑尾装载等待区);
-            F_AGV agv1 = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.接货充电点);
+            F_AGV agv1 = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.进窑尾充电站);
             // 让未上锁的、电量低于60且未充电的AGV去充电，且接货充电点没有AGV
             if (agv != null && agv.IsFree 
                 && !F_AGV.IsLock(agv.Id)
                 &&  agv.Electicity <= F_DataCenter.MDev.IGetDevElectricity()
                 && agv.ChargeStatus == EnumChargeStatus.未充电
                 && agv1 == null
-                && !_plcEnd.IsBatteryLock)
+                && !_plcEnd.IsEnterBatteryLock)
             {
                 _PlcEndNeedCharge = true;
 
-                F_ExcTask task = new F_ExcTask(null, EnumOper.充电, ConstSetBA.窑尾装载等待区, ConstSetBA.接货充电点);
+                F_ExcTask task = new F_ExcTask(null, EnumOper.充电, ConstSetBA.窑尾装载等待区, ConstSetBA.进窑尾充电站);
 
                 F_AGV.AgvLock(agv.Id);
 
-                _plcEnd.IsBatteryLock = true;
+                _plcEnd.IsEnterBatteryLock = true;
 
                 _plcEnd.ChargeAgv = agv.Id;
 
@@ -366,7 +420,7 @@ namespace KEDAClient
 
                 if( agv1 !=null)
                 {
-                    _plcEnd.IsBatteryLock = true;
+                    _plcEnd.IsEnterBatteryLock = true;
 
                     _plcEnd.ChargeAgv = agv1.Id;
                 }               
@@ -378,7 +432,7 @@ namespace KEDAClient
         private void PlcHeadCharge()
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.窑头卸载等待区);
-            F_AGV agv1 = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.卸货充电点);
+            F_AGV agv1 = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.进窑头充电点);
             // 让电量低于60且未充电的AGV去充电
             if (agv != null &&  agv.IsFree
                && agv.Electicity <= F_DataCenter.MDev.IGetDevElectricity()
@@ -386,17 +440,17 @@ namespace KEDAClient
                && !F_AGV.IsLock(agv.Id) 
                && agv.ChargeStatus == EnumChargeStatus.未充电  
                && agv1 == null
-                && !_plcHead.IsBatteryLock)
+                && !_plcHead.IsEnterBatteryLock)
             {
                 _PlcHeadNeedCharge = true;
 
-                F_ExcTask task = new F_ExcTask(null, EnumOper.充电, ConstSetBA.窑头卸载等待区, ConstSetBA.卸货充电点);
+                F_ExcTask task = new F_ExcTask(null, EnumOper.充电, ConstSetBA.窑头卸载等待区, ConstSetBA.进窑头充电点);
 
                 F_AGV.AgvLock(agv.Id);
 
                 //task.Id = agv.Id;
 
-                _plcHead.IsBatteryLock = true;
+                _plcHead.IsEnterBatteryLock = true;
 
                 _plcHead.ChargeAgv = agv.Id;
 
@@ -417,7 +471,7 @@ namespace KEDAClient
         private string PlcEndChargeSucMsg   = "窑尾充 到 窑尾取";
         public void PlcEndChargeSuc()
         {
-            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.接货充电点);
+            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.进窑尾充电站);
             // 有未上锁的、充电完成的AGV,且窑尾装载点有货、AGV上无货
             if (agv != null &&  agv.IsFree
                 && !F_AGV.IsLock(agv.Id) 
@@ -429,7 +483,7 @@ namespace KEDAClient
                 {
                     _PlcEndChargeSuc = true;
 
-                    F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.取货, ConstSetBA.接货充电点, ConstSetBA.窑尾装载点);
+                    F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.取货, ConstSetBA.进窑尾充电站, ConstSetBA.窑尾装载点);
 
                     F_AGV.AgvLock(agv.Id);
 
@@ -455,7 +509,7 @@ namespace KEDAClient
         private string PlcHeadChargeSucMsg  = "窑头充 到 窑头卸";
         public void PlcHeadChargeSuc()
         {
-            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.卸货充电点);
+            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.进窑头充电点);
             // 有充电完成的AGV,且窑头卸载点没货
             if (agv != null &&  agv.IsFree
                 && agv.ChargeStatus == EnumChargeStatus.充电完成 
@@ -469,7 +523,7 @@ namespace KEDAClient
                     true
                     )
                 {
-                    F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.放货, ConstSetBA.卸货充电点, ConstSetBA.窑头卸载点);
+                    F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.放货, ConstSetBA.进窑头充电点, ConstSetBA.窑头卸载点);
 
                     F_AGV.AgvLock(agv.Id);
 
