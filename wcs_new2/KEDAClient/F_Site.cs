@@ -38,6 +38,8 @@ namespace KEDAClient
 
         public static String 窑尾对接完成点 = "22";
 
+        public static String 窑头对接完成点 = "23";
+
         public static int 最低电量 = 70;
 
         public static int 最低电量排序序号 = 3;
