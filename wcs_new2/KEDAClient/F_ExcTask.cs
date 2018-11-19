@@ -16,6 +16,7 @@ namespace KEDAClient
     public enum EnumOper
     {
         无动作,
+        对接完成,
         取货,
         放货,
         充电,
@@ -136,7 +137,7 @@ namespace KEDAClient
             _startSite = startSite;
 
             _endSite = endSite;
-            
+
             _objID = this.GetHashCode();// int.Parse(DateTime.Now.ToString("yyyyMMddHHmmss", System.Globalization.DateTimeFormatInfo.InvariantInfo));
         }
 
@@ -148,21 +149,12 @@ namespace KEDAClient
             if (_plc != null)
             {
                 _plc.IsLock = false;
-
-                if(_agv !=null && _plc.ChargeAgv == _agv.Id)
-                {
-
-                    if (_plc.IsEnterBatteryLock)
-                    {
-                        _plc.IsEnterBatteryLock = false;
-                    }
-
-                }
             }
+
             if (_agv != null) { F_AGV.AgvRelease(_agv.Id); }
 
             if (_taskDispatch != null) { if (WcfMainHelper.CtrDispatch(_taskDispatch.Id, EnumCtrType.Stop)) { _isSuc = true; } }
-            
+
         }
         /// <summary>
         /// 发送窑头电机启动时间是否完成
@@ -171,8 +163,8 @@ namespace KEDAClient
         public bool IsHeadRunTimeFinish()
         {
             return (DateTime.Now - BeginTime).TotalSeconds > ParamControl.IgnoreHeadUnloadSecond;
-        }       
-        
+        }
+
         /// <summary>
         /// 发送窑尾电机启动时间是否完成
         /// </summary>
@@ -219,15 +211,23 @@ namespace KEDAClient
                 ///此次调度任务已经完成
                 if (_taskDispatch.Statue == EnumResultType.Suc)
                 {
-                    
+
                     if (_operType == EnumOper.取货)       //窑尾
                     {
                         ///当前AGV的到达的地标 与 棍台绑定地标一致
                         if (_agv.Site == _plc.Site)
                         {
+                            if (_agv != null && _plc.EnterChargeAgv == _agv.Id)
+                            {
+                                if (_plc.IsEnterBatteryLock)
+                                {
+                                    _plc.IsEnterBatteryLock = false;
+                                }
+                            }
+
                             //如果界面打开忽略《窑尾》AGV货物状态和Plc货物状态则 直接发送棍台转动命令
                             if (ParamControl.Is_IgnoreTailUnloadStatus ||
-                                ( _plc.Sta_Material == EnumSta_Material.有货 
+                                (_plc.Sta_Material == EnumSta_Material.有货
                                 && (_agv.Sta_Material == EnumSta_Material.无货 || _agv.Sta_Material == EnumSta_Material.传送中)))
                             {
                                 if (BeginTime == null) BeginTime = System.DateTime.Now;
@@ -237,7 +237,7 @@ namespace KEDAClient
                             }
 
                             //如果界面打开忽略《窑尾》AGV货物状态，并且上面已经发送了指定时间的棍台转动时间
-                            if ((ParamControl.Is_IgnoreTailUnloadStatus && IsTailRunTimeFinish())|| 
+                            if ((ParamControl.Is_IgnoreTailUnloadStatus && IsTailRunTimeFinish()) ||
                                 (_plc.Sta_Material == EnumSta_Material.无货 && _agv.Sta_Material == EnumSta_Material.有货))
                             {
                                 _agv.SendOrdr(EnumType.上料操作, EnumPara.agv辊台停止);
@@ -248,7 +248,7 @@ namespace KEDAClient
                                 if (ParamControl.Is_IgnoreTailStaStatus ||
                                     _agv.Sta_Monitor == EnumSta_Monitor.电机停止
                                     )
-                                {                            
+                                {
                                     ISetTaskSuc();
                                 }
                             }
@@ -260,9 +260,17 @@ namespace KEDAClient
                         ///当前AGV的到达的地标 与 棍台绑定地标一致
                         if (_agv.Site == _plc.Site)
                         {
+                            if (_agv != null && _plc.EnterChargeAgv == _agv.Id)
+                            {
+                                if (_plc.IsEnterBatteryLock)
+                                {
+                                    _plc.IsEnterBatteryLock = false;
+                                }
+                            }
+
                             //如果界面打开忽略《窑头》AGV货物状态和Plc货物状态则 直接发送棍台转动命令
-                            if (ParamControl.Is_IgnoreHeadUnloadStatus || 
-                                ((_plc.Sta_Material == EnumSta_Material.有货 || _plc.Sta_Material == EnumSta_Material.无货 )&&
+                            if (ParamControl.Is_IgnoreHeadUnloadStatus ||
+                                ((_plc.Sta_Material == EnumSta_Material.有货 || _plc.Sta_Material == EnumSta_Material.无货) &&
                                 (_agv.Sta_Material == EnumSta_Material.传送中 || _agv.Sta_Material == EnumSta_Material.有货)))
                             {
                                 if (BeginTime == null) BeginTime = System.DateTime.Now;
@@ -273,8 +281,8 @@ namespace KEDAClient
                             }
 
                             //如果界面打开忽略《窑头》AGV货物状态，并且上面已经发送了指定时间的棍台转动时间
-                            if ((ParamControl.Is_IgnoreHeadUnloadStatus && IsHeadRunTimeFinish()) || 
-                                (_plc.Sta_Material == EnumSta_Material.有货 && 
+                            if ((ParamControl.Is_IgnoreHeadUnloadStatus && IsHeadRunTimeFinish()) ||
+                                (_plc.Sta_Material == EnumSta_Material.有货 &&
                                _agv.Sta_Material == EnumSta_Material.无货))
                             {
                                 _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台上料完成);
@@ -285,7 +293,7 @@ namespace KEDAClient
                                 if (ParamControl.Is_IgnoreHeadStaStatus ||
                                     _agv.Sta_Monitor == EnumSta_Monitor.电机停止
                                     )
-                                {                               
+                                {
                                     ISetTaskSuc();
                                 }
                             }
@@ -294,13 +302,27 @@ namespace KEDAClient
                         return "";
                     }
                     else if (_operType == EnumOper.充电)
-                    {                      
-                        ISetTaskSuc();                   
+                    {
+                        ISetTaskSuc();
                         return "";
                     }
                     else if (_operType == EnumOper.无动作)
-                    {                      
+                    {
                         ISetTaskSuc();
+                        return "";
+                    }
+                    else if (_operType == EnumOper.对接完成)
+                    {
+                        ISetTaskSuc();
+                        if (_plc.IsExitBatteryLock)
+                        {
+                            _plc.IsExitBatteryLock = false;
+                        }
+                        if (_plc.ExitFlag)
+                        {
+                            _plc.ExitFlag = true;
+                        }
+
                         return "";
                     }
                 }
@@ -406,15 +428,16 @@ namespace KEDAClient
         /// </summary>
         /// <param name="task"></param>
         /// <returns></returns>
-        public bool IStartTask(F_ExcTask task,String msg)
+        public bool IStartTask(F_ExcTask task, String msg)
         {
             lock (_ans)
             {
                 F_ExcTask exit = _taskList.Find(c => { return (c.Plc == task.Plc && task.Plc != null) || c.Id == task.Id; });
 
-                if (exit == null) {
+                if (exit == null)
+                {
                     _taskList.Add(task);
-                    PublicDataContorl.AddTaskData(new TaskData(task.NO, msg, task.StartSite+","+task.EndSite));
+                    PublicDataContorl.AddTaskData(new TaskData(task.NO, msg, task.StartSite + "," + task.EndSite));
                     return true;
                 }
             }
