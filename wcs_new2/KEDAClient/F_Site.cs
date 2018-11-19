@@ -20,11 +20,11 @@ namespace KEDAClient
 
         public static String 窑头卸载点 = "14";
 
-        public static String 进窑尾充电站 = "51";
+        public static String 进窑尾充电点 = "51";
 
         public static String 进窑头充电点 = "52";
 
-        public static String 出窑尾充电站 = "51";
+        public static String 出窑尾充电点 = "51";
 
         public static String 出窑头充电点 = "52";
 

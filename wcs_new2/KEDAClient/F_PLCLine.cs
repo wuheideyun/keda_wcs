@@ -107,9 +107,19 @@ namespace KEDAClient
         bool _isExitBatteryLock = false;
 
         /// <summary>
-        /// 充电车辆
+        /// 进充电车辆
         /// </summary>
-        string _ChargeAgv = "";
+        string _enterChargeAgv = "";
+
+        /// <summary>
+        /// 出充电车辆
+        /// </summary>
+        string _exitChargeAgv = "";
+
+        /// <summary>
+        /// 可出站标志
+        /// </summary>
+        bool _exitFlag = true;
 
         /// <summary>
         /// 对应地标
@@ -188,12 +198,30 @@ namespace KEDAClient
         }
 
         /// <summary>
-        /// 充电车辆
+        /// 可出站标志
         /// </summary>
-        public string ChargeAgv
+        public bool ExitFlag
         {
-            get { return _ChargeAgv; }
-            set { _ChargeAgv = value; }
+            get { return _exitFlag ; }
+            set { _exitFlag = value; }
+        }
+
+        /// <summary>
+        /// 进窑头、窑尾充电车辆
+        /// </summary>
+        public string EnterChargeAgv
+        {
+            get { return _enterChargeAgv; }
+            set { _enterChargeAgv = value; }
+        }
+
+        /// <summary>
+        /// 出窑头、窑尾充电车辆
+        /// </summary>
+        public string ExitChargeAgv
+        {
+            get { return _exitChargeAgv; }
+            set { _exitChargeAgv = value; }
         }
 
         /// <summary>

@@ -788,7 +788,7 @@
             this.PLCPage.Location = new System.Drawing.Point(4, 4);
             this.PLCPage.Name = "PLCPage";
             this.PLCPage.Padding = new System.Windows.Forms.Padding(3);
-            this.PLCPage.Size = new System.Drawing.Size(495, 626);
+            this.PLCPage.Size = new System.Drawing.Size(495, 615);
             this.PLCPage.TabIndex = 2;
             this.PLCPage.Text = "线边辊台";
             // 
@@ -798,7 +798,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(3, 3);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(489, 620);
+            this.panel9.Size = new System.Drawing.Size(489, 609);
             this.panel9.TabIndex = 2;
             // 
             // panel10
@@ -998,7 +998,7 @@
             this.testPage.Location = new System.Drawing.Point(4, 4);
             this.testPage.Name = "testPage";
             this.testPage.Padding = new System.Windows.Forms.Padding(3);
-            this.testPage.Size = new System.Drawing.Size(495, 626);
+            this.testPage.Size = new System.Drawing.Size(495, 615);
             this.testPage.TabIndex = 4;
             this.testPage.Text = "测试配置";
             // 
@@ -1007,7 +1007,7 @@
             this.panel8.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.panel8.Controls.Add(this.panel12);
             this.panel8.Controls.Add(this.panel11);
-            this.panel8.Location = new System.Drawing.Point(3, -26);
+            this.panel8.Location = new System.Drawing.Point(3, -32);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(677, 727);
             this.panel8.TabIndex = 0;
@@ -1256,7 +1256,7 @@
             this.taskconfPage.Controls.Add(this.panel13);
             this.taskconfPage.Location = new System.Drawing.Point(4, 4);
             this.taskconfPage.Name = "taskconfPage";
-            this.taskconfPage.Size = new System.Drawing.Size(495, 626);
+            this.taskconfPage.Size = new System.Drawing.Size(495, 615);
             this.taskconfPage.TabIndex = 5;
             this.taskconfPage.Text = "任务配置";
             // 
@@ -1267,7 +1267,7 @@
             this.panel13.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel13.Location = new System.Drawing.Point(0, 0);
             this.panel13.Name = "panel13";
-            this.panel13.Size = new System.Drawing.Size(495, 626);
+            this.panel13.Size = new System.Drawing.Size(495, 615);
             this.panel13.TabIndex = 1;
             // 
             // panel15
@@ -1291,7 +1291,7 @@
             this.panel15.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel15.Location = new System.Drawing.Point(0, 0);
             this.panel15.Name = "panel15";
-            this.panel15.Size = new System.Drawing.Size(495, 626);
+            this.panel15.Size = new System.Drawing.Size(495, 615);
             this.panel15.TabIndex = 1;
             // 
             // IgAgvLoadTask
@@ -1590,7 +1590,7 @@
             this.tableLayoutPanel1.Controls.Add(this.label27, 0, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 12);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 12;
+            this.tableLayoutPanel1.RowCount = 14;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333333F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333333F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333333F));
@@ -1603,6 +1603,8 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333333F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333333F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333333F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(330, 441);
             this.tableLayoutPanel1.TabIndex = 8;
             // 

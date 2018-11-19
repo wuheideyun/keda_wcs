@@ -266,7 +266,7 @@ namespace KEDAClient
                     return c.IsAlive && devid != null ? c.DevId == devid : true && c.DevType == "Magnet_Basic"
                     //&& c.ProtyList[ConstSetBA.空闲].RValue == "True"
                     && (c.ProtyList[ConstSetBA.地标].RValue != ConstSetBA.窑尾装载等待区 && c.ProtyList[ConstSetBA.地标].RValue != ConstSetBA.窑头卸载等待区
-                    && c.ProtyList[ConstSetBA.地标].RValue != ConstSetBA.进窑尾充电站 && c.ProtyList[ConstSetBA.地标].RValue != ConstSetBA.进窑头充电点)
+                    && c.ProtyList[ConstSetBA.地标].RValue != ConstSetBA.进窑尾充电点 && c.ProtyList[ConstSetBA.地标].RValue != ConstSetBA.进窑头充电点)
 ;
                 });
 

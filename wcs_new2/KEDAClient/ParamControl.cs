@@ -51,14 +51,14 @@ namespace KEDAClient
         public static bool Do_TailLoad = true;
 
         /// <summary>
-        /// 是否之前去窑头等待区任务
+        /// 是否执行去窑尾对接完成点任务
         /// </summary>
-        public static bool Do_ToHeadWait = true;
+        public static bool Do_ToTailSuc = true;
 
         /// <summary>
-        /// 是否执行去窑尾等待区任务
+        /// 是否执行去窑头对接完成点任务
         /// </summary>
-        public static bool Do_ToTailWait = true;
+        public static bool Do_ToHeadSuc = true;
 
         /// <summary>
         /// 是否自动执行任务，和界面的执行任务进行对应，
@@ -194,11 +194,6 @@ namespace KEDAClient
         public static void AddTaskData(TaskData task)
         {
             _taskDatas.Add(task);
-        }
-
-        public static void UpdateDispatchID()
-        {
-
         }
 
     }
