@@ -658,24 +658,24 @@ namespace KEDAClient
         }
 
         /// <summary>
-        /// 是否执行到窑头等待点任务
+        /// 是否执行到窑尾对接完成点任务
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void headWaitBtn_Click(object sender, EventArgs e)
         {
-            ParamControl.Do_ToHeadWait = headWaitBtn.Checked;
+            ParamControl.Do_ToTailSuc = tailSucBtn.Checked;
 
         }
 
         /// <summary>
-        /// 是否执行去窑尾等待点任务
+        /// 是否执行去窑头对接完成点任务
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void tailWaitBtn_Click(object sender, EventArgs e)
         {
-            ParamControl.Do_ToTailWait = tailWaitBtn.Checked;
+            ParamControl.Do_ToHeadSuc = headSucBtn.Checked;
 
         }
         
@@ -702,12 +702,12 @@ namespace KEDAClient
             headChargeBtn.Checked = allOnOffBtn.Checked;
             headChargSucBtn.Checked = allOnOffBtn.Checked;
             headUnloadBtn.Checked = allOnOffBtn.Checked;
-            headWaitBtn.Checked = allOnOffBtn.Checked;
+            tailSucBtn.Checked = allOnOffBtn.Checked;
 
             tailChargeBtn.Checked = allOnOffBtn.Checked;
             tailChargSucBtn.Checked = allOnOffBtn.Checked;
             tailLoadBtn.Checked = allOnOffBtn.Checked;
-            tailWaitBtn.Checked = allOnOffBtn.Checked;
+            headSucBtn.Checked = allOnOffBtn.Checked;
 
 
             headChargeBtn_Click(sender, e);

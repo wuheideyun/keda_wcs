@@ -201,18 +201,28 @@ namespace KEDAClient
 
                         if (ParamControl.Do_ToTailWait)
                         {
-                            TaskEndToEndWait();        // 窑头放 到 窑头对接完成点
-                            TaskHeadSucToEndWait();   //  窑头对接完成点 到 窑尾等待点
+                           
                         }
+
+                        TaskHeadToExitBattery();  // 窑头放 到 出窑头充电站
+
+                        TaskHeadToHeadSuc();        // 窑头放 到 窑头对接完成点
+
+                        TaskHeadSucToEndWait();   //  窑头对接完成点 到 窑尾等待点
+                    
 
                         if (ParamControl.Do_TailLoad)      TaskPlcEndGet();        // 窑尾等 到 窑尾取
 
                         if (ParamControl.Do_ToHeadWait)
                         {
-                            TaskEndToHeadWait();      // 窑尾取 到 窑尾对接完成点
-                            TaskEndSucToHeadWait();   //  窑尾对接完成点 到 窑头等待点
-
+                            
                         }
+
+                        TaskEndToExitBattery();   // 窑尾取 到 出窑尾充电站
+
+                        TaskEndToEndSuc();      // 窑尾取 到 窑尾对接完成点
+
+                        TaskEndSucToHeadWait();   //  窑尾对接完成点 到 窑头等待点
                     }
                 }
                 catch(Exception e)
@@ -262,9 +272,8 @@ namespace KEDAClient
             }
         }
 
-        private string TaskHeadToHeadSucMsg = "窑头放 到 窑头对接完成点";
         private string TaskHeadToExitBatteryMsg = "窑头放 到 出窑头充电站";
-        private void TaskEndToEndWait()
+        private void TaskHeadToExitBattery()
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(_plcHead.Site);
             F_AGV agv1 = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.出窑头充电点);
@@ -292,24 +301,41 @@ namespace KEDAClient
                         sendServerLog(agv.Id + TaskHeadToExitBatteryMsg);
 
                         LogFactory.LogDispatch(agv.Id, "AGV出窑头充电", TaskHeadToExitBatteryMsg);
-                    }
-                    else
-                    {
-                        // 从窑头到窑头对接完成点
-                        F_ExcTask task1 = new F_ExcTask(null, EnumOper.无动作, ConstSetBA.窑头卸载点, ConstSetBA.窑头对接完成点);
+                    }                                    
+                }
+            }
+        }
 
-                        F_AGV.AgvLock(agv.Id);
+        private string TaskHeadToHeadSucMsg = "窑头放 到 窑头对接完成点";
+        /// <summary>
+        /// 窑头去窑头对接完成点
+        /// </summary>
+        private void TaskHeadToHeadSuc()
+        {
+            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(_plcHead.Site);
+            if (agv != null
+                && agv.IsFree
+                && !F_AGV.IsLock(agv.Id)
+                && (ParamControl.IgnoreAgvUnloadTask || agv.Sta_Material == EnumSta_Material.无货)
+                && agv.Electicity > F_DataCenter.MDev.IGetDevElectricity())
+            {
+                // 判断窑头可出站标志是否为True
+                if (_HeadExitFlag)
+                {
+                    // 从窑头到窑头对接完成点
+                    F_ExcTask task1 = new F_ExcTask(null, EnumOper.无动作, ConstSetBA.窑头卸载点, ConstSetBA.窑头对接完成点);
 
-                        task1.Id = agv.Id;
+                    F_AGV.AgvLock(agv.Id);
 
-                        _HeadExitFlag = false;
+                    task1.Id = agv.Id;
 
-                        F_DataCenter.MTask.IStartTask(task1, agv.Id + TaskHeadToHeadSucMsg);
+                    _HeadExitFlag = false;
 
-                        sendServerLog(agv.Id + TaskHeadToHeadSucMsg);
+                    F_DataCenter.MTask.IStartTask(task1, agv.Id + TaskHeadToHeadSucMsg);
 
-                        LogFactory.LogDispatch(agv.Id, "卸货完成", TaskHeadToHeadSucMsg);
-                    }                    
+                    sendServerLog(agv.Id + TaskHeadToHeadSucMsg);
+
+                    LogFactory.LogDispatch(agv.Id, "卸货完成", TaskHeadToHeadSucMsg);
                 }
             }
         }
@@ -372,10 +398,9 @@ namespace KEDAClient
                 }
             }
         }
-
-        private string TaskEndToEndSucMsg = "窑尾取 到 窑尾对接完成点";
+      
         private string TaskEndToExitBatteryMsg = "窑尾取 到 出窑尾充电站";
-        private void TaskEndToHeadWait()
+        private void TaskEndToExitBattery()
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(_plcEnd.Site);
             F_AGV agv1 = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.出窑尾充电站);
@@ -403,25 +428,41 @@ namespace KEDAClient
                         sendServerLog(agv.Id + TaskEndToExitBatteryMsg);
 
                         LogFactory.LogDispatch(agv.Id, "AGV出窑尾充电", TaskEndToExitBatteryMsg);
-                    }
-                    else
-                    {
-                        // 从窑尾到窑尾对接完成点
-                        F_ExcTask task1 = new F_ExcTask(null, EnumOper.无动作, ConstSetBA.窑尾装载点, ConstSetBA.窑尾对接完成点);
-
-                        F_AGV.AgvLock(agv.Id);
-
-                        task1.Id = agv.Id;
-
-                        _EndExitFlag = false;
-
-                        F_DataCenter.MTask.IStartTask(task1, agv.Id + TaskEndToEndSucMsg);
-
-                        sendServerLog(agv.Id + TaskEndToEndSucMsg);
-
-                        LogFactory.LogDispatch(agv.Id, "取货完成", TaskEndToEndSucMsg);
-                    }                  
+                    }                                
                 }              
+            }
+        }
+
+        private string TaskEndToEndSucMsg = "窑尾取 到 窑尾对接完成点";
+        /// <summary>
+        /// 窑尾到窑尾对接完成点
+        /// </summary>
+        private void TaskEndToEndSuc()
+        {
+            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(_plcEnd.Site);
+            if (agv != null && agv.IsFree
+                && !F_AGV.IsLock(agv.Id)
+                && (ParamControl.IgnoreAgvLoadTask || agv.Sta_Material == EnumSta_Material.有货)
+                && agv.Electicity > F_DataCenter.MDev.IGetDevElectricity())
+            {
+                // 判断窑尾可出站标志是否为True
+                if (_EndExitFlag)
+                {
+                    // 从窑尾到窑尾对接完成点
+                    F_ExcTask task1 = new F_ExcTask(null, EnumOper.无动作, ConstSetBA.窑尾装载点, ConstSetBA.窑尾对接完成点);
+
+                    F_AGV.AgvLock(agv.Id);
+
+                    task1.Id = agv.Id;
+
+                    _EndExitFlag = false;
+
+                    F_DataCenter.MTask.IStartTask(task1, agv.Id + TaskEndToEndSucMsg);
+
+                    sendServerLog(agv.Id + TaskEndToEndSucMsg);
+
+                    LogFactory.LogDispatch(agv.Id, "取货完成", TaskEndToEndSucMsg);
+                }
             }
         }
 

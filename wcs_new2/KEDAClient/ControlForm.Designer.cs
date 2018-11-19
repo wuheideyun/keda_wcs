@@ -148,10 +148,10 @@
             this.label21 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
-            this.headWaitBtn = new KEDAClient.SwitchButton();
+            this.tailSucBtn = new KEDAClient.SwitchButton();
             this.allOnOffBtn = new KEDAClient.SwitchButton();
             this.label22 = new System.Windows.Forms.Label();
-            this.tailWaitBtn = new KEDAClient.SwitchButton();
+            this.headSucBtn = new KEDAClient.SwitchButton();
             this.label23 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.headChargSucBtn = new KEDAClient.SwitchButton();
@@ -216,7 +216,7 @@
             this.panel3.Location = new System.Drawing.Point(201, 72);
             this.panel3.Name = "panel3";
             this.panel3.Padding = new System.Windows.Forms.Padding(3);
-            this.panel3.Size = new System.Drawing.Size(633, 664);
+            this.panel3.Size = new System.Drawing.Size(633, 653);
             this.panel3.TabIndex = 6;
             // 
             // mainTabControl
@@ -236,7 +236,7 @@
             this.mainTabControl.Multiline = true;
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.SelectedIndex = 0;
-            this.mainTabControl.Size = new System.Drawing.Size(643, 634);
+            this.mainTabControl.Size = new System.Drawing.Size(643, 623);
             this.mainTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.mainTabControl.TabIndex = 2;
             // 
@@ -257,7 +257,7 @@
             this.controlPage.Location = new System.Drawing.Point(4, 4);
             this.controlPage.Name = "controlPage";
             this.controlPage.Padding = new System.Windows.Forms.Padding(3);
-            this.controlPage.Size = new System.Drawing.Size(495, 626);
+            this.controlPage.Size = new System.Drawing.Size(495, 615);
             this.controlPage.TabIndex = 0;
             this.controlPage.Text = "综合控制";
             // 
@@ -1491,7 +1491,7 @@
             this.panel4.Location = new System.Drawing.Point(834, 72);
             this.panel4.Name = "panel4";
             this.panel4.Padding = new System.Windows.Forms.Padding(3);
-            this.panel4.Size = new System.Drawing.Size(350, 664);
+            this.panel4.Size = new System.Drawing.Size(350, 653);
             this.panel4.TabIndex = 7;
             // 
             // tabControlEx1
@@ -1503,7 +1503,7 @@
             this.tabControlEx1.Location = new System.Drawing.Point(3, 3);
             this.tabControlEx1.Name = "tabControlEx1";
             this.tabControlEx1.SelectedIndex = 0;
-            this.tabControlEx1.Size = new System.Drawing.Size(340, 654);
+            this.tabControlEx1.Size = new System.Drawing.Size(340, 643);
             this.tabControlEx1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControlEx1.TabIndex = 3;
             // 
@@ -1515,7 +1515,7 @@
             this.taskPages.Location = new System.Drawing.Point(4, 64);
             this.taskPages.Name = "taskPages";
             this.taskPages.Padding = new System.Windows.Forms.Padding(3);
-            this.taskPages.Size = new System.Drawing.Size(332, 586);
+            this.taskPages.Size = new System.Drawing.Size(332, 575);
             this.taskPages.TabIndex = 0;
             this.taskPages.Text = "当前任务";
             // 
@@ -1523,7 +1523,7 @@
             // 
             this.taskStopBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.taskStopBtn.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.taskStopBtn.Location = new System.Drawing.Point(3, 542);
+            this.taskStopBtn.Location = new System.Drawing.Point(3, 531);
             this.taskStopBtn.Name = "taskStopBtn";
             this.taskStopBtn.Size = new System.Drawing.Size(326, 41);
             this.taskStopBtn.TabIndex = 2;
@@ -1556,7 +1556,7 @@
             this.timeTaskPage.Location = new System.Drawing.Point(4, 64);
             this.timeTaskPage.Name = "timeTaskPage";
             this.timeTaskPage.Padding = new System.Windows.Forms.Padding(3);
-            this.timeTaskPage.Size = new System.Drawing.Size(332, 586);
+            this.timeTaskPage.Size = new System.Drawing.Size(332, 575);
             this.timeTaskPage.TabIndex = 1;
             this.timeTaskPage.Text = "定时任务";
             // 
@@ -1576,10 +1576,10 @@
             this.tableLayoutPanel1.Controls.Add(this.label21, 0, 11);
             this.tableLayoutPanel1.Controls.Add(this.label19, 0, 10);
             this.tableLayoutPanel1.Controls.Add(this.label20, 0, 8);
-            this.tableLayoutPanel1.Controls.Add(this.headWaitBtn, 1, 11);
+            this.tableLayoutPanel1.Controls.Add(this.tailSucBtn, 1, 11);
             this.tableLayoutPanel1.Controls.Add(this.allOnOffBtn, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.label22, 0, 9);
-            this.tableLayoutPanel1.Controls.Add(this.tailWaitBtn, 1, 9);
+            this.tableLayoutPanel1.Controls.Add(this.headSucBtn, 1, 9);
             this.tableLayoutPanel1.Controls.Add(this.label23, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label25, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.headChargSucBtn, 1, 5);
@@ -1588,7 +1588,7 @@
             this.tableLayoutPanel1.Controls.Add(this.label46, 0, 7);
             this.tableLayoutPanel1.Controls.Add(this.label24, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.label27, 0, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 18);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 12);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 12;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333333F));
@@ -1704,7 +1704,7 @@
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(186, 22);
             this.label21.TabIndex = 14;
-            this.label21.Text = "窑尾取 到 窑头等";
+            this.label21.Text = "窑尾取 到 窑尾完";
             this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label19
@@ -1731,21 +1731,21 @@
             this.label20.TabIndex = 11;
             this.label20.Text = "窑头等 到 窑头卸";
             // 
-            // headWaitBtn
+            // tailSucBtn
             // 
-            this.headWaitBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.headWaitBtn.BackColor = System.Drawing.Color.Transparent;
-            this.headWaitBtn.Checked = true;
-            this.headWaitBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
-            this.headWaitBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.headWaitBtn.Location = new System.Drawing.Point(220, 405);
-            this.headWaitBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
-            this.headWaitBtn.Name = "headWaitBtn";
-            this.headWaitBtn.Size = new System.Drawing.Size(86, 26);
-            this.headWaitBtn.TabIndex = 15;
-            this.headWaitBtn.TextName = null;
-            this.headWaitBtn.TextStartPoint = new System.Drawing.Point(0, 0);
-            this.headWaitBtn.Click += new System.EventHandler(this.headWaitBtn_Click);
+            this.tailSucBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.tailSucBtn.BackColor = System.Drawing.Color.Transparent;
+            this.tailSucBtn.Checked = true;
+            this.tailSucBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
+            this.tailSucBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.tailSucBtn.Location = new System.Drawing.Point(220, 405);
+            this.tailSucBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.tailSucBtn.Name = "tailSucBtn";
+            this.tailSucBtn.Size = new System.Drawing.Size(86, 26);
+            this.tailSucBtn.TabIndex = 15;
+            this.tailSucBtn.TextName = null;
+            this.tailSucBtn.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.tailSucBtn.Click += new System.EventHandler(this.headWaitBtn_Click);
             // 
             // allOnOffBtn
             // 
@@ -1773,23 +1773,23 @@
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(186, 22);
             this.label22.TabIndex = 12;
-            this.label22.Text = "窑头卸 到 窑尾等";
+            this.label22.Text = "窑头卸 到 窑头完";
             // 
-            // tailWaitBtn
+            // headSucBtn
             // 
-            this.tailWaitBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.tailWaitBtn.BackColor = System.Drawing.Color.Transparent;
-            this.tailWaitBtn.Checked = true;
-            this.tailWaitBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
-            this.tailWaitBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.tailWaitBtn.Location = new System.Drawing.Point(220, 329);
-            this.tailWaitBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
-            this.tailWaitBtn.Name = "tailWaitBtn";
-            this.tailWaitBtn.Size = new System.Drawing.Size(86, 26);
-            this.tailWaitBtn.TabIndex = 16;
-            this.tailWaitBtn.TextName = null;
-            this.tailWaitBtn.TextStartPoint = new System.Drawing.Point(0, 0);
-            this.tailWaitBtn.Click += new System.EventHandler(this.tailWaitBtn_Click);
+            this.headSucBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.headSucBtn.BackColor = System.Drawing.Color.Transparent;
+            this.headSucBtn.Checked = true;
+            this.headSucBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
+            this.headSucBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.headSucBtn.Location = new System.Drawing.Point(220, 329);
+            this.headSucBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.headSucBtn.Name = "headSucBtn";
+            this.headSucBtn.Size = new System.Drawing.Size(86, 26);
+            this.headSucBtn.TabIndex = 16;
+            this.headSucBtn.TextName = null;
+            this.headSucBtn.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.headSucBtn.Click += new System.EventHandler(this.tailWaitBtn_Click);
             // 
             // label23
             // 
@@ -1904,7 +1904,7 @@
             this.panel2.Location = new System.Drawing.Point(0, 72);
             this.panel2.Name = "panel2";
             this.panel2.Padding = new System.Windows.Forms.Padding(3);
-            this.panel2.Size = new System.Drawing.Size(201, 664);
+            this.panel2.Size = new System.Drawing.Size(201, 653);
             this.panel2.TabIndex = 5;
             // 
             // agvList
@@ -1920,7 +1920,7 @@
             this.agvList.Location = new System.Drawing.Point(3, 3);
             this.agvList.MultiSelect = false;
             this.agvList.Name = "agvList";
-            this.agvList.Size = new System.Drawing.Size(191, 654);
+            this.agvList.Size = new System.Drawing.Size(191, 643);
             this.agvList.TabIndex = 1;
             this.agvList.UseCompatibleStateImageBehavior = false;
             this.agvList.View = System.Windows.Forms.View.Details;
@@ -1946,7 +1946,7 @@
             this.AutoGenerateTaskBtn.Checked = false;
             this.AutoGenerateTaskBtn.CheckStyleX = KEDAClient.CheckStyle.style7;
             this.AutoGenerateTaskBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.AutoGenerateTaskBtn.Font = new System.Drawing.Font("隶书", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.AutoGenerateTaskBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AutoGenerateTaskBtn.ForeColor = System.Drawing.Color.White;
             this.AutoGenerateTaskBtn.Location = new System.Drawing.Point(108, 2);
             this.AutoGenerateTaskBtn.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
@@ -1963,7 +1963,7 @@
             this.InitAllBtn.Checked = false;
             this.InitAllBtn.CheckStyleX = KEDAClient.CheckStyle.style7;
             this.InitAllBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.InitAllBtn.Font = new System.Drawing.Font("隶书", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.InitAllBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.InitAllBtn.ForeColor = System.Drawing.Color.Black;
             this.InitAllBtn.Location = new System.Drawing.Point(803, 2);
             this.InitAllBtn.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
@@ -1980,7 +1980,7 @@
             this.ExecuteTaskBtn.Checked = false;
             this.ExecuteTaskBtn.CheckStyleX = KEDAClient.CheckStyle.style7;
             this.ExecuteTaskBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ExecuteTaskBtn.Font = new System.Drawing.Font("隶书", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.ExecuteTaskBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.ExecuteTaskBtn.ForeColor = System.Drawing.Color.White;
             this.ExecuteTaskBtn.Location = new System.Drawing.Point(467, 2);
             this.ExecuteTaskBtn.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
@@ -2008,11 +2008,11 @@
             this.toolStripContainer1.ContentPanel.Controls.Add(this.panel4);
             this.toolStripContainer1.ContentPanel.Controls.Add(this.panel2);
             this.toolStripContainer1.ContentPanel.Controls.Add(this.panel1);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(1184, 736);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(1184, 725);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer1.Name = "toolStripContainer1";
-            this.toolStripContainer1.Size = new System.Drawing.Size(1184, 761);
+            this.toolStripContainer1.Size = new System.Drawing.Size(1184, 750);
             this.toolStripContainer1.TabIndex = 8;
             this.toolStripContainer1.Text = "toolStripContainer1";
             // 
@@ -2022,7 +2022,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.DimGray;
-            this.ClientSize = new System.Drawing.Size(1184, 761);
+            this.ClientSize = new System.Drawing.Size(1184, 750);
             this.Controls.Add(this.toolStripContainer1);
             this.Font = new System.Drawing.Font("宋体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -2101,8 +2101,8 @@
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label20;
-        private SwitchButton headWaitBtn;
-        private SwitchButton tailWaitBtn;
+        private SwitchButton tailSucBtn;
+        private SwitchButton headSucBtn;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label26;
         private SwitchButton headChargSucBtn;
