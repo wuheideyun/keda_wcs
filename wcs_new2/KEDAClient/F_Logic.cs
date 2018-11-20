@@ -189,19 +189,19 @@ namespace KEDAClient
                         if (ParamControl.Do_EnterHeadCharge) TaskHeadToEnterBattery();        // 窑头等 到 进窑头充
 
                         if (ParamControl.Do_EnterEndCharge) TaskEndToEnterBattery();         // 窑尾等 到 进窑尾充
-                        
-                        if (ParamControl.Do_ExitHeadCharge) TaskHeadToExitBattery();  // 窑头放 到 出窑头充   
-    
-                        if (ParamControl.Do_ExitEndCharge) TaskEndToExitBattery();   // 窑尾取 到 出窑尾充
+
+                        if (ParamControl.Do_ExitHeadCharge) TaskHeadToExitBattery();        // 窑头放 到 出窑头充   
+
+                        if (ParamControl.Do_ExitEndCharge) TaskEndToExitBattery();          // 窑尾取 到 出窑尾充
 
                         //充电完成逻辑
                         if (ParamControl.Do_EnterHeadChargeSucc) TaskEnterHeadChargeSuc();    // 进窑头充 到 窑头卸
 
-                        if (ParamControl.Do_EnterEndChargeSucc) TaskEndHeadChargeSuc();     // 进窑尾充 到 货尾取
+                        if (ParamControl.Do_EnterEndChargeSucc) TaskEnterEndChargeSuc();     // 进窑尾充 到 窑尾取
 
-                        if (ParamControl.Do_ExitHeadChargeSucc) TaskExitHeadChargeSuc();    //出窑头充 到 窑头对接完成点
+                        if (ParamControl.Do_ExitHeadChargeSucc) TaskExitHeadChargeSuc();    //出窑头充 到 窑头完
 
-                        if (ParamControl.Do_ExitEndChargeSucc) TaskExitEndChargeSuc();      //出窑尾充 到 窑尾对接完成点
+                        if (ParamControl.Do_ExitEndChargeSucc) TaskExitEndChargeSuc();      //出窑尾充 到 窑尾完
 
 
 
@@ -209,16 +209,16 @@ namespace KEDAClient
                         if (ParamControl.Do_HeadUnload) TaskPlcHeadPut();        // 窑头等 到 窑头卸
 
                         if (ParamControl.Do_ToHeadSuc) TaskHeadToHeadSuc();     // 窑头卸 到 窑头完
-                        
-                        if (ParamControl.Do_ToHeadSuc)   TaskHeadToHeadSuc();     // 窑头卸 到 窑头完
-               
-                        if (ParamControl.Do_ToEndWait)   TaskHeadSucToEndWait();  // 窑头完 到 窑尾等
-                        
-                        if (ParamControl.Do_EndLoad) TaskPlcEndGet();         // 窑尾等 到 窑尾取
-                        
-                        if (ParamControl.Do_ToEndSuc)    TaskEndToEndSuc();       // 窑尾取 到 窑尾完
 
-                        if (ParamControl.Do_ToHeadWait)  TaskEndSucToHeadWait();  // 窑尾完 到 窑头等
+                        if (ParamControl.Do_ToHeadSuc) TaskHeadToHeadSuc();     // 窑头卸 到 窑头完
+
+                        if (ParamControl.Do_ToEndWait) TaskHeadSucToEndWait();  // 窑头完 到 窑尾等
+
+                        if (ParamControl.Do_EndLoad) TaskPlcEndGet();         // 窑尾等 到 窑尾取
+
+                        if (ParamControl.Do_ToEndSuc) TaskEndToEndSuc();       // 窑尾取 到 窑尾完
+
+                        if (ParamControl.Do_ToHeadWait) TaskEndSucToHeadWait();  // 窑尾完 到 窑头等
 
 
 
@@ -689,11 +689,11 @@ namespace KEDAClient
         /// <summary>
         /// 进窑尾充 到 窑尾取
         /// </summary>
-        public void TaskEndHeadChargeSuc()
+        public void TaskEnterEndChargeSuc()
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.进窑尾充电点);
             // 有未上锁的、充电完成的AGV,且窑尾装载点有货、AGV上无货
-            if (agv != null && agv.IsFree
+            if (!_plcEnd.IsLock && agv != null && agv.IsFree
                 && !F_AGV.IsLock(agv.Id)
                 && agv.ChargeStatus == EnumChargeStatus.充电完成)
             {
@@ -734,7 +734,7 @@ namespace KEDAClient
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.进窑头充电点);
             // 有充电完成的AGV,且窑头卸载点没货
-            if (agv != null && agv.IsFree
+            if ((ParamControl.Do_HeadPlcLock && !_plcHead.IsLock) && agv != null && agv.IsFree
                 && agv.ChargeStatus == EnumChargeStatus.充电完成
                 && !F_AGV.IsLock(agv.Id)
                )
