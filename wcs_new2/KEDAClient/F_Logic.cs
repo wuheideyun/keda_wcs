@@ -199,9 +199,9 @@ namespace KEDAClient
 
                         if (ParamControl.Do_EnterEndChargeSucc) TaskEndHeadChargeSuc();     // 进窑尾充 到 货尾取
 
-                        if (ParamControl.Do_ExitHeadChargeSucc) TaskExitHeadChargeSuc();    //出窑头充 到 窑头对接完成点
+                        if (ParamControl.Do_ExitHeadChargeSucc) TaskExitHeadChargeSuc();    //出窑头充 到 窑头完
 
-                        if (ParamControl.Do_ExitEndChargeSucc) TaskExitEndChargeSuc();      //出窑尾充 到 窑尾对接完成点
+                        if (ParamControl.Do_ExitEndChargeSucc) TaskExitEndChargeSuc();      //出窑尾充 到 窑尾完
 
 
 
@@ -292,7 +292,8 @@ namespace KEDAClient
                 if (_plcHead.ExitFlag)
                 {
                     // 判断窑头接货完成的车是否需要充电,且出窑头充电站没有车、未被锁定
-                    if (agv.Electicity <= F_DataCenter.MDev.IGetDevElectricity() && agv1 == null && !_plcHead.IsExitBatteryLock)
+                    if (agv.Electicity <= F_DataCenter.MDev.IGetDevElectricity() && agv.ChargeStatus == EnumChargeStatus.未充电
+                        && agv1 == null && !_plcHead.IsExitBatteryLock)
                     {
                         F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.充电, ConstSetBA.窑头卸载点, ConstSetBA.出窑头充电点);
 
@@ -432,7 +433,8 @@ namespace KEDAClient
                 if (_plcEnd.ExitFlag)
                 {
                     // 判断窑尾接货完成的车是否需要充电,且出窑尾充电站没有车、未被锁定
-                    if (agv.Electicity <= F_DataCenter.MDev.IGetDevElectricity() && agv1 == null && !_plcEnd.IsExitBatteryLock)
+                    if (agv.Electicity <= F_DataCenter.MDev.IGetDevElectricity() && agv.ChargeStatus == EnumChargeStatus.未充电
+                        && agv1 == null && !_plcEnd.IsExitBatteryLock)
                     {
                         F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.充电, ConstSetBA.窑尾装载点, ConstSetBA.出窑尾充电点);
 
@@ -650,10 +652,9 @@ namespace KEDAClient
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.窑头卸载等待区);
             F_AGV agv1 = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.进窑头充电点);
-            // 让电量低于60且未充电的AGV去充电
+           
             if (agv != null && agv.IsFree
-               && agv.Electicity <= F_DataCenter.MDev.IGetDevElectricity()
-               && agv.Electicity <= 80
+               && agv.Electicity <= F_DataCenter.MDev.IGetDevElectricity()              
                && !F_AGV.IsLock(agv.Id)
                && agv.ChargeStatus == EnumChargeStatus.未充电
                && agv1 == null
