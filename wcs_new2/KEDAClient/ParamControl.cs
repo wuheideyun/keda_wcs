@@ -48,17 +48,27 @@ namespace KEDAClient
         /// <summary>
         /// 是否执行窑尾取货任务
         /// </summary>
-        public static bool Do_TailLoad = true;
+        public static bool Do_EndLoad = true;
 
         /// <summary>
         /// 是否执行去窑尾对接完成点任务
         /// </summary>
-        public static bool Do_ToTailSuc = true;
+        public static bool Do_ToEndSuc = true;
 
         /// <summary>
         /// 是否执行去窑头对接完成点任务
         /// </summary>
         public static bool Do_ToHeadSuc = true;
+
+        /// <summary>
+        /// 是否执行去窑尾等任务
+        /// </summary>
+        public static bool Do_ToEndWait = true;
+
+        /// <summary>
+        /// 是否执行去窑头等任务
+        /// </summary>
+        public static bool Do_ToHeadWait = true;
 
         /// <summary>
         /// 是否自动执行任务，和界面的执行任务进行对应，

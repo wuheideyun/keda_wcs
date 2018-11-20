@@ -190,6 +190,10 @@ namespace KEDAClient
 
                         if (ParamControl.Do_TailCharge) PlcEndCharge();         // 窑尾等 到 窑尾充
 
+                        TaskHeadToExitBattery();  // 窑头放 到 出窑头充电站      
+
+                        TaskEndToExitBattery();   // 窑尾取 到 出窑尾充电站
+
                         //充电完成逻辑
                         if (ParamControl.Do_HeadChargeSucc) PlcHeadChargeSuc();    // 窑头充 到 窑头卸
 
@@ -197,21 +201,21 @@ namespace KEDAClient
 
 
                         //正常取卸逻辑
-                        if (ParamControl.Do_HeadUnload) TaskPlcHeadPut();       // 窑头等 到 窑头卸
+                        if (ParamControl.Do_HeadUnload)  TaskPlcHeadPut();        // 窑头等 到 窑头卸
 
-                        if (ParamControl.Do_ToHeadSuc) TaskHeadToHeadSuc();    // 窑头放 到 窑头对接完成点
+                        if (ParamControl.Do_ToHeadSuc)   TaskHeadToHeadSuc();     // 窑头卸 到 窑头对接完成点
+               
+                        if (ParamControl.Do_ToEndWait)   TaskHeadSucToEndWait();  // 窑头对接完成点 到 窑尾等待点
 
-                        TaskHeadToExitBattery();  // 窑头放 到 出窑头充电站                       
+                        if (ParamControl.Do_EndLoad)     TaskPlcEndGet();         // 窑尾等 到 窑尾取
 
-                        TaskHeadSucToEndWait();   //  窑头对接完成点 到 窑尾等待点
+                        if (ParamControl.Do_ToEndSuc)    TaskEndToEndSuc();       // 窑尾取 到 窑尾对接完成点
 
-                        if (ParamControl.Do_TailLoad) TaskPlcEndGet();        // 窑尾等 到 窑尾取
+                        if (ParamControl.Do_ToHeadWait)  TaskEndSucToHeadWait();  // 窑尾对接完成点 到 窑头等待点
 
-                        if (ParamControl.Do_ToTailSuc) TaskEndToEndSuc();      // 窑尾取 到 窑尾对接完成点
 
-                        TaskEndToExitBattery();   // 窑尾取 到 出窑尾充电站
 
-                        TaskEndSucToHeadWait();   //  窑尾对接完成点 到 窑头等待点
+
                     }
                 }
                 catch (Exception e)

@@ -568,17 +568,6 @@ namespace KEDAClient
         }
 
 
-        private void ExecuteTaskBtn_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void AgvClearSiteBtn_Click(object sender, EventArgs e)
-        {
-
-        }
-
-
         #endregion
 
         #region 任务操作
@@ -651,9 +640,9 @@ namespace KEDAClient
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void tailLoadBtn_Click(object sender, EventArgs e)
+        private void endLoadBtn_Click(object sender, EventArgs e)
         {
-            ParamControl.Do_TailLoad = tailLoadBtn.Checked;
+            ParamControl.Do_EndLoad = endLoadBtn.Checked;
 
         }
 
@@ -662,9 +651,9 @@ namespace KEDAClient
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void headWaitBtn_Click(object sender, EventArgs e)
+        private void endSucBtn_Click(object sender, EventArgs e)
         {
-            ParamControl.Do_ToTailSuc = tailSucBtn.Checked;
+            ParamControl.Do_ToEndSuc = endSucBtn.Checked;
 
         }
 
@@ -673,12 +662,35 @@ namespace KEDAClient
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void tailWaitBtn_Click(object sender, EventArgs e)
+        private void headSucBtn_Click(object sender, EventArgs e)
         {
             ParamControl.Do_ToHeadSuc = headSucBtn.Checked;
 
         }
-        
+
+        /// <summary>
+        /// 是否执行去窑尾等任务
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void endWaitBtn_Click(object sender, EventArgs e)
+        {
+            ParamControl.Do_ToEndWait = endWaitBtn.Checked;
+
+        }
+
+        /// <summary>
+        /// 是否执行去窑头等任务
+        /// </summary>
+        /// <param name = "sender" ></ param >
+        /// < param name="e"></param>
+        private void headWaitBtn_Click(object sender, EventArgs e)
+        {
+            ParamControl.Do_ToHeadWait = headWaitBtn.Checked;
+
+        }
+       
+
         /// <summary>
         /// 是否执行窑头充电完成任务
         /// </summary>
@@ -701,24 +713,28 @@ namespace KEDAClient
         {
             headChargeBtn.Checked = allOnOffBtn.Checked;
             headChargSucBtn.Checked = allOnOffBtn.Checked;
-            headUnloadBtn.Checked = allOnOffBtn.Checked;
-            tailSucBtn.Checked = allOnOffBtn.Checked;
+            headUnloadBtn.Checked = allOnOffBtn.Checked;           
+            headSucBtn.Checked = allOnOffBtn.Checked;
+            headWaitBtn.Checked = allOnOffBtn.Checked;
 
             tailChargeBtn.Checked = allOnOffBtn.Checked;
             tailChargSucBtn.Checked = allOnOffBtn.Checked;
-            tailLoadBtn.Checked = allOnOffBtn.Checked;
-            headSucBtn.Checked = allOnOffBtn.Checked;
-
+            endLoadBtn.Checked = allOnOffBtn.Checked;
+            endSucBtn.Checked = allOnOffBtn.Checked;
+            endWaitBtn.Checked = allOnOffBtn.Checked;
 
             headChargeBtn_Click(sender, e);
             headChargSucBtn_Click(sender, e);
             headUnloadBtn_Click(sender, e);
             headWaitBtn_Click(sender, e);
+            headSucBtn_Click(sender, e);
 
             tailChargeBtn_Click(sender, e);
             tailChargSucBtn_Click(sender, e);
-            tailLoadBtn_Click(sender, e);
-            tailWaitBtn_Click(sender, e);
+            endLoadBtn_Click(sender, e);
+            endWaitBtn_Click(sender, e);
+            endSucBtn_Click(sender, e);
+           
         }
 
         #endregion
@@ -845,6 +861,7 @@ namespace KEDAClient
         {
             ParamControl.IgnoreAgvUnloadTask = IgAgvUnLoadTask.Checked;
         }
+
 
         /// <summary>
         /// 窑尾等 到 窑尾取  忽略窑尾有货状态 让AGV过去接货
