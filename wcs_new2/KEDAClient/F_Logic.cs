@@ -186,32 +186,37 @@ namespace KEDAClient
                     if (ParamControl.Is_AutoAddTask)
                     {
                         //充电逻辑
-                        if (ParamControl.Do_HeadCharge) PlcHeadCharge();        // 窑头等 到 窑头充
+                        if (ParamControl.Do_EnterHeadCharge) TaskHeadToEnterBattery();        // 窑头等 到 进窑头充
 
-                        if (ParamControl.Do_TailCharge) PlcEndCharge();         // 窑尾等 到 窑尾充
+                        if (ParamControl.Do_EnterEndCharge) TaskEndToEnterBattery();         // 窑尾等 到 进窑尾充
 
-                        TaskHeadToExitBattery();  // 窑头放 到 出窑头充电站      
+                        if (ParamControl.Do_ExitHeadCharge) TaskHeadToExitBattery();  // 窑头放 到 出窑头充   
 
-                        TaskEndToExitBattery();   // 窑尾取 到 出窑尾充电站
+                        if (ParamControl.Do_ExitEndCharge) TaskEndToExitBattery();   // 窑尾取 到 出窑尾充
 
                         //充电完成逻辑
-                        if (ParamControl.Do_HeadChargeSucc) PlcHeadChargeSuc();    // 窑头充 到 窑头卸
+                        if (ParamControl.Do_EnterHeadChargeSucc) TaskEnterHeadChargeSuc();    // 进窑头充 到 窑头卸
 
-                        if (ParamControl.Do_TailChargeSucc) PlcEndChargeSuc();     // 窑尾充 到 货尾取
+                        if (ParamControl.Do_EnterEndChargeSucc) TaskEndHeadChargeSuc();     // 进窑尾充 到 货尾取
+
+                        if (ParamControl.Do_ExitHeadChargeSucc) TaskExitHeadChargeSuc();    //出窑头充 到 窑头对接完成点
+
+                        if (ParamControl.Do_ExitEndChargeSucc) TaskExitEndChargeSuc();      //出窑尾充 到 窑尾对接完成点
+
 
 
                         //正常取卸逻辑
-                        if (ParamControl.Do_HeadUnload)  TaskPlcHeadPut();        // 窑头等 到 窑头卸
+                        if (ParamControl.Do_HeadUnload) TaskPlcHeadPut();        // 窑头等 到 窑头卸
 
-                        if (ParamControl.Do_ToHeadSuc)   TaskHeadToHeadSuc();     // 窑头卸 到 窑头对接完成点
-               
-                        if (ParamControl.Do_ToEndWait)   TaskHeadSucToEndWait();  // 窑头对接完成点 到 窑尾等待点
+                        if (ParamControl.Do_ToHeadSuc) TaskHeadToHeadSuc();     // 窑头卸 到 窑头对接完成点
 
-                        if (ParamControl.Do_EndLoad)     TaskPlcEndGet();         // 窑尾等 到 窑尾取
+                        if (ParamControl.Do_ToEndWait) TaskHeadSucToEndWait();  // 窑头对接完成点 到 窑尾等待点
 
-                        if (ParamControl.Do_ToEndSuc)    TaskEndToEndSuc();       // 窑尾取 到 窑尾对接完成点
+                        if (ParamControl.Do_EndLoad) TaskPlcEndGet();         // 窑尾等 到 窑尾取
 
-                        if (ParamControl.Do_ToHeadWait)  TaskEndSucToHeadWait();  // 窑尾对接完成点 到 窑头等待点
+                        if (ParamControl.Do_ToEndSuc) TaskEndToEndSuc();       // 窑尾取 到 窑尾对接完成点
+
+                        if (ParamControl.Do_ToHeadWait) TaskEndSucToHeadWait();  // 窑尾对接完成点 到 窑头等待点
 
 
 
@@ -229,6 +234,9 @@ namespace KEDAClient
 
 
         private string TaskPlcHeadPutMsg = "窑头等 到 窑头卸";
+        /// <summary>
+        /// 窑头等 到 窑头卸
+        /// </summary>
         private void TaskPlcHeadPut()
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.窑头卸载等待区);
@@ -265,6 +273,9 @@ namespace KEDAClient
         }
 
         private string TaskHeadToExitBatteryMsg = "窑头放 到 出窑头充电站";
+        /// <summary>
+        /// 窑头放 到 出窑头充电站
+        /// </summary>
         private void TaskHeadToExitBattery()
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(_plcHead.Site);
@@ -317,7 +328,7 @@ namespace KEDAClient
                 if (_plcHead.ExitFlag)
                 {
                     // 如果需要充电但是充电桩有车、被锁，或者不需要充电直接去到对接完成点
-                    if((agv.Electicity <= F_DataCenter.MDev.IGetDevElectricity() && agv1 != null && _plcHead.IsExitBatteryLock)
+                    if ((agv.Electicity <= F_DataCenter.MDev.IGetDevElectricity() && agv1 != null && _plcHead.IsExitBatteryLock)
                         || agv.Electicity > F_DataCenter.MDev.IGetDevElectricity())
                     {
                         // 从窑头到窑头对接完成点
@@ -334,7 +345,7 @@ namespace KEDAClient
                         sendServerLog(agv.Id + TaskHeadToHeadSucMsg);
 
                         LogFactory.LogDispatch(agv.Id, "卸货完成", TaskHeadToHeadSucMsg);
-                    }                   
+                    }
                 }
             }
         }
@@ -364,6 +375,9 @@ namespace KEDAClient
         }
 
         private string TaskPlcEndGetMsg = "窑尾等 到 窑尾取";
+        /// <summary>
+        /// 窑尾等 到 窑尾取
+        /// </summary>
         private void TaskPlcEndGet()
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.窑尾装载等待区);
@@ -399,6 +413,9 @@ namespace KEDAClient
         }
 
         private string TaskEndToExitBatteryMsg = "窑尾取 到 出窑尾充电站";
+        /// <summary>
+        /// 窑尾取 到 出窑尾充电站
+        /// </summary>
         private void TaskEndToExitBattery()
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(_plcEnd.Site);
@@ -469,7 +486,7 @@ namespace KEDAClient
                         sendServerLog(agv.Id + TaskEndToEndSucMsg);
 
                         LogFactory.LogDispatch(agv.Id, "取货完成", TaskEndToEndSucMsg);
-                    }                  
+                    }
                 }
             }
         }
@@ -498,7 +515,10 @@ namespace KEDAClient
         }
 
         private string ExitPlcEndChargeSucMsg = "出窑尾充 到 窑尾对接完成点";
-        public void ExitPlcEndChargeSuc()
+        /// <summary>
+        /// 出窑尾充 到 窑尾对接完成点
+        /// </summary>
+        public void TaskExitEndChargeSuc()
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.出窑尾充电点);
             // 有未上锁的、充电完成的AGV,且窑尾装载点有货、AGV上无货
@@ -533,7 +553,10 @@ namespace KEDAClient
         }
 
         private string ExitPlcHeadChargeSucMsg = "出窑头充 到 窑头对接完成点";
-        public void ExitPlcHeadChargeSuc()
+        /// <summary>
+        /// 出窑头充 到 窑头对接完成点
+        /// </summary>
+        public void TaskExitHeadChargeSuc()
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.出窑头充电点);
             // 有未上锁的、充电完成的AGV
@@ -567,8 +590,11 @@ namespace KEDAClient
             }
         }
 
-        private string PlcEndChargeMsg = "窑尾等 到 窑尾充";
-        private void PlcEndCharge()
+        private string PlcEndChargeMsg = "窑尾等 到 进窑尾充";
+        /// <summary>
+        /// 窑尾等 到 进窑尾充
+        /// </summary>
+        private void TaskEndToEnterBattery()
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.窑尾装载等待区);
             F_AGV agv1 = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.进窑尾充电点);
@@ -613,8 +639,11 @@ namespace KEDAClient
         }
 
 
-        private string PlcHeadChargeMsg = "窑头等 到 窑头充";
-        private void PlcHeadCharge()
+        private string PlcHeadChargeMsg = "窑头等 到 进窑头充";
+        /// <summary>
+        /// 窑头等 到 进窑头充
+        /// </summary>
+        private void TaskHeadToEnterBattery()
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.窑头卸载等待区);
             F_AGV agv1 = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.进窑头充电点);
@@ -653,8 +682,11 @@ namespace KEDAClient
             }
         }
 
-        private string PlcEndChargeSucMsg = "窑尾充 到 窑尾取";
-        public void PlcEndChargeSuc()
+        private string PlcEndChargeSucMsg = "进窑尾充 到 窑尾取";
+        /// <summary>
+        /// 进窑尾充 到 窑尾取
+        /// </summary>
+        public void TaskEndHeadChargeSuc()
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.进窑尾充电点);
             // 有未上锁的、充电完成的AGV,且窑尾装载点有货、AGV上无货
@@ -691,8 +723,11 @@ namespace KEDAClient
         }
 
 
-        private string PlcHeadChargeSucMsg = "窑头充 到 窑头卸";
-        public void PlcHeadChargeSuc()
+        private string PlcHeadChargeSucMsg = "进窑头充 到 窑头卸";
+        /// <summary>
+        /// 进窑头充 到 窑头卸
+        /// </summary>
+        public void TaskEnterHeadChargeSuc()
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.进窑头充电点);
             // 有充电完成的AGV,且窑头卸载点没货

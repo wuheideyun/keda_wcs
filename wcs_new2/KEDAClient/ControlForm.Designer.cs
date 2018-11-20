@@ -39,17 +39,17 @@
             this.agvNameLab = new System.Windows.Forms.Label();
             this.AgvInitBtn = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.switchButton7 = new KEDAClient.SwitchButton();
+            this.ExitEndChargeLBtn = new KEDAClient.SwitchButton();
             this.label57 = new System.Windows.Forms.Label();
-            this.tialPlcChargeLBtn = new KEDAClient.SwitchButton();
-            this.TailPlcLockBtn = new KEDAClient.SwitchButton();
+            this.EnterEndChargeLBtn = new KEDAClient.SwitchButton();
+            this.EndPlcLockBtn = new KEDAClient.SwitchButton();
             this.label10 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.switchButton6 = new KEDAClient.SwitchButton();
+            this.ExitHeadChargeLBtn = new KEDAClient.SwitchButton();
             this.label56 = new System.Windows.Forms.Label();
-            this.HeadPlcChargeLBtn = new KEDAClient.SwitchButton();
+            this.EnterHeadChargeLBtn = new KEDAClient.SwitchButton();
             this.HeadPlcLockBtn = new KEDAClient.SwitchButton();
             this.label16 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -144,9 +144,9 @@
             this.timeTaskPage = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
-            this.headChargeBtn = new KEDAClient.SwitchButton();
+            this.enterheadChargeBtn = new KEDAClient.SwitchButton();
             this.label2 = new System.Windows.Forms.Label();
-            this.tailChargeBtn = new KEDAClient.SwitchButton();
+            this.enterendChargeBtn = new KEDAClient.SwitchButton();
             this.headUnloadBtn = new KEDAClient.SwitchButton();
             this.endLoadBtn = new KEDAClient.SwitchButton();
             this.label21 = new System.Windows.Forms.Label();
@@ -158,20 +158,20 @@
             this.headSucBtn = new KEDAClient.SwitchButton();
             this.label23 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
-            this.headChargSucBtn = new KEDAClient.SwitchButton();
+            this.enterheadChargSucBtn = new KEDAClient.SwitchButton();
             this.label26 = new System.Windows.Forms.Label();
-            this.tailChargSucBtn = new KEDAClient.SwitchButton();
+            this.enterendChargSucBtn = new KEDAClient.SwitchButton();
             this.label46 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.label47 = new System.Windows.Forms.Label();
             this.label48 = new System.Windows.Forms.Label();
-            this.switchButton1 = new KEDAClient.SwitchButton();
-            this.switchButton3 = new KEDAClient.SwitchButton();
+            this.exitheadChargeBtn = new KEDAClient.SwitchButton();
+            this.exitendChargeBtn = new KEDAClient.SwitchButton();
             this.label54 = new System.Windows.Forms.Label();
             this.label55 = new System.Windows.Forms.Label();
-            this.switchButton4 = new KEDAClient.SwitchButton();
-            this.switchButton5 = new KEDAClient.SwitchButton();
+            this.exitheadChargSucBtn = new KEDAClient.SwitchButton();
+            this.exitendChargSucBtn = new KEDAClient.SwitchButton();
             this.label58 = new System.Windows.Forms.Label();
             this.label59 = new System.Windows.Forms.Label();
             this.headWaitBtn = new KEDAClient.SwitchButton();
@@ -323,31 +323,32 @@
             // panel6
             // 
             this.panel6.AutoScroll = true;
-            this.panel6.Controls.Add(this.switchButton7);
+            this.panel6.Controls.Add(this.ExitEndChargeLBtn);
             this.panel6.Controls.Add(this.label57);
-            this.panel6.Controls.Add(this.tialPlcChargeLBtn);
-            this.panel6.Controls.Add(this.TailPlcLockBtn);
+            this.panel6.Controls.Add(this.EnterEndChargeLBtn);
+            this.panel6.Controls.Add(this.EndPlcLockBtn);
             this.panel6.Controls.Add(this.label10);
             this.panel6.Controls.Add(this.label12);
             this.panel6.Controls.Add(this.label18);
-            this.panel6.Location = new System.Drawing.Point(253, 440);
+            this.panel6.Location = new System.Drawing.Point(250, 440);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(236, 170);
+            this.panel6.Size = new System.Drawing.Size(245, 170);
             this.panel6.TabIndex = 16;
             // 
-            // switchButton7
+            // ExitEndChargeLBtn
             // 
-            this.switchButton7.BackColor = System.Drawing.Color.Transparent;
-            this.switchButton7.Checked = false;
-            this.switchButton7.CheckStyleX = KEDAClient.CheckStyle.style8;
-            this.switchButton7.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.switchButton7.Location = new System.Drawing.Point(145, 126);
-            this.switchButton7.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
-            this.switchButton7.Name = "switchButton7";
-            this.switchButton7.Size = new System.Drawing.Size(81, 30);
-            this.switchButton7.TabIndex = 21;
-            this.switchButton7.TextName = null;
-            this.switchButton7.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.ExitEndChargeLBtn.BackColor = System.Drawing.Color.Transparent;
+            this.ExitEndChargeLBtn.Checked = false;
+            this.ExitEndChargeLBtn.CheckStyleX = KEDAClient.CheckStyle.style8;
+            this.ExitEndChargeLBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ExitEndChargeLBtn.Location = new System.Drawing.Point(154, 126);
+            this.ExitEndChargeLBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.ExitEndChargeLBtn.Name = "ExitEndChargeLBtn";
+            this.ExitEndChargeLBtn.Size = new System.Drawing.Size(81, 30);
+            this.ExitEndChargeLBtn.TabIndex = 21;
+            this.ExitEndChargeLBtn.TextName = null;
+            this.ExitEndChargeLBtn.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.ExitEndChargeLBtn.Click += new System.EventHandler(this.ExitEndChargeLBtn_Click);
             // 
             // label57
             // 
@@ -356,44 +357,46 @@
             this.label57.ForeColor = System.Drawing.Color.White;
             this.label57.Location = new System.Drawing.Point(3, 131);
             this.label57.Name = "label57";
-            this.label57.Size = new System.Drawing.Size(137, 22);
+            this.label57.Size = new System.Drawing.Size(160, 22);
             this.label57.TabIndex = 20;
-            this.label57.Text = "充电桩状态:";
+            this.label57.Text = "出充电桩状态:";
             // 
-            // tialPlcChargeLBtn
+            // EnterEndChargeLBtn
             // 
-            this.tialPlcChargeLBtn.BackColor = System.Drawing.Color.Transparent;
-            this.tialPlcChargeLBtn.Checked = false;
-            this.tialPlcChargeLBtn.CheckStyleX = KEDAClient.CheckStyle.style8;
-            this.tialPlcChargeLBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.tialPlcChargeLBtn.Location = new System.Drawing.Point(144, 85);
-            this.tialPlcChargeLBtn.Margin = new System.Windows.Forms.Padding(20, 16, 20, 16);
-            this.tialPlcChargeLBtn.Name = "tialPlcChargeLBtn";
-            this.tialPlcChargeLBtn.Size = new System.Drawing.Size(81, 30);
-            this.tialPlcChargeLBtn.TabIndex = 19;
-            this.tialPlcChargeLBtn.TextName = null;
-            this.tialPlcChargeLBtn.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.EnterEndChargeLBtn.BackColor = System.Drawing.Color.Transparent;
+            this.EnterEndChargeLBtn.Checked = false;
+            this.EnterEndChargeLBtn.CheckStyleX = KEDAClient.CheckStyle.style8;
+            this.EnterEndChargeLBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.EnterEndChargeLBtn.Location = new System.Drawing.Point(154, 85);
+            this.EnterEndChargeLBtn.Margin = new System.Windows.Forms.Padding(20, 16, 20, 16);
+            this.EnterEndChargeLBtn.Name = "EnterEndChargeLBtn";
+            this.EnterEndChargeLBtn.Size = new System.Drawing.Size(81, 30);
+            this.EnterEndChargeLBtn.TabIndex = 19;
+            this.EnterEndChargeLBtn.TextName = null;
+            this.EnterEndChargeLBtn.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.EnterEndChargeLBtn.Click += new System.EventHandler(this.EnterEndChargeLBtn_Click);
             // 
-            // TailPlcLockBtn
+            // EndPlcLockBtn
             // 
-            this.TailPlcLockBtn.BackColor = System.Drawing.Color.Transparent;
-            this.TailPlcLockBtn.Checked = false;
-            this.TailPlcLockBtn.CheckStyleX = KEDAClient.CheckStyle.style8;
-            this.TailPlcLockBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.TailPlcLockBtn.Location = new System.Drawing.Point(143, 40);
-            this.TailPlcLockBtn.Margin = new System.Windows.Forms.Padding(11, 9, 11, 9);
-            this.TailPlcLockBtn.Name = "TailPlcLockBtn";
-            this.TailPlcLockBtn.Size = new System.Drawing.Size(81, 30);
-            this.TailPlcLockBtn.TabIndex = 18;
-            this.TailPlcLockBtn.TextName = null;
-            this.TailPlcLockBtn.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.EndPlcLockBtn.BackColor = System.Drawing.Color.Transparent;
+            this.EndPlcLockBtn.Checked = false;
+            this.EndPlcLockBtn.CheckStyleX = KEDAClient.CheckStyle.style8;
+            this.EndPlcLockBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.EndPlcLockBtn.Location = new System.Drawing.Point(154, 40);
+            this.EndPlcLockBtn.Margin = new System.Windows.Forms.Padding(11, 9, 11, 9);
+            this.EndPlcLockBtn.Name = "EndPlcLockBtn";
+            this.EndPlcLockBtn.Size = new System.Drawing.Size(81, 30);
+            this.EndPlcLockBtn.TabIndex = 18;
+            this.EndPlcLockBtn.TextName = null;
+            this.EndPlcLockBtn.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.EndPlcLockBtn.Click += new System.EventHandler(this.EndPlcLockBtn_Click);
             // 
             // label10
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label10.ForeColor = System.Drawing.Color.White;
-            this.label10.Location = new System.Drawing.Point(2, 48);
+            this.label10.Location = new System.Drawing.Point(4, 48);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(114, 22);
             this.label10.TabIndex = 15;
@@ -417,62 +420,64 @@
             this.label18.ForeColor = System.Drawing.Color.White;
             this.label18.Location = new System.Drawing.Point(2, 92);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(137, 22);
+            this.label18.Size = new System.Drawing.Size(160, 22);
             this.label18.TabIndex = 14;
-            this.label18.Text = "充电桩状态:";
+            this.label18.Text = "进充电桩状态:";
             // 
             // panel5
             // 
-            this.panel5.Controls.Add(this.switchButton6);
+            this.panel5.Controls.Add(this.ExitHeadChargeLBtn);
             this.panel5.Controls.Add(this.label56);
-            this.panel5.Controls.Add(this.HeadPlcChargeLBtn);
+            this.panel5.Controls.Add(this.EnterHeadChargeLBtn);
             this.panel5.Controls.Add(this.HeadPlcLockBtn);
             this.panel5.Controls.Add(this.label16);
             this.panel5.Controls.Add(this.label8);
             this.panel5.Controls.Add(this.label14);
-            this.panel5.Location = new System.Drawing.Point(6, 440);
+            this.panel5.Location = new System.Drawing.Point(1, 440);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(236, 172);
+            this.panel5.Size = new System.Drawing.Size(246, 172);
             this.panel5.TabIndex = 15;
             // 
-            // switchButton6
+            // ExitHeadChargeLBtn
             // 
-            this.switchButton6.BackColor = System.Drawing.Color.Transparent;
-            this.switchButton6.Checked = false;
-            this.switchButton6.CheckStyleX = KEDAClient.CheckStyle.style8;
-            this.switchButton6.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.switchButton6.Location = new System.Drawing.Point(150, 127);
-            this.switchButton6.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
-            this.switchButton6.Name = "switchButton6";
-            this.switchButton6.Size = new System.Drawing.Size(81, 30);
-            this.switchButton6.TabIndex = 19;
-            this.switchButton6.TextName = null;
-            this.switchButton6.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.ExitHeadChargeLBtn.BackColor = System.Drawing.Color.Transparent;
+            this.ExitHeadChargeLBtn.Checked = false;
+            this.ExitHeadChargeLBtn.CheckStyleX = KEDAClient.CheckStyle.style8;
+            this.ExitHeadChargeLBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ExitHeadChargeLBtn.Location = new System.Drawing.Point(152, 128);
+            this.ExitHeadChargeLBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.ExitHeadChargeLBtn.Name = "ExitHeadChargeLBtn";
+            this.ExitHeadChargeLBtn.Size = new System.Drawing.Size(81, 30);
+            this.ExitHeadChargeLBtn.TabIndex = 19;
+            this.ExitHeadChargeLBtn.TextName = null;
+            this.ExitHeadChargeLBtn.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.ExitHeadChargeLBtn.Click += new System.EventHandler(this.ExitHeadChargeLBtn_Click);
             // 
             // label56
             // 
             this.label56.AutoSize = true;
             this.label56.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label56.ForeColor = System.Drawing.Color.White;
-            this.label56.Location = new System.Drawing.Point(4, 132);
+            this.label56.Location = new System.Drawing.Point(0, 132);
             this.label56.Name = "label56";
-            this.label56.Size = new System.Drawing.Size(137, 22);
+            this.label56.Size = new System.Drawing.Size(160, 22);
             this.label56.TabIndex = 18;
-            this.label56.Text = "充电桩状态:";
+            this.label56.Text = "出充电桩状态:";
             // 
-            // HeadPlcChargeLBtn
+            // EnterHeadChargeLBtn
             // 
-            this.HeadPlcChargeLBtn.BackColor = System.Drawing.Color.Transparent;
-            this.HeadPlcChargeLBtn.Checked = false;
-            this.HeadPlcChargeLBtn.CheckStyleX = KEDAClient.CheckStyle.style8;
-            this.HeadPlcChargeLBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.HeadPlcChargeLBtn.Location = new System.Drawing.Point(150, 86);
-            this.HeadPlcChargeLBtn.Margin = new System.Windows.Forms.Padding(11, 9, 11, 9);
-            this.HeadPlcChargeLBtn.Name = "HeadPlcChargeLBtn";
-            this.HeadPlcChargeLBtn.Size = new System.Drawing.Size(81, 30);
-            this.HeadPlcChargeLBtn.TabIndex = 17;
-            this.HeadPlcChargeLBtn.TextName = null;
-            this.HeadPlcChargeLBtn.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.EnterHeadChargeLBtn.BackColor = System.Drawing.Color.Transparent;
+            this.EnterHeadChargeLBtn.Checked = false;
+            this.EnterHeadChargeLBtn.CheckStyleX = KEDAClient.CheckStyle.style8;
+            this.EnterHeadChargeLBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.EnterHeadChargeLBtn.Location = new System.Drawing.Point(152, 86);
+            this.EnterHeadChargeLBtn.Margin = new System.Windows.Forms.Padding(11, 9, 11, 9);
+            this.EnterHeadChargeLBtn.Name = "EnterHeadChargeLBtn";
+            this.EnterHeadChargeLBtn.Size = new System.Drawing.Size(81, 30);
+            this.EnterHeadChargeLBtn.TabIndex = 17;
+            this.EnterHeadChargeLBtn.TextName = null;
+            this.EnterHeadChargeLBtn.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.EnterHeadChargeLBtn.Click += new System.EventHandler(this.EnterHeadChargeLBtn_Click);
             // 
             // HeadPlcLockBtn
             // 
@@ -480,13 +485,14 @@
             this.HeadPlcLockBtn.Checked = false;
             this.HeadPlcLockBtn.CheckStyleX = KEDAClient.CheckStyle.style8;
             this.HeadPlcLockBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.HeadPlcLockBtn.Location = new System.Drawing.Point(150, 40);
+            this.HeadPlcLockBtn.Location = new System.Drawing.Point(152, 44);
             this.HeadPlcLockBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.HeadPlcLockBtn.Name = "HeadPlcLockBtn";
             this.HeadPlcLockBtn.Size = new System.Drawing.Size(81, 30);
             this.HeadPlcLockBtn.TabIndex = 16;
             this.HeadPlcLockBtn.TextName = null;
             this.HeadPlcLockBtn.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.HeadPlcLockBtn.Click += new System.EventHandler(this.HeadPlcLockBtn_Click);
             // 
             // label16
             // 
@@ -515,11 +521,11 @@
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label14.ForeColor = System.Drawing.Color.White;
-            this.label14.Location = new System.Drawing.Point(4, 85);
+            this.label14.Location = new System.Drawing.Point(0, 90);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(137, 22);
+            this.label14.Size = new System.Drawing.Size(160, 22);
             this.label14.TabIndex = 14;
-            this.label14.Text = "充电桩状态:";
+            this.label14.Text = "进充电桩状态:";
             // 
             // tableLayoutPanel2
             // 
@@ -816,7 +822,7 @@
             this.AgvClearSiteBtn.Size = new System.Drawing.Size(88, 53);
             this.AgvClearSiteBtn.TabIndex = 5;
             this.AgvClearSiteBtn.Text = "清除站点";
-            this.AgvClearSiteBtn.UseVisualStyleBackColor = true;          
+            this.AgvClearSiteBtn.UseVisualStyleBackColor = true;
             // 
             // AgvBackwardBtn
             // 
@@ -1639,9 +1645,9 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.headChargeBtn, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.enterheadChargeBtn, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.tailChargeBtn, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.enterendChargeBtn, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.headUnloadBtn, 1, 12);
             this.tableLayoutPanel1.Controls.Add(this.endLoadBtn, 1, 15);
             this.tableLayoutPanel1.Controls.Add(this.label21, 0, 16);
@@ -1653,20 +1659,20 @@
             this.tableLayoutPanel1.Controls.Add(this.headSucBtn, 1, 13);
             this.tableLayoutPanel1.Controls.Add(this.label23, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label25, 0, 7);
-            this.tableLayoutPanel1.Controls.Add(this.headChargSucBtn, 1, 7);
+            this.tableLayoutPanel1.Controls.Add(this.enterheadChargSucBtn, 1, 7);
             this.tableLayoutPanel1.Controls.Add(this.label26, 0, 8);
-            this.tableLayoutPanel1.Controls.Add(this.tailChargSucBtn, 1, 8);
+            this.tableLayoutPanel1.Controls.Add(this.enterendChargSucBtn, 1, 8);
             this.tableLayoutPanel1.Controls.Add(this.label46, 0, 11);
             this.tableLayoutPanel1.Controls.Add(this.label24, 0, 6);
             this.tableLayoutPanel1.Controls.Add(this.label27, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label47, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.label48, 0, 5);
-            this.tableLayoutPanel1.Controls.Add(this.switchButton1, 1, 4);
-            this.tableLayoutPanel1.Controls.Add(this.switchButton3, 1, 5);
+            this.tableLayoutPanel1.Controls.Add(this.exitheadChargeBtn, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.exitendChargeBtn, 1, 5);
             this.tableLayoutPanel1.Controls.Add(this.label54, 0, 9);
             this.tableLayoutPanel1.Controls.Add(this.label55, 0, 10);
-            this.tableLayoutPanel1.Controls.Add(this.switchButton4, 1, 9);
-            this.tableLayoutPanel1.Controls.Add(this.switchButton5, 1, 10);
+            this.tableLayoutPanel1.Controls.Add(this.exitheadChargSucBtn, 1, 9);
+            this.tableLayoutPanel1.Controls.Add(this.exitendChargSucBtn, 1, 10);
             this.tableLayoutPanel1.Controls.Add(this.label58, 0, 14);
             this.tableLayoutPanel1.Controls.Add(this.label59, 0, 17);
             this.tableLayoutPanel1.Controls.Add(this.headWaitBtn, 1, 17);
@@ -1703,25 +1709,25 @@
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(3, 58);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(186, 22);
+            this.label1.Size = new System.Drawing.Size(208, 22);
             this.label1.TabIndex = 7;
-            this.label1.Text = "窑头等 到 窑头充";
+            this.label1.Text = "窑头等 到 进窑头充";
             // 
-            // headChargeBtn
+            // enterheadChargeBtn
             // 
-            this.headChargeBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.headChargeBtn.BackColor = System.Drawing.Color.Transparent;
-            this.headChargeBtn.Checked = true;
-            this.headChargeBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
-            this.headChargeBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.headChargeBtn.Location = new System.Drawing.Point(223, 58);
-            this.headChargeBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
-            this.headChargeBtn.Name = "headChargeBtn";
-            this.headChargeBtn.Size = new System.Drawing.Size(75, 23);
-            this.headChargeBtn.TabIndex = 6;
-            this.headChargeBtn.TextName = null;
-            this.headChargeBtn.TextStartPoint = new System.Drawing.Point(0, 0);
-            this.headChargeBtn.Click += new System.EventHandler(this.headChargeBtn_Click);
+            this.enterheadChargeBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.enterheadChargeBtn.BackColor = System.Drawing.Color.Transparent;
+            this.enterheadChargeBtn.Checked = true;
+            this.enterheadChargeBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
+            this.enterheadChargeBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.enterheadChargeBtn.Location = new System.Drawing.Point(234, 58);
+            this.enterheadChargeBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.enterheadChargeBtn.Name = "enterheadChargeBtn";
+            this.enterheadChargeBtn.Size = new System.Drawing.Size(75, 23);
+            this.enterheadChargeBtn.TabIndex = 6;
+            this.enterheadChargeBtn.TextName = null;
+            this.enterheadChargeBtn.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.enterheadChargeBtn.Click += new System.EventHandler(this.enterheadChargeBtn_Click);
             // 
             // label2
             // 
@@ -1731,25 +1737,25 @@
             this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(3, 91);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(186, 22);
+            this.label2.Size = new System.Drawing.Size(208, 22);
             this.label2.TabIndex = 8;
-            this.label2.Text = "窑尾等 到 窑尾充";
+            this.label2.Text = "窑尾等 到 进窑尾充";
             // 
-            // tailChargeBtn
+            // enterendChargeBtn
             // 
-            this.tailChargeBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.tailChargeBtn.BackColor = System.Drawing.Color.Transparent;
-            this.tailChargeBtn.Checked = true;
-            this.tailChargeBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
-            this.tailChargeBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.tailChargeBtn.Location = new System.Drawing.Point(223, 91);
-            this.tailChargeBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
-            this.tailChargeBtn.Name = "tailChargeBtn";
-            this.tailChargeBtn.Size = new System.Drawing.Size(75, 23);
-            this.tailChargeBtn.TabIndex = 9;
-            this.tailChargeBtn.TextName = null;
-            this.tailChargeBtn.TextStartPoint = new System.Drawing.Point(0, 0);
-            this.tailChargeBtn.Click += new System.EventHandler(this.tailChargeBtn_Click);
+            this.enterendChargeBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.enterendChargeBtn.BackColor = System.Drawing.Color.Transparent;
+            this.enterendChargeBtn.Checked = true;
+            this.enterendChargeBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
+            this.enterendChargeBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.enterendChargeBtn.Location = new System.Drawing.Point(234, 91);
+            this.enterendChargeBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.enterendChargeBtn.Name = "enterendChargeBtn";
+            this.enterendChargeBtn.Size = new System.Drawing.Size(75, 23);
+            this.enterendChargeBtn.TabIndex = 9;
+            this.enterendChargeBtn.TextName = null;
+            this.enterendChargeBtn.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.enterendChargeBtn.Click += new System.EventHandler(this.enterendChargeBtn_Click);
             // 
             // headUnloadBtn
             // 
@@ -1758,7 +1764,7 @@
             this.headUnloadBtn.Checked = true;
             this.headUnloadBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.headUnloadBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.headUnloadBtn.Location = new System.Drawing.Point(223, 362);
+            this.headUnloadBtn.Location = new System.Drawing.Point(234, 362);
             this.headUnloadBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.headUnloadBtn.Name = "headUnloadBtn";
             this.headUnloadBtn.Size = new System.Drawing.Size(75, 23);
@@ -1774,7 +1780,7 @@
             this.endLoadBtn.Checked = true;
             this.endLoadBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.endLoadBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.endLoadBtn.Location = new System.Drawing.Point(223, 461);
+            this.endLoadBtn.Location = new System.Drawing.Point(234, 461);
             this.endLoadBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.endLoadBtn.Name = "endLoadBtn";
             this.endLoadBtn.Size = new System.Drawing.Size(75, 23);
@@ -1827,7 +1833,7 @@
             this.endSucBtn.Checked = true;
             this.endSucBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.endSucBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.endSucBtn.Location = new System.Drawing.Point(223, 494);
+            this.endSucBtn.Location = new System.Drawing.Point(234, 494);
             this.endSucBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.endSucBtn.Name = "endSucBtn";
             this.endSucBtn.Size = new System.Drawing.Size(75, 23);
@@ -1843,7 +1849,7 @@
             this.allOnOffBtn.Checked = true;
             this.allOnOffBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.allOnOffBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.allOnOffBtn.Location = new System.Drawing.Point(223, 5);
+            this.allOnOffBtn.Location = new System.Drawing.Point(234, 5);
             this.allOnOffBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.allOnOffBtn.Name = "allOnOffBtn";
             this.allOnOffBtn.Size = new System.Drawing.Size(75, 23);
@@ -1871,7 +1877,7 @@
             this.headSucBtn.Checked = true;
             this.headSucBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.headSucBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.headSucBtn.Location = new System.Drawing.Point(223, 395);
+            this.headSucBtn.Location = new System.Drawing.Point(234, 395);
             this.headSucBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.headSucBtn.Name = "headSucBtn";
             this.headSucBtn.Size = new System.Drawing.Size(75, 23);
@@ -1900,25 +1906,25 @@
             this.label25.ForeColor = System.Drawing.Color.White;
             this.label25.Location = new System.Drawing.Point(3, 210);
             this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(186, 22);
+            this.label25.Size = new System.Drawing.Size(208, 22);
             this.label25.TabIndex = 21;
-            this.label25.Text = "窑头充 到 窑头卸";
+            this.label25.Text = "进窑头充 到 窑头卸";
             // 
-            // headChargSucBtn
+            // enterheadChargSucBtn
             // 
-            this.headChargSucBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.headChargSucBtn.BackColor = System.Drawing.Color.Transparent;
-            this.headChargSucBtn.Checked = true;
-            this.headChargSucBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
-            this.headChargSucBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.headChargSucBtn.Location = new System.Drawing.Point(223, 210);
-            this.headChargSucBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
-            this.headChargSucBtn.Name = "headChargSucBtn";
-            this.headChargSucBtn.Size = new System.Drawing.Size(75, 23);
-            this.headChargSucBtn.TabIndex = 23;
-            this.headChargSucBtn.TextName = null;
-            this.headChargSucBtn.TextStartPoint = new System.Drawing.Point(0, 0);
-            this.headChargSucBtn.Click += new System.EventHandler(this.headChargSucBtn_Click);
+            this.enterheadChargSucBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.enterheadChargSucBtn.BackColor = System.Drawing.Color.Transparent;
+            this.enterheadChargSucBtn.Checked = true;
+            this.enterheadChargSucBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
+            this.enterheadChargSucBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.enterheadChargSucBtn.Location = new System.Drawing.Point(234, 210);
+            this.enterheadChargSucBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.enterheadChargSucBtn.Name = "enterheadChargSucBtn";
+            this.enterheadChargSucBtn.Size = new System.Drawing.Size(75, 23);
+            this.enterheadChargSucBtn.TabIndex = 23;
+            this.enterheadChargSucBtn.TextName = null;
+            this.enterheadChargSucBtn.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.enterheadChargSucBtn.Click += new System.EventHandler(this.enterheadChargSucBtn_Click);
             // 
             // label26
             // 
@@ -1928,25 +1934,25 @@
             this.label26.ForeColor = System.Drawing.Color.White;
             this.label26.Location = new System.Drawing.Point(3, 243);
             this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(186, 22);
+            this.label26.Size = new System.Drawing.Size(208, 22);
             this.label26.TabIndex = 22;
-            this.label26.Text = "窑尾充 到 窑尾取";
+            this.label26.Text = "进窑尾充 到 窑尾取";
             // 
-            // tailChargSucBtn
+            // enterendChargSucBtn
             // 
-            this.tailChargSucBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.tailChargSucBtn.BackColor = System.Drawing.Color.Transparent;
-            this.tailChargSucBtn.Checked = true;
-            this.tailChargSucBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
-            this.tailChargSucBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.tailChargSucBtn.Location = new System.Drawing.Point(223, 243);
-            this.tailChargSucBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
-            this.tailChargSucBtn.Name = "tailChargSucBtn";
-            this.tailChargSucBtn.Size = new System.Drawing.Size(75, 23);
-            this.tailChargSucBtn.TabIndex = 24;
-            this.tailChargSucBtn.TextName = null;
-            this.tailChargSucBtn.TextStartPoint = new System.Drawing.Point(0, 0);
-            this.tailChargSucBtn.Click += new System.EventHandler(this.tailChargSucBtn_Click);
+            this.enterendChargSucBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.enterendChargSucBtn.BackColor = System.Drawing.Color.Transparent;
+            this.enterendChargSucBtn.Checked = true;
+            this.enterendChargSucBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
+            this.enterendChargSucBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.enterendChargSucBtn.Location = new System.Drawing.Point(234, 243);
+            this.enterendChargSucBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.enterendChargSucBtn.Name = "enterendChargSucBtn";
+            this.enterendChargSucBtn.Size = new System.Drawing.Size(75, 23);
+            this.enterendChargSucBtn.TabIndex = 24;
+            this.enterendChargSucBtn.TextName = null;
+            this.enterendChargSucBtn.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.enterendChargSucBtn.Click += new System.EventHandler(this.enterendChargSucBtn_Click);
             // 
             // label46
             // 
@@ -1992,9 +1998,9 @@
             this.label47.ForeColor = System.Drawing.Color.White;
             this.label47.Location = new System.Drawing.Point(3, 124);
             this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(87, 22);
+            this.label47.Size = new System.Drawing.Size(208, 22);
             this.label47.TabIndex = 30;
-            this.label47.Text = "label47";
+            this.label47.Text = "窑头卸 到 出窑头充";
             // 
             // label48
             // 
@@ -2004,39 +2010,41 @@
             this.label48.ForeColor = System.Drawing.Color.White;
             this.label48.Location = new System.Drawing.Point(3, 157);
             this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(87, 22);
+            this.label48.Size = new System.Drawing.Size(208, 22);
             this.label48.TabIndex = 31;
-            this.label48.Text = "label48";
+            this.label48.Text = "窑尾取 到 出窑尾充";
             // 
-            // switchButton1
+            // exitheadChargeBtn
             // 
-            this.switchButton1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.switchButton1.BackColor = System.Drawing.Color.Transparent;
-            this.switchButton1.Checked = true;
-            this.switchButton1.CheckStyleX = KEDAClient.CheckStyle.style1;
-            this.switchButton1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.switchButton1.Location = new System.Drawing.Point(223, 124);
-            this.switchButton1.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
-            this.switchButton1.Name = "switchButton1";
-            this.switchButton1.Size = new System.Drawing.Size(75, 23);
-            this.switchButton1.TabIndex = 32;
-            this.switchButton1.TextName = null;
-            this.switchButton1.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.exitheadChargeBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.exitheadChargeBtn.BackColor = System.Drawing.Color.Transparent;
+            this.exitheadChargeBtn.Checked = true;
+            this.exitheadChargeBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
+            this.exitheadChargeBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.exitheadChargeBtn.Location = new System.Drawing.Point(234, 124);
+            this.exitheadChargeBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.exitheadChargeBtn.Name = "exitheadChargeBtn";
+            this.exitheadChargeBtn.Size = new System.Drawing.Size(75, 23);
+            this.exitheadChargeBtn.TabIndex = 32;
+            this.exitheadChargeBtn.TextName = null;
+            this.exitheadChargeBtn.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.exitheadChargeBtn.Click += new System.EventHandler(this.exitheadChargeBtn_Click);
             // 
-            // switchButton3
+            // exitendChargeBtn
             // 
-            this.switchButton3.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.switchButton3.BackColor = System.Drawing.Color.Transparent;
-            this.switchButton3.Checked = true;
-            this.switchButton3.CheckStyleX = KEDAClient.CheckStyle.style1;
-            this.switchButton3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.switchButton3.Location = new System.Drawing.Point(223, 157);
-            this.switchButton3.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
-            this.switchButton3.Name = "switchButton3";
-            this.switchButton3.Size = new System.Drawing.Size(75, 23);
-            this.switchButton3.TabIndex = 33;
-            this.switchButton3.TextName = null;
-            this.switchButton3.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.exitendChargeBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.exitendChargeBtn.BackColor = System.Drawing.Color.Transparent;
+            this.exitendChargeBtn.Checked = true;
+            this.exitendChargeBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
+            this.exitendChargeBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.exitendChargeBtn.Location = new System.Drawing.Point(234, 157);
+            this.exitendChargeBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.exitendChargeBtn.Name = "exitendChargeBtn";
+            this.exitendChargeBtn.Size = new System.Drawing.Size(75, 23);
+            this.exitendChargeBtn.TabIndex = 33;
+            this.exitendChargeBtn.TextName = null;
+            this.exitendChargeBtn.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.exitendChargeBtn.Click += new System.EventHandler(this.exitendChargeBtn_Click);
             // 
             // label54
             // 
@@ -2046,9 +2054,9 @@
             this.label54.ForeColor = System.Drawing.Color.White;
             this.label54.Location = new System.Drawing.Point(3, 276);
             this.label54.Name = "label54";
-            this.label54.Size = new System.Drawing.Size(87, 22);
+            this.label54.Size = new System.Drawing.Size(208, 22);
             this.label54.TabIndex = 34;
-            this.label54.Text = "label54";
+            this.label54.Text = "出窑头充 到 窑头完";
             // 
             // label55
             // 
@@ -2058,39 +2066,41 @@
             this.label55.ForeColor = System.Drawing.Color.White;
             this.label55.Location = new System.Drawing.Point(3, 309);
             this.label55.Name = "label55";
-            this.label55.Size = new System.Drawing.Size(87, 22);
+            this.label55.Size = new System.Drawing.Size(208, 22);
             this.label55.TabIndex = 35;
-            this.label55.Text = "label55";
+            this.label55.Text = "出窑尾充 到 窑尾完";
             // 
-            // switchButton4
+            // exitheadChargSucBtn
             // 
-            this.switchButton4.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.switchButton4.BackColor = System.Drawing.Color.Transparent;
-            this.switchButton4.Checked = true;
-            this.switchButton4.CheckStyleX = KEDAClient.CheckStyle.style1;
-            this.switchButton4.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.switchButton4.Location = new System.Drawing.Point(223, 276);
-            this.switchButton4.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
-            this.switchButton4.Name = "switchButton4";
-            this.switchButton4.Size = new System.Drawing.Size(75, 23);
-            this.switchButton4.TabIndex = 36;
-            this.switchButton4.TextName = null;
-            this.switchButton4.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.exitheadChargSucBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.exitheadChargSucBtn.BackColor = System.Drawing.Color.Transparent;
+            this.exitheadChargSucBtn.Checked = true;
+            this.exitheadChargSucBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
+            this.exitheadChargSucBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.exitheadChargSucBtn.Location = new System.Drawing.Point(234, 276);
+            this.exitheadChargSucBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.exitheadChargSucBtn.Name = "exitheadChargSucBtn";
+            this.exitheadChargSucBtn.Size = new System.Drawing.Size(75, 23);
+            this.exitheadChargSucBtn.TabIndex = 36;
+            this.exitheadChargSucBtn.TextName = null;
+            this.exitheadChargSucBtn.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.exitheadChargSucBtn.Click += new System.EventHandler(this.exitheadChargSucBtn_Click);
             // 
-            // switchButton5
+            // exitendChargSucBtn
             // 
-            this.switchButton5.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.switchButton5.BackColor = System.Drawing.Color.Transparent;
-            this.switchButton5.Checked = true;
-            this.switchButton5.CheckStyleX = KEDAClient.CheckStyle.style1;
-            this.switchButton5.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.switchButton5.Location = new System.Drawing.Point(223, 309);
-            this.switchButton5.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
-            this.switchButton5.Name = "switchButton5";
-            this.switchButton5.Size = new System.Drawing.Size(75, 23);
-            this.switchButton5.TabIndex = 37;
-            this.switchButton5.TextName = null;
-            this.switchButton5.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.exitendChargSucBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.exitendChargSucBtn.BackColor = System.Drawing.Color.Transparent;
+            this.exitendChargSucBtn.Checked = true;
+            this.exitendChargSucBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
+            this.exitendChargSucBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.exitendChargSucBtn.Location = new System.Drawing.Point(234, 309);
+            this.exitendChargSucBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.exitendChargSucBtn.Name = "exitendChargSucBtn";
+            this.exitendChargSucBtn.Size = new System.Drawing.Size(75, 23);
+            this.exitendChargSucBtn.TabIndex = 37;
+            this.exitendChargSucBtn.TextName = null;
+            this.exitendChargSucBtn.TextStartPoint = new System.Drawing.Point(0, 0);
+            this.exitendChargSucBtn.Click += new System.EventHandler(this.exitendChargSucBtn_Click);
             // 
             // label58
             // 
@@ -2123,7 +2133,7 @@
             this.headWaitBtn.Checked = true;
             this.headWaitBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.headWaitBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.headWaitBtn.Location = new System.Drawing.Point(223, 530);
+            this.headWaitBtn.Location = new System.Drawing.Point(234, 530);
             this.headWaitBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.headWaitBtn.Name = "headWaitBtn";
             this.headWaitBtn.Size = new System.Drawing.Size(75, 23);
@@ -2139,7 +2149,7 @@
             this.endWaitBtn.Checked = true;
             this.endWaitBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.endWaitBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.endWaitBtn.Location = new System.Drawing.Point(223, 428);
+            this.endWaitBtn.Location = new System.Drawing.Point(234, 428);
             this.endWaitBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.endWaitBtn.Name = "endWaitBtn";
             this.endWaitBtn.Size = new System.Drawing.Size(75, 23);
@@ -2337,9 +2347,9 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel4;
-        private SwitchButton headChargeBtn;
+        private SwitchButton enterheadChargeBtn;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private SwitchButton tailChargeBtn;
+        private SwitchButton enterendChargeBtn;
         private SwitchButton AutoGenerateTaskBtn;
         private SwitchButton InitAllBtn;
         private SwitchButton ExecuteTaskBtn;
@@ -2357,8 +2367,8 @@
         private SwitchButton headSucBtn;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label26;
-        private SwitchButton headChargSucBtn;
-        private SwitchButton tailChargSucBtn;
+        private SwitchButton enterheadChargSucBtn;
+        private SwitchButton enterendChargSucBtn;
         private System.Windows.Forms.Button taskStopBtn;
         private System.Windows.Forms.Label label27;
         private SwitchButton allOnOffBtn;
@@ -2370,13 +2380,13 @@
         private System.Windows.Forms.Label agvNameLab;
         private System.Windows.Forms.Button AgvInitBtn;
         private System.Windows.Forms.Panel panel6;
-        private SwitchButton tialPlcChargeLBtn;
-        private SwitchButton TailPlcLockBtn;
+        private SwitchButton EnterEndChargeLBtn;
+        private SwitchButton EndPlcLockBtn;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Panel panel5;
-        private SwitchButton HeadPlcChargeLBtn;
+        private SwitchButton EnterHeadChargeLBtn;
         private SwitchButton HeadPlcLockBtn;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label8;
@@ -2469,15 +2479,15 @@
         private System.Windows.Forms.Label label46;
         private System.Windows.Forms.Label label47;
         private System.Windows.Forms.Label label48;
-        private SwitchButton switchButton1;
-        private SwitchButton switchButton3;
+        private SwitchButton exitheadChargeBtn;
+        private SwitchButton exitendChargeBtn;
         private System.Windows.Forms.Label label54;
         private System.Windows.Forms.Label label55;
-        private SwitchButton switchButton4;
-        private SwitchButton switchButton5;
-        private SwitchButton switchButton7;
+        private SwitchButton exitheadChargSucBtn;
+        private SwitchButton exitendChargSucBtn;
+        private SwitchButton ExitEndChargeLBtn;
         private System.Windows.Forms.Label label57;
-        private SwitchButton switchButton6;
+        private SwitchButton ExitHeadChargeLBtn;
         private System.Windows.Forms.Label label56;
         private System.Windows.Forms.Label label58;
         private System.Windows.Forms.Label label59;

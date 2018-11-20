@@ -20,25 +20,44 @@ namespace KEDAClient
 
         //任务执行的参数配置：默认是执行true
         /// <summary>
-        /// 是否执行窑头充电任务
+        /// 是否执行进窑头充电任务
         /// </summary>
-        public static bool Do_HeadCharge = true;
+        public static bool Do_EnterHeadCharge = true;
 
         /// <summary>
-        /// 是否执行窑尾充电任务
+        /// 是否执行进窑尾充电任务
         /// </summary>
-        public static bool Do_TailCharge = true;
+        public static bool Do_EnterEndCharge = true;
 
         /// <summary>
-        /// 是否执行窑头充电完成回去等待点的任务
+        /// 是否执行出窑头充电任务
         /// </summary>
-        public static bool Do_HeadChargeSucc = true;
+        public static bool Do_ExitHeadCharge = true;
 
         /// <summary>
-        /// 是否执行窑尾充电完成回去等待点的任务
+        /// 是否执行出窑尾充电任务
         /// </summary>
-        public static bool Do_TailChargeSucc = true;
+        public static bool Do_ExitEndCharge = true;
 
+        /// <summary>
+        /// 是否执行进窑头充电完成回去等待点的任务
+        /// </summary>
+        public static bool Do_EnterHeadChargeSucc = true;
+
+        /// <summary>
+        /// 是否执行进窑尾充电完成回去等待点的任务
+        /// </summary>
+        public static bool Do_EnterEndChargeSucc = true;
+
+        /// <summary>
+        /// 是否执行出窑头充电完成回去等待点的任务
+        /// </summary>
+        public static bool Do_ExitHeadChargeSucc = true;
+
+        /// <summary>
+        /// 是否执行出窑尾充电完成回去等待点的任务
+        /// </summary>
+        public static bool Do_ExitEndChargeSucc = true;
 
         /// <summary>
         /// 是否执行窑头卸货任务
@@ -69,6 +88,39 @@ namespace KEDAClient
         /// 是否执行去窑头等任务
         /// </summary>
         public static bool Do_ToHeadWait = true;
+
+
+        //状态锁定：默认是false
+        /// <summary>
+        /// 是否锁定窑头
+        /// </summary>
+        public static bool Do_HeadPlcLock = false;
+
+        /// <summary>
+        /// 是否锁定进窑头充电桩
+        /// </summary>
+        public static bool Do_EnterHeadChargeLock = false;
+
+        /// <summary>
+        /// 是否锁定出窑头充电桩
+        /// </summary>
+        public static bool Do_ExitHeadChargeLock = false;
+
+        /// <summary>
+        /// 是否锁定窑尾
+        /// </summary>
+        public static bool Do_EndPlcLock = false;
+
+        /// <summary>
+        /// 是否锁定进窑尾充电桩
+        /// </summary>
+        public static bool Do_EnterEndChargeLock = false;
+
+        /// <summary>
+        /// 是否锁定出窑尾充电桩
+        /// </summary>
+        public static bool Do_ExitEndChargeLock = false;
+
 
         /// <summary>
         /// 是否自动执行任务，和界面的执行任务进行对应，
@@ -105,6 +157,7 @@ namespace KEDAClient
         /// 忽略窑头放料Agv和Plc的货物状态是发送点击启动时间
         /// </summary>
         private static int _IgnoreHeadUnloadSecond = 30;
+
         /// <summary>
         /// 忽略窑头放料Agv和Plc的货物状态是发送点击启动时间
         /// </summary>

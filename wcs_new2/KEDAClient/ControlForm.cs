@@ -344,10 +344,10 @@ namespace KEDAClient
                 _plc = new PLC(F_DataCenter.MDev.IGetDev(_plcSelectName));
                 PlcLocationLab.Text = _plc.PLCLocat();
                 PlcStaMaterialLab.Text = _plc.Sta_Material();
-                PlcStaMonitorLab .Text =_plc.Sta_Monitor();
-                PlcErrorLab .Text = _plc.Sta_Error();
-                PlcSpareLab .Text = _plc.SpareInform ();
-                
+                PlcStaMonitorLab.Text = _plc.Sta_Monitor();
+                PlcErrorLab.Text = _plc.Sta_Error();
+                PlcSpareLab.Text = _plc.SpareInform();
+
             }
         }
 
@@ -590,38 +590,89 @@ namespace KEDAClient
 
         #region 定时任务配置
 
+        
         /// <summary>
-        /// 是否执行窑尾充电完成任务
+        /// 是否执行进窑头充电任务
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void tailChargSucBtn_Click(object sender, EventArgs e)
+        private void enterheadChargeBtn_Click(object sender, EventArgs e)
         {
-            ParamControl.Do_TailChargeSucc = tailChargSucBtn.Checked;
+            ParamControl.Do_EnterHeadCharge = enterheadChargeBtn.Checked;
+
+        }
+        
+        /// <summary>
+        /// 是否执行进窑尾充电任务
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void enterendChargeBtn_Click(object sender, EventArgs e)
+        {
+            ParamControl.Do_EnterEndCharge = enterendChargeBtn.Checked;
 
         }
 
         /// <summary>
-        /// 更改窑头充电任务
+        /// 是否执行出窑头充电任务
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void headChargeBtn_Click(object sender, EventArgs e)
+        private void exitheadChargeBtn_Click(object sender, EventArgs e)
         {
-            ParamControl.Do_HeadCharge = headChargeBtn.Checked;
+            ParamControl.Do_ExitHeadCharge = exitheadChargeBtn.Checked;
 
         }
-       
 
         /// <summary>
-        /// 是否执行窑尾充电任务
+        /// 是否执行出窑尾充电任务
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void tailChargeBtn_Click(object sender, EventArgs e)
+        private void exitendChargeBtn_Click(object sender, EventArgs e)
         {
-            ParamControl.Do_TailCharge = tailChargeBtn.Checked;
+            ParamControl.Do_ExitEndCharge = exitendChargeBtn.Checked;
+        }
 
+        /// <summary>
+        /// 是否执行进窑头充电完成任务
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void enterheadChargSucBtn_Click(object sender, EventArgs e)
+        {
+            ParamControl.Do_EnterHeadChargeSucc = enterheadChargSucBtn.Checked;
+        }
+
+        /// <summary>
+        /// 是否执行进窑尾充电完成任务
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void enterendChargSucBtn_Click(object sender, EventArgs e)
+        {
+            ParamControl.Do_EnterEndChargeSucc = enterendChargSucBtn.Checked;
+        }
+
+        /// <summary>
+        /// 是否执行出窑头充电完成任务
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void exitheadChargSucBtn_Click(object sender, EventArgs e)
+        {
+
+            ParamControl.Do_ExitHeadChargeSucc  = exitheadChargSucBtn.Checked;
+        }
+
+        /// <summary>
+        /// 是否执行出窑尾充电完成任务
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void exitendChargSucBtn_Click(object sender, EventArgs e)
+        {
+            ParamControl.Do_ExitEndChargeSucc = exitendChargSucBtn.Checked;
         }
 
         /// <summary>
@@ -682,27 +733,14 @@ namespace KEDAClient
         /// <summary>
         /// 是否执行去窑头等任务
         /// </summary>
-        /// <param name = "sender" ></ param >
-        /// < param name="e"></param>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void headWaitBtn_Click(object sender, EventArgs e)
         {
             ParamControl.Do_ToHeadWait = headWaitBtn.Checked;
 
         }
-       
-
-        /// <summary>
-        /// 是否执行窑头充电完成任务
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void headChargSucBtn_Click(object sender, EventArgs e)
-        {
-
-            ParamControl.Do_HeadChargeSucc = headChargSucBtn.Checked;
-
-        }
-
+         
 
         /// <summary>
         /// 控制是否全部打开任务
@@ -711,30 +749,34 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void allOnOffBtn_Click(object sender, EventArgs e)
         {
-            headChargeBtn.Checked = allOnOffBtn.Checked;
-            headChargSucBtn.Checked = allOnOffBtn.Checked;
-            headUnloadBtn.Checked = allOnOffBtn.Checked;           
+            enterheadChargeBtn.Checked = allOnOffBtn.Checked;
+            enterheadChargSucBtn.Checked = allOnOffBtn.Checked;
+            headUnloadBtn.Checked = allOnOffBtn.Checked;
             headSucBtn.Checked = allOnOffBtn.Checked;
             headWaitBtn.Checked = allOnOffBtn.Checked;
 
-            tailChargeBtn.Checked = allOnOffBtn.Checked;
-            tailChargSucBtn.Checked = allOnOffBtn.Checked;
+            enterendChargeBtn.Checked = allOnOffBtn.Checked;
+            enterendChargSucBtn.Checked = allOnOffBtn.Checked;
             endLoadBtn.Checked = allOnOffBtn.Checked;
             endSucBtn.Checked = allOnOffBtn.Checked;
             endWaitBtn.Checked = allOnOffBtn.Checked;
 
-            headChargeBtn_Click(sender, e);
-            headChargSucBtn_Click(sender, e);
+            enterheadChargeBtn_Click(sender, e);
+            exitheadChargeBtn_Click(sender, e);
+            enterheadChargSucBtn_Click(sender, e);
+            exitheadChargSucBtn_Click(sender, e);
             headUnloadBtn_Click(sender, e);
             headWaitBtn_Click(sender, e);
             headSucBtn_Click(sender, e);
 
-            tailChargeBtn_Click(sender, e);
-            tailChargSucBtn_Click(sender, e);
+            enterendChargeBtn_Click(sender, e);
+            exitendChargeBtn_Click(sender, e);
+            enterendChargSucBtn_Click(sender, e);
+            exitendChargSucBtn_Click(sender, e);
             endLoadBtn_Click(sender, e);
             endWaitBtn_Click(sender, e);
             endSucBtn_Click(sender, e);
-           
+
         }
 
         #endregion
@@ -840,7 +882,7 @@ namespace KEDAClient
             ParamControl.Is_IgnoreHeadUnloadStatus = IgnoreHeadStatusBtn.Checked;
         }
 
-       
+
 
         /// <summary>
         /// 窑头等 到 窑头卸  忽略窑头无货状态 让AGV过去窑头卸
@@ -882,6 +924,73 @@ namespace KEDAClient
         {
             ParamControl.IgnoreAgvLoadTask = IgAgvLoadTask.Checked;
         }
+        #endregion
+
+        #region 锁定状态控制
+
+
+        /// <summary>
+        /// 是否解锁窑头状态
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void HeadPlcLockBtn_Click(object sender, EventArgs e)
+        {
+            ParamControl.Do_HeadPlcLock = HeadPlcLockBtn.Checked;
+        }
+
+        /// <summary>
+        /// 是否解锁进窑头充电桩状态
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EnterHeadChargeLBtn_Click(object sender, EventArgs e)
+        {
+            ParamControl.Do_EnterHeadChargeLock = EnterHeadChargeLBtn.Checked;
+        }
+
+        /// <summary>
+        /// 是否解锁出窑头充电桩状态
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ExitHeadChargeLBtn_Click(object sender, EventArgs e)
+        {
+            ParamControl.Do_ExitHeadChargeLock = ExitHeadChargeLBtn.Checked;
+        }
+
+
+        /// <summary>
+        /// 是否解锁窑尾状态
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EndPlcLockBtn_Click(object sender, EventArgs e)
+        {
+            ParamControl.Do_EndPlcLock = EndPlcLockBtn.Checked;
+        }
+
+        /// <summary>
+        /// 是否解锁进窑尾充电桩状态
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EnterEndChargeLBtn_Click(object sender, EventArgs e)
+        {
+            ParamControl.Do_EnterEndChargeLock = EnterEndChargeLBtn.Checked;
+        }
+
+        /// <summary>
+        /// 是否解锁出窑尾充电桩状态
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ExitEndChargeLBtn_Click(object sender, EventArgs e)
+        {
+            ParamControl.Do_ExitEndChargeLock = ExitEndChargeLBtn.Checked;
+
+        }
+
         #endregion
     }
 }
