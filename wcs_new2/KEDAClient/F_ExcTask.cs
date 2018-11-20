@@ -146,10 +146,10 @@ namespace KEDAClient
         /// </summary>
         public void ISetTaskSuc()
         {
-            if (_plc != null)
-            {
-                _plc.IsLock = false;
-            }
+            //if (_plc != null)
+            //{
+            //    _plc.IsLock = false;
+            //}
 
             if (_agv != null) { F_AGV.AgvRelease(_agv.Id); }
 
@@ -249,6 +249,10 @@ namespace KEDAClient
                                     _agv.Sta_Monitor == EnumSta_Monitor.电机停止
                                     )
                                 {
+                                    if (_plc != null)
+                                    {
+                                        _plc.IsLock = false;
+                                    }
                                     ISetTaskSuc();
                                 }
                             }
@@ -294,6 +298,10 @@ namespace KEDAClient
                                     _agv.Sta_Monitor == EnumSta_Monitor.电机停止
                                     )
                                 {
+                                    if (_plc != null)
+                                    {
+                                        _plc.IsLock = false;
+                                    }
                                     ISetTaskSuc();
                                 }
                             }
