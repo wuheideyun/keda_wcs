@@ -249,10 +249,13 @@ namespace KEDAClient
                                     _agv.Sta_Monitor == EnumSta_Monitor.电机停止
                                     )
                                 {
-                                    if (_plc != null)
+                                    //取货完成，解锁窑尾
+                                    if (_plc != null && ParamControl.Do_EndPlcLock)
                                     {
                                         _plc.IsLock = false;
+                                        ParamControl.Do_EndPlcLock = false;
                                     }
+
                                     ISetTaskSuc();
                                 }
                             }
@@ -298,10 +301,13 @@ namespace KEDAClient
                                     _agv.Sta_Monitor == EnumSta_Monitor.电机停止
                                     )
                                 {
-                                    if (_plc != null)
+                                    //放货完成，解锁窑头
+                                    if (_plc != null && ParamControl.Do_HeadPlcLock)
                                     {
                                         _plc.IsLock = false;
+                                        ParamControl.Do_HeadPlcLock = false;
                                     }
+
                                     ISetTaskSuc();
                                 }
                             }
@@ -319,9 +325,9 @@ namespace KEDAClient
                         ISetTaskSuc();
                         return "";
                     }
-                    else if (_operType == EnumOper.对接完成 )
-                    {                        
-                        if (_plc.IsExitBatteryLock && _plc.ExitChargeAgv == _agv.Id )
+                    else if (_operType == EnumOper.对接完成)
+                    {
+                        if (_plc.IsExitBatteryLock && _plc.ExitChargeAgv == _agv.Id)
                         {
                             _plc.IsExitBatteryLock = false;
                         }

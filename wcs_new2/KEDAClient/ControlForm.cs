@@ -991,6 +991,17 @@ namespace KEDAClient
 
         }
 
+        private void RefreshLockBtn()
+        {
+            HeadPlcLockBtn.Checked = ParamControl.Do_HeadPlcLock;
+
+            EndPlcLockBtn.Checked = ParamControl.Do_EndPlcLock;
+
+
+
+        }
+
+
         #endregion
     }
 }
