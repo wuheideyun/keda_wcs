@@ -90,6 +90,16 @@ namespace KEDAClient
         /// </summary>
         ArrayList PLCHeadTrafficSite = new ArrayList();
 
+        /// <summary>
+        /// 出窑尾完去到窑头等地标集合
+        /// </summary>
+        ArrayList PLCEndToHeadWaitSite = new ArrayList();
+
+        /// <summary>
+        /// 出窑头完去到窑尾等地标集合
+        /// </summary>
+        ArrayList PLCHeadToEndWaitSite = new ArrayList();
+
 
         /// <summary>
         /// 构造函数
@@ -245,10 +255,11 @@ namespace KEDAClient
             ///窑头无货 窑头AGV未锁定 并且 此次任务没有被响应
             if (!ParamControl.Do_HeadPlcLock && !_plcHead.IsLock && agv != null && agv.IsFree
                 && !F_AGV.IsLock(agv.Id)
+                && agv.Electicity > F_DataCenter.MDev.IGetDevElectricity()
                 && (ParamControl.IgnoreHeadUnloadTask || _plcHead.Sta_Material == EnumSta_Material.无货))
             {
                 //窑头等待区的车不需要充电、没有充电完成的车、没有回卸载点的车
-                if (!_PlcHeadNeedCharge && !_EnterPlcHeadChargeSuc && !_ToPlcHead)
+                if (!_EnterPlcHeadChargeSuc && !_ToPlcHead)
                 {
 
                     ///派发一个从窑头卸载等待区到窑头卸载点的任务
@@ -261,7 +272,7 @@ namespace KEDAClient
                         _plcHead.IsLock = true;
                         ParamControl.Do_HeadPlcLock = true;
 
-                        F_AGV.AgvLock(agv.Id);
+                        F_AGV.AgvLock(agv.Id);                       
 
                         sendServerLog(agv.Id + TaskPlcHeadPutMsg);
 
@@ -390,6 +401,7 @@ namespace KEDAClient
             ///窑尾有货 窑尾等待点的AGV没有锁定 并且 此次任务没有被响应
             if ((!ParamControl.Do_EndPlcLock && !_plcEnd.IsLock) && agv != null && agv.IsFree
                 && !F_AGV.IsLock(agv.Id)
+                && agv.Electicity > F_DataCenter.MDev.IGetDevElectricity()
                 && (ParamControl.IgnoreTailLoadTask || _plcEnd.Sta_Material == EnumSta_Material.有货)
                 )
             {
@@ -480,17 +492,15 @@ namespace KEDAClient
                         || agv.Electicity > F_DataCenter.MDev.IGetDevElectricity())
                     {
                         // 从窑尾到窑尾对接完成点
-                        F_ExcTask task1 = new F_ExcTask(null, EnumOper.对接完成, ConstSetBA.窑尾装载点, ConstSetBA.窑尾对接完成点);
+                        F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.对接完成, ConstSetBA.窑尾装载点, ConstSetBA.窑尾对接完成点);
 
                         F_AGV.AgvLock(agv.Id);
 
-                        task1.Id = agv.Id;
-
+                        task.Id = agv.Id;
 
                         _plcEnd.ExitFlag = false;
 
-
-                        F_DataCenter.MTask.IStartTask(task1, agv.Id + TaskEndToEndSucMsg);
+                        F_DataCenter.MTask.IStartTask(task, agv.Id + TaskEndToEndSucMsg);
 
                         sendServerLog(agv.Id + TaskEndToEndSucMsg);
 
@@ -509,13 +519,13 @@ namespace KEDAClient
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.窑尾对接完成点);
             if (agv != null && agv.IsFree && !F_AGV.IsLock(agv.Id))
             {
-                F_ExcTask task1 = new F_ExcTask(null, EnumOper.无动作, ConstSetBA.窑尾对接完成点, ConstSetBA.窑头卸载等待区);
+                F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, ConstSetBA.窑尾对接完成点, ConstSetBA.窑头卸载等待区);
 
                 F_AGV.AgvLock(agv.Id);
 
-                task1.Id = agv.Id;
+                task.Id = agv.Id;
 
-                F_DataCenter.MTask.IStartTask(task1, agv.Id + TaskEndSucToHeadWaitMsg);
+                F_DataCenter.MTask.IStartTask(task, agv.Id + TaskEndSucToHeadWaitMsg);
 
                 sendServerLog(agv.Id + TaskEndSucToHeadWaitMsg);
 
@@ -545,7 +555,8 @@ namespace KEDAClient
                     F_AGV.AgvLock(agv.Id);
 
                     _plcEnd.ExitFlag = false;
-                    //task.Id = agv.Id;
+
+                    task.Id = agv.Id;
 
                     F_DataCenter.MTask.IStartTask(task, agv.Id + ExitPlcEndChargeSucMsg);
 
@@ -583,7 +594,8 @@ namespace KEDAClient
                     F_AGV.AgvLock(agv.Id);
 
                     _plcHead.ExitFlag = false;
-                    //task.Id = agv.Id;
+
+                    task.Id = agv.Id;
 
                     F_DataCenter.MTask.IStartTask(task, agv.Id + ExitPlcHeadChargeSucMsg);
 
@@ -625,7 +637,7 @@ namespace KEDAClient
 
                 _plcEnd.EnterChargeAgv = agv.Id;
 
-                //task.Id = agv.Id;
+                task.Id = agv.Id;
 
                 F_DataCenter.MTask.IStartTask(task, agv.Id + PlcEndChargeMsg);
 
@@ -662,7 +674,7 @@ namespace KEDAClient
                && !F_AGV.IsLock(agv.Id)
                && agv.ChargeStatus == EnumChargeStatus.未充电
                && agv1 == null
-                && !_plcHead.IsEnterBatteryLock)
+               && !_plcHead.IsEnterBatteryLock)
             {
                 _PlcHeadNeedCharge = true;
 
@@ -670,7 +682,7 @@ namespace KEDAClient
 
                 F_AGV.AgvLock(agv.Id);
 
-                //task.Id = agv.Id;
+                task.Id = agv.Id;
 
                 //进窑头充电，锁定进窑头充电桩
                 _plcHead.IsEnterBatteryLock = true;
@@ -704,9 +716,9 @@ namespace KEDAClient
                 && !F_AGV.IsLock(agv.Id)
                 && agv.ChargeStatus == EnumChargeStatus.充电完成)
             {
-                if (// _plcEnd.Sta_Material == EnumSta_Material.有货 &&
-                    //agv.Sta_Material == EnumSta_Material.无货
-                    true)
+                if (_plcEnd.Sta_Material == EnumSta_Material.有货 &&
+                    agv.Sta_Material == EnumSta_Material.无货
+                    )
                 {
                     _EnterPlcEndChargeSuc = true;
 
@@ -718,7 +730,7 @@ namespace KEDAClient
                     _plcEnd.IsLock = true;
                     ParamControl.Do_EndPlcLock = true;
 
-                    //task.Id = agv.Id;
+                    task.Id = agv.Id;
 
                     F_DataCenter.MTask.IStartTask(task, agv.Id + PlcEndChargeSucMsg);
 
@@ -750,9 +762,8 @@ namespace KEDAClient
             {
                 _EnterPlcHeadChargeSuc = true;
 
-                if (//_plcHead.Sta_Material == EnumSta_Material.无货
-                    //&&  agv.Sta_Material == EnumSta_Material.有货
-                    true
+                if (_plcHead.Sta_Material == EnumSta_Material.无货
+                    &&  agv.Sta_Material == EnumSta_Material.有货                   
                     )
                 {
                     F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.放货, ConstSetBA.进窑头充电点, ConstSetBA.窑头卸载点);
@@ -763,7 +774,7 @@ namespace KEDAClient
                     _plcHead.IsLock = true;
                     ParamControl.Do_HeadPlcLock = true;
 
-                    //task.Id = agv.Id;
+                    task.Id = agv.Id;
 
                     F_DataCenter.MTask.IStartTask(task, agv.Id + PlcHeadChargeSucMsg);
 
@@ -781,16 +792,21 @@ namespace KEDAClient
 
         private string toEndGrtMsg = "(初)继续 窑尾取";
         private string toHeadGrtMsg = "(初)继续 窑头卸";
-        private string initToEndSucMsg = "(初)Agv有货 到 窑尾对接完成点";
-        private string initToHeadSucMsg = "(初)Agv无货 到 窑头对接完成点";
+        private string initToEndSucMsg = "(初)Agv有货 到 窑尾完";
+        private string initToHeadSucMsg = "(初)Agv无货 到 窑头完";
+        private string initToEndWaitMsg = "(初)Agv无货 到 窑尾等";
+        private string initToHeadWaitMsg = "(初)Agv有货 到 窑头等";
         /// <summary>
         /// 初始化，让AGV回到相应的点或者执行相应的任务
         /// </summary>
         private void InitToAllAGV()
         {
             List<F_AGV> agvs = F_DataCenter.MDev.InitGetDevNot(agvid);
-            PLCEndTrafficSite.AddRange(new string[] { "11", "13", "15", "21" });
-            PLCHeadTrafficSite.AddRange(new string[] { "12", "14", "16", "24" });
+            PLCEndTrafficSite.AddRange(new string[] { "46", "26", "21", "11" });
+            PLCHeadTrafficSite.AddRange(new string[] { "43", "23", "24", "14" });
+            PLCEndToHeadWaitSite.AddRange(new string[] { "12", "62", "42" });
+            PLCHeadToEndWaitSite.AddRange(new string[] { "15", "65", "45" });
+
             if (agvs != null)
             {
                 foreach (F_AGV agv in agvs)
@@ -800,10 +816,10 @@ namespace KEDAClient
                     {
                         if (agv.Site == ConstSetBA.窑尾装载点)
                         {
-                            // 初始化，在窑尾装载点且有货，去到窑尾对接完成点(--窑头卸载等待点)
+                            // 初始化，在窑尾装载点且有货，去到窑尾对接完成点
                             if (agv.Sta_Material == EnumSta_Material.有货)
                             {
-                                F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, agv.Site, ConstSetBA.窑尾对接完成点);
+                                F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.对接完成, agv.Site, ConstSetBA.窑尾对接完成点);
 
                                 task.Id = agv.Id;
 
@@ -831,10 +847,10 @@ namespace KEDAClient
                                 LogFactory.LogDispatch(agv.Id, "车辆初始化", "位于装载点且无货的AGV，执行取货任务");
                             }
                         }
-                        // 不在装载点的车，判断地标是否为正反卡的21,若为取货完成的车去到窑尾对接完成点(--窑头卸载等待点)
+                        // 不在装载点的车，判断地标是否为正反卡的21,若为取货完成的车去到窑尾对接完成点
                         else if (agv.Site == ConstSetBA.窑尾装载点的前一地标 && agv.Sta_Material == EnumSta_Material.有货)
                         {
-                            F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, agv.Site, ConstSetBA.窑尾对接完成点);
+                            F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.对接完成, agv.Site, ConstSetBA.窑尾对接完成点);
 
                             task.Id = agv.Id;
 
@@ -852,6 +868,7 @@ namespace KEDAClient
                             F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.取货, agv.Site, ConstSetBA.窑尾装载点);
 
                             F_AGV.AgvLock(agv.Id);
+
                             task.Id = agv.Id;
 
                             F_DataCenter.MTask.IStartTask(task, agv.Id + toEndGrtMsg);
@@ -866,10 +883,10 @@ namespace KEDAClient
                     {
                         if (agv.Site == ConstSetBA.窑头卸载点)
                         {
-                            // 初始化，在窑头卸载点且无货，去到窑头对接完成点(--窑尾装载等待点)
+                            // 初始化，在窑头卸载点且无货，去到窑头对接完成点
                             if (agv.Sta_Material == EnumSta_Material.无货)
                             {
-                                F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, agv.Site, ConstSetBA.窑头对接完成点);
+                                F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.对接完成, agv.Site, ConstSetBA.窑头对接完成点);
 
                                 task.Id = agv.Id;
 
@@ -892,15 +909,15 @@ namespace KEDAClient
 
                                 F_DataCenter.MTask.IStartTask(task, agv.Id + toHeadGrtMsg);
 
-                                sendServerLog(agv.Id + "初始化，位于窑头卸载点且无货，执行放货任务");
+                                sendServerLog(agv.Id + "初始化，位于窑头卸载点且有货，执行放货任务");
 
-                                LogFactory.LogDispatch(agv.Id, "车辆初始化", "位于窑头卸载点且无货，执行放货任务");
+                                LogFactory.LogDispatch(agv.Id, "车辆初始化", "位于窑头卸载点且有货，执行放货任务");
                             }
                         }
-                        // 不在卸载点的车，判断地标是否为正反卡的24，若为放货完成的车去到窑头对接完成点（--窑尾装载等待点）
+                        // 不在卸载点的车，判断地标是否为正反卡的24，若为放货完成的车去到窑头对接完成点
                         else if (agv.Site == ConstSetBA.窑头卸载点的前一地标 && agv.Sta_Material == EnumSta_Material.无货)
                         {
-                            F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, agv.Site, ConstSetBA.窑头对接完成点);
+                            F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.对接完成, agv.Site, ConstSetBA.窑头对接完成点);
 
                             task.Id = agv.Id;
 
@@ -929,31 +946,31 @@ namespace KEDAClient
                         }
                     }
                     /// 不在任何交通管制点的车，去到相应的等待点
-                    /// 卸货完成的车处于窑头交管解除点，直接去到窑头对接完成点（--窑尾装载等待点）
-                    else if (agv.Site == ConstSetBA.窑头交管解除点)
+                    /// 窑头卸货完成的车，直接去到窑尾装载等待点
+                    else if (PLCHeadToEndWaitSite.Contains(agv.Site) && agv.Sta_Material== EnumSta_Material.无货)
                     {
-                        F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, agv.Site, ConstSetBA.窑头对接完成点);
+                        F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, agv.Site, ConstSetBA.窑尾装载等待区);
 
                         task.Id = agv.Id;
 
-                        F_DataCenter.MTask.IStartTask(task, agv.Id + initToHeadSucMsg);
+                        F_DataCenter.MTask.IStartTask(task, agv.Id + initToEndWaitMsg);
 
-                        sendServerLog(agv.Id + initToHeadSucMsg);
+                        sendServerLog(agv.Id + initToEndWaitMsg);
 
-                        LogFactory.LogDispatch(agv.Id, "车辆初始化 ,窑头交管解除点的AGV", initToHeadSucMsg);
+                        LogFactory.LogDispatch(agv.Id, "车辆初始化 ,窑头交管解除点的AGV", initToEndWaitMsg);
                     }
-                    ///  取货完成的车处于窑尾交管解除点，直接去到窑尾对接完成点(--窑头卸载等待点)
-                    else
+                    ///  窑尾取货完成的车，直接去到窑头卸载等待点
+                    else if(PLCEndToHeadWaitSite.Contains(agv.Site) && agv.Sta_Material == EnumSta_Material.有货)
                     {
-                        F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, agv.Site, ConstSetBA.窑尾对接完成点);
+                        F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, agv.Site, ConstSetBA.窑头卸载等待区);
 
                         task.Id = agv.Id;
 
-                        F_DataCenter.MTask.IStartTask(task, agv.Id + initToEndSucMsg);
+                        F_DataCenter.MTask.IStartTask(task, agv.Id + initToHeadWaitMsg);
 
-                        sendServerLog(agv.Id + initToEndSucMsg);
+                        sendServerLog(agv.Id + initToHeadWaitMsg);
 
-                        LogFactory.LogDispatch(agv.Id, "车辆初始化 ,窑尾交管解除点的AGV", initToEndSucMsg);
+                        LogFactory.LogDispatch(agv.Id, "车辆初始化 ,窑尾交管解除点的AGV", initToHeadWaitMsg);
                     }
                 }
             }
