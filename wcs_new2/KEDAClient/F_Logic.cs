@@ -802,10 +802,10 @@ namespace KEDAClient
         private void InitToAllAGV()
         {
             List<F_AGV> agvs = F_DataCenter.MDev.InitGetDevNot(agvid);
-            PLCEndTrafficSite.AddRange(new string[] { "46", "26", "21", "11" });
-            PLCHeadTrafficSite.AddRange(new string[] { "43", "23", "24", "14" });
-            PLCEndToHeadWaitSite.AddRange(new string[] { "12", "62", "42" });
-            PLCHeadToEndWaitSite.AddRange(new string[] { "15", "65", "45" });
+            PLCEndTrafficSite.AddRange(new string[] { "26", "16", "21", "11" });
+            PLCHeadTrafficSite.AddRange(new string[] { "23", "13", "24", "14" });
+            PLCEndToHeadWaitSite.AddRange(new string[] { "12", "62" });
+            PLCHeadToEndWaitSite.AddRange(new string[] { "15", "65" });
 
             if (agvs != null)
             {
