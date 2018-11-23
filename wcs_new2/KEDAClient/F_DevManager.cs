@@ -213,7 +213,8 @@ namespace KEDAClient
                 //考虑范围只有正在作业的车辆，非作业车辆不纳入考虑
                 List<DeviceBackImf> devs = _devList.FindAll(c =>
                 {
-                    return c.DevType == "Magnet_Basic" && c.IsAlive
+                    return c.DevType == "Magnet_Basic" 
+                    && c.IsAlive
                     && c.ProtyList[ErrorType.脱轨].RValue == "0"
                     ;
                 });
@@ -236,7 +237,7 @@ namespace KEDAClient
                 if(list.Count > ConstSetBA.最低电量排序序号)
                 {
 
-                     return list[ConstSetBA.最低电量排序序号];
+                     return list[ConstSetBA.最低电量排序序号 - 1];
 
                 }
                 else
