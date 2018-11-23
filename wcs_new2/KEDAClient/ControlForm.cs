@@ -135,6 +135,7 @@ namespace KEDAClient
             CurrentTaskList_Refresh();
             agvData_Refresh();
             plcData_Refresh();
+            RefreshLockBtn();
             timerForListRefresh.Enabled = true;
         }
 
@@ -991,13 +992,22 @@ namespace KEDAClient
 
         }
 
+        /// <summary>
+        /// 刷新锁定状态
+        /// </summary>
         private void RefreshLockBtn()
         {
             HeadPlcLockBtn.Checked = ParamControl.Do_HeadPlcLock;
 
             EndPlcLockBtn.Checked = ParamControl.Do_EndPlcLock;
 
+            EnterHeadChargeLBtn.Checked = ParamControl.Do_EnterHeadChargeLock;
 
+            ExitHeadChargeLBtn.Checked = ParamControl.Do_ExitHeadChargeLock;
+
+            EnterEndChargeLBtn.Checked = ParamControl.Do_EnterEndChargeLock;
+
+            ExitEndChargeLBtn.Checked = ParamControl.Do_ExitEndChargeLock;
 
         }
 

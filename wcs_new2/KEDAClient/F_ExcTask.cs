@@ -219,9 +219,10 @@ namespace KEDAClient
                         {
                             if (_agv != null && _plc.EnterChargeAgv == _agv.Id)
                             {
-                                if (_plc.IsEnterBatteryLock)
+                                if (_plc.IsEnterBatteryLock && ParamControl.Do_EnterEndChargeLock)
                                 {
                                     _plc.IsEnterBatteryLock = false;
+                                    ParamControl.Do_EnterEndChargeLock = false;
                                 }
                             }
 
@@ -269,9 +270,10 @@ namespace KEDAClient
                         {
                             if (_agv != null && _plc.EnterChargeAgv == _agv.Id)
                             {
-                                if (_plc.IsEnterBatteryLock)
+                                if (_plc.IsEnterBatteryLock && ParamControl.Do_EnterHeadChargeLock)
                                 {
                                     _plc.IsEnterBatteryLock = false;
+                                    ParamControl.Do_EnterHeadChargeLock = false;
                                 }
                             }
 
@@ -329,7 +331,17 @@ namespace KEDAClient
                     {
                         if (_plc.IsExitBatteryLock && _plc.ExitChargeAgv == _agv.Id)
                         {
-                            _plc.IsExitBatteryLock = false;
+                            if (_plc.Site == "14")
+                            {
+                                _plc.IsExitBatteryLock = false;
+                                ParamControl.Do_ExitHeadChargeLock = false;
+                            }
+                            else if (_plc.Site == "11")
+                            {
+                                _plc.IsExitBatteryLock = false;
+                                ParamControl.Do_ExitEndChargeLock = false;
+                            }
+
                         }
                         if (_plc.ExitFlag)
                         {

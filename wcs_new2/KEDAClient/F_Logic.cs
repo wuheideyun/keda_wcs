@@ -313,7 +313,11 @@ namespace KEDAClient
 
                         task.Id = agv.Id;
 
+                        //出窑头充电，锁定出窑头充电桩
                         _plcHead.IsExitBatteryLock = true;
+                        ParamControl.Do_ExitHeadChargeLock = true;
+
+                        _plcHead.ExitChargeAgv = agv.Id;
 
                         F_DataCenter.MTask.IStartTask(task, agv.Id + TaskHeadToExitBatteryMsg);
 
@@ -458,7 +462,11 @@ namespace KEDAClient
 
                         task.Id = agv.Id;
 
+                        //出窑尾充电，锁定出窑尾充电桩
                         _plcEnd.IsExitBatteryLock = true;
+                        ParamControl.Do_ExitEndChargeLock = true;
+
+                        _plcEnd.ExitChargeAgv = agv.Id;
 
                         F_DataCenter.MTask.IStartTask(task, agv.Id + TaskEndToExitBatteryMsg);
 
@@ -558,6 +566,8 @@ namespace KEDAClient
 
                     task.Id = agv.Id;
 
+                    Thread.Sleep(2000);
+
                     F_DataCenter.MTask.IStartTask(task, agv.Id + ExitPlcEndChargeSucMsg);
 
                     sendServerLog(agv.Id + ExitPlcEndChargeSucMsg);
@@ -597,6 +607,8 @@ namespace KEDAClient
 
                     task.Id = agv.Id;
 
+                    Thread.Sleep(2000);
+
                     F_DataCenter.MTask.IStartTask(task, agv.Id + ExitPlcHeadChargeSucMsg);
 
                     sendServerLog(agv.Id + ExitPlcHeadChargeSucMsg);
@@ -629,11 +641,13 @@ namespace KEDAClient
             {
                 _PlcEndNeedCharge = true;
 
-                F_ExcTask task = new F_ExcTask(null, EnumOper.充电, ConstSetBA.窑尾装载等待区, ConstSetBA.进窑尾充电点);
+                F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.充电, ConstSetBA.窑尾装载等待区, ConstSetBA.进窑尾充电点);
 
                 F_AGV.AgvLock(agv.Id);
 
+                //进窑尾充电，锁定进窑尾充电桩
                 _plcEnd.IsEnterBatteryLock = true;
+                ParamControl.Do_EnterEndChargeLock = true;
 
                 _plcEnd.EnterChargeAgv = agv.Id;
 
@@ -678,7 +692,7 @@ namespace KEDAClient
             {
                 _PlcHeadNeedCharge = true;
 
-                F_ExcTask task = new F_ExcTask(null, EnumOper.充电, ConstSetBA.窑头卸载等待区, ConstSetBA.进窑头充电点);
+                F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.充电, ConstSetBA.窑头卸载等待区, ConstSetBA.进窑头充电点);
 
                 F_AGV.AgvLock(agv.Id);
 
@@ -732,6 +746,8 @@ namespace KEDAClient
 
                     task.Id = agv.Id;
 
+                    Thread.Sleep(2000);
+
                     F_DataCenter.MTask.IStartTask(task, agv.Id + PlcEndChargeSucMsg);
 
                     sendServerLog(agv.Id + PlcEndChargeSucMsg);
@@ -775,6 +791,8 @@ namespace KEDAClient
                     ParamControl.Do_HeadPlcLock = true;
 
                     task.Id = agv.Id;
+
+                    Thread.Sleep(2000);
 
                     F_DataCenter.MTask.IStartTask(task, agv.Id + PlcHeadChargeSucMsg);
 
