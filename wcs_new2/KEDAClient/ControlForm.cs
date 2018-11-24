@@ -752,12 +752,16 @@ namespace KEDAClient
         {
             enterheadChargeBtn.Checked = allOnOffBtn.Checked;
             enterheadChargSucBtn.Checked = allOnOffBtn.Checked;
+            exitheadChargeBtn.Checked = allOnOffBtn.Checked;
+            exitheadChargSucBtn.Checked = allOnOffBtn.Checked;
             headUnloadBtn.Checked = allOnOffBtn.Checked;
             headSucBtn.Checked = allOnOffBtn.Checked;
             headWaitBtn.Checked = allOnOffBtn.Checked;
 
             enterendChargeBtn.Checked = allOnOffBtn.Checked;
             enterendChargSucBtn.Checked = allOnOffBtn.Checked;
+            exitendChargeBtn.Checked = allOnOffBtn.Checked;
+            exitendChargSucBtn.Checked = allOnOffBtn.Checked;
             endLoadBtn.Checked = allOnOffBtn.Checked;
             endSucBtn.Checked = allOnOffBtn.Checked;
             endWaitBtn.Checked = allOnOffBtn.Checked;
@@ -969,6 +973,7 @@ namespace KEDAClient
         private void EndPlcLockBtn_Click(object sender, EventArgs e)
         {
             ParamControl.Do_EndPlcLock = EndPlcLockBtn.Checked;
+                      
         }
 
         /// <summary>

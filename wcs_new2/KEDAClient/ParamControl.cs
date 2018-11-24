@@ -94,7 +94,7 @@ namespace KEDAClient
         /// <summary>
         /// 是否锁定窑头
         /// </summary>
-        public static bool Do_HeadPlcLock = false;
+        public static bool Do_HeadPlcLock = false  ;
 
         /// <summary>
         /// 是否锁定进窑头充电桩

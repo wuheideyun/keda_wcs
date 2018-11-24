@@ -18,6 +18,8 @@ namespace KEDAClient
 
         传送中 = 3,
 
+        允许下料 = 4,
+
         未知
     }
 
@@ -25,7 +27,7 @@ namespace KEDAClient
     /// 电机状态
     /// </summary>
     public enum EnumSta_Monitor
-    {     
+    {
 
         未知,
 
@@ -55,7 +57,7 @@ namespace KEDAClient
     /// 上下料操作枚举
     /// </summary>
     public enum EnumType
-    { 
+    {
         上料操作 = 1,
 
         下料操作 = 2,
@@ -131,7 +133,7 @@ namespace KEDAClient
         /// </summary>
         public EnumSta_Material Sta_Material
         {
-            get 
+            get
             {
                 EnumSta_Material result = EnumSta_Material.未知;
 
@@ -170,7 +172,7 @@ namespace KEDAClient
         /// <returns></returns>
         public string Error_Code
         {
-            get 
+            get
             {
                 return F_DataCenter.MDev.IGetSenValue(_id, "0003");
             }
@@ -202,7 +204,7 @@ namespace KEDAClient
         /// </summary>
         public bool ExitFlag
         {
-            get { return _exitFlag ; }
+            get { return _exitFlag; }
             set { _exitFlag = value; }
         }
 
@@ -268,7 +270,7 @@ namespace KEDAClient
         /// <returns></returns>
         public bool SendOrdr(EnumType oper, EnumPara para)
         {
-            return WcfMainHelper.SendOrder(_id, new FControlOrder("远程",1, (int)oper, (int)para));
+            return WcfMainHelper.SendOrder(_id, new FControlOrder("远程", 1, (int)oper, (int)para));
         }
     }
 }

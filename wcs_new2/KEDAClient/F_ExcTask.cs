@@ -251,10 +251,10 @@ namespace KEDAClient
                                     )
                                 {
                                     //取货完成，解锁窑尾
-                                    if (_plc != null && ParamControl.Do_EndPlcLock)
+                                    if (_plc != null && !ParamControl.Do_EndPlcLock)
                                     {
                                         _plc.IsLock = false;
-                                        ParamControl.Do_EndPlcLock = false;
+                                        ParamControl.Do_EndPlcLock = true ;
                                     }
 
                                     ISetTaskSuc();
@@ -279,7 +279,8 @@ namespace KEDAClient
 
                             //如果界面打开忽略《窑头》AGV货物状态和Plc货物状态则 直接发送棍台转动命令
                             if (ParamControl.Is_IgnoreHeadUnloadStatus ||
-                                ((_plc.Sta_Material == EnumSta_Material.有货 || _plc.Sta_Material == EnumSta_Material.无货) &&
+                                ((_plc.Sta_Material == EnumSta_Material.有货 || _plc.Sta_Material == EnumSta_Material.无货
+                                || _plc.Sta_Material == EnumSta_Material.未知) &&
                                 (_agv.Sta_Material == EnumSta_Material.传送中 || _agv.Sta_Material == EnumSta_Material.有货)))
                             {
                                 if (BeginTime == null) BeginTime = System.DateTime.Now;
@@ -291,7 +292,7 @@ namespace KEDAClient
 
                             //如果界面打开忽略《窑头》AGV货物状态，并且上面已经发送了指定时间的棍台转动时间
                             if ((ParamControl.Is_IgnoreHeadUnloadStatus && IsHeadRunTimeFinish()) ||
-                                (_plc.Sta_Material == EnumSta_Material.有货 &&
+                                ((_plc.Sta_Material == EnumSta_Material.有货 || _plc.Sta_Material == EnumSta_Material.未知) &&
                                _agv.Sta_Material == EnumSta_Material.无货))
                             {
                                 _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台上料完成);
@@ -304,10 +305,10 @@ namespace KEDAClient
                                     )
                                 {
                                     //放货完成，解锁窑头
-                                    if (_plc != null && ParamControl.Do_HeadPlcLock)
+                                    if (_plc != null && !ParamControl.Do_HeadPlcLock)
                                     {
                                         _plc.IsLock = false;
-                                        ParamControl.Do_HeadPlcLock = false;
+                                        ParamControl.Do_HeadPlcLock = true ;
                                     }
 
                                     ISetTaskSuc();
