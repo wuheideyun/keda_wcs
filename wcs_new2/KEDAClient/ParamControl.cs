@@ -94,32 +94,32 @@ namespace KEDAClient
         /// <summary>
         /// 是否锁定窑头
         /// </summary>
-        public static bool Do_HeadPlcLock = false  ;
+        public static bool Do_HeadPlcLock = true   ;
 
         /// <summary>
         /// 是否锁定进窑头充电桩
         /// </summary>
-        public static bool Do_EnterHeadChargeLock = false;
+        public static bool Do_EnterHeadChargeLock = true ;
 
         /// <summary>
         /// 是否锁定出窑头充电桩
         /// </summary>
-        public static bool Do_ExitHeadChargeLock = false;
+        public static bool Do_ExitHeadChargeLock = true ;
 
         /// <summary>
         /// 是否锁定窑尾
         /// </summary>
-        public static bool Do_EndPlcLock = false;
+        public static bool Do_EndPlcLock = true ;
 
         /// <summary>
         /// 是否锁定进窑尾充电桩
         /// </summary>
-        public static bool Do_EnterEndChargeLock = false;
+        public static bool Do_EnterEndChargeLock = true ;
 
         /// <summary>
         /// 是否锁定出窑尾充电桩
         /// </summary>
-        public static bool Do_ExitEndChargeLock = false;
+        public static bool Do_ExitEndChargeLock = true ;
 
 
         /// <summary>
