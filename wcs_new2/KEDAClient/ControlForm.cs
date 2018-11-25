@@ -766,7 +766,7 @@ namespace KEDAClient
         /// <param name="e"></param>
         private void endPlcLoadBtn_Click(object sender, EventArgs e)
         {
-            ParamControl.Do_EndPlcUnload = endPlcLoadBtn.Checked;
+            ParamControl.Do_EndPlcLoad = endPlcLoadBtn.Checked;
         }
 
         /// <summary>

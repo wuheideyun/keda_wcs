@@ -97,7 +97,7 @@ namespace KEDAClient
         /// <summary>
         /// 是否执行启动窑尾辊台
         /// </summary>
-        public static bool Do_EndPlcUnload = true;
+        public static bool Do_EndPlcLoad = true;
 
         //状态锁定：默认是false
         /// <summary>
