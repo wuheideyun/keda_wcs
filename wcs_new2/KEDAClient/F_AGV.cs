@@ -8,7 +8,7 @@ using FLCommonInterfaces;
 
 namespace KEDAClient
 {
-    
+
     /// <summary>
     /// 运行状态
     /// </summary>
@@ -20,6 +20,17 @@ namespace KEDAClient
 
         停止 = 3,
 
+        未知
+    }
+
+    public enum EnumagvSta_Material
+    {
+        有货 = 1,
+
+        无货 = 2,
+
+        传送中 = 3,
+                
         未知
     }
 
@@ -45,7 +56,7 @@ namespace KEDAClient
             return _mapList.GetBooleanValue(agvid);
         }
 
-      
+
         /// <summary>
         /// PLC系统ID
         /// </summary>
@@ -53,22 +64,24 @@ namespace KEDAClient
         public string Id
         {
             get { return _id; }
-        }     
+        }
+
+
 
         /// <summary>
         /// 货物状态
         /// </summary>
-        public EnumSta_Material Sta_Material
+        public EnumagvSta_Material Sta_Material
         {
-            get 
+            get
             {
-                EnumSta_Material result = EnumSta_Material.未知;
+                EnumagvSta_Material result = EnumagvSta_Material.未知;
 
                 try
                 {
-                    result = (EnumSta_Material)Convert.ToInt32((F_DataCenter.MDev.IGetSenValue(_id, "0036")));
+                    result = (EnumagvSta_Material)Convert.ToInt32((F_DataCenter.MDev.IGetSenValue(_id, "0036")));
                 }
-                catch { result = EnumSta_Material.未知; }
+                catch { result = EnumagvSta_Material.未知; }
 
                 return result;
             }
@@ -99,7 +112,7 @@ namespace KEDAClient
         /// <returns></returns>
         public string Site
         {
-            get 
+            get
             {
                 return F_DataCenter.MDev.IGetSenValue(_id, "0002");
             }
@@ -134,7 +147,7 @@ namespace KEDAClient
                 catch { result = EnumChargeStatus.未知; }
 
                 return result;
-            }        
+            }
         }
 
         /// <summary>

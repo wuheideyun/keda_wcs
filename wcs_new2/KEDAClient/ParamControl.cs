@@ -661,11 +661,11 @@ namespace KEDAClient
             String status = "";
             if (item.DevId == "PLC01")
             {
-                status = "窑头";
+                status = "窑尾";
             }
             else if (item.DevId == "PLC02")
             {
-                status = "窑尾";
+                status = "窑头";
             }
             else
             {

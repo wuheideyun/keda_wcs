@@ -12,9 +12,9 @@ namespace KEDAClient
     /// </summary>
     public enum EnumSta_Material
     {
-        有货 = 1,
+        无货 = 1,
 
-        无货 = 2,
+        有货 = 2,
 
         传送中 = 3,
 
