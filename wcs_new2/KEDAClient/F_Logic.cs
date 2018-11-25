@@ -228,7 +228,7 @@ namespace KEDAClient
 
                         if (ParamControl.Do_ToHeadWait) TaskEndSucToHeadWait();  // 窑尾完 到 窑头等
 
-                        if(ParamControl.Do_EndPlcUnload) TaskPlcEndStart();        //窑尾启动辊台
+                        if(ParamControl.Do_EndPlcLoad) TaskPlcEndStart();        //窑尾启动辊台
 
                         if(ParamControl.Do_HeadPlcUnload) TaskPlcHeadStart();      //窑头启动辊台
 
@@ -883,7 +883,7 @@ namespace KEDAClient
                )
             {
                 
-                F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.取货, ConstSetBA.窑尾装载点, ConstSetBA.窑尾装载点);
+                F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.取货, ConstSetBA.窑尾装载点, ConstSetBA.窑尾装载点);
 
                 task.Id = agv.Id;
 
