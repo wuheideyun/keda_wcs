@@ -193,7 +193,6 @@ namespace KEDAClient
 
                 dis.EndSite = _endSite;
 
-
                 if (!string.IsNullOrEmpty(_startSite)) { dis.StartSiteList.Add(_startSite); }
 
                 string back = "";

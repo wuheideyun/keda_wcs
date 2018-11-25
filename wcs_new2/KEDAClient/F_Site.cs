@@ -8,6 +8,13 @@ namespace KEDAClient
 {
     public class ConstSetBA
     {
+        //站点
+        public static String 窑尾装载站 = "1";
+
+        public static String 窑头卸载站 = "4";
+
+        //地标
+
         public static String 窑尾装载等待区 = "36";
 
         public static String 窑尾装载点的前一地标 = "21";
@@ -48,6 +55,8 @@ namespace KEDAClient
         public static int 运行状态 = 0;
 
         public static int 地标 = 1;
+
+        public static int 站点 = 2;
 
         public static int 运行方向 = 4;
 
