@@ -346,12 +346,14 @@ namespace KEDAClient
             }
             if (agv != null
                 && agv.IsFree
-                && !F_AGV.IsLock(agv.Id)
+                &&! F_AGV.IsLock(agv.Id)
                 && (ParamControl.IgnoreAgvUnloadTask || agv.Sta_Material == EnumSta_Material.无货)
                 )
             {
                 // 判断窑头可出站标志是否为True
-                if (_plcHead.ExitFlag)
+                if (_plcHead.ExitFlag
+                  // true
+                    )
                 {
                     // 如果需要充电但是充电桩有车、被锁，或者不需要充电直接去到对接完成点
                     if ((agv.Electicity <= F_DataCenter.MDev.IGetDevElectricity()
@@ -386,7 +388,9 @@ namespace KEDAClient
         private void TaskHeadSucToEndWait()
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.窑头对接完成点);
-            if (agv != null && agv.IsFree && !F_AGV.IsLock(agv.Id))
+            if (agv != null && agv.IsFree
+                // && !F_AGV.IsLock(agv.Id)
+                )
             {
                 F_ExcTask task1 = new F_ExcTask(null, EnumOper.无动作, ConstSetBA.窑头对接完成点, ConstSetBA.窑尾装载等待区);
 

@@ -344,7 +344,7 @@ namespace KEDAClient
                             }
 
                         }
-                        if (_plc.ExitFlag)
+                        if (!_plc.ExitFlag)
                         {
                             _plc.ExitFlag = true;
                         }
