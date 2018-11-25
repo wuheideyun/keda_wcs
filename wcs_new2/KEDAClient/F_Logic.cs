@@ -228,7 +228,9 @@ namespace KEDAClient
 
                         if (ParamControl.Do_ToHeadWait) TaskEndSucToHeadWait();  // 窑尾完 到 窑头等
 
+                        TaskPlcEndStart();//窑尾启动辊台
 
+                        TaskPlcHeadStart();//窑头启动辊台
 
 
 
@@ -866,6 +868,62 @@ namespace KEDAClient
             {
                 _EnterPlcHeadChargeSuc = false;
             }
+        }
+
+        private string PlcEndStartSucMsg = "窑尾启动辊台";
+        /// <summary>
+        /// 窑尾启动辊台
+        /// </summary>
+        public void TaskPlcEndStart()
+        {
+            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.窑尾装载点);
+
+            if (agv != null && 
+                agv.IsFree &&
+                agv.Sta_Material == EnumagvSta_Material.无货
+               )
+            {
+                
+                F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.取货, ConstSetBA.窑尾装载点, ConstSetBA.窑尾装载点);
+
+                task.Id = agv.Id;
+
+                F_DataCenter.MTask.IStartTask(task, agv.Id + PlcEndStartSucMsg);
+
+                sendServerLog(agv.Id + PlcEndStartSucMsg);
+
+                LogFactory.LogDispatch(agv.Id, "窑尾启动辊台", PlcEndStartSucMsg);
+
+            }
+    
+        }
+
+        private string PlcHeadStartSucMsg = "窑头启动辊台";
+        /// <summary>
+        /// 窑头启动辊台
+        /// </summary>
+        public void TaskPlcHeadStart()
+        {
+            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.窑头卸载点);
+
+            if (agv != null &&
+                agv.IsFree &&
+                agv.Sta_Material == EnumagvSta_Material.有货
+               )
+            {
+
+                F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.放货, ConstSetBA.窑头卸载点, ConstSetBA.窑头卸载点);
+
+                task.Id = agv.Id;
+
+                F_DataCenter.MTask.IStartTask(task, agv.Id + PlcHeadStartSucMsg);
+
+                sendServerLog(agv.Id + PlcHeadStartSucMsg);
+
+                LogFactory.LogDispatch(agv.Id, "窑头启动辊台", PlcHeadStartSucMsg);
+
+            }
+
         }
 
         private string toEndGrtMsg = "(初)继续 窑尾取";
