@@ -89,6 +89,15 @@ namespace KEDAClient
         /// </summary>
         public static bool Do_ToHeadWait = true;
 
+        /// <summary>
+        /// 是否执行启动窑头辊台
+        /// </summary>
+        public static bool Do_HeadPlcUnload = true;
+
+        /// <summary>
+        /// 是否执行启动窑尾辊台
+        /// </summary>
+        public static bool Do_EndPlcUnload = true;
 
         //状态锁定：默认是false
         /// <summary>

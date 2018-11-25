@@ -228,9 +228,9 @@ namespace KEDAClient
 
                         if (ParamControl.Do_ToHeadWait) TaskEndSucToHeadWait();  // 窑尾完 到 窑头等
 
-                        TaskPlcEndStart();//窑尾启动辊台
+                        if(ParamControl.Do_EndPlcUnload) TaskPlcEndStart();        //窑尾启动辊台
 
-                        TaskPlcHeadStart();//窑头启动辊台
+                        if(ParamControl.Do_HeadPlcUnload) TaskPlcHeadStart();      //窑头启动辊台
 
 
 

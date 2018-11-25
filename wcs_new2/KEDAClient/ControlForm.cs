@@ -437,6 +437,13 @@ namespace KEDAClient
         {
             ParamControl.Is_AutoAddTask = AutoGenerateTaskBtn.Checked;
 
+            //自动生成任务按钮开启时，将自动执行任务按钮同步开启
+            if (AutoGenerateTaskBtn.Checked)
+            {
+                ExecuteTaskBtn.Checked = true;
+                ParamControl.Is_AutoExecuteTask = true;
+            }
+
         }
 
         /// <summary>
@@ -741,7 +748,26 @@ namespace KEDAClient
             ParamControl.Do_ToHeadWait = headWaitBtn.Checked;
 
         }
-         
+
+        /// <summary>
+        /// 是否执行启动窑头辊台
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void headPlcUnloadBtn_Click(object sender, EventArgs e)
+        {
+            ParamControl.Do_HeadPlcUnload = headPlcUnloadBtn.Checked;
+        }
+
+        /// <summary>
+        /// 是否执行启动窑尾辊台
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void endPlcLoadBtn_Click(object sender, EventArgs e)
+        {
+            ParamControl.Do_EndPlcUnload = endPlcLoadBtn.Checked;
+        }
 
         /// <summary>
         /// 控制是否全部打开任务
@@ -757,6 +783,7 @@ namespace KEDAClient
             headUnloadBtn.Checked = allOnOffBtn.Checked;
             headSucBtn.Checked = allOnOffBtn.Checked;
             headWaitBtn.Checked = allOnOffBtn.Checked;
+            headPlcUnloadBtn.Checked = allOnOffBtn.Checked;
 
             enterendChargeBtn.Checked = allOnOffBtn.Checked;
             enterendChargSucBtn.Checked = allOnOffBtn.Checked;
@@ -765,6 +792,7 @@ namespace KEDAClient
             endLoadBtn.Checked = allOnOffBtn.Checked;
             endSucBtn.Checked = allOnOffBtn.Checked;
             endWaitBtn.Checked = allOnOffBtn.Checked;
+            endPlcLoadBtn.Checked = allOnOffBtn.Checked;
 
             enterheadChargeBtn_Click(sender, e);
             exitheadChargeBtn_Click(sender, e);
@@ -773,6 +801,7 @@ namespace KEDAClient
             headUnloadBtn_Click(sender, e);
             headWaitBtn_Click(sender, e);
             headSucBtn_Click(sender, e);
+            headPlcUnloadBtn_Click(sender, e);
 
             enterendChargeBtn_Click(sender, e);
             exitendChargeBtn_Click(sender, e);
@@ -781,6 +810,7 @@ namespace KEDAClient
             endLoadBtn_Click(sender, e);
             endWaitBtn_Click(sender, e);
             endSucBtn_Click(sender, e);
+            endPlcLoadBtn_Click(sender, e);
 
         }
 
@@ -985,6 +1015,7 @@ namespace KEDAClient
         {
             ParamControl.Do_EnterEndChargeLock = EnterEndChargeLBtn.Checked;
         }
+
 
         /// <summary>
         /// 是否解锁出窑尾充电桩状态
