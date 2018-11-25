@@ -276,7 +276,6 @@ namespace KEDAClient
                 {
 
                     ///派发一个从窑头卸载等待区到窑头卸载点的任务
-                    ///
 
                     F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.放货, ConstSetBA.窑头卸载等待区, ConstSetBA.窑头卸载点);
 
@@ -452,7 +451,7 @@ namespace KEDAClient
                 {
 
                     ///派发一个从窑尾装载等待区到窑尾装载点取货的任务
-                    F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.取货, ConstSetBA.窑尾装载等待区, _plcEnd.Site;
+                    F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.取货, ConstSetBA.窑尾装载等待区, _plcEnd.Site);
 
                     task.Id = agv.Id;
 
@@ -546,9 +545,9 @@ namespace KEDAClient
                     d_agv == null )
                 {
                     // 如果需要充电但是充电桩有车、被锁，或者不需要充电直接去到对接完成点
-                    if ((//agv.Electicity <= F_DataCenter.MDev.IGetDevElectricity()  && 
+                    if (//agv.Electicity <= F_DataCenter.MDev.IGetDevElectricity()  && 
                         //agv1 != null                         &&
-                        (//_plcEnd.IsExitBatteryLock && 
+                        //_plcEnd.IsExitBatteryLock && 
                         //ParamControl.Do_ExitEndChargeLock))
                         //|| agv.Electicity > F_DataCenter.MDev.IGetDevElectricity()
                         true
