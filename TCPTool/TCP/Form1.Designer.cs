@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.connectBtn = new System.Windows.Forms.Button();
             this.disconnectBtn = new System.Windows.Forms.Button();
@@ -57,6 +58,11 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label9 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.ReceiveBtn = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -64,7 +70,7 @@
             // connectBtn
             // 
             this.connectBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.connectBtn.Location = new System.Drawing.Point(65, 173);
+            this.connectBtn.Location = new System.Drawing.Point(65, 159);
             this.connectBtn.Name = "connectBtn";
             this.connectBtn.Size = new System.Drawing.Size(75, 23);
             this.connectBtn.TabIndex = 0;
@@ -75,7 +81,7 @@
             // disconnectBtn
             // 
             this.disconnectBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.disconnectBtn.Location = new System.Drawing.Point(165, 173);
+            this.disconnectBtn.Location = new System.Drawing.Point(165, 159);
             this.disconnectBtn.Name = "disconnectBtn";
             this.disconnectBtn.Size = new System.Drawing.Size(75, 23);
             this.disconnectBtn.TabIndex = 1;
@@ -106,20 +112,20 @@
             // receiveTb
             // 
             this.receiveTb.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.receiveTb.Location = new System.Drawing.Point(293, 59);
+            this.receiveTb.Location = new System.Drawing.Point(293, 68);
             this.receiveTb.Multiline = true;
             this.receiveTb.Name = "receiveTb";
             this.receiveTb.ReadOnly = true;
             this.receiveTb.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.receiveTb.Size = new System.Drawing.Size(495, 140);
+            this.receiveTb.Size = new System.Drawing.Size(423, 140);
             this.receiveTb.TabIndex = 4;
             // 
             // transmitTb
             // 
-            this.transmitTb.Location = new System.Drawing.Point(293, 220);
+            this.transmitTb.Location = new System.Drawing.Point(293, 235);
             this.transmitTb.Multiline = true;
             this.transmitTb.Name = "transmitTb";
-            this.transmitTb.Size = new System.Drawing.Size(478, 74);
+            this.transmitTb.Size = new System.Drawing.Size(423, 49);
             this.transmitTb.TabIndex = 5;
             // 
             // sentBtn
@@ -156,27 +162,30 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(44, 220);
+            this.label3.ForeColor = System.Drawing.Color.Red;
+            this.label3.Location = new System.Drawing.Point(42, 196);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(185, 12);
+            this.label3.Size = new System.Drawing.Size(209, 12);
             this.label3.TabIndex = 9;
-            this.label3.Text = "连接断开后，资源已释放无法连接";
+            this.label3.Text = "连接断开后，资源已释放无法重新连接";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(291, 202);
+            this.label4.Font = new System.Drawing.Font("华文新魏", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label4.Location = new System.Drawing.Point(290, 211);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(41, 12);
+            this.label4.Size = new System.Drawing.Size(70, 21);
             this.label4.TabIndex = 10;
             this.label4.Text = "发送区";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(291, 44);
+            this.label5.Font = new System.Drawing.Font("华文新魏", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label5.Location = new System.Drawing.Point(290, 44);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(41, 12);
+            this.label5.Size = new System.Drawing.Size(70, 21);
             this.label5.TabIndex = 11;
             this.label5.Text = "显示区";
             // 
@@ -318,7 +327,7 @@
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(772, 3);
+            this.pictureBox1.Location = new System.Drawing.Point(1046, 3);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(22, 19);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -343,15 +352,64 @@
             this.panel1.Controls.Add(this.label9);
             this.panel1.Location = new System.Drawing.Point(1, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(797, 39);
+            this.panel1.Size = new System.Drawing.Size(1071, 39);
             this.panel1.TabIndex = 30;
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(750, 68);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox1.Size = new System.Drawing.Size(311, 140);
+            this.textBox1.TabIndex = 31;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("华文新魏", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label10.Location = new System.Drawing.Point(746, 44);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(270, 21);
+            this.label10.TabIndex = 32;
+            this.label10.Text = "接收区（接收服务器的反馈）";
+            // 
+            // ReceiveBtn
+            // 
+            this.ReceiveBtn.Location = new System.Drawing.Point(750, 233);
+            this.ReceiveBtn.Name = "ReceiveBtn";
+            this.ReceiveBtn.Size = new System.Drawing.Size(75, 23);
+            this.ReceiveBtn.TabIndex = 34;
+            this.ReceiveBtn.Text = "接收";
+            this.ReceiveBtn.UseVisualStyleBackColor = true;
+            this.ReceiveBtn.Click += new System.EventHandler(this.ReceiveBtn_Click);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.ForeColor = System.Drawing.Color.Red;
+            this.label11.Location = new System.Drawing.Point(753, 259);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(185, 12);
+            this.label11.TabIndex = 35;
+            this.label11.Text = "需等服务器发送数据才能按接收键";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1073, 485);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.ReceiveBtn);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.OrderTb);
@@ -420,6 +478,11 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button ReceiveBtn;
+        private System.Windows.Forms.Label label11;
     }
 }
 
