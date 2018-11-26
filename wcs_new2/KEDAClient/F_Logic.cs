@@ -255,7 +255,7 @@ namespace KEDAClient
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.窑头卸载等待区);
             //查找是否存在目标站点是窑头的AGV
             F_AGV d_agv = F_DataCenter.MDev.IGetDevOnDestination(ConstSetBA.窑头卸载站);
-            F_AGV d_agv2 = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.窑头卸载点);
+            F_AGV d_agv2 = F_DataCenter.MDev.IGetAliveDevOnSite(ConstSetBA.窑头卸载点);
 
 
             ///窑头无货 窑头AGV未锁定 并且 此次任务没有被响应
@@ -381,7 +381,7 @@ namespace KEDAClient
                         )
                     {
                         // 从窑头到窑头对接完成点
-                        F_ExcTask task1 = new F_ExcTask(_plcHead, EnumOper.对接完成, ConstSetBA.窑头卸载点, ConstSetBA.窑头对接完成点);
+                        F_ExcTask task1 = new F_ExcTask(null, EnumOper.对接完成, ConstSetBA.窑头卸载点, ConstSetBA.窑头对接完成点);
 
                         F_AGV.AgvLock(agv.Id);
 
@@ -434,7 +434,7 @@ namespace KEDAClient
 
             //查找是否存在目标站点是窑尾的AGV
             F_AGV d_agv = F_DataCenter.MDev.IGetDevOnDestination(ConstSetBA.窑尾装载站);
-            F_AGV d_agv2 = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.窑尾装载点);
+            F_AGV d_agv2 = F_DataCenter.MDev.IGetAliveDevOnSite(ConstSetBA.窑尾装载点);
 
             ///窑尾有货 窑尾等待点的AGV没有锁定 并且 此次任务没有被响应
             if (//(ParamControl.Do_EndPlcLock && !_plcEnd.IsLock) && 
@@ -554,7 +554,7 @@ namespace KEDAClient
                         )
                     {
                         // 从窑尾到窑尾对接完成点
-                        F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.对接完成, ConstSetBA.窑尾装载点, ConstSetBA.窑尾对接完成点);
+                        F_ExcTask task = new F_ExcTask(null, EnumOper.对接完成, ConstSetBA.窑尾装载点, ConstSetBA.窑尾对接完成点);
 
                         F_AGV.AgvLock(agv.Id);
 
@@ -613,7 +613,7 @@ namespace KEDAClient
                 {
                     _ExitPlcEndChargeSuc = true;
 
-                    F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.对接完成, ConstSetBA.出窑尾充电点, ConstSetBA.窑尾对接完成点);
+                    F_ExcTask task = new F_ExcTask(null, EnumOper.对接完成, ConstSetBA.出窑尾充电点, ConstSetBA.窑尾对接完成点);
 
                     F_AGV.AgvLock(agv.Id);
 
@@ -654,7 +654,7 @@ namespace KEDAClient
                 {
                     _ExitPlcHeadChargeSuc = true;
 
-                    F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.对接完成, ConstSetBA.出窑头充电点, ConstSetBA.窑头对接完成点);
+                    F_ExcTask task = new F_ExcTask(null, EnumOper.对接完成, ConstSetBA.出窑头充电点, ConstSetBA.窑头对接完成点);
 
                     F_AGV.AgvLock(agv.Id);
 
@@ -954,7 +954,7 @@ namespace KEDAClient
                             // 初始化，在窑尾装载点且有货，去到窑尾对接完成点
                             if (agv.Sta_Material == EnumagvSta_Material.有货)
                             {
-                                F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.对接完成, agv.Site, ConstSetBA.窑尾对接完成点);
+                                F_ExcTask task = new F_ExcTask(null, EnumOper.对接完成, agv.Site, ConstSetBA.窑尾对接完成点);
 
                                 task.Id = agv.Id;
 
@@ -985,7 +985,7 @@ namespace KEDAClient
                         // 不在装载点的车，判断地标是否为正反卡的21,若为取货完成的车去到窑尾对接完成点
                         else if (agv.Site == ConstSetBA.窑尾装载点的前一地标 && agv.Sta_Material == EnumagvSta_Material.有货)
                         {
-                            F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.对接完成, agv.Site, ConstSetBA.窑尾对接完成点);
+                            F_ExcTask task = new F_ExcTask(null, EnumOper.对接完成, agv.Site, ConstSetBA.窑尾对接完成点);
 
                             task.Id = agv.Id;
 
@@ -1021,7 +1021,7 @@ namespace KEDAClient
                             // 初始化，在窑头卸载点且无货，去到窑头对接完成点
                             if (agv.Sta_Material == EnumagvSta_Material.无货)
                             {
-                                F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.对接完成, agv.Site, ConstSetBA.窑头对接完成点);
+                                F_ExcTask task = new F_ExcTask(null, EnumOper.对接完成, agv.Site, ConstSetBA.窑头对接完成点);
 
                                 task.Id = agv.Id;
 
@@ -1052,7 +1052,7 @@ namespace KEDAClient
                         // 不在卸载点的车，判断地标是否为正反卡的24，若为放货完成的车去到窑头对接完成点
                         else if (agv.Site == ConstSetBA.窑头卸载点的前一地标 && agv.Sta_Material == EnumagvSta_Material.无货)
                         {
-                            F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.对接完成, agv.Site, ConstSetBA.窑头对接完成点);
+                            F_ExcTask task = new F_ExcTask(null, EnumOper.对接完成, agv.Site, ConstSetBA.窑头对接完成点);
 
                             task.Id = agv.Id;
 

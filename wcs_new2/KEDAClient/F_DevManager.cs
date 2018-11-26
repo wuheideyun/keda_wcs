@@ -190,7 +190,30 @@ namespace KEDAClient
             {
                 DeviceBackImf dev = _devList.Find(c => { return c.DevType == "Magnet_Basic" 
                     && c.ProtyList[ConstSetBA.地标].RValue == site
-                    && c.ProtyList[ConstSetBA.空闲].RValue == "True";
+                    && c.ProtyList[ConstSetBA.空闲].RValue == "True"
+                    ;
+                });
+
+                if (dev != null) { return new F_AGV(dev.DevId); }
+            }
+            catch { }
+
+            return null;
+        }
+        /// <summary>
+        /// 获取在某个地标上在线的AGV
+        /// </summary>
+        /// <param name="site"></param>
+        /// <returns></returns>
+        public F_AGV IGetAliveDevOnSite(string site)
+        {
+            try
+            {
+                DeviceBackImf dev = _devList.Find(c => {
+                    return c.DevType == "Magnet_Basic"
+                    && c.ProtyList[ConstSetBA.地标].RValue == site
+                    //&& c.IsAlive == true
+                    ;
                 });
 
                 if (dev != null) { return new F_AGV(dev.DevId); }
