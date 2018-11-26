@@ -221,6 +221,8 @@ namespace KEDAClient
         /// </summary>
         public static bool IgnoreAgvLoadTask = false;
 
+
+        public static MapList LowEleList = new MapList();
     }
 
     /// <summary>
@@ -492,6 +494,16 @@ namespace KEDAClient
         {
             _value = GetRValue("T01");
             return !_value.Equals("") && _value.Equals("False") ? "未被交管" : GetRValue("T02");
+        }
+
+        public static int GetDevEle(DeviceBackImf item)
+        {
+            if (item.DevType.Equals("WK_PLC")) return 100;
+            if (int.TryParse(item.IGet("0007").RValue ?? "0", out int ele))
+            {
+                return ele;
+            }
+            return ele;
         }
 
         /// <summary>

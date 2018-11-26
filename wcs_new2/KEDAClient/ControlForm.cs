@@ -207,6 +207,7 @@ namespace KEDAClient
             {
                 ListViewItem item = new ListViewItem(data.DevID); // AGV名称
                 item.SubItems.Add(data.Status); //AGV状态
+                if (data.Electricity <= 30) item.BackColor = Color.Red;
                 agvList.Items.Add(item);
             }
             // 结束数据处理
@@ -217,7 +218,8 @@ namespace KEDAClient
                 if (agvList.Items.Count > _agvListIndex && _agvListText.Equals(agvList.Items[_agvListIndex].Text))
                 {
                     agvList.FocusedItem = agvList.Items[_agvListIndex];
-                    agvList.Items[_agvListIndex].BackColor = Color.LightGray;
+                    //agvList.Items[_agvListIndex].BackColor = Color.LightGray;
+                    agvList.Items[_agvListIndex].BackColor = Color.FromArgb(agvList.Items[_agvListIndex].BackColor.ToArgb() * 20);
                     return;
                 }
 
@@ -226,14 +228,16 @@ namespace KEDAClient
                     if (item.Text.Equals(_agvListText))
                     {
                         agvList.FocusedItem = item;
-                        agvList.FocusedItem.BackColor = Color.LightGray;
+                        //agvList.FocusedItem.BackColor = Color.LightGray;
+                        agvList.FocusedItem.BackColor = Color.FromArgb(agvList.FocusedItem.BackColor.ToArgb()*20);
                         return;
                     }
                 }
                 if (agvList.FocusedItem == null && agvList.Items.Count > 0)
                 {
                     agvList.FocusedItem = agvList.Items[0];
-                    agvList.FocusedItem.BackColor = Color.LightGray;
+                    //agvList.FocusedItem.BackColor  = Color.LightGray;
+                    agvList.FocusedItem.BackColor = Color.FromArgb(agvList.FocusedItem.BackColor.ToArgb() * 20);
                 }
                 else
                 {
