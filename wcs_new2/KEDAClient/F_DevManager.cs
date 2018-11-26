@@ -246,6 +246,27 @@ namespace KEDAClient
         }
 
         /// <summary>
+        /// 获取离线的AGV
+        /// </summary>
+        /// <param name="site"></param>
+        /// <returns></returns>
+        public F_AGV IGetDevOnNotAlive()
+        {
+            try
+            {
+                DeviceBackImf dev = _devList.Find(c => {
+                    return c.DevType == "Magnet_Basic"
+                    && !c.IsAlive;
+                });
+
+                if (dev != null) { return new F_AGV(dev.DevId); }
+            }
+            catch { }
+
+            return null;
+        }
+
+        /// <summary>
         /// 获取所有正在线上工作的车辆电量信息，返回出于最低电量排序序号的那台车电量
         /// </summary>
         /// <param name="site"></param>
