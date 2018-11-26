@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCP", "TCP\TCP.csproj", "{1
 		{A1D2ED87-B00A-43EC-9CB3-842A925A27A1} = {A1D2ED87-B00A-43EC-9CB3-842A925A27A1}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncTcp", "..\..\AsyncTcp\AsyncTcp\AsyncTcp.csproj", "{A1D2ED87-B00A-43EC-9CB3-842A925A27A1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncTcp", "AsyncTcp\AsyncTcp.csproj", "{A1D2ED87-B00A-43EC-9CB3-842A925A27A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
