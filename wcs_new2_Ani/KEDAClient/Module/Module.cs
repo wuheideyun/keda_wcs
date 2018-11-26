@@ -36,6 +36,7 @@ namespace DispatchAnmination
             if (agv != null)
             {
                 agv.UpdateAgvStatus(isalive);
+                agv.PointSite = dessite;
                 agvPoint = AgvLineMaster.GetMPointOnLine(name,siteid, dessite, rate);
                 if (agvPoint != null)
                 {
@@ -71,6 +72,7 @@ namespace DispatchAnmination
             {
                 AgvModule agvm = new AgvModule(agvname, new Point(p.X, p.Y), site);
                 agvm.UpdateAgvStatus(isalive);
+                agvm.PointSite = dessite;
                 _agvModules.Add(agvm);
                 FLog.Log("添加" + agvname + ",地标:" + site + ",地标:" + p.X + "," + p.Y);
             }
@@ -172,10 +174,11 @@ namespace DispatchAnmination
         /// </summary>
         internal Point _describP;
 
+
         /// <summary>
         /// 画笔
         /// </summary>
-        internal Pen _pen = new Pen(new SolidBrush(Color.Black));
+        internal Pen _pen = new Pen(new SolidBrush(Color.Black),3.33F);
 
         internal Brush _brush = new SolidBrush(Color.Black);
         internal Brush _orageBrush = new SolidBrush(Color.Orange);

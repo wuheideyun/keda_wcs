@@ -29,6 +29,16 @@ namespace DispatchAnmination
         /// 当前站点
         /// </summary>
         public int Site;
+
+        /// <summary>
+        /// 目标站点
+        /// </summary>
+        public int PointSite
+        {
+            set;get;
+        }
+
+        public Point UpPoint;
         /// <summary>
         /// 构造函数
         /// </summary>
@@ -53,7 +63,11 @@ namespace DispatchAnmination
             Site = site;
 
             Update(centerPoint);
+
+            UpPoint = new Point(_centerP.X - _size * _scale, _centerP.Y - 4 * _size * _scale);
             brush = _brushGreen;
+
+            
         }
         /// <summary>
         /// 离线AGV显示灰色，在线绿色
@@ -117,6 +131,10 @@ namespace DispatchAnmination
             //模型描述文字中心点
             _describP.X = _centerP.X - _size * _scale;
             _describP.Y = _centerP.Y + 2 * _size * _scale;
+
+            UpPoint.X = _centerP.X - _size * _scale;
+            UpPoint.Y = _centerP.Y - 4 * _size * _scale;
+
         }
         private Brush brush;
         /// <summary>
@@ -134,6 +152,8 @@ namespace DispatchAnmination
             g.FillEllipse(_orageBrush, _rectangle[1]);
 
             g.DrawString(_name, _font, Brushes.Black, _describP);
+            if (PointSite != 0)
+                g.DrawString(PointSite + "", _font, Brushes.RosyBrown, UpPoint);
         }
     }
 }
