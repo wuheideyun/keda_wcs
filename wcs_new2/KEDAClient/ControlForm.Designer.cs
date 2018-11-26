@@ -2245,6 +2245,7 @@
             this.agvList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.agvList.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.agvList.ForeColor = System.Drawing.Color.White;
+            this.agvList.FullRowSelect = true;
             this.agvList.GridLines = true;
             this.agvList.Location = new System.Drawing.Point(3, 3);
             this.agvList.MultiSelect = false;

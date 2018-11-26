@@ -404,7 +404,11 @@ namespace KEDAClient
                 //&& c.ProtyList[ConstSetBA.空闲].RValue == "True"
                 foreach (var item in _devList)
                 {
-                    list.Add(new DevData(item.DevId, AGV.GetDevStatus(item)));
+                    list.Add(new DevData {
+                        DevID = item.DevId,
+                        Status = AGV.GetDevStatus(item),
+                        Electricity = AGV.GetDevEle(item)}
+                    );
                 }
                 return list;
             }
@@ -419,23 +423,10 @@ namespace KEDAClient
     /// </summary>
     public class DevData
     {
-        private String _devid;
-        private String _status;
+        public int Electricity;
 
-        public String DevID
-        {
-            get { return _devid; }
-        }
+        public String DevID;
 
-        public String Status
-        {
-            get { return _status; }
-        }
-
-        public DevData(String devid,String status)
-        {
-            _devid = devid;
-            _status = status;
-        }
+        public String Status;
     }
 }

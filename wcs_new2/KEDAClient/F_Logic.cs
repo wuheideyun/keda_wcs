@@ -231,9 +231,7 @@ namespace KEDAClient
                         if(ParamControl.Do_EndPlcLoad) TaskPlcEndStart();        //窑尾启动辊台
 
                         if(ParamControl.Do_HeadPlcUnload) TaskPlcHeadStart();      //窑头启动辊台
-
-
-
+                        
                     }
                 }
                 catch (Exception e)
