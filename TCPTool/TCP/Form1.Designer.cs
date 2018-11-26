@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.connectBtn = new System.Windows.Forms.Button();
             this.disconnectBtn = new System.Windows.Forms.Button();
@@ -58,11 +57,13 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label9 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.ReceiveBtn = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -112,7 +113,7 @@
             // receiveTb
             // 
             this.receiveTb.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.receiveTb.Location = new System.Drawing.Point(293, 68);
+            this.receiveTb.Location = new System.Drawing.Point(257, 68);
             this.receiveTb.Multiline = true;
             this.receiveTb.Name = "receiveTb";
             this.receiveTb.ReadOnly = true;
@@ -122,7 +123,7 @@
             // 
             // transmitTb
             // 
-            this.transmitTb.Location = new System.Drawing.Point(293, 235);
+            this.transmitTb.Location = new System.Drawing.Point(257, 237);
             this.transmitTb.Multiline = true;
             this.transmitTb.Name = "transmitTb";
             this.transmitTb.Size = new System.Drawing.Size(423, 49);
@@ -131,7 +132,7 @@
             // sentBtn
             // 
             this.sentBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.sentBtn.Location = new System.Drawing.Point(293, 300);
+            this.sentBtn.Location = new System.Drawing.Point(257, 300);
             this.sentBtn.Name = "sentBtn";
             this.sentBtn.Size = new System.Drawing.Size(75, 23);
             this.sentBtn.TabIndex = 6;
@@ -173,7 +174,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("华文新魏", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(290, 211);
+            this.label4.Location = new System.Drawing.Point(253, 211);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(70, 21);
             this.label4.TabIndex = 10;
@@ -183,7 +184,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("华文新魏", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label5.Location = new System.Drawing.Point(290, 44);
+            this.label5.Location = new System.Drawing.Point(253, 44);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(70, 21);
             this.label5.TabIndex = 11;
@@ -192,7 +193,7 @@
             // advanceBtn
             // 
             this.advanceBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.advanceBtn.Location = new System.Drawing.Point(293, 369);
+            this.advanceBtn.Location = new System.Drawing.Point(260, 369);
             this.advanceBtn.Name = "advanceBtn";
             this.advanceBtn.Size = new System.Drawing.Size(61, 23);
             this.advanceBtn.TabIndex = 12;
@@ -203,7 +204,7 @@
             // retreatBtn
             // 
             this.retreatBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.retreatBtn.Location = new System.Drawing.Point(360, 369);
+            this.retreatBtn.Location = new System.Drawing.Point(327, 369);
             this.retreatBtn.Name = "retreatBtn";
             this.retreatBtn.Size = new System.Drawing.Size(61, 23);
             this.retreatBtn.TabIndex = 13;
@@ -214,7 +215,7 @@
             // pauseBtn
             // 
             this.pauseBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.pauseBtn.Location = new System.Drawing.Point(427, 369);
+            this.pauseBtn.Location = new System.Drawing.Point(394, 369);
             this.pauseBtn.Name = "pauseBtn";
             this.pauseBtn.Size = new System.Drawing.Size(61, 23);
             this.pauseBtn.TabIndex = 14;
@@ -225,7 +226,7 @@
             // rollBtn
             // 
             this.rollBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.rollBtn.Location = new System.Drawing.Point(494, 369);
+            this.rollBtn.Location = new System.Drawing.Point(461, 369);
             this.rollBtn.Name = "rollBtn";
             this.rollBtn.Size = new System.Drawing.Size(61, 23);
             this.rollBtn.TabIndex = 15;
@@ -236,7 +237,7 @@
             // button5
             // 
             this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button5.Location = new System.Drawing.Point(561, 369);
+            this.button5.Location = new System.Drawing.Point(528, 369);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(61, 23);
             this.button5.TabIndex = 16;
@@ -246,7 +247,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(234, 374);
+            this.label6.Location = new System.Drawing.Point(201, 374);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(53, 12);
             this.label6.TabIndex = 17;
@@ -255,7 +256,7 @@
             // DirectionLb
             // 
             this.DirectionLb.AutoSize = true;
-            this.DirectionLb.Location = new System.Drawing.Point(291, 341);
+            this.DirectionLb.Location = new System.Drawing.Point(14, 235);
             this.DirectionLb.Name = "DirectionLb";
             this.DirectionLb.Size = new System.Drawing.Size(89, 12);
             this.DirectionLb.TabIndex = 18;
@@ -264,7 +265,7 @@
             // RollerLb
             // 
             this.RollerLb.AutoSize = true;
-            this.RollerLb.Location = new System.Drawing.Point(425, 341);
+            this.RollerLb.Location = new System.Drawing.Point(14, 260);
             this.RollerLb.Name = "RollerLb";
             this.RollerLb.Size = new System.Drawing.Size(89, 12);
             this.RollerLb.TabIndex = 19;
@@ -279,7 +280,7 @@
             "后退",
             "暂停",
             "辊台动"});
-            this.comboBox1.Location = new System.Drawing.Point(293, 402);
+            this.comboBox1.Location = new System.Drawing.Point(260, 402);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(132, 20);
             this.comboBox1.TabIndex = 20;
@@ -288,7 +289,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(222, 405);
+            this.label7.Location = new System.Drawing.Point(189, 405);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(65, 12);
             this.label7.TabIndex = 21;
@@ -297,7 +298,7 @@
             // Set
             // 
             this.Set.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Set.Location = new System.Drawing.Point(679, 399);
+            this.Set.Location = new System.Drawing.Point(646, 399);
             this.Set.Name = "Set";
             this.Set.Size = new System.Drawing.Size(75, 23);
             this.Set.TabIndex = 25;
@@ -307,7 +308,7 @@
             // 
             // OrderTb
             // 
-            this.OrderTb.Location = new System.Drawing.Point(455, 401);
+            this.OrderTb.Location = new System.Drawing.Point(422, 401);
             this.OrderTb.Name = "OrderTb";
             this.OrderTb.Size = new System.Drawing.Size(196, 21);
             this.OrderTb.TabIndex = 26;
@@ -316,7 +317,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.ForeColor = System.Drawing.Color.DarkRed;
-            this.label8.Location = new System.Drawing.Point(453, 429);
+            this.label8.Location = new System.Drawing.Point(420, 429);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(113, 12);
             this.label8.TabIndex = 27;
@@ -356,19 +357,14 @@
             this.panel1.TabIndex = 30;
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
             // 
-            // timer1
-            // 
-            this.timer1.Interval = 1000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(750, 68);
+            this.textBox1.Location = new System.Drawing.Point(679, 68);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(311, 140);
+            this.textBox1.Size = new System.Drawing.Size(382, 140);
             this.textBox1.TabIndex = 31;
             // 
             // label10
@@ -381,33 +377,62 @@
             this.label10.TabIndex = 32;
             this.label10.Text = "接收区（接收服务器的反馈）";
             // 
-            // ReceiveBtn
+            // button1
             // 
-            this.ReceiveBtn.Location = new System.Drawing.Point(750, 233);
-            this.ReceiveBtn.Name = "ReceiveBtn";
-            this.ReceiveBtn.Size = new System.Drawing.Size(75, 23);
-            this.ReceiveBtn.TabIndex = 34;
-            this.ReceiveBtn.Text = "接收";
-            this.ReceiveBtn.UseVisualStyleBackColor = true;
-            this.ReceiveBtn.Click += new System.EventHandler(this.ReceiveBtn_Click);
+            this.button1.Location = new System.Drawing.Point(948, 230);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(113, 23);
+            this.button1.TabIndex = 33;
+            this.button1.Text = "接收AGV状态";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.ForeColor = System.Drawing.Color.Red;
-            this.label11.Location = new System.Drawing.Point(753, 259);
+            this.label11.Location = new System.Drawing.Point(14, 282);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(185, 12);
-            this.label11.TabIndex = 35;
-            this.label11.Text = "需等服务器发送数据才能按接收键";
+            this.label11.Size = new System.Drawing.Size(65, 12);
+            this.label11.TabIndex = 34;
+            this.label11.Text = "当前站点：";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(14, 305);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(77, 12);
+            this.label12.TabIndex = 35;
+            this.label12.Text = "当前速度比：";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(15, 330);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(89, 12);
+            this.label13.TabIndex = 36;
+            this.label13.Text = "当前运行方向：";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(16, 352);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(77, 12);
+            this.label14.TabIndex = 37;
+            this.label14.Text = "当前电量比：";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1073, 485);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.ReceiveBtn);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.panel1);
@@ -440,6 +465,7 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TCP";
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -478,11 +504,13 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Button ReceiveBtn;
+        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
     }
 }
 
