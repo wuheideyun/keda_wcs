@@ -151,7 +151,7 @@ namespace KEDAClient
             //    _plc.IsLock = false;
             //}
 
-            if (_agv != null) { F_AGV.AgvRelease(_agv.Id); }
+            //if (_agv != null) { F_AGV.AgvRelease(_agv.Id); }
 
             if (_taskDispatch != null) { if (WcfMainHelper.CtrDispatch(_taskDispatch.Id, EnumCtrType.Stop)) { _isSuc = true; } }
 
@@ -193,7 +193,6 @@ namespace KEDAClient
 
                 dis.EndSite = _endSite;
 
-
                 if (!string.IsNullOrEmpty(_startSite)) { dis.StartSiteList.Add(_startSite); }
 
                 string back = "";
@@ -219,16 +218,17 @@ namespace KEDAClient
                         {
                             if (_agv != null && _plc.EnterChargeAgv == _agv.Id)
                             {
-                                if (_plc.IsEnterBatteryLock)
+                                if (_plc.IsEnterBatteryLock && !ParamControl.Do_EnterEndChargeLock)
                                 {
                                     _plc.IsEnterBatteryLock = false;
+                                    ParamControl.Do_EnterEndChargeLock = true ;
                                 }
                             }
 
                             //如果界面打开忽略《窑尾》AGV货物状态和Plc货物状态则 直接发送棍台转动命令
                             if (ParamControl.Is_IgnoreTailUnloadStatus ||
                                 (_plc.Sta_Material == EnumSta_Material.有货
-                                && (_agv.Sta_Material == EnumSta_Material.无货 || _agv.Sta_Material == EnumSta_Material.传送中)))
+                                && (_agv.Sta_Material == EnumagvSta_Material.无货 || _agv.Sta_Material == EnumagvSta_Material.传送中)))
                             {
                                 if (BeginTime == null) BeginTime = System.DateTime.Now;
                                 _agv.SendOrdr(EnumType.上料操作, EnumPara.agv上料启动);
@@ -238,7 +238,8 @@ namespace KEDAClient
 
                             //如果界面打开忽略《窑尾》AGV货物状态，并且上面已经发送了指定时间的棍台转动时间
                             if ((ParamControl.Is_IgnoreTailUnloadStatus && IsTailRunTimeFinish()) ||
-                                (_plc.Sta_Material == EnumSta_Material.无货 && _agv.Sta_Material == EnumSta_Material.有货))
+                                (//_plc.Sta_Material == EnumSta_Material.无货  && 
+                                _agv.Sta_Material == EnumagvSta_Material.有货))
                             {
                                 _agv.SendOrdr(EnumType.上料操作, EnumPara.agv辊台停止);
 
@@ -250,10 +251,10 @@ namespace KEDAClient
                                     )
                                 {
                                     //取货完成，解锁窑尾
-                                    if (_plc != null && ParamControl.Do_EndPlcLock)
+                                    if (_plc != null && !ParamControl.Do_EndPlcLock)
                                     {
                                         _plc.IsLock = false;
-                                        ParamControl.Do_EndPlcLock = false;
+                                        ParamControl.Do_EndPlcLock = true ;
                                     }
 
                                     ISetTaskSuc();
@@ -269,16 +270,18 @@ namespace KEDAClient
                         {
                             if (_agv != null && _plc.EnterChargeAgv == _agv.Id)
                             {
-                                if (_plc.IsEnterBatteryLock)
+                                if (_plc.IsEnterBatteryLock && !ParamControl.Do_EnterHeadChargeLock)
                                 {
                                     _plc.IsEnterBatteryLock = false;
+                                    ParamControl.Do_EnterHeadChargeLock = true ;
                                 }
                             }
 
                             //如果界面打开忽略《窑头》AGV货物状态和Plc货物状态则 直接发送棍台转动命令
                             if (ParamControl.Is_IgnoreHeadUnloadStatus ||
-                                ((_plc.Sta_Material == EnumSta_Material.有货 || _plc.Sta_Material == EnumSta_Material.无货) &&
-                                (_agv.Sta_Material == EnumSta_Material.传送中 || _agv.Sta_Material == EnumSta_Material.有货)))
+                                ((_plc.Sta_Material == EnumSta_Material.允许下料  || _plc.Sta_Material == EnumSta_Material.无货
+                                || _plc.Sta_Material == EnumSta_Material.未知) &&
+                                (_agv.Sta_Material == EnumagvSta_Material.传送中 || _agv.Sta_Material == EnumagvSta_Material.有货)))
                             {
                                 if (BeginTime == null) BeginTime = System.DateTime.Now;
                                 _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台上料中);
@@ -289,8 +292,8 @@ namespace KEDAClient
 
                             //如果界面打开忽略《窑头》AGV货物状态，并且上面已经发送了指定时间的棍台转动时间
                             if ((ParamControl.Is_IgnoreHeadUnloadStatus && IsHeadRunTimeFinish()) ||
-                                (_plc.Sta_Material == EnumSta_Material.有货 &&
-                               _agv.Sta_Material == EnumSta_Material.无货))
+                                ((_plc.Sta_Material == EnumSta_Material.允许下料  || _plc.Sta_Material == EnumSta_Material.未知) &&
+                               _agv.Sta_Material == EnumagvSta_Material.无货))
                             {
                                 _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台上料完成);
 
@@ -302,10 +305,10 @@ namespace KEDAClient
                                     )
                                 {
                                     //放货完成，解锁窑头
-                                    if (_plc != null && ParamControl.Do_HeadPlcLock)
+                                    if (_plc != null && !ParamControl.Do_HeadPlcLock)
                                     {
                                         _plc.IsLock = false;
-                                        ParamControl.Do_HeadPlcLock = false;
+                                        ParamControl.Do_HeadPlcLock = true ;
                                     }
 
                                     ISetTaskSuc();
@@ -329,9 +332,19 @@ namespace KEDAClient
                     {
                         if (_plc.IsExitBatteryLock && _plc.ExitChargeAgv == _agv.Id)
                         {
-                            _plc.IsExitBatteryLock = false;
+                            if (_plc.Site == "14")
+                            {
+                                _plc.IsExitBatteryLock = false;
+                                ParamControl.Do_ExitHeadChargeLock = true ;
+                            }
+                            else if (_plc.Site == "11")
+                            {
+                                _plc.IsExitBatteryLock = false;
+                                ParamControl.Do_ExitEndChargeLock = true ;
+                            }
+
                         }
-                        if (_plc.ExitFlag)
+                        if (!_plc.ExitFlag)
                         {
                             _plc.ExitFlag = true;
                         }

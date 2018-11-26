@@ -89,37 +89,46 @@ namespace KEDAClient
         /// </summary>
         public static bool Do_ToHeadWait = true;
 
+        /// <summary>
+        /// 是否执行启动窑头辊台
+        /// </summary>
+        public static bool Do_HeadPlcUnload = true;
+
+        /// <summary>
+        /// 是否执行启动窑尾辊台
+        /// </summary>
+        public static bool Do_EndPlcLoad = true;
 
         //状态锁定：默认是false
         /// <summary>
         /// 是否锁定窑头
         /// </summary>
-        public static bool Do_HeadPlcLock = false;
+        public static bool Do_HeadPlcLock = true   ;
 
         /// <summary>
         /// 是否锁定进窑头充电桩
         /// </summary>
-        public static bool Do_EnterHeadChargeLock = false;
+        public static bool Do_EnterHeadChargeLock = true ;
 
         /// <summary>
         /// 是否锁定出窑头充电桩
         /// </summary>
-        public static bool Do_ExitHeadChargeLock = false;
+        public static bool Do_ExitHeadChargeLock = true ;
 
         /// <summary>
         /// 是否锁定窑尾
         /// </summary>
-        public static bool Do_EndPlcLock = false;
+        public static bool Do_EndPlcLock = true ;
 
         /// <summary>
         /// 是否锁定进窑尾充电桩
         /// </summary>
-        public static bool Do_EnterEndChargeLock = false;
+        public static bool Do_EnterEndChargeLock = true ;
 
         /// <summary>
         /// 是否锁定出窑尾充电桩
         /// </summary>
-        public static bool Do_ExitEndChargeLock = false;
+        public static bool Do_ExitEndChargeLock = true ;
 
 
         /// <summary>
@@ -661,11 +670,11 @@ namespace KEDAClient
             String status = "";
             if (item.DevId == "PLC01")
             {
-                status = "窑头";
+                status = "窑尾";
             }
             else if (item.DevId == "PLC02")
             {
-                status = "窑尾";
+                status = "窑头";
             }
             else
             {

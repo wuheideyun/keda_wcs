@@ -200,7 +200,28 @@ namespace KEDAClient
             return null;
         }
 
-        
+        /// <summary>
+        /// 获取指定目标站点的AGV
+        /// </summary>
+        /// <param name="site"></param>
+        /// <returns></returns>
+        public F_AGV IGetDevOnDestination(string dest)
+        {
+            try
+            {
+                DeviceBackImf dev = _devList.Find(c => {
+                    return c.DevType == "Magnet_Basic"
+                    && c.IsAlive
+                    && (c.ProtyList[ConstSetBA.站点].RValue == dest);
+                });
+
+                if (dev != null) { return new F_AGV(dev.DevId); }
+            }
+            catch { }
+
+            return null;
+        }
+
         /// <summary>
         /// 获取所有正在线上工作的车辆电量信息，返回出于最低电量排序序号的那台车电量
         /// </summary>
@@ -213,7 +234,8 @@ namespace KEDAClient
                 //考虑范围只有正在作业的车辆，非作业车辆不纳入考虑
                 List<DeviceBackImf> devs = _devList.FindAll(c =>
                 {
-                    return c.DevType == "Magnet_Basic" && c.IsAlive
+                    return c.DevType == "Magnet_Basic" 
+                    && c.IsAlive
                     && c.ProtyList[ErrorType.脱轨].RValue == "0"
                     ;
                 });
@@ -236,7 +258,7 @@ namespace KEDAClient
                 if(list.Count > ConstSetBA.最低电量排序序号)
                 {
 
-                     return list[ConstSetBA.最低电量排序序号];
+                     return list[ConstSetBA.最低电量排序序号 - 1];
 
                 }
                 else

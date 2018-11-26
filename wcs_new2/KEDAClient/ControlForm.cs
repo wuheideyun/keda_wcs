@@ -135,6 +135,7 @@ namespace KEDAClient
             CurrentTaskList_Refresh();
             agvData_Refresh();
             plcData_Refresh();
+            RefreshLockBtn();
             timerForListRefresh.Enabled = true;
         }
 
@@ -435,6 +436,13 @@ namespace KEDAClient
         private void AutoGenerateTaskBtn_Click(object sender, EventArgs e)
         {
             ParamControl.Is_AutoAddTask = AutoGenerateTaskBtn.Checked;
+
+            //自动生成任务按钮开启时，将自动执行任务按钮同步开启
+            if (AutoGenerateTaskBtn.Checked)
+            {
+                ExecuteTaskBtn.Checked = true;
+                ParamControl.Is_AutoExecuteTask = true;
+            }
 
         }
 
@@ -740,7 +748,26 @@ namespace KEDAClient
             ParamControl.Do_ToHeadWait = headWaitBtn.Checked;
 
         }
-         
+
+        /// <summary>
+        /// 是否执行启动窑头辊台
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void headPlcUnloadBtn_Click(object sender, EventArgs e)
+        {
+            ParamControl.Do_HeadPlcUnload = headPlcUnloadBtn.Checked;
+        }
+
+        /// <summary>
+        /// 是否执行启动窑尾辊台
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void endPlcLoadBtn_Click(object sender, EventArgs e)
+        {
+            ParamControl.Do_EndPlcLoad = endPlcLoadBtn.Checked;
+        }
 
         /// <summary>
         /// 控制是否全部打开任务
@@ -751,15 +778,21 @@ namespace KEDAClient
         {
             enterheadChargeBtn.Checked = allOnOffBtn.Checked;
             enterheadChargSucBtn.Checked = allOnOffBtn.Checked;
+            exitheadChargeBtn.Checked = allOnOffBtn.Checked;
+            exitheadChargSucBtn.Checked = allOnOffBtn.Checked;
             headUnloadBtn.Checked = allOnOffBtn.Checked;
             headSucBtn.Checked = allOnOffBtn.Checked;
             headWaitBtn.Checked = allOnOffBtn.Checked;
+            headPlcUnloadBtn.Checked = allOnOffBtn.Checked;
 
             enterendChargeBtn.Checked = allOnOffBtn.Checked;
             enterendChargSucBtn.Checked = allOnOffBtn.Checked;
+            exitendChargeBtn.Checked = allOnOffBtn.Checked;
+            exitendChargSucBtn.Checked = allOnOffBtn.Checked;
             endLoadBtn.Checked = allOnOffBtn.Checked;
             endSucBtn.Checked = allOnOffBtn.Checked;
             endWaitBtn.Checked = allOnOffBtn.Checked;
+            endPlcLoadBtn.Checked = allOnOffBtn.Checked;
 
             enterheadChargeBtn_Click(sender, e);
             exitheadChargeBtn_Click(sender, e);
@@ -768,6 +801,7 @@ namespace KEDAClient
             headUnloadBtn_Click(sender, e);
             headWaitBtn_Click(sender, e);
             headSucBtn_Click(sender, e);
+            headPlcUnloadBtn_Click(sender, e);
 
             enterendChargeBtn_Click(sender, e);
             exitendChargeBtn_Click(sender, e);
@@ -776,6 +810,7 @@ namespace KEDAClient
             endLoadBtn_Click(sender, e);
             endWaitBtn_Click(sender, e);
             endSucBtn_Click(sender, e);
+            endPlcLoadBtn_Click(sender, e);
 
         }
 
@@ -968,6 +1003,7 @@ namespace KEDAClient
         private void EndPlcLockBtn_Click(object sender, EventArgs e)
         {
             ParamControl.Do_EndPlcLock = EndPlcLockBtn.Checked;
+                      
         }
 
         /// <summary>
@@ -980,6 +1016,7 @@ namespace KEDAClient
             ParamControl.Do_EnterEndChargeLock = EnterEndChargeLBtn.Checked;
         }
 
+
         /// <summary>
         /// 是否解锁出窑尾充电桩状态
         /// </summary>
@@ -991,13 +1028,22 @@ namespace KEDAClient
 
         }
 
+        /// <summary>
+        /// 刷新锁定状态
+        /// </summary>
         private void RefreshLockBtn()
         {
             HeadPlcLockBtn.Checked = ParamControl.Do_HeadPlcLock;
 
             EndPlcLockBtn.Checked = ParamControl.Do_EndPlcLock;
 
+            EnterHeadChargeLBtn.Checked = ParamControl.Do_EnterHeadChargeLock;
 
+            ExitHeadChargeLBtn.Checked = ParamControl.Do_ExitHeadChargeLock;
+
+            EnterEndChargeLBtn.Checked = ParamControl.Do_EnterEndChargeLock;
+
+            ExitEndChargeLBtn.Checked = ParamControl.Do_ExitEndChargeLock;
 
         }
 

@@ -12,13 +12,11 @@ namespace KEDAClient
     /// </summary>
     public enum EnumSta_Material
     {
-        无货 = 1,
+        有货 = 1,
 
-        有货 = 2,
+        无货 = 2,
 
         传送中 = 3,
-
-        允许下料 = 4,
 
         未知
     }
@@ -27,7 +25,7 @@ namespace KEDAClient
     /// 电机状态
     /// </summary>
     public enum EnumSta_Monitor
-    {
+    {     
 
         未知,
 
@@ -57,7 +55,7 @@ namespace KEDAClient
     /// 上下料操作枚举
     /// </summary>
     public enum EnumType
-    {
+    { 
         上料操作 = 1,
 
         下料操作 = 2,
@@ -131,64 +129,64 @@ namespace KEDAClient
         /// <summary>
         /// 货物状态
         /// </summary>
-        public EnumSta_Material Sta_Material
-        {
-            get
-            {
-                EnumSta_Material result = EnumSta_Material.未知;
+        //public EnumSta_Material Sta_Material
+        //{
+        //    get 
+        //    {
+        //        EnumSta_Material result = EnumSta_Material.未知;
 
-                try
-                {
-                    result = (EnumSta_Material)Convert.ToInt32((F_DataCenter.MDev.IGetSenValue(_id, "0001")));
-                }
-                catch { result = EnumSta_Material.未知; }
+        //        try
+        //        {
+        //            result = (EnumSta_Material)Convert.ToInt32((F_DataCenter.MDev.IGetSenValue(_id, "0001")));
+        //        }
+        //        catch { result = EnumSta_Material.未知; }
 
-                return result;
-            }
-        }
+        //        return result;
+        //    }
+        //}
 
         /// <summary>
         /// 电机状态
         /// </summary>
-        public EnumSta_Monitor Sta_Monitor
-        {
-            get
-            {
-                EnumSta_Monitor result = EnumSta_Monitor.未知;
+        //public EnumSta_Monitor Sta_Monitor
+        //{
+        //    get
+        //    {
+        //        EnumSta_Monitor result = EnumSta_Monitor.未知;
 
-                try
-                {
-                    result = (EnumSta_Monitor)Convert.ToInt32((F_DataCenter.MDev.IGetSenValue(_id, "0002")));
-                }
-                catch { result = EnumSta_Monitor.未知; }
+        //        try
+        //        {
+        //            result = (EnumSta_Monitor)Convert.ToInt32((F_DataCenter.MDev.IGetSenValue(_id, "0002")));
+        //        }
+        //        catch { result = EnumSta_Monitor.未知; }
 
-                return result;
-            }
-        }
+        //        return result;
+        //    }
+        //}
 
         /// <summary>
         /// 故障代码
         /// </summary>
         /// <returns></returns>
-        public string Error_Code
-        {
-            get
-            {
-                return F_DataCenter.MDev.IGetSenValue(_id, "0003");
-            }
-        }
+        //public string Error_Code
+        //{
+        //    get 
+        //    {
+        //        return F_DataCenter.MDev.IGetSenValue(_id, "0003");
+        //    }
+        //}
 
         /// <summary>
         /// 备用信息
         /// </summary>
         /// <returns></returns>
-        public string Tag_Code
-        {
-            get
-            {
-                return F_DataCenter.MDev.IGetSenValue(_id, "0004");
-            }
-        }
+        //public string Tag_Code
+        //{
+        //    get
+        //    {
+        //        return F_DataCenter.MDev.IGetSenValue(_id, "0004");
+        //    }
+        //}
 
         /// <summary>
         /// 是否被锁
@@ -204,7 +202,7 @@ namespace KEDAClient
         /// </summary>
         public bool ExitFlag
         {
-            get { return _exitFlag; }
+            get { return _exitFlag ; }
             set { _exitFlag = value; }
         }
 
@@ -270,7 +268,7 @@ namespace KEDAClient
         /// <returns></returns>
         public bool SendOrdr(EnumType oper, EnumPara para)
         {
-            return WcfMainHelper.SendOrder(_id, new FControlOrder("远程", 1, (int)oper, (int)para));
+            return WcfMainHelper.SendOrder(_id, new FControlOrder("远程",1, (int)oper, (int)para));
         }
     }
 }
