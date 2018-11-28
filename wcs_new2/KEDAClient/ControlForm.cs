@@ -207,7 +207,11 @@ namespace KEDAClient
             {
                 ListViewItem item = new ListViewItem(data.DevID); // AGV名称
                 item.SubItems.Add(data.Status); //AGV状态
-                if (data.Electricity <= 30) item.BackColor = Color.Red;
+                if (data.Status == "离线") item.BackColor = Color.Gray;
+                else if (data.Electricity <= F_DataCenter.MDev.IGetDevElectricity()) item.BackColor = Color.Red;
+                else if (data.Status == "在线" || data.Status == "任务中" || data.Status == "空闲" || data.Status == "被交管" || data.Status == "障碍物") item.BackColor = Color.Green;
+                else if (data.Status == "脱轨") item.BackColor = Color.Blue;
+                else if (data.Status == "充电中") item.BackColor = Color.Yellow;
                 agvList.Items.Add(item);
             }
             // 结束数据处理

@@ -5,6 +5,7 @@ using System.Text;
 using ArrayMap;
 using WcfHelper;
 using FLCommonInterfaces;
+using DataContract;
 
 namespace KEDAClient
 {
@@ -170,6 +171,16 @@ namespace KEDAClient
             get
             {
                 return F_DataCenter.MDev.IGetSenValue(_id, "0010") == "True" && !(F_DataCenter.MDev.IsDevInDispath(_id));
+            }
+        }
+
+        public bool IsAlive
+        {
+            get
+            {
+                DeviceBackImf dev = F_DataCenter.MDev.IGetDev(Id);
+
+                return dev != null ? dev.IsAlive : false;
             }
         }
 

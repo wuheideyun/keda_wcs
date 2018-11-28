@@ -57,6 +57,46 @@ namespace KEDAClient
         F_AGV _agv = null;
 
         /// <summary>
+        /// 离线计数
+        /// </summary>
+        int _disAliveCounter = 0;
+
+        /// <summary>
+        /// 任务已经开始
+        /// </summary>
+        bool _isStart = false;
+
+        /// <summary>
+        /// 是否离线超时
+        /// </summary>
+        bool _isDisaliveOverTime = false;
+
+        /// <summary>
+        /// 是否离线超时
+        /// </summary>
+        public bool IsDisaliveOverTime
+        {
+            get { return _isDisaliveOverTime; }
+        }
+        /// <summary>
+        /// 计数器
+        /// </summary>
+        int _triggerCounter = 0;
+
+        /// <summary>
+        /// 是否超时
+        /// </summary>
+        bool _isOverTime = false;
+
+        /// <summary>
+        /// 是否超时
+        /// </summary>
+        public bool IsOverTime
+        {
+            get { return _isOverTime; }
+        }
+
+        /// <summary>
         /// 是否已经完成
         /// </summary>
         bool _isSuc = false;
@@ -156,6 +196,7 @@ namespace KEDAClient
             if (_taskDispatch != null) { if (WcfMainHelper.CtrDispatch(_taskDispatch.Id, EnumCtrType.Stop)) { _isSuc = true; } }
 
         }
+
         /// <summary>
         /// 发送窑头电机启动时间是否完成
         /// </summary>
@@ -181,6 +222,27 @@ namespace KEDAClient
         {
             if (_isSuc) { return ""; }
 
+            if (!_isStart)
+            {
+                if (++_triggerCounter > F_DataCenter.ClearTime) { _isOverTime = true; }
+            }
+
+            if(_agv != null)
+            {
+                if(_agv.IsAlive)
+                {
+                    _disAliveCounter = 0;
+                }
+                else
+                {
+                    if (++_disAliveCounter > F_DataCenter.ClearTime) { _isDisaliveOverTime = true; }
+                }
+            }
+            else
+            {
+                if(++_triggerCounter > F_DataCenter.ClearTime) { _isOverTime = true; }
+            }
+
             _taskDispatch = WcfMainHelper.GetDispatch(Id);
 
             if (_taskDispatch == null)
@@ -195,6 +257,9 @@ namespace KEDAClient
 
                 if (!string.IsNullOrEmpty(_startSite)) { dis.StartSiteList.Add(_startSite); }
 
+                ///修改By fujun
+                dis.DevList.Add(Id);
+
                 string back = "";
 
                 WcfMainHelper.StartDispatch(dis, out back);
@@ -203,7 +268,10 @@ namespace KEDAClient
             }
             else
             {
+                ///修改By fujun
+                _isStart = true;
 
+                #region 滚筒逻辑
                 ///确定此时任务的AGV
                 if (_agv == null) { _agv = new F_AGV(_taskDispatch.Dev); }
 
@@ -221,7 +289,7 @@ namespace KEDAClient
                                 if (_plc.IsEnterBatteryLock && !ParamControl.Do_EnterEndChargeLock)
                                 {
                                     _plc.IsEnterBatteryLock = false;
-                                    ParamControl.Do_EnterEndChargeLock = true ;
+                                    ParamControl.Do_EnterEndChargeLock = true;
                                 }
                             }
 
@@ -263,7 +331,7 @@ namespace KEDAClient
                                     if (_plc != null && !ParamControl.Do_EndPlcLock)
                                     {
                                         _plc.IsLock = false;
-                                        ParamControl.Do_EndPlcLock = true ;
+                                        ParamControl.Do_EndPlcLock = true;
                                     }
 
                                     ISetTaskSuc();
@@ -282,13 +350,13 @@ namespace KEDAClient
                                 if (_plc.IsEnterBatteryLock && !ParamControl.Do_EnterHeadChargeLock)
                                 {
                                     _plc.IsEnterBatteryLock = false;
-                                    ParamControl.Do_EnterHeadChargeLock = true ;
+                                    ParamControl.Do_EnterHeadChargeLock = true;
                                 }
                             }
 
                             //如果界面打开忽略《窑头》AGV货物状态和Plc货物状态则 直接发送棍台转动命令
                             if (ParamControl.Is_IgnoreHeadUnloadStatus ||
-                                ((_plc.Sta_Material == EnumSta_Material.允许下料  || _plc.Sta_Material == EnumSta_Material.无货
+                                ((_plc.Sta_Material == EnumSta_Material.允许下料 || _plc.Sta_Material == EnumSta_Material.无货
                                 || _plc.Sta_Material == EnumSta_Material.未知) &&
                                 (_agv.Sta_Material == EnumagvSta_Material.传送中 || _agv.Sta_Material == EnumagvSta_Material.有货)))
                             {
@@ -305,12 +373,12 @@ namespace KEDAClient
 
                                     _agv.SendOrdr(EnumType.下料操作, EnumPara.agv下料启动);
                                 }
-                                
+
                             }
 
                             //如果界面打开忽略《窑头》AGV货物状态，并且上面已经发送了指定时间的棍台转动时间
                             if ((ParamControl.Is_IgnoreHeadUnloadStatus && IsHeadRunTimeFinish()) ||
-                                ((_plc.Sta_Material == EnumSta_Material.允许下料  || _plc.Sta_Material == EnumSta_Material.未知) &&
+                                ((_plc.Sta_Material == EnumSta_Material.允许下料 || _plc.Sta_Material == EnumSta_Material.未知) &&
                                _agv.Sta_Material == EnumagvSta_Material.无货))
                             {
                                 _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台上料完成);
@@ -326,7 +394,7 @@ namespace KEDAClient
                                     if (_plc != null && !ParamControl.Do_HeadPlcLock)
                                     {
                                         _plc.IsLock = false;
-                                        ParamControl.Do_HeadPlcLock = true ;
+                                        ParamControl.Do_HeadPlcLock = true;
                                     }
 
                                     ISetTaskSuc();
@@ -371,6 +439,8 @@ namespace KEDAClient
                     }
                 }
                 return "";
+
+                #endregion
             }
         }
     }
@@ -410,7 +480,6 @@ namespace KEDAClient
             _thread.Start();
         }
 
-
         /// <summary>
         /// 展示服务日志到界面
         /// </summary>
@@ -437,7 +506,6 @@ namespace KEDAClient
             listBox.SelectedIndex = listBox.Items.Count - 1;
         }
 
-
         /// <summary>
         /// 事务线程
         /// </summary>
@@ -459,7 +527,8 @@ namespace KEDAClient
                             String msg = item.DoWork();
                             if (msg != "") sendServerLog(msg);
 
-                            if (item.IsSuc) { IDeletTask(item.Id); }
+                            ///任务完成 或者 超时 或者离线超时
+                            if (item.IsSuc || item.IsOverTime || item.IsDisaliveOverTime) { IDeletTask(item.Id); }
                         }
                     }
                 }
@@ -476,8 +545,10 @@ namespace KEDAClient
         {
             lock (_ans)
             {
-                F_ExcTask exit = _taskList.Find(c => { return //(c.Plc == task.Plc && task.Plc != null) ||
-                    c.Id == task.Id; });
+                F_ExcTask exit = _taskList.Find(c => {
+                    return //(c.Plc == task.Plc && task.Plc != null) ||
+                    c.Id == task.Id;
+                });
 
                 if (exit == null)
                 {
@@ -510,6 +581,10 @@ namespace KEDAClient
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="no"></param>
         public void StopTask(int no)
         {
             lock (_ans)

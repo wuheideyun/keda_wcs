@@ -7,10 +7,11 @@ using System.Windows.Forms;
 
 namespace KEDAClient
 {
-    
+
     public static class F_DataCenter
     {
         static bool _init = false;
+
         /// <summary>
         /// 自动生成任务开启关闭标识
         /// </summary>
@@ -35,6 +36,19 @@ namespace KEDAClient
         /// 流程管理器
         /// </summary>
         static F_Logic _mLogic = null;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        static int _clearTime = 20;
+
+        /// <summary>
+        /// 任务超时清除时间
+        /// </summary>
+        public static int ClearTime
+        {
+            get { return F_DataCenter._clearTime; }
+        }
 
         /// <summary>
         /// 流程管理器
@@ -72,12 +86,11 @@ namespace KEDAClient
 
                 _mDev = new F_DevManager(context, listBoxOutput);
 
-                _mTask = new F_ExcTaskManager(context,listBoxOutput);
+                _mTask = new F_ExcTaskManager(context, listBoxOutput);
 
                 _mLogic = new F_Logic(context, listBoxOutput);
             }
         }
-
 
         /// <summary>
         /// 停止后台服务

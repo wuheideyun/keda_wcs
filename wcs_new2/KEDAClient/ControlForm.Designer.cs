@@ -1739,7 +1739,7 @@
             // 
             this.enterheadChargeBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.enterheadChargeBtn.BackColor = System.Drawing.Color.Transparent;
-            this.enterheadChargeBtn.Checked = true;
+            this.enterheadChargeBtn.Checked = false;
             this.enterheadChargeBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.enterheadChargeBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.enterheadChargeBtn.Location = new System.Drawing.Point(234, 54);
@@ -1767,7 +1767,7 @@
             // 
             this.enterendChargeBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.enterendChargeBtn.BackColor = System.Drawing.Color.Transparent;
-            this.enterendChargeBtn.Checked = true;
+            this.enterendChargeBtn.Checked = false;
             this.enterendChargeBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.enterendChargeBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.enterendChargeBtn.Location = new System.Drawing.Point(234, 83);
@@ -1783,7 +1783,7 @@
             // 
             this.headUnloadBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.headUnloadBtn.BackColor = System.Drawing.Color.Transparent;
-            this.headUnloadBtn.Checked = true;
+            this.headUnloadBtn.Checked = false;
             this.headUnloadBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.headUnloadBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.headUnloadBtn.Location = new System.Drawing.Point(234, 326);
@@ -1799,7 +1799,7 @@
             // 
             this.endLoadBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.endLoadBtn.BackColor = System.Drawing.Color.Transparent;
-            this.endLoadBtn.Checked = true;
+            this.endLoadBtn.Checked = false;
             this.endLoadBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.endLoadBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.endLoadBtn.Location = new System.Drawing.Point(234, 413);
@@ -1852,7 +1852,7 @@
             // 
             this.endSucBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.endSucBtn.BackColor = System.Drawing.Color.Transparent;
-            this.endSucBtn.Checked = true;
+            this.endSucBtn.Checked = false;
             this.endSucBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.endSucBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.endSucBtn.Location = new System.Drawing.Point(234, 442);
@@ -1868,7 +1868,7 @@
             // 
             this.allOnOffBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.allOnOffBtn.BackColor = System.Drawing.Color.Transparent;
-            this.allOnOffBtn.Checked = true;
+            this.allOnOffBtn.Checked = false;
             this.allOnOffBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.allOnOffBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.allOnOffBtn.Location = new System.Drawing.Point(234, 5);
@@ -1896,7 +1896,7 @@
             // 
             this.headSucBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.headSucBtn.BackColor = System.Drawing.Color.Transparent;
-            this.headSucBtn.Checked = true;
+            this.headSucBtn.Checked = false;
             this.headSucBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.headSucBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.headSucBtn.Location = new System.Drawing.Point(234, 355);
@@ -1936,7 +1936,7 @@
             // 
             this.enterheadChargSucBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.enterheadChargSucBtn.BackColor = System.Drawing.Color.Transparent;
-            this.enterheadChargSucBtn.Checked = true;
+            this.enterheadChargSucBtn.Checked = false;
             this.enterheadChargSucBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.enterheadChargSucBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.enterheadChargSucBtn.Location = new System.Drawing.Point(234, 190);
@@ -1964,7 +1964,7 @@
             // 
             this.enterendChargSucBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.enterendChargSucBtn.BackColor = System.Drawing.Color.Transparent;
-            this.enterendChargSucBtn.Checked = true;
+            this.enterendChargSucBtn.Checked = false;
             this.enterendChargSucBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.enterendChargSucBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.enterendChargSucBtn.Location = new System.Drawing.Point(234, 219);
@@ -2040,7 +2040,7 @@
             // 
             this.exitheadChargeBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.exitheadChargeBtn.BackColor = System.Drawing.Color.Transparent;
-            this.exitheadChargeBtn.Checked = true;
+            this.exitheadChargeBtn.Checked = false;
             this.exitheadChargeBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.exitheadChargeBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.exitheadChargeBtn.Location = new System.Drawing.Point(234, 112);
@@ -2056,7 +2056,7 @@
             // 
             this.exitendChargeBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.exitendChargeBtn.BackColor = System.Drawing.Color.Transparent;
-            this.exitendChargeBtn.Checked = true;
+            this.exitendChargeBtn.Checked = false;
             this.exitendChargeBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.exitendChargeBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.exitendChargeBtn.Location = new System.Drawing.Point(234, 142);
@@ -2096,7 +2096,7 @@
             // 
             this.exitheadChargSucBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.exitheadChargSucBtn.BackColor = System.Drawing.Color.Transparent;
-            this.exitheadChargSucBtn.Checked = true;
+            this.exitheadChargSucBtn.Checked = false;
             this.exitheadChargSucBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.exitheadChargSucBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.exitheadChargSucBtn.Location = new System.Drawing.Point(234, 248);
@@ -2112,7 +2112,7 @@
             // 
             this.exitendChargSucBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.exitendChargSucBtn.BackColor = System.Drawing.Color.Transparent;
-            this.exitendChargSucBtn.Checked = true;
+            this.exitendChargSucBtn.Checked = false;
             this.exitendChargSucBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.exitendChargSucBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.exitendChargSucBtn.Location = new System.Drawing.Point(234, 277);
@@ -2152,7 +2152,7 @@
             // 
             this.headWaitBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.headWaitBtn.BackColor = System.Drawing.Color.Transparent;
-            this.headWaitBtn.Checked = true;
+            this.headWaitBtn.Checked = false;
             this.headWaitBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.headWaitBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.headWaitBtn.Location = new System.Drawing.Point(234, 471);
@@ -2168,7 +2168,7 @@
             // 
             this.endWaitBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.endWaitBtn.BackColor = System.Drawing.Color.Transparent;
-            this.endWaitBtn.Checked = true;
+            this.endWaitBtn.Checked = false;
             this.endWaitBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.endWaitBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.endWaitBtn.Location = new System.Drawing.Point(234, 384);
@@ -2184,7 +2184,7 @@
             // 
             this.headPlcUnloadBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.headPlcUnloadBtn.BackColor = System.Drawing.Color.Transparent;
-            this.headPlcUnloadBtn.Checked = true;
+            this.headPlcUnloadBtn.Checked = false;
             this.headPlcUnloadBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.headPlcUnloadBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.headPlcUnloadBtn.Location = new System.Drawing.Point(234, 500);
@@ -2200,7 +2200,7 @@
             // 
             this.endPlcLoadBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.endPlcLoadBtn.BackColor = System.Drawing.Color.Transparent;
-            this.endPlcLoadBtn.Checked = true;
+            this.endPlcLoadBtn.Checked = false;
             this.endPlcLoadBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.endPlcLoadBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.endPlcLoadBtn.Location = new System.Drawing.Point(234, 533);
@@ -2303,6 +2303,8 @@
             this.InitAllBtn.TextName = "初始化";
             this.InitAllBtn.TextStartPoint = new System.Drawing.Point(16, 10);
             this.InitAllBtn.Click += new System.EventHandler(this.InitAllBtn_Click);
+            //暂时屏蔽初始化按钮
+            this.InitAllBtn.Enabled = false;
             // 
             // ExecuteTaskBtn
             // 
