@@ -593,13 +593,16 @@ namespace KEDAClient
                 switch (status)
                 {
                     case 1:
-                        _value = "有货";
+                        _value = "无货";
                         break;
                     case 2:
-                        _value = "无货";
+                        _value = "有货";
                         break;
                     case 3:
                         _value = "传送中";
+                        break;
+                    case 4:
+                        _value = "允许下料";
                         break;
                     default:
                         _value = "未知";

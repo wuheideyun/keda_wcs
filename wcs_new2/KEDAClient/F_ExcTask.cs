@@ -378,7 +378,7 @@ namespace KEDAClient
 
                             //如果界面打开忽略《窑头》AGV货物状态，并且上面已经发送了指定时间的棍台转动时间
                             if ((ParamControl.Is_IgnoreHeadUnloadStatus && IsHeadRunTimeFinish()) ||
-                                ((_plc.Sta_Material == EnumSta_Material.允许下料 || _plc.Sta_Material == EnumSta_Material.未知) &&
+                                (//(_plc.Sta_Material == EnumSta_Material.允许下料 || _plc.Sta_Material == EnumSta_Material.未知) &&
                                _agv.Sta_Material == EnumagvSta_Material.无货))
                             {
                                 _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台上料完成);

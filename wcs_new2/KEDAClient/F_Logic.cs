@@ -257,15 +257,15 @@ namespace KEDAClient
 
 
             ///窑头无货 窑头AGV未锁定 并且 此次任务没有被响应
-            if (ParamControl.Do_HeadPlcLock 
-                && (d_agv == null && d_agv2 == null)// !_plcHead.IsLock
+            if (//ParamControl.Do_HeadPlcLock && 
+                (d_agv == null && d_agv2 == null)// !_plcHead.IsLock
                 && agv != null && agv.IsFree
-                && !F_AGV.IsLock(agv.Id)
+                //&& !F_AGV.IsLock(agv.Id)
                 //&& agv.Electicity > F_DataCenter.MDev.IGetDevElectricity()
-                && (//ParamControl.IgnoreHeadUnloadTask ||
-                _plcHead.Sta_Material == EnumSta_Material.允许下料
-                || _plcHead.Sta_Material == EnumSta_Material.未知
-                ))
+                //&& (//ParamControl.IgnoreHeadUnloadTask ||
+                //_plcHead.Sta_Material == EnumSta_Material.允许下料
+                //|| _plcHead.Sta_Material == EnumSta_Material.未知                )
+                )
             {
                 //窑头等待区的车不需要充电、没有充电完成的车、没有回卸载点的车
                 if (true
@@ -360,7 +360,7 @@ namespace KEDAClient
             }
             if (agv != null
                 && agv.IsFree
-                &&! F_AGV.IsLock(agv.Id)
+                //&&! F_AGV.IsLock(agv.Id)
                 && (ParamControl.IgnoreAgvUnloadTask || agv.Sta_Material == EnumagvSta_Material.无货)
                 )
             {
