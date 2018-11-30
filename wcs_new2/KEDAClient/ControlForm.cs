@@ -233,7 +233,7 @@ namespace KEDAClient
                     {
                         agvList.FocusedItem = item;
                         //agvList.FocusedItem.BackColor = Color.LightGray;
-                        agvList.FocusedItem.BackColor = Color.FromArgb(agvList.FocusedItem.BackColor.ToArgb()*20);
+                        agvList.FocusedItem.BackColor = Color.FromArgb(agvList.FocusedItem.BackColor.ToArgb() * 20);
                         return;
                     }
                 }
@@ -314,7 +314,6 @@ namespace KEDAClient
                     _plcSelectName = agvList.FocusedItem.Text;
                     plcData_Refresh();
                 }
-
             }
         }
 
@@ -532,24 +531,17 @@ namespace KEDAClient
                 MessageBox.Show("请选中需要操作的车辆", "提示");
                 return;
             }
+            else if (WcfMainHelper.SendOrder(agvList.FocusedItem.Text, new FControlOrder("前进启动", 1, 1)))
+            {
+                //记录agv状态
+                agvStatus[agvList.FocusedItem.Text] = "forwardmove";
+                AgvForwardBtn.Enabled = false;
+            }
             else
             {
-                if (!AgvBackwardBtn.Enabled)
-                {
-                    StopAGV();
-                }
-
-                if (WcfMainHelper.SendOrder(agvList.FocusedItem.Text, new FControlOrder("前进启动", 1, 1)))
-                {
-                    //记录agv状态
-                    agvStatus[agvList.FocusedItem.Text] = "forwardmove";
-                    AgvForwardBtn.Enabled = false;
-                }
-                else
-                {
-                    MessageBox.Show("请尝试再操作一次", "提示");
-                }
+                MessageBox.Show("请尝试再操作一次", "提示");
             }
+
         }
 
         /// <summary>
@@ -564,24 +556,36 @@ namespace KEDAClient
                 MessageBox.Show("请选中需要操作的车辆", "提示");
                 return;
             }
+            else if (WcfMainHelper.SendOrder(agvList.FocusedItem.Text, new FControlOrder("后退", 1, 2)))
+            {
+                //记录agv状态
+                agvStatus[agvList.FocusedItem.Text] = "backmove";
+                AgvBackwardBtn.Enabled = false;
+            }
             else
             {
-                if (!AgvForwardBtn.Enabled)
-                {
-                    StopAGV();
-                }
-                if (WcfMainHelper.SendOrder(agvList.FocusedItem.Text, new FControlOrder("后退", 1, 2)))
-                {
-                    //记录agv状态
-                    agvStatus[agvList.FocusedItem.Text] = "backmove";
-                    AgvBackwardBtn.Enabled = false;
-                }
-                else
-                {
-                    MessageBox.Show("请尝试再操作一次", "提示");
-                }
+                MessageBox.Show("请尝试再操作一次", "提示");
             }
         }
+
+        /// <summary>
+        /// 清除站点
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AgvClearSiteBtn_Click(object sender, EventArgs e)
+        {
+            if (agvList.FocusedItem == null)
+            {
+                MessageBox.Show("请选中需要操作的车辆", "提示");
+                return;
+            }
+            else
+            {
+                WcfMainHelper.SendOrder(agvList.FocusedItem.Text, new FControlOrder("清除站点",3, 0));
+            }
+        }
+
 
 
         #endregion
@@ -606,7 +610,7 @@ namespace KEDAClient
 
         #region 定时任务配置
 
-        
+
         /// <summary>
         /// 是否执行进窑头充电任务
         /// </summary>
@@ -617,7 +621,7 @@ namespace KEDAClient
             ParamControl.Do_EnterHeadCharge = enterheadChargeBtn.Checked;
 
         }
-        
+
         /// <summary>
         /// 是否执行进窑尾充电任务
         /// </summary>
@@ -678,7 +682,7 @@ namespace KEDAClient
         private void exitheadChargSucBtn_Click(object sender, EventArgs e)
         {
 
-            ParamControl.Do_ExitHeadChargeSucc  = exitheadChargSucBtn.Checked;
+            ParamControl.Do_ExitHeadChargeSucc = exitheadChargSucBtn.Checked;
         }
 
         /// <summary>
@@ -1011,7 +1015,7 @@ namespace KEDAClient
         private void EndPlcLockBtn_Click(object sender, EventArgs e)
         {
             ParamControl.Do_EndPlcLock = EndPlcLockBtn.Checked;
-                      
+
         }
 
         /// <summary>

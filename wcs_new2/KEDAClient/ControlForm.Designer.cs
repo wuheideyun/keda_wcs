@@ -827,6 +827,7 @@
             this.AgvClearSiteBtn.TabIndex = 5;
             this.AgvClearSiteBtn.Text = "清除站点";
             this.AgvClearSiteBtn.UseVisualStyleBackColor = true;
+            this.AgvClearSiteBtn.Click += new System.EventHandler(this.AgvClearSiteBtn_Click);
             // 
             // AgvBackwardBtn
             // 
@@ -850,11 +851,11 @@
             // 
             // AgvStopBtn
             // 
-            this.AgvStopBtn.Font = new System.Drawing.Font("宋体", 16F);
+            this.AgvStopBtn.Font = new System.Drawing.Font("黑体", 16F);
             this.AgvStopBtn.Location = new System.Drawing.Point(29, 134);
             this.AgvStopBtn.Name = "AgvStopBtn";
             this.AgvStopBtn.Size = new System.Drawing.Size(88, 40);
-            this.AgvStopBtn.TabIndex = 2;
+            this.AgvStopBtn.TabIndex = 3;
             this.AgvStopBtn.Text = "停止";
             this.AgvStopBtn.UseVisualStyleBackColor = true;
             this.AgvStopBtn.Click += new System.EventHandler(this.AgvStopBtn_Click);
@@ -2293,6 +2294,7 @@
             this.InitAllBtn.Checked = false;
             this.InitAllBtn.CheckStyleX = KEDAClient.CheckStyle.style7;
             this.InitAllBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.InitAllBtn.Enabled = false;
             this.InitAllBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.InitAllBtn.ForeColor = System.Drawing.Color.Black;
             this.InitAllBtn.Location = new System.Drawing.Point(803, 2);
@@ -2303,8 +2305,6 @@
             this.InitAllBtn.TextName = "初始化";
             this.InitAllBtn.TextStartPoint = new System.Drawing.Point(16, 10);
             this.InitAllBtn.Click += new System.EventHandler(this.InitAllBtn_Click);
-            //暂时屏蔽初始化按钮
-            this.InitAllBtn.Enabled = false;
             // 
             // ExecuteTaskBtn
             // 
