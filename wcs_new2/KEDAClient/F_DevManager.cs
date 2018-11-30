@@ -245,6 +245,11 @@ namespace KEDAClient
             return null;
         }
 
+        public List< FDispatchBackImf> DispatchList
+        {
+            get  {return  _dispatchList; }
+        }
+
         /// <summary>
         /// 获取离线的AGV
         /// </summary>
