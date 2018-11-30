@@ -45,7 +45,7 @@ namespace KEDAClient
 
         public static int 最低电量 = 40;
 
-        public static int 最低电量排序序号 = 3;
+        public static int 最低电量排序序号 = 2;
 
         public static String AGV有货 = "1";
 
@@ -71,6 +71,9 @@ namespace KEDAClient
         public static int 交管状态 = 35;
 
         public static int 交管设备 = 36;
+
+        public static int 脱轨 = 11;
+
 
 
 

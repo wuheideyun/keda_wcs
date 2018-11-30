@@ -227,9 +227,9 @@ namespace KEDAClient
                 if (++_triggerCounter > F_DataCenter.ClearTime) { _isOverTime = true; }
             }
 
-            if(_agv != null)
+            if (_agv != null)
             {
-                if(_agv.IsAlive)
+                if (_agv.IsAlive)
                 {
                     _disAliveCounter = 0;
                 }
@@ -240,7 +240,7 @@ namespace KEDAClient
             }
             else
             {
-                if(++_triggerCounter > F_DataCenter.ClearTime) { _isOverTime = true; }
+                if (++_triggerCounter > F_DataCenter.ClearTime) { _isOverTime = true; }
             }
 
             _taskDispatch = WcfMainHelper.GetDispatch(Id);
@@ -338,6 +338,10 @@ namespace KEDAClient
                                 }
                             }
                         }
+                        else
+                        {
+                            ISetTaskSuc();
+                        }
                         return "";
                     }
                     else if (_operType == EnumOper.放货)      //窑头
@@ -401,6 +405,10 @@ namespace KEDAClient
                                 }
                             }
 
+                        }
+                        else
+                        {
+                            ISetTaskSuc();
                         }
                         return "";
                     }
@@ -519,6 +527,9 @@ namespace KEDAClient
 
                 try
                 {
+                    //同步任务
+                    ClearLeftDispatch();
+
                     lock (_ans) { taskList.Clear(); taskList.AddRange(_taskList); }
                     if (ParamControl.Is_AutoExecuteTask)
                     {
@@ -526,6 +537,8 @@ namespace KEDAClient
                         {
                             String msg = item.DoWork();
                             if (msg != "") sendServerLog(msg);
+
+                            
 
                             ///任务完成 或者 超时 或者离线超时
                             if (item.IsSuc || item.IsOverTime || item.IsDisaliveOverTime) { IDeletTask(item.Id); }
@@ -545,7 +558,8 @@ namespace KEDAClient
         {
             lock (_ans)
             {
-                F_ExcTask exit = _taskList.Find(c => {
+                F_ExcTask exit = _taskList.Find(c =>
+                {
                     return //(c.Plc == task.Plc && task.Plc != null) ||
                     c.Id == task.Id;
                 });
@@ -556,9 +570,18 @@ namespace KEDAClient
                     PublicDataContorl.AddTaskData(new TaskData(task.NO, msg, task.StartSite + "," + task.EndSite));
                     return true;
                 }
+                else if (task.EndSite != exit.EndSite)
+                {
+                    _taskList.Remove(exit);
+                    _taskList.Add(task);
+                    PublicDataContorl.AddTaskData(new TaskData(task.NO, msg, task.StartSite + "," + task.EndSite));
+                    return true;
+                }
+                else
+                {
+                    return true;
+                }
             }
-
-            return false;
         }
 
         /// <summary>
@@ -599,7 +622,37 @@ namespace KEDAClient
                 }
             }
         }
+        /// <summary>
+        /// 清除不在任务链表中的调度任务
+        /// </summary>
+        public void ClearLeftDispatch()
+        {
+            List<FDispatchBackImf> diss = F_DataCenter.MDev.DispatchList;
 
+            if (diss != null)
+            {
+                diss.ForEach(c =>
+                {
+                    if (!IsDispatchInTask(c.Id))
+                    {
+                        WcfHelper.WcfMainHelper.CtrDispatch(c.Id, EnumCtrType.Stop);
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// 调度任务是否在任务链表中
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public bool IsDispatchInTask(string id)
+        {
+            lock (_ans)
+            {
+                return _taskList.Find(c =>{ return c.Id == id; }) != null;
+            }
+        }
         /// <summary>
         /// 停止事务线程
         /// </summary>

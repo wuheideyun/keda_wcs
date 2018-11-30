@@ -42,62 +42,62 @@ namespace KEDAClient
         /// <summary>
         /// 是否执行进窑头充电完成回去等待点的任务
         /// </summary>
-        public static bool Do_EnterHeadChargeSucc = true;
+        public static bool Do_EnterHeadChargeSucc = false ;
 
         /// <summary>
         /// 是否执行进窑尾充电完成回去等待点的任务
         /// </summary>
-        public static bool Do_EnterEndChargeSucc = true;
+        public static bool Do_EnterEndChargeSucc = false;
 
         /// <summary>
         /// 是否执行出窑头充电完成回去等待点的任务
         /// </summary>
-        public static bool Do_ExitHeadChargeSucc = true;
+        public static bool Do_ExitHeadChargeSucc = false;
 
         /// <summary>
         /// 是否执行出窑尾充电完成回去等待点的任务
         /// </summary>
-        public static bool Do_ExitEndChargeSucc = true;
+        public static bool Do_ExitEndChargeSucc = false;
 
         /// <summary>
         /// 是否执行窑头卸货任务
         /// </summary>
-        public static bool Do_HeadUnload = true;
+        public static bool Do_HeadUnload = false;
 
         /// <summary>
         /// 是否执行窑尾取货任务
         /// </summary>
-        public static bool Do_EndLoad = true;
+        public static bool Do_EndLoad = false;
 
         /// <summary>
         /// 是否执行去窑尾对接完成点任务
         /// </summary>
-        public static bool Do_ToEndSuc = true;
+        public static bool Do_ToEndSuc = false;
 
         /// <summary>
         /// 是否执行去窑头对接完成点任务
         /// </summary>
-        public static bool Do_ToHeadSuc = true;
+        public static bool Do_ToHeadSuc = false;
 
         /// <summary>
         /// 是否执行去窑尾等任务
         /// </summary>
-        public static bool Do_ToEndWait = true;
+        public static bool Do_ToEndWait = false;
 
         /// <summary>
         /// 是否执行去窑头等任务
         /// </summary>
-        public static bool Do_ToHeadWait = true;
+        public static bool Do_ToHeadWait = false;
 
         /// <summary>
         /// 是否执行启动窑头辊台
         /// </summary>
-        public static bool Do_HeadPlcUnload = true;
+        public static bool Do_HeadPlcUnload = false;
 
         /// <summary>
         /// 是否执行启动窑尾辊台
         /// </summary>
-        public static bool Do_EndPlcLoad = true;
+        public static bool Do_EndPlcLoad = false;
 
         //状态锁定：默认是false
         /// <summary>
@@ -534,18 +534,24 @@ namespace KEDAClient
             {
                 status = "被交管(" + item.ProtyList[ConstSetBA.交管设备].RValue + ")";
             }
-            else if (item.ProtyList[ConstSetBA.空闲].RValue == "True" && !F_DataCenter.MDev.IsDevInDispath(item.DevId))
-            {
-                status = "空闲";
-            }
             else if (item.ProtyList[ConstSetBA.充电状态].RValue == "1")
             {
                 status = "充电中";
             }
-            else
+            else if (item.ProtyList[ConstSetBA.空闲].RValue == "True" && !F_DataCenter.MDev.IsDevInDispath(item.DevId))
+            {
+                status = "空闲";
+            }
+
+            else if (item.ProtyList[ConstSetBA.空闲].RValue == "False" && item.ProtyList[ConstSetBA.站点].RValue != null)
             {
                 status = "任务中";
             }
+            else
+            {
+                status = "其他";
+            }
+
             return status;
         }
 
