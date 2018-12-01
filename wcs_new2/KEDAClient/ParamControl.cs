@@ -22,22 +22,22 @@ namespace KEDAClient
         /// <summary>
         /// 是否执行进窑头充电任务
         /// </summary>
-        public static bool Do_EnterHeadCharge = true;
+        public static bool Do_EnterHeadCharge = false;
 
         /// <summary>
         /// 是否执行进窑尾充电任务
         /// </summary>
-        public static bool Do_EnterEndCharge = true;
+        public static bool Do_EnterEndCharge = false;
 
         /// <summary>
         /// 是否执行出窑头充电任务
         /// </summary>
-        public static bool Do_ExitHeadCharge = true;
+        public static bool Do_ExitHeadCharge = false;
 
         /// <summary>
         /// 是否执行出窑尾充电任务
         /// </summary>
-        public static bool Do_ExitEndCharge = true;
+        public static bool Do_ExitEndCharge = false;
 
         /// <summary>
         /// 是否执行进窑头充电完成回去等待点的任务

@@ -605,6 +605,8 @@ namespace KEDAClient
             }
 
             PublicDataContorl.StopTask(int.Parse(currentTaskList.FocusedItem.Text));
+
+            currentTaskList.FocusedItem.Remove();
         }
         #endregion
 

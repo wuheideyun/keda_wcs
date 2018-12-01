@@ -289,6 +289,7 @@ namespace KEDAClient
                                 if (_plc.IsEnterBatteryLock && !ParamControl.Do_EnterEndChargeLock)
                                 {
                                     _plc.IsEnterBatteryLock = false;
+
                                     ParamControl.Do_EnterEndChargeLock = true;
                                 }
                             }
@@ -573,6 +574,7 @@ namespace KEDAClient
                 else if (task.EndSite != exit.EndSite)
                 {
                     _taskList.Remove(exit);
+                    PublicDataContorl.TaskIsSucc(exit.NO);
                     _taskList.Add(task);
                     PublicDataContorl.AddTaskData(new TaskData(task.NO, msg, task.StartSite + "," + task.EndSite));
                     return true;
@@ -619,6 +621,10 @@ namespace KEDAClient
                     PublicDataContorl.TaskIsSucc(excTask.NO);
                     excTask.ISetTaskSuc();
                     _taskList.Remove(excTask);
+                }
+                else
+                {
+                    PublicDataContorl.TaskIsSucc(no);
                 }
             }
         }

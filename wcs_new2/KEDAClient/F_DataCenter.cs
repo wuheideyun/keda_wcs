@@ -40,7 +40,7 @@ namespace KEDAClient
         /// <summary>
         /// 
         /// </summary>
-        static int _clearTime = 20;
+        static int _clearTime = 400;
 
         /// <summary>
         /// 任务超时清除时间
