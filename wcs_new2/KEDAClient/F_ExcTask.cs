@@ -286,11 +286,15 @@ namespace KEDAClient
                         {
                             if (_agv != null && _plc.EnterChargeAgv == _agv.Id)
                             {
-                                if (_plc.IsEnterBatteryLock && !ParamControl.Do_EnterEndChargeLock)
+                                if (_plc.IsEnterBatteryLock 
+                                    //&& !ParamControl.Do_EnterEndChargeLock
+                                    )
                                 {
                                     _plc.IsEnterBatteryLock = false;
 
                                     ParamControl.Do_EnterEndChargeLock = true;
+
+                                    _plc.EnterChargeAgv = null;
                                 }
                             }
 
@@ -329,7 +333,9 @@ namespace KEDAClient
                                     )
                                 {
                                     //取货完成，解锁窑尾
-                                    if (_plc != null && !ParamControl.Do_EndPlcLock)
+                                    if (_plc != null 
+                                       // && !ParamControl.Do_EndPlcLock
+                                        )
                                     {
                                         _plc.IsLock = false;
                                         ParamControl.Do_EndPlcLock = true;
@@ -352,7 +358,9 @@ namespace KEDAClient
                         {
                             if (_agv != null && _plc.EnterChargeAgv == _agv.Id)
                             {
-                                if (_plc.IsEnterBatteryLock && !ParamControl.Do_EnterHeadChargeLock)
+                                if (_plc.IsEnterBatteryLock 
+                                    //&& !ParamControl.Do_EnterHeadChargeLock
+                                    )
                                 {
                                     _plc.IsEnterBatteryLock = false;
                                     ParamControl.Do_EnterHeadChargeLock = true;
@@ -396,7 +404,9 @@ namespace KEDAClient
                                     )
                                 {
                                     //放货完成，解锁窑头
-                                    if (_plc != null && !ParamControl.Do_HeadPlcLock)
+                                    if (_plc != null 
+                                        //&& !ParamControl.Do_HeadPlcLock
+                                        )
                                     {
                                         _plc.IsLock = false;
                                         ParamControl.Do_HeadPlcLock = true;
@@ -572,6 +582,14 @@ namespace KEDAClient
                     return true;
                 }
                 else if (task.EndSite != exit.EndSite)
+                {
+                    _taskList.Remove(exit);
+                    PublicDataContorl.TaskIsSucc(exit.NO);
+                    _taskList.Add(task);
+                    PublicDataContorl.AddTaskData(new TaskData(task.NO, msg, task.StartSite + "," + task.EndSite));
+                    return true;
+                }
+                else if (task.StartSite != exit.StartSite)
                 {
                     _taskList.Remove(exit);
                     PublicDataContorl.TaskIsSucc(exit.NO);
