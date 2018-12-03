@@ -186,12 +186,6 @@ namespace KEDAClient
         /// </summary>
         public void ISetTaskSuc()
         {
-            //if (_plc != null)
-            //{
-            //    _plc.IsLock = false;
-            //}
-
-            //if (_agv != null) { F_AGV.AgvRelease(_agv.Id); }
 
             if (_taskDispatch != null) { if (WcfMainHelper.CtrDispatch(_taskDispatch.Id, EnumCtrType.Stop)) { _isSuc = true; } }
 
@@ -338,6 +332,7 @@ namespace KEDAClient
                                         )
                                     {
                                         _plc.IsLock = false;
+
                                         ParamControl.Do_EndPlcLock = true;
                                     }
 
@@ -359,14 +354,13 @@ namespace KEDAClient
                             if (_agv != null && _plc.EnterChargeAgv == _agv.Id)
                             {
                                 if (_plc.IsEnterBatteryLock 
-                                    //&& !ParamControl.Do_EnterHeadChargeLock
                                     )
                                 {
                                     _plc.IsEnterBatteryLock = false;
-                                    ParamControl.Do_EnterHeadChargeLock = true;
+
+                                    _plc.EnterChargeAgv = null;
                                 }
                             }
-
                             //如果界面打开忽略《窑头》AGV货物状态和Plc货物状态则 直接发送棍台转动命令
                             if (ParamControl.Is_IgnoreHeadUnloadStatus ||
                                 ((_plc.Sta_Material == EnumSta_Material.允许下料 || _plc.Sta_Material == EnumSta_Material.无货
@@ -409,6 +403,7 @@ namespace KEDAClient
                                         )
                                     {
                                         _plc.IsLock = false;
+
                                         ParamControl.Do_HeadPlcLock = true;
                                     }
 
@@ -426,33 +421,30 @@ namespace KEDAClient
                     else if (_operType == EnumOper.充电)
                     {
                         ISetTaskSuc();
+
                         return "";
                     }
                     else if (_operType == EnumOper.无动作)
                     {
                         ISetTaskSuc();
+
                         return "";
                     }
                     else if (_operType == EnumOper.对接完成)
                     {
-                        //if (_plc.IsExitBatteryLock && _plc.ExitChargeAgv == _agv.Id)
-                        //{
-                        //    if (_plc.Site == "14")
-                        //    {
-                        //        _plc.IsExitBatteryLock = false;
-                        //        ParamControl.Do_ExitHeadChargeLock = true ;
-                        //    }
-                        //    else if (_plc.Site == "11")
-                        //    {
-                        //        _plc.IsExitBatteryLock = false;
-                        //        ParamControl.Do_ExitEndChargeLock = true ;
-                        //    }
-                        //
-                        //}
-                        //if (!_plc.ExitFlag)
-                        //{
-                        //    _plc.ExitFlag = true;
-                        //}
+                        if (_plc.IsExitBatteryLock && _plc.ExitChargeAgv == _agv.Id)
+                        {
+
+                            _plc.IsExitBatteryLock = false;
+
+                            _plc.ExitChargeAgv = null;
+                           
+                        }
+
+                        if (!_plc.ExitFlag)
+                        {
+                            _plc.ExitFlag = true;
+                        }
                         ISetTaskSuc();
                         return "";
                     }
