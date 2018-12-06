@@ -47,7 +47,7 @@ namespace FormTest
         /// </summary>
         public void InitPara()
         {
-            _severIp = "127.0.0.1";
+            _severIp = "192.168.43.225";
 
             WcfMainHelper.InitPara(_severIp, "", "");
         }
@@ -350,13 +350,13 @@ namespace FormTest
     /// </summary>
     public class MapDevMsgMaster
     {
-        private static Point StartP = new Point(200, 11000);
-        private static int Disten_X = 2400, Disten_Togeter = 1700;
-        private static int Disten_Y = -900;
+        private static Point StartP = new Point(800, 12500);
+        private static int Disten_X = 3000, Disten_Togeter = 2500;
+        private static int Disten_Y = -1000;
         private static int Now_X = StartP.X, Now_Y = StartP.Y;
         private static Object _obj = new object();
         public static List<IWord> DevMsg = new List<IWord>();
-        public static Font _font = new Font("宋体", 450, FontStyle.Bold);
+        public static Font _font = new Font("宋体", 700, FontStyle.Bold);
 
         private static int SwichLineCount = 0;
         public static Point NextPoint()
@@ -371,7 +371,7 @@ namespace FormTest
                 Now_X += Disten_X;
             }
 
-            if (SwichLineCount % 14 == 0)
+            if (SwichLineCount % 10 == 0)
             {
                 Now_Y += Disten_Y;
                 Now_X = StartP.X;
