@@ -889,6 +889,7 @@
             this.AgvClearSiteBtn.TabIndex = 5;
             this.AgvClearSiteBtn.Text = "清除站点";
             this.AgvClearSiteBtn.UseVisualStyleBackColor = true;
+            this.AgvClearSiteBtn.Click += new System.EventHandler(this.AgvClearSiteBtn_Click);
             // 
             // AgvBackwardBtn
             // 
@@ -912,11 +913,11 @@
             // 
             // AgvStopBtn
             // 
-            this.AgvStopBtn.Font = new System.Drawing.Font("宋体", 16F);
+            this.AgvStopBtn.Font = new System.Drawing.Font("黑体", 16F);
             this.AgvStopBtn.Location = new System.Drawing.Point(29, 134);
             this.AgvStopBtn.Name = "AgvStopBtn";
             this.AgvStopBtn.Size = new System.Drawing.Size(88, 40);
-            this.AgvStopBtn.TabIndex = 2;
+            this.AgvStopBtn.TabIndex = 3;
             this.AgvStopBtn.Text = "停止";
             this.AgvStopBtn.UseVisualStyleBackColor = true;
             this.AgvStopBtn.Click += new System.EventHandler(this.AgvStopBtn_Click);
