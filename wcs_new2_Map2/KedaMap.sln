@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27703.2047
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kedaMap", "KEDAClient\kedaMap.csproj", "{85C717F5-4C23-498C-BA5D-A7D43D557FF1}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "MapShow", "MapShow\MapShow.vdproj", "{FF3CA9C5-5E58-49ED-9F94-D4D537DCE77E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{85C717F5-4C23-498C-BA5D-A7D43D557FF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{85C717F5-4C23-498C-BA5D-A7D43D557FF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{85C717F5-4C23-498C-BA5D-A7D43D557FF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF3CA9C5-5E58-49ED-9F94-D4D537DCE77E}.Debug|Any CPU.ActiveCfg = Debug
+		{FF3CA9C5-5E58-49ED-9F94-D4D537DCE77E}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
