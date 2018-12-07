@@ -47,7 +47,7 @@ namespace FormTest
         /// </summary>
         public void InitPara()
         {
-            _severIp = "192.168.43.225";
+            _severIp = "192.168.6.79"; // 吕超电脑的IP
 
             WcfMainHelper.InitPara(_severIp, "", "");
         }
@@ -458,55 +458,60 @@ namespace FormTest
                     status = "离线";
                     color = Color.Gray;
                 }
+                else if (item.IGet("0007").RValue.Equals("10"))
+                {
+                    status = "在线";
+                    color = Color.LightGreen;
+                }
                 else if (item.DevType == "WK_PLC")
                 {
                     status = "在线";
-                    color = Color.Green;
+                    color = Color.LightGreen;
                 }
                 else if (item.IGet("0029").RValue.Equals("0"))
                 {
                     status = "脱轨";
-                    color = Color.Plum ;
+                    color = Color.Blue ;
                 }
                 else if (item.IGet("0001").RValue.Equals("2"))
                 {
                     status = "障碍";
-                    color = Color.Yellow;
+                    color = Color.LightGreen;
                 }
                 else if (item.IGet("T01").RValue.Equals("True"))
                 {
                     status = "交管";// (" + item.IGet("T02").RValue + ")";
-                    color = Color.Blue;
+                    color = Color.LightGreen;
                 }
                 else if (item.IGet("0008").RValue.Equals("1"))
                 {
                     status = "充电";
-                    color = Color.Orange;
+                    color = Color.Yellow;
                 }
                 else if (item.IGet("0002").RValue.Equals("11") || item.IGet("0002").RValue.Equals("14"))
                 {
                     status = "对接";
-                    color = Color.Red;
+                    color = Color.LightGreen;
                 }
                 else if (!item.IGet("0010").RValue.Equals("True") && DevMaster.F_Dev.IsDevInDispath(item.DevId))
                 {
                     status = "任务";
-                    color = Color.Pink;
+                    color = Color.LightGreen;
                 }
                 else if (item.IGet("0010").RValue.Equals("True") && !DevMaster.F_Dev.IsDevInDispath(item.DevId))
                 {
                     status = "空闲";
-                    color = Color.PowderBlue;
+                    color = Color.LightGreen;
                 }
                 else if(DevMaster.F_Dev.IsDevInDispath(item.DevId))
                 {
                     status = "任务";
-                    color = Color.Turquoise;
+                    color = Color.LightGreen;
                 }
                 else
                 {
                     status = "未知";
-                    color = Color.Violet;
+                    color = Color.LightGreen;
                 }
                 return status;
             }
