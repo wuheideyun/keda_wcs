@@ -440,23 +440,35 @@ namespace FormTest
                 }
                 else if (item.IGet("0001").RValue.Equals("2"))
                 {
-                    status = "障碍物";
+                    status = "障碍";
                 }
                 else if (item.IGet("T01").RValue.Equals("True"))
                 {
-                    status = "被交管";// (" + item.IGet("T02").RValue + ")";
+                    status = "交管";// (" + item.IGet("T02").RValue + ")";
                 }
                 else if (item.IGet("0008").RValue.Equals("1"))
                 {
-                    status = "充电中";
+                    status = "充电";
+                }
+                else if (item.IGet("0002").RValue.Equals("11") || item.IGet("0002").RValue.Equals("14"))
+                {
+                    status = "对接";
                 }
                 else if (!item.IGet("0010").RValue.Equals("True") && DevMaster.F_Dev.IsDevInDispath(item.DevId))
                 {
-                    status = "任务中";
+                    status = "任务";
                 }
                 else if (item.IGet("0010").RValue.Equals("True") && !DevMaster.F_Dev.IsDevInDispath(item.DevId))
                 {
                     status = "空闲";
+                }
+                else if(DevMaster.F_Dev.IsDevInDispath(item.DevId))
+                {
+                    status = "任务";
+                }
+                else
+                {
+                    status = "未知";
                 }
                 return status;
             }
