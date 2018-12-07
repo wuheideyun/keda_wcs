@@ -48,7 +48,7 @@ namespace FormTest
         public void InitPara()
         {
             _severIp = "192.168.6.79"; // 吕超电脑的IP
-
+            //_severIp = "127.0.0.1";
             WcfMainHelper.InitPara(_severIp, "", "");
         }
 
@@ -380,6 +380,47 @@ namespace FormTest
         public static List<IWord> DevMsg = new List<IWord>();
         public static Font _font = new Font("宋体", 900, FontStyle.Bold);
 
+        private static int elect1 = 100, elect2 = 100;
+        private static string lowagv1, lowagv2;
+
+        /// <summary>
+        /// 比较电量记录最低了两个电量和AGV名称
+        /// </summary>
+        /// <param name="agv"></param>
+        public static void CompareAgv(DeviceBackImf agv)
+        {
+            int ele = int.Parse(agv.IGet("0007").RValue);
+            if (ele < elect1 && elect1 > elect2)
+            {
+                elect1 = ele;
+                lowagv1 = agv.DevId + 100;
+            }
+            else if (ele < elect2)
+            {
+                elect2 = ele;
+                lowagv2 = agv.DevId + 100;
+            }
+        }
+
+        /// <summary>
+        /// 改变最低电量两个AGV状态的颜色为红色
+        /// </summary>
+        public static void SetRedText()
+        {
+            IWord agv1 = DevMsg.Find(c => { return c.Id.Equals(lowagv1); });
+            IWord agv2 = DevMsg.Find(c => { return c.Id.Equals(lowagv2); });
+            if (agv1 != null)
+            {
+                agv1.IColor = Color.Red;
+            }
+            if (agv2 != null)
+            {
+                agv2.IColor = Color.Red;
+            }
+        }
+
+
+
         private static int SwichLineCount = 0;
         public static Point NextPoint()
         {
@@ -439,7 +480,9 @@ namespace FormTest
                         IColor = color,
                         IFont = _font
                     });
+                    CompareAgv(agv);
                 }
+                SetRedText();
             }
         }
 
