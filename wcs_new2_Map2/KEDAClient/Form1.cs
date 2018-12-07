@@ -501,11 +501,6 @@ namespace FormTest
                     status = "离线";
                     color = Color.Gray;
                 }
-                else if (item.IGet("0007").RValue.Equals("10"))
-                {
-                    status = "在线";
-                    color = Color.LightGreen;
-                }
                 else if (item.DevType == "WK_PLC")
                 {
                     status = "在线";
