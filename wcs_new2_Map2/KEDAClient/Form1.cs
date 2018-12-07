@@ -107,7 +107,7 @@ namespace FormTest
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-
+            //1.AGV地图的坐标图片信息放在 MapItemMaster.Mapitmes
             foreach (var agv in MapItemMaster.Mapitmes)
             {
                 mapEditorControlMap.MapObj.IGExpand.ISetWoed(agv.word);
@@ -162,6 +162,12 @@ namespace FormTest
         private static Object _obj = new object();
         public static List<MapItem> Mapitmes = new List<MapItem>();
         private static List<MapItem> _mapitmes = new List<MapItem>();
+
+
+        /// <summary>
+        /// 2.后台获取了AGV的信息在这个方法组装
+        /// </summary>
+        /// <param name="list"></param>
         public static void UpdateItems(List<DeviceBackImf> list)
         {
             _mapitmes.Clear();
@@ -172,7 +178,12 @@ namespace FormTest
                 {
                     try
                     {
-                        _mapitmes.Add(new MapItem(agv));
+                        //3.如果是 AGV类型的设备 进入这个方法
+                        //在这里可以对AGV做判断，如果离线不显示则不添加
+                        if (agv.IsAlive)
+                        {
+                            _mapitmes.Add(new MapItem(agv));
+                        }
                     }
                     catch (Exception e)
                     {
@@ -311,9 +322,17 @@ namespace FormTest
 
         public IMap map = new IMap();
 
+
+        /// <summary>
+        /// 4. 这里是组装一个AGV的图片和agv名字的构造方法
+        /// </summary>
+        /// <param name="agv"></param>
         public MapItem(DeviceBackImf agv)
         {
+            //获取AGV的 X坐标值
             int x = agv.IGet("B02") == null ? 0 : int.Parse(agv.IGet("B02").RValue);
+
+            //获取AGV Y坐标值
             int y = agv.IGet("B03") == null ? 0 : int.Parse(agv.IGet("B03").RValue);
 
             word.Id = agv.DevId;
@@ -326,12 +345,15 @@ namespace FormTest
 
             word.Text = agv.DevId.Replace("AGV","");
 
+            //根据AGV的货物状态 设置图片资源
             if ("1".Equals(agv.IGet("0036").RValue))
             {
+                //AGV有货的图片
                 map.IBitMap = Resources.loadagv;
             }
             else
             {
+                //AGV没货的图片
                 map.IBitMap = Resources.AGV;
             }
 
@@ -387,6 +409,10 @@ namespace FormTest
             SwichLineCount = 0;
         }
 
+        /// <summary>
+        /// 6.组装上方的AGV状态列表信息
+        /// </summary>
+        /// <param name="list"></param>
         public static void UpdateDevInfo(List<DeviceBackImf> list)
         {
             lock (_obj)
@@ -404,12 +430,13 @@ namespace FormTest
                         IFont = _font
 
                     });
+                    Color color = Color.Black;
                     DevMsg.Add(new IWord
                     {
                         Id = agv.DevId + 100,
-                        Text = GetDevStatus(agv),
+                        Text = GetDevStatus(agv, out color),
                         ILocPoint = NextPoint(),
-                        IColor = Color.Red,
+                        IColor = color,
                         IFont = _font
                     });
                 }
@@ -421,7 +448,7 @@ namespace FormTest
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public static string GetDevStatus(DeviceBackImf item)
+        public static string GetDevStatus(DeviceBackImf item,out Color color)
         {
             try
             {
@@ -429,52 +456,64 @@ namespace FormTest
                 if (!item.IsAlive)
                 {
                     status = "离线";
+                    color = Color.Gray;
                 }
                 else if (item.DevType == "WK_PLC")
                 {
                     status = "在线";
+                    color = Color.Green;
                 }
                 else if (item.IGet("0029").RValue.Equals("0"))
                 {
                     status = "脱轨";
+                    color = Color.Plum ;
                 }
                 else if (item.IGet("0001").RValue.Equals("2"))
                 {
                     status = "障碍";
+                    color = Color.Yellow;
                 }
                 else if (item.IGet("T01").RValue.Equals("True"))
                 {
                     status = "交管";// (" + item.IGet("T02").RValue + ")";
+                    color = Color.Blue;
                 }
                 else if (item.IGet("0008").RValue.Equals("1"))
                 {
                     status = "充电";
+                    color = Color.Orange;
                 }
                 else if (item.IGet("0002").RValue.Equals("11") || item.IGet("0002").RValue.Equals("14"))
                 {
                     status = "对接";
+                    color = Color.Red;
                 }
                 else if (!item.IGet("0010").RValue.Equals("True") && DevMaster.F_Dev.IsDevInDispath(item.DevId))
                 {
                     status = "任务";
+                    color = Color.Pink;
                 }
                 else if (item.IGet("0010").RValue.Equals("True") && !DevMaster.F_Dev.IsDevInDispath(item.DevId))
                 {
                     status = "空闲";
+                    color = Color.PowderBlue;
                 }
                 else if(DevMaster.F_Dev.IsDevInDispath(item.DevId))
                 {
                     status = "任务";
+                    color = Color.Turquoise;
                 }
                 else
                 {
                     status = "未知";
+                    color = Color.Violet;
                 }
                 return status;
             }
             catch (Exception e)
             {
                 FLog.Log(e.Message);
+                color = Color.Black;
                 return "程序错误";
             }
 
