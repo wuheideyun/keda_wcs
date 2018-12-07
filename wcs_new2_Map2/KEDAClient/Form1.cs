@@ -350,13 +350,13 @@ namespace FormTest
     /// </summary>
     public class MapDevMsgMaster
     {
-        private static Point StartP = new Point(800, 12500);
-        private static int Disten_X = 3000, Disten_Togeter = 2500;
-        private static int Disten_Y = -1000;
+        private static Point StartP = new Point(600, 18000);
+        private static int Disten_X = 3700, Disten_Togeter = 3300;
+        private static int Disten_Y = -2000;
         private static int Now_X = StartP.X, Now_Y = StartP.Y;
         private static Object _obj = new object();
         public static List<IWord> DevMsg = new List<IWord>();
-        public static Font _font = new Font("宋体", 700, FontStyle.Bold);
+        public static Font _font = new Font("宋体", 900, FontStyle.Bold);
 
         private static int SwichLineCount = 0;
         public static Point NextPoint()
@@ -371,10 +371,10 @@ namespace FormTest
                 Now_X += Disten_X;
             }
 
-            if (SwichLineCount % 10 == 0)
+            if (SwichLineCount % 8 == 0)
             {
                 Now_Y += Disten_Y;
-                Now_X = StartP.X;
+                Now_X =  StartP.X;
             }
             SwichLineCount++;
             return new Point(Now_X, Now_Y);
@@ -444,7 +444,7 @@ namespace FormTest
                 }
                 else if (item.IGet("T01").RValue.Equals("True"))
                 {
-                    status = "被交管(" + item.IGet("T02").RValue + ")";
+                    status = "被交管";// (" + item.IGet("T02").RValue + ")";
                 }
                 else if (item.IGet("0008").RValue.Equals("1"))
                 {
