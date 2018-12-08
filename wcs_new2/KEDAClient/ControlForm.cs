@@ -83,7 +83,7 @@ namespace KEDAClient
         /// </summary>
         public void InitPara()
         {
-            _severIp = "127.0.0.1";
+            _severIp = "192.168.6.79";
 
             WcfMainHelper.InitPara(_severIp, "", "");
         }
@@ -148,7 +148,7 @@ namespace KEDAClient
 
             if (taskDatas == null)
             {
-                currentTaskList.Clear();
+                currentTaskList.Items.Clear();
                 return;
             }
 
@@ -156,11 +156,15 @@ namespace KEDAClient
             currentTaskList.Items.Clear();
             foreach (var data in taskDatas)
             {
-                ListViewItem item = new ListViewItem(data.NO + ""); // 任务信息
-                //item.Text = data.NO + "" ;
-                item.SubItems.Add(data.Msg); //站点信息
-                item.SubItems.Add(data.SiteMsg); //站点信息
-                currentTaskList.Items.Add(item);
+                if(data != null)
+                {
+                    ListViewItem item = new ListViewItem(data.NO + ""); // 任务信息
+                    //item.Text = data.NO + "" ;
+                    item.SubItems.Add(data.Msg); //站点信息
+                    item.SubItems.Add(data.SiteMsg); //站点信息
+                    currentTaskList.Items.Add(item);
+                }
+               
             }
             // 结束数据处理
             currentTaskList.EndUpdate();

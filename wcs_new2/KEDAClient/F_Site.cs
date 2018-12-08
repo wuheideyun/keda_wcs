@@ -15,7 +15,7 @@ namespace KEDAClient
 
         public static String 充电桩站 = "50";
 
-        public static String 窑头对接完成站 = "12";
+        public static String 窑头对接完成站 = "15";
 
         //地标
 

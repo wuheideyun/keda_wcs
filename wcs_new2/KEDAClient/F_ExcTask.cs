@@ -280,7 +280,7 @@ namespace KEDAClient
                         {
                             if (_agv != null && _plc.EnterChargeAgv == _agv.Id)
                             {
-                                if (_plc.IsEnterBatteryLock 
+                                if (_plc.IsEnterBatteryLock
                                     //&& !ParamControl.Do_EnterEndChargeLock
                                     )
                                 {
@@ -327,8 +327,8 @@ namespace KEDAClient
                                     )
                                 {
                                     //取货完成，解锁窑尾
-                                    if (_plc != null 
-                                       // && !ParamControl.Do_EndPlcLock
+                                    if (_plc != null
+                                        // && !ParamControl.Do_EndPlcLock
                                         )
                                     {
                                         _plc.IsLock = false;
@@ -353,7 +353,7 @@ namespace KEDAClient
                         {
                             if (_agv != null && _plc.EnterChargeAgv == _agv.Id)
                             {
-                                if (_plc.IsEnterBatteryLock 
+                                if (_plc.IsEnterBatteryLock
                                     )
                                 {
                                     _plc.IsEnterBatteryLock = false;
@@ -398,7 +398,7 @@ namespace KEDAClient
                                     )
                                 {
                                     //放货完成，解锁窑头
-                                    if (_plc != null 
+                                    if (_plc != null
                                         //&& !ParamControl.Do_HeadPlcLock
                                         )
                                     {
@@ -420,6 +420,10 @@ namespace KEDAClient
                     }
                     else if (_operType == EnumOper.充电)
                     {
+                        if (!_plc.ExitFlag)
+                        {
+                            _plc.ExitFlag = true;
+                        }
                         ISetTaskSuc();
 
                         return "";
@@ -438,7 +442,7 @@ namespace KEDAClient
                             _plc.IsExitBatteryLock = false;
 
                             _plc.ExitChargeAgv = null;
-                           
+
                         }
 
                         if (!_plc.ExitFlag)
@@ -541,7 +545,7 @@ namespace KEDAClient
                             String msg = item.DoWork();
                             if (msg != "") sendServerLog(msg);
 
-                            
+
 
                             ///任务完成 或者 超时 或者离线超时
                             if (item.IsSuc || item.IsOverTime || item.IsDisaliveOverTime) { IDeletTask(item.Id); }
@@ -666,7 +670,7 @@ namespace KEDAClient
         {
             lock (_ans)
             {
-                return _taskList.Find(c =>{ return c.Id == id; }) != null;
+                return _taskList.Find(c => { return c.Id == id; }) != null;
             }
         }
         /// <summary>
