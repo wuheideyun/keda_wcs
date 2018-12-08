@@ -431,7 +431,7 @@ namespace FormTest
         public static Font _font = new Font("宋体", 900, FontStyle.Bold);
 
         private static int elect1 = 100, elect2 = 100;
-        private static string lowagv1, lowagv2;
+        private static string[] lowagv = new string[2];
         private static Dictionary<string,int> eledic = new Dictionary<string, int>();
 
         /// <summary>
@@ -444,23 +444,33 @@ namespace FormTest
             if (agv.DevType == "Magnet_Basic" && agv.IsAlive && agv.ProtyList[ErrorType.脱轨].RValue == "0")
             {
                 int ele = int.Parse(agv.IGet("0007").RValue);
+
                 if (eledic.ContainsKey(agv.DevId))
                 {
                     eledic.Remove(agv.DevId);
                 }
+
                 eledic.Add(agv.DevId, ele);
+
+                if (eledic.Count > 0)
+                {
+                    Dictionary<string, int> eledic_SortedByValue1 = DictonarySort(eledic);
+
+                    Dictionary<string, int> eledic_SortedByValue2 = eledic.OrderBy(o => o.Value).ToDictionary(p => p.Key, o => o.Value);
+
+                    int count = 0;
+
+                    foreach(KeyValuePair<string, int> kvp in eledic_SortedByValue2)
+                    {
+                        lowagv[count++] = kvp.Key;
+
+                        if (count > 1)
+                        {
+                            break;
+                        }
+                    }
+                }
                 
-                //string agvid = eledic.Min().Key;
-                if (ele < elect1 && elect1 > elect2)
-                {
-                    elect1 = ele;
-                    lowagv1 = agv.DevId + ele;
-                }
-                else if (ele < elect2)
-                {
-                    elect2 = ele;
-                    lowagv2 = agv.DevId + ele;
-                }
             }
             else
             {
@@ -469,13 +479,21 @@ namespace FormTest
             
         }
 
+        private Dictionary<string, int> DictonarySort(Dictionary<string, int> dic)
+        {
+            Dictionary<string, int> dicSort = from objDic in dic orderby objDic.Value select objDic;
+
+            return dicSort;
+                
+        }
+
         /// <summary>
         /// 改变最低电量两个AGV状态的颜色为红色
         /// </summary>
         public static void SetRedText()
         {
-            IWord agv1 = DevMsg.Find(c => { return c.Id.Equals(lowagv1); });
-            IWord agv2 = DevMsg.Find(c => { return c.Id.Equals(lowagv2); });
+            IWord agv1 = DevMsg.Find(c => { return c.Id.Equals(lowagv[1]); });
+            IWord agv2 = DevMsg.Find(c => { return c.Id.Equals(lowagv[2]); });
             if (agv1 != null)
             {
                 agv1.IColor = Color.Red;
