@@ -1,0 +1,183 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using ArrayMap;
+using WcfHelper;
+using FLCommonInterfaces;
+
+namespace KEDAClient
+{
+    
+    /// <summary>
+    /// 运行状态
+    /// </summary>
+    public enum EnumSta_AGV
+    {
+        运行 = 1,
+
+        暂停 = 2,
+
+        停止 = 3,
+
+        未知
+    }
+
+    /// <summary>
+    /// 线边滚筒PLC对象
+    /// </summary>
+    public class F_AGV
+    {
+        internal static MapList _mapList = new MapList();
+
+        public static void AgvLock(String agvid)
+        {
+            _mapList.Put(agvid, true);
+        }
+
+        public static void AgvRelease(String agvid)
+        {
+            _mapList.Put(agvid, false);
+        }
+
+        public static Boolean IsLock(String agvid)
+        {
+            return _mapList.GetBooleanValue(agvid);
+        }
+
+      
+        /// <summary>
+        /// PLC系统ID
+        /// </summary>
+        string _id = "";
+        public string Id
+        {
+            get { return _id; }
+        }     
+
+        ///// <summary>
+        ///// 货物状态
+        ///// </summary>
+        //public EnumSta_Material Sta_Material
+        //{
+        //    get 
+        //    {
+        //        EnumSta_Material result = EnumSta_Material.未知;
+
+        //        try
+        //        {
+        //            result = (EnumSta_Material)Convert.ToInt32((F_DataCenter.MDev.IGetSenValue(_id, "0036")));
+        //        }
+        //        catch { result = EnumSta_Material.未知; }
+
+        //        return result;
+        //    }
+        //}
+
+        /// <summary>
+        /// 电机状态
+        /// </summary>
+        //public EnumSta_Monitor Sta_Monitor
+        //{
+        //    get
+        //    {
+        //        EnumSta_Monitor result = EnumSta_Monitor.未知;
+
+        //        try
+        //        {
+        //            result = (EnumSta_Monitor)Convert.ToInt32((F_DataCenter.MDev.IGetSenValue(_id, "0037")));
+        //        }
+        //        catch { result = EnumSta_Monitor.未知; }
+
+        //        return result;
+        //    }
+        //}
+
+        /// <summary>
+        /// 当前地标
+        /// </summary>
+        /// <returns></returns>
+        //public string Site
+        //{
+        //    get 
+        //    {
+        //        return F_DataCenter.MDev.IGetSenValue(_id, "0002");
+        //    }
+        //}
+
+        /// <summary>
+        /// AGV电量
+        /// </summary>
+        /// <returns></returns>
+        //public int Electicity
+        //{
+        //    get
+        //    {
+        //        return Convert.ToInt32(F_DataCenter.MDev.IGetSenValue(_id, "0007"));
+        //    }
+        //}
+
+        /// <summary>
+        /// 充电状态
+        /// </summary>
+        /// <returns></returns>
+        //public EnumChargeStatus ChargeStatus
+        //{
+        //    get
+        //    {
+        //        EnumChargeStatus result = EnumChargeStatus.未知;
+
+        //        try
+        //        {
+        //            result = (EnumChargeStatus)Convert.ToInt32((F_DataCenter.MDev.IGetSenValue(_id, "0008")));
+        //        }
+        //        catch { result = EnumChargeStatus.未知; }
+
+        //        return result;
+        //    }        
+        //}
+
+        /// <summary>
+        /// 备用信息
+        /// </summary>
+        /// <returns></returns>
+        //public string Tag_Code
+        //{
+        //    get
+        //    {
+        //        return F_DataCenter.MDev.IGetSenValue(_id, "0004");
+        //    }
+        //}
+
+        /// <summary>
+        /// AGV是否处于空闲状态
+        /// </summary>
+        //public bool IsFree
+        //{
+        //    get
+        //    {
+        //        return F_DataCenter.MDev.IGetSenValue(_id, "0010") == "True" && !(F_DataCenter.MDev.IsDevInDispath(_id));
+        //    }
+        //}
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="id"></param>
+        public F_AGV(string id)
+        {
+            _id = id;
+        }
+
+        /// <summary>
+        /// 给车载PLC发送相应动作
+        /// </summary>
+        /// <param name="oper"></param>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        public bool SendOrdr(EnumType oper, EnumPara para)
+        {
+            return WcfMainHelper.SendOrder(_id, new FControlOrder("远程", 11, (int)oper, (int)para));
+        }
+    }
+}
