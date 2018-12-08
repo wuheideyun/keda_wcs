@@ -432,6 +432,7 @@ namespace FormTest
 
         private static int elect1 = 100, elect2 = 100;
         private static string lowagv1, lowagv2;
+        private static Dictionary<string,int> eledic = new Dictionary<string, int>();
 
         /// <summary>
         /// 比较电量记录最低了两个电量和AGV名称
@@ -439,20 +440,31 @@ namespace FormTest
         /// <param name="agv"></param>
         public static void CompareAgv(DeviceBackImf agv)
         {
-            
-            int ele = int.Parse(agv.IGet("0007").RValue);
-            if(agv.DevType == "Magnet_Basic" && agv.IsAlive && agv.ProtyList[ErrorType.脱轨].RValue == "0")
+
+            if (agv.DevType == "Magnet_Basic" && agv.IsAlive && agv.ProtyList[ErrorType.脱轨].RValue == "0")
             {
+                int ele = int.Parse(agv.IGet("0007").RValue);
+                if (eledic.ContainsKey(agv.DevId))
+                {
+                    eledic.Remove(agv.DevId);
+                }
+                eledic.Add(agv.DevId, ele);
+                
+                //string agvid = eledic.Min().Key;
                 if (ele < elect1 && elect1 > elect2)
                 {
                     elect1 = ele;
-                    lowagv1 = agv.DevId + 100;
+                    lowagv1 = agv.DevId + ele;
                 }
                 else if (ele < elect2)
                 {
                     elect2 = ele;
-                    lowagv2 = agv.DevId + 100;
+                    lowagv2 = agv.DevId + ele;
                 }
+            }
+            else
+            {
+                eledic.Remove(agv.DevId);
             }
             
         }
