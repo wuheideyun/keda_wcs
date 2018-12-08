@@ -389,17 +389,22 @@ namespace FormTest
         /// <param name="agv"></param>
         public static void CompareAgv(DeviceBackImf agv)
         {
+            
             int ele = int.Parse(agv.IGet("0007").RValue);
-            if (ele < elect1 && elect1 > elect2)
+            if(agv.DevType == "Magnet_Basic" && agv.IsAlive && agv.ProtyList[ErrorType.脱轨].RValue == "0")
             {
-                elect1 = ele;
-                lowagv1 = agv.DevId + 100;
+                if (ele < elect1 && elect1 > elect2)
+                {
+                    elect1 = ele;
+                    lowagv1 = agv.DevId + 100;
+                }
+                else if (ele < elect2)
+                {
+                    elect2 = ele;
+                    lowagv2 = agv.DevId + 100;
+                }
             }
-            else if (ele < elect2)
-            {
-                elect2 = ele;
-                lowagv2 = agv.DevId + 100;
-            }
+            
         }
 
         /// <summary>
