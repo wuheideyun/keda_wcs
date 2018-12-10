@@ -454,7 +454,7 @@ namespace FormTest
 
                 if (eledic.Count > 0)
                 {
-                    Dictionary<string, int> eledic_SortedByValue1 = DictonarySort(eledic);
+                    //Dictionary<string, int> eledic_SortedByValue1 = DictonarySort(eledic);
 
                     Dictionary<string, int> eledic_SortedByValue2 = eledic.OrderBy(o => o.Value).ToDictionary(p => p.Key, o => o.Value);
 
@@ -462,7 +462,7 @@ namespace FormTest
 
                     foreach(KeyValuePair<string, int> kvp in eledic_SortedByValue2)
                     {
-                        lowagv[count++] = kvp.Key;
+                        lowagv[count++] = kvp.Key + 100;
 
                         if (count > 1)
                         {
@@ -479,21 +479,21 @@ namespace FormTest
             
         }
 
-        private Dictionary<string, int> DictonarySort(Dictionary<string, int> dic)
-        {
-            Dictionary<string, int> dicSort = from objDic in dic orderby objDic.Value select objDic;
+        //private Dictionary<string, int> DictonarySort(Dictionary<string, int> dic)
+        //{
+        //    Dictionary<string, int> dicSort = from objDic in dic orderby objDic.Value select objDic;
 
-            return dicSort;
+        //    return dicSort;
                 
-        }
+        //}
 
         /// <summary>
         /// 改变最低电量两个AGV状态的颜色为红色
         /// </summary>
         public static void SetRedText()
         {
-            IWord agv1 = DevMsg.Find(c => { return c.Id.Equals(lowagv[1]); });
-            IWord agv2 = DevMsg.Find(c => { return c.Id.Equals(lowagv[2]); });
+            IWord agv1 = DevMsg.Find(c => { return c.Id.Equals(lowagv[0]); });
+            IWord agv2 = DevMsg.Find(c => { return c.Id.Equals(lowagv[1]); });
             if (agv1 != null)
             {
                 agv1.IColor = Color.Red;
@@ -649,7 +649,7 @@ namespace FormTest
                 }
                 else
                 {
-                    status = "未知";
+                    status = "任务";
                     color = Color.LightGreen;
                 }
                 return status;
