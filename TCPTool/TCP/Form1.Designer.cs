@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.connectBtn = new System.Windows.Forms.Button();
             this.disconnectBtn = new System.Windows.Forms.Button();
@@ -60,12 +61,37 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
+            this.PonintLb = new System.Windows.Forms.Label();
+            this.SpeedLb = new System.Windows.Forms.Label();
+            this.Direction = new System.Windows.Forms.Label();
+            this.Electric = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.button2 = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.checkBox16 = new System.Windows.Forms.CheckBox();
+            this.checkBox17 = new System.Windows.Forms.CheckBox();
+            this.checkBox18 = new System.Windows.Forms.CheckBox();
+            this.checkBox19 = new System.Windows.Forms.CheckBox();
+            this.checkBox20 = new System.Windows.Forms.CheckBox();
+            this.checkBox11 = new System.Windows.Forms.CheckBox();
+            this.checkBox12 = new System.Windows.Forms.CheckBox();
+            this.checkBox13 = new System.Windows.Forms.CheckBox();
+            this.checkBox14 = new System.Windows.Forms.CheckBox();
+            this.checkBox15 = new System.Windows.Forms.CheckBox();
+            this.checkBox6 = new System.Windows.Forms.CheckBox();
+            this.checkBox7 = new System.Windows.Forms.CheckBox();
+            this.checkBox8 = new System.Windows.Forms.CheckBox();
+            this.checkBox9 = new System.Windows.Forms.CheckBox();
+            this.checkBox10 = new System.Windows.Forms.CheckBox();
+            this.checkBox5 = new System.Windows.Forms.CheckBox();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // connectBtn
@@ -118,7 +144,7 @@
             this.receiveTb.Name = "receiveTb";
             this.receiveTb.ReadOnly = true;
             this.receiveTb.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.receiveTb.Size = new System.Drawing.Size(423, 140);
+            this.receiveTb.Size = new System.Drawing.Size(464, 140);
             this.receiveTb.TabIndex = 4;
             // 
             // transmitTb
@@ -256,7 +282,7 @@
             // DirectionLb
             // 
             this.DirectionLb.AutoSize = true;
-            this.DirectionLb.Location = new System.Drawing.Point(14, 235);
+            this.DirectionLb.Location = new System.Drawing.Point(6, 17);
             this.DirectionLb.Name = "DirectionLb";
             this.DirectionLb.Size = new System.Drawing.Size(89, 12);
             this.DirectionLb.TabIndex = 18;
@@ -265,7 +291,7 @@
             // RollerLb
             // 
             this.RollerLb.AutoSize = true;
-            this.RollerLb.Location = new System.Drawing.Point(14, 260);
+            this.RollerLb.Location = new System.Drawing.Point(139, 17);
             this.RollerLb.Name = "RollerLb";
             this.RollerLb.Size = new System.Drawing.Size(89, 12);
             this.RollerLb.TabIndex = 19;
@@ -298,7 +324,7 @@
             // Set
             // 
             this.Set.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Set.Location = new System.Drawing.Point(646, 399);
+            this.Set.Location = new System.Drawing.Point(624, 399);
             this.Set.Name = "Set";
             this.Set.Size = new System.Drawing.Size(75, 23);
             this.Set.TabIndex = 25;
@@ -328,7 +354,7 @@
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(1046, 3);
+            this.pictureBox1.Location = new System.Drawing.Point(1226, 0);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(22, 19);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -353,18 +379,18 @@
             this.panel1.Controls.Add(this.label9);
             this.panel1.Location = new System.Drawing.Point(1, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1071, 39);
+            this.panel1.Size = new System.Drawing.Size(1248, 39);
             this.panel1.TabIndex = 30;
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(679, 68);
+            this.textBox1.Location = new System.Drawing.Point(727, 68);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(382, 140);
+            this.textBox1.Size = new System.Drawing.Size(509, 140);
             this.textBox1.TabIndex = 31;
             // 
             // label10
@@ -379,7 +405,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(948, 230);
+            this.button1.Location = new System.Drawing.Point(727, 214);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(113, 23);
             this.button1.TabIndex = 33;
@@ -387,51 +413,308 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // label11
+            // PonintLb
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(14, 282);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(65, 12);
-            this.label11.TabIndex = 34;
-            this.label11.Text = "当前站点：";
+            this.PonintLb.AutoSize = true;
+            this.PonintLb.Location = new System.Drawing.Point(263, 17);
+            this.PonintLb.Name = "PonintLb";
+            this.PonintLb.Size = new System.Drawing.Size(65, 12);
+            this.PonintLb.TabIndex = 34;
+            this.PonintLb.Text = "当前站点：";
             // 
-            // label12
+            // SpeedLb
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(14, 305);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(77, 12);
-            this.label12.TabIndex = 35;
-            this.label12.Text = "当前速度比：";
+            this.SpeedLb.AutoSize = true;
+            this.SpeedLb.Location = new System.Drawing.Point(375, 17);
+            this.SpeedLb.Name = "SpeedLb";
+            this.SpeedLb.Size = new System.Drawing.Size(77, 12);
+            this.SpeedLb.TabIndex = 35;
+            this.SpeedLb.Text = "当前速度比：";
             // 
-            // label13
+            // Direction
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(15, 330);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(89, 12);
-            this.label13.TabIndex = 36;
-            this.label13.Text = "当前运行方向：";
+            this.Direction.AutoSize = true;
+            this.Direction.Location = new System.Drawing.Point(6, 43);
+            this.Direction.Name = "Direction";
+            this.Direction.Size = new System.Drawing.Size(89, 12);
+            this.Direction.TabIndex = 36;
+            this.Direction.Text = "当前运行方向：";
             // 
-            // label14
+            // Electric
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(16, 352);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(77, 12);
-            this.label14.TabIndex = 37;
-            this.label14.Text = "当前电量比：";
+            this.Electric.AutoSize = true;
+            this.Electric.Location = new System.Drawing.Point(139, 43);
+            this.Electric.Name = "Electric";
+            this.Electric.Size = new System.Drawing.Size(77, 12);
+            this.Electric.TabIndex = 37;
+            this.Electric.Text = "当前电量比：";
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(727, 243);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(113, 23);
+            this.button2.TabIndex = 38;
+            this.button2.Text = "关闭接收AGV信息";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.textBox2);
+            this.groupBox1.Controls.Add(this.checkBox16);
+            this.groupBox1.Controls.Add(this.checkBox17);
+            this.groupBox1.Controls.Add(this.checkBox18);
+            this.groupBox1.Controls.Add(this.checkBox19);
+            this.groupBox1.Controls.Add(this.checkBox20);
+            this.groupBox1.Controls.Add(this.checkBox11);
+            this.groupBox1.Controls.Add(this.checkBox12);
+            this.groupBox1.Controls.Add(this.checkBox13);
+            this.groupBox1.Controls.Add(this.checkBox14);
+            this.groupBox1.Controls.Add(this.checkBox15);
+            this.groupBox1.Controls.Add(this.checkBox6);
+            this.groupBox1.Controls.Add(this.checkBox7);
+            this.groupBox1.Controls.Add(this.checkBox8);
+            this.groupBox1.Controls.Add(this.checkBox9);
+            this.groupBox1.Controls.Add(this.checkBox10);
+            this.groupBox1.Controls.Add(this.checkBox5);
+            this.groupBox1.Controls.Add(this.checkBox4);
+            this.groupBox1.Controls.Add(this.checkBox3);
+            this.groupBox1.Controls.Add(this.checkBox2);
+            this.groupBox1.Controls.Add(this.checkBox1);
+            this.groupBox1.Controls.Add(this.DirectionLb);
+            this.groupBox1.Controls.Add(this.RollerLb);
+            this.groupBox1.Controls.Add(this.Electric);
+            this.groupBox1.Controls.Add(this.PonintLb);
+            this.groupBox1.Controls.Add(this.Direction);
+            this.groupBox1.Controls.Add(this.SpeedLb);
+            this.groupBox1.Location = new System.Drawing.Point(727, 272);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(509, 233);
+            this.groupBox1.TabIndex = 39;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "状态与故障";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(0, 177);
+            this.textBox2.Multiline = true;
+            this.textBox2.Name = "textBox2";
+            this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox2.Size = new System.Drawing.Size(509, 56);
+            this.textBox2.TabIndex = 58;
+            // 
+            // checkBox16
+            // 
+            this.checkBox16.AutoSize = true;
+            this.checkBox16.Location = new System.Drawing.Point(400, 69);
+            this.checkBox16.Name = "checkBox16";
+            this.checkBox16.Size = new System.Drawing.Size(114, 16);
+            this.checkBox16.TabIndex = 57;
+            this.checkBox16.Text = "寻迹传感器2异常";
+            this.checkBox16.UseVisualStyleBackColor = true;
+            // 
+            // checkBox17
+            // 
+            this.checkBox17.AutoSize = true;
+            this.checkBox17.Location = new System.Drawing.Point(400, 91);
+            this.checkBox17.Name = "checkBox17";
+            this.checkBox17.Size = new System.Drawing.Size(114, 16);
+            this.checkBox17.TabIndex = 56;
+            this.checkBox17.Text = "寻迹传感器3异常";
+            this.checkBox17.UseVisualStyleBackColor = true;
+            // 
+            // checkBox18
+            // 
+            this.checkBox18.AutoSize = true;
+            this.checkBox18.Location = new System.Drawing.Point(401, 113);
+            this.checkBox18.Name = "checkBox18";
+            this.checkBox18.Size = new System.Drawing.Size(114, 16);
+            this.checkBox18.TabIndex = 55;
+            this.checkBox18.Text = "寻迹传感器4异常";
+            this.checkBox18.UseVisualStyleBackColor = true;
+            // 
+            // checkBox19
+            // 
+            this.checkBox19.AutoSize = true;
+            this.checkBox19.Location = new System.Drawing.Point(401, 135);
+            this.checkBox19.Name = "checkBox19";
+            this.checkBox19.Size = new System.Drawing.Size(114, 16);
+            this.checkBox19.TabIndex = 54;
+            this.checkBox19.Text = "寻迹传感器5异常";
+            this.checkBox19.UseVisualStyleBackColor = true;
+            // 
+            // checkBox20
+            // 
+            this.checkBox20.AutoSize = true;
+            this.checkBox20.Location = new System.Drawing.Point(401, 157);
+            this.checkBox20.Name = "checkBox20";
+            this.checkBox20.Size = new System.Drawing.Size(114, 16);
+            this.checkBox20.TabIndex = 53;
+            this.checkBox20.Text = "寻迹传感器6异常";
+            this.checkBox20.UseVisualStyleBackColor = true;
+            // 
+            // checkBox11
+            // 
+            this.checkBox11.AutoSize = true;
+            this.checkBox11.Location = new System.Drawing.Point(265, 69);
+            this.checkBox11.Name = "checkBox11";
+            this.checkBox11.Size = new System.Drawing.Size(114, 16);
+            this.checkBox11.TabIndex = 52;
+            this.checkBox11.Text = "寻迹传感器3离线";
+            this.checkBox11.UseVisualStyleBackColor = true;
+            // 
+            // checkBox12
+            // 
+            this.checkBox12.AutoSize = true;
+            this.checkBox12.Location = new System.Drawing.Point(265, 91);
+            this.checkBox12.Name = "checkBox12";
+            this.checkBox12.Size = new System.Drawing.Size(114, 16);
+            this.checkBox12.TabIndex = 51;
+            this.checkBox12.Text = "寻迹传感器4离线";
+            this.checkBox12.UseVisualStyleBackColor = true;
+            // 
+            // checkBox13
+            // 
+            this.checkBox13.AutoSize = true;
+            this.checkBox13.Location = new System.Drawing.Point(265, 113);
+            this.checkBox13.Name = "checkBox13";
+            this.checkBox13.Size = new System.Drawing.Size(114, 16);
+            this.checkBox13.TabIndex = 50;
+            this.checkBox13.Text = "寻迹传感器5离线";
+            this.checkBox13.UseVisualStyleBackColor = true;
+            // 
+            // checkBox14
+            // 
+            this.checkBox14.AutoSize = true;
+            this.checkBox14.Location = new System.Drawing.Point(265, 135);
+            this.checkBox14.Name = "checkBox14";
+            this.checkBox14.Size = new System.Drawing.Size(114, 16);
+            this.checkBox14.TabIndex = 49;
+            this.checkBox14.Text = "寻迹传感器6离线";
+            this.checkBox14.UseVisualStyleBackColor = true;
+            // 
+            // checkBox15
+            // 
+            this.checkBox15.AutoSize = true;
+            this.checkBox15.Location = new System.Drawing.Point(265, 157);
+            this.checkBox15.Name = "checkBox15";
+            this.checkBox15.Size = new System.Drawing.Size(114, 16);
+            this.checkBox15.TabIndex = 48;
+            this.checkBox15.Text = "寻迹传感器1异常";
+            this.checkBox15.UseVisualStyleBackColor = true;
+            // 
+            // checkBox6
+            // 
+            this.checkBox6.AutoSize = true;
+            this.checkBox6.Location = new System.Drawing.Point(138, 69);
+            this.checkBox6.Name = "checkBox6";
+            this.checkBox6.Size = new System.Drawing.Size(108, 16);
+            this.checkBox6.TabIndex = 47;
+            this.checkBox6.Text = "避障传感器错误";
+            this.checkBox6.UseVisualStyleBackColor = true;
+            // 
+            // checkBox7
+            // 
+            this.checkBox7.AutoSize = true;
+            this.checkBox7.Location = new System.Drawing.Point(138, 91);
+            this.checkBox7.Name = "checkBox7";
+            this.checkBox7.Size = new System.Drawing.Size(84, 16);
+            this.checkBox7.TabIndex = 46;
+            this.checkBox7.Text = "驱动器故障";
+            this.checkBox7.UseVisualStyleBackColor = true;
+            // 
+            // checkBox8
+            // 
+            this.checkBox8.AutoSize = true;
+            this.checkBox8.Location = new System.Drawing.Point(138, 113);
+            this.checkBox8.Name = "checkBox8";
+            this.checkBox8.Size = new System.Drawing.Size(72, 16);
+            this.checkBox8.TabIndex = 45;
+            this.checkBox8.Text = "挂钩故障";
+            this.checkBox8.UseVisualStyleBackColor = true;
+            // 
+            // checkBox9
+            // 
+            this.checkBox9.AutoSize = true;
+            this.checkBox9.Location = new System.Drawing.Point(138, 133);
+            this.checkBox9.Name = "checkBox9";
+            this.checkBox9.Size = new System.Drawing.Size(114, 16);
+            this.checkBox9.TabIndex = 44;
+            this.checkBox9.Text = "寻迹传感器1离线";
+            this.checkBox9.UseVisualStyleBackColor = true;
+            // 
+            // checkBox10
+            // 
+            this.checkBox10.AutoSize = true;
+            this.checkBox10.Location = new System.Drawing.Point(138, 155);
+            this.checkBox10.Name = "checkBox10";
+            this.checkBox10.Size = new System.Drawing.Size(114, 16);
+            this.checkBox10.TabIndex = 43;
+            this.checkBox10.Text = "寻迹传感器2离线";
+            this.checkBox10.UseVisualStyleBackColor = true;
+            // 
+            // checkBox5
+            // 
+            this.checkBox5.AutoSize = true;
+            this.checkBox5.Location = new System.Drawing.Point(8, 157);
+            this.checkBox5.Name = "checkBox5";
+            this.checkBox5.Size = new System.Drawing.Size(84, 16);
+            this.checkBox5.TabIndex = 42;
+            this.checkBox5.Text = "机械撞触发";
+            this.checkBox5.UseVisualStyleBackColor = true;
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Location = new System.Drawing.Point(8, 135);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(72, 16);
+            this.checkBox4.TabIndex = 41;
+            this.checkBox4.Text = "轨道错误";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Location = new System.Drawing.Point(8, 113);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(60, 16);
+            this.checkBox3.TabIndex = 40;
+            this.checkBox3.Text = "全轨道";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(8, 91);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(48, 16);
+            this.checkBox2.TabIndex = 39;
+            this.checkBox2.Text = "脱轨";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(8, 69);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(72, 16);
+            this.checkBox1.TabIndex = 38;
+            this.checkBox1.Text = "急停触发";
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1073, 485);
-            this.Controls.Add(this.label14);
-            this.Controls.Add(this.label13);
-            this.Controls.Add(this.label12);
-            this.Controls.Add(this.label11);
+            this.ClientSize = new System.Drawing.Size(1248, 517);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.textBox1);
@@ -441,8 +724,6 @@
             this.Controls.Add(this.Set);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.RollerLb);
-            this.Controls.Add(this.DirectionLb);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.rollBtn);
@@ -465,10 +746,11 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TCP";
-            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -507,10 +789,34 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label PonintLb;
+        private System.Windows.Forms.Label SpeedLb;
+        private System.Windows.Forms.Label Direction;
+        private System.Windows.Forms.Label Electric;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.CheckBox checkBox16;
+        private System.Windows.Forms.CheckBox checkBox17;
+        private System.Windows.Forms.CheckBox checkBox18;
+        private System.Windows.Forms.CheckBox checkBox19;
+        private System.Windows.Forms.CheckBox checkBox20;
+        private System.Windows.Forms.CheckBox checkBox11;
+        private System.Windows.Forms.CheckBox checkBox12;
+        private System.Windows.Forms.CheckBox checkBox13;
+        private System.Windows.Forms.CheckBox checkBox14;
+        private System.Windows.Forms.CheckBox checkBox15;
+        private System.Windows.Forms.CheckBox checkBox6;
+        private System.Windows.Forms.CheckBox checkBox7;
+        private System.Windows.Forms.CheckBox checkBox8;
+        private System.Windows.Forms.CheckBox checkBox9;
+        private System.Windows.Forms.CheckBox checkBox10;
+        private System.Windows.Forms.CheckBox checkBox5;
+        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.TextBox textBox2;
     }
 }
 

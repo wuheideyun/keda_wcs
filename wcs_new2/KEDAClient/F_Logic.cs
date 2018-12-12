@@ -8,6 +8,7 @@ using LogHelper;
 using FLCommonInterfaces;
 using WcfHelper;
 using System.Collections;
+using DataContract;
 
 namespace KEDAClient
 {
@@ -121,11 +122,19 @@ namespace KEDAClient
             _thread.Start();
 
 
-
+            // 发生故障、离线的车，清除其相应的任务
             Thread tr3 = new Thread(ClearTask);
+
             tr3.IsBackground = true;
+
             tr3.Start();
 
+            //检查线边辊台PLC连接状态
+            Thread tr4 = new Thread(CheckPlcStatus);
+
+            tr4.IsBackground = true;
+
+            tr4.Start();
         }
 
         /// <summary>
@@ -1155,6 +1164,30 @@ namespace KEDAClient
         }
 
 
+
+        /// <summary>
+        /// 检查线边辊台PLC连接状态
+        /// </summary>
+        public void CheckPlcStatus()
+        {
+            while (true)
+            {
+                Thread.Sleep(5000);
+
+                List<DeviceBackImf> devsList = WcfMainHelper.GetDevList();
+
+                foreach (var dev in devsList)
+                {
+                    if (dev.DevType == "WK_PLC" && !dev.IsAlive)
+                    {
+                        F_PLCLine plc = new F_PLCLine(dev.DevId);
+
+                        plc.SendOrdr(0,0);
+                    }
+                }
+
+            }
+        }
 
         /// <summary>
         /// 发生故障、离线的车，清除其相应的任务

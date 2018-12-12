@@ -104,9 +104,15 @@ namespace FormTest
         IMap map = new IMap();
 
         bool _flag = false;
+        int count = 0;
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            if (20 < count++)//20秒清除界面资源再加载  清理离线的AGV 图片信息
+            {
+                mapEditorControlMap.MapObj.IGExpand.IClear();
+                count = 0;
+            }
             //1.AGV地图的坐标图片信息放在 MapItemMaster.Mapitmes
             foreach (var agv in MapItemMaster.Mapitmes)
             {
@@ -161,48 +167,56 @@ namespace FormTest
     {
         private static Object _obj = new object();
         public static List<MapItem> Mapitmes = new List<MapItem>();
-        private static List<MapItem> _mapitmes = new List<MapItem>();
 
-
+        public static MapItem TemMapItem;
         /// <summary>
         /// 2.后台获取了AGV的信息在这个方法组装
         /// </summary>
         /// <param name="list"></param>
         public static void UpdateItems(List<DeviceBackImf> list)
         {
-            _mapitmes.Clear();
-
-            foreach (var agv in list)
-            {
-                if (agv.DevType.Equals("Magnet_Basic"))//AGV
-                {
-                    try
-                    {
-                        //3.如果是 AGV类型的设备 进入这个方法
-                        //在这里可以对AGV做判断，如果离线不显示则不添加
-                        if (agv.IsAlive)
-                        {
-                            _mapitmes.Add(new MapItem(agv));
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e.Message);
-                    }
-                }
-                else//PLC
-                {
-                    PlcItem.Update(agv);
-                }
-            }
-
-
             lock (_obj)
             {
-                Mapitmes.Clear();
-                Mapitmes.AddRange(_mapitmes);
+                foreach (var agv in list)
+                {
+                    if (agv.DevType.Equals("Magnet_Basic"))//AGV
+                    {
+                        try
+                        {
+                            TemMapItem = Mapitmes.Find(c => { return c.ID.Equals(agv.DevId); });
+                            //3.如果是 AGV类型的设备 进入这个方法
+                            //在这里可以对AGV做判断，如果离线不显示则不添加
+                            if (agv.IsAlive)
+                            {
+                                if (TemMapItem == null)
+                                {
+                                    Mapitmes.Add(new MapItem(agv));
+                                }
+                                else
+                                {
+                                    TemMapItem.Update(agv);
+                                }
+                                    
+                            }
+                            else
+                            {
+                                if(TemMapItem != null)
+                                {
+                                    Mapitmes.Remove(TemMapItem);
+                                }
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine("构造"+agv.DevId+"地图坐标错误信息:"+e.Message);
+                        }
+                    }
+                    else//PLC
+                    {
+                        PlcItem.Update(agv);
+                    }
+                }
             }
-
         }
     }
     public class PlcItem
@@ -216,6 +230,37 @@ namespace FormTest
 
         public static Size MapSize = new Size(500, 500);
 
+        /// <summary>
+        /// 初始化窑头的信息
+        /// </summary>
+        /// <param name="plc"></param>
+        public static void InitTail(DeviceBackImf plc)
+        {
+            TailPlcMap.Id = plc.DevId;
+            TailPlcMap.ISize = MapSize;
+            TailPlcword.Id = plc.DevId + "100";
+            TailPlcword.IFont = new Font("宋体", 350, FontStyle.Bold);
+            TailPlcword.IColor = Color.Black;
+            TailPlcword.ILocPoint = new Point(492, 6050);
+        }
+        /// <summary>
+        /// 初始化窑头的信息
+        /// </summary>
+        /// <param name="plc"></param>
+        public static void InitHeal(DeviceBackImf plc)
+        {
+            HeadPlcMap.Id = plc.DevId;
+            HeadPlcMap.ISize = MapSize;
+            HeadPlcword.Id = plc.DevId + "100";
+            HeadPlcword.IFont = new Font("宋体", 350, FontStyle.Bold);
+            HeadPlcword.IColor = Color.Black;
+            HeadPlcword.ILocPoint = new Point(26376, 6050);
+        }
+        
+        /// <summary>
+        /// 更新PLC的背景和上方的当前状态
+        /// </summary>
+        /// <param name="plc"></param>
         public static void Update(DeviceBackImf plc)
         {
             if (plc.DevId.Equals("PLC01"))//窑尾
@@ -240,14 +285,8 @@ namespace FormTest
                     TailPlcword.Text = "传输中";
                 }
 
+                if (TailPlcMap.Id == null) InitTail(plc);
                 
-                TailPlcMap.Id = plc.DevId;
-                TailPlcMap.ISize = MapSize;
-                TailPlcword.Id = plc.DevId + "100";
-                TailPlcword.IFont = new Font("宋体", 350, FontStyle.Bold);
-                TailPlcword.IColor = Color.Black;
-                TailPlcword.ILocPoint=new Point(492,6050);
-
             }
             else//窑头
             {
@@ -269,13 +308,8 @@ namespace FormTest
                     HeadPlcMap.IBitMap = Resources.bg;
                     HeadPlcword.Text = "无货";
                 }
-                
-                HeadPlcMap.Id = plc.DevId;
-                HeadPlcMap.ISize = MapSize;
-                HeadPlcword.Id = plc.DevId + "100";
-                HeadPlcword.IFont = new Font("宋体", 350, FontStyle.Bold);
-                HeadPlcword.IColor = Color.Black;
-                HeadPlcword.ILocPoint = new Point(26376, 6050);
+
+                if (HeadPlcMap.Id == null) InitHeal(plc);
             }
         }
         private static Point HeadLoadP = new Point(26646, 5146);//窑头有货地标
@@ -317,11 +351,15 @@ namespace FormTest
 
     public class MapItem
     {
-
+        public string ID;
         public IWord word = new IWord();
 
         public IMap map = new IMap();
 
+        /// <summary>
+        /// AGV图片的尺寸
+        /// </summary>
+        public static Size MapSize = new Size(500, 500);
 
         /// <summary>
         /// 4. 这里是组装一个AGV的图片和agv名字的构造方法
@@ -329,21 +367,39 @@ namespace FormTest
         /// <param name="agv"></param>
         public MapItem(DeviceBackImf agv)
         {
-            //获取AGV的 X坐标值
-            int x = agv.IGet("B02") == null ? 0 : int.Parse(agv.IGet("B02").RValue);
-
-            //获取AGV Y坐标值
-            int y = agv.IGet("B03") == null ? 0 : int.Parse(agv.IGet("B03").RValue);
+            ID = agv.DevId;
 
             word.Id = agv.DevId;
 
             word.IColor = Color.Black;
 
             word.IFont = new Font("宋体", 350, FontStyle.Bold);
+            
+            word.Text = agv.DevId.Replace("AGV","");
+
+            map.ISize = MapSize;
+
+            //map.IAngel = agv.IGet("B04")==null ? 0 : float.Parse(agv.IGet("B04").RValue);
+
+            map.Id = agv.DevId;
+
+            //更新AGV地标和背景图片
+            Update(agv);
+        }
+
+        /// <summary>
+        /// 更新AGV地标背景方法
+        /// </summary>
+        /// <param name="agv"></param>
+        public void Update(DeviceBackImf agv)
+        {
+            //获取AGV的 X坐标值
+            int x = agv.IGet("B02") == null ? 0 : int.Parse(agv.IGet("B02").RValue);
+
+            //获取AGV Y坐标值
+            int y = agv.IGet("B03") == null ? 0 : int.Parse(agv.IGet("B03").RValue);
 
             word.ILocPoint = new Point(x - 300, y - 250);
-
-            word.Text = agv.DevId.Replace("AGV","");
 
             //根据AGV的货物状态 设置图片资源
             if ("1".Equals(agv.IGet("0036").RValue))
@@ -357,13 +413,7 @@ namespace FormTest
                 map.IBitMap = Resources.AGV;
             }
 
-            map.ISize = new Size(500, 500);
-
             map.ILocPoint = new Point(x, y);
-
-            //map.IAngel = agv.IGet("B04")==null ? 0 : float.Parse(agv.IGet("B04").RValue);
-
-            map.Id = agv.DevId;
         }
     }
 
@@ -381,7 +431,8 @@ namespace FormTest
         public static Font _font = new Font("宋体", 900, FontStyle.Bold);
 
         private static int elect1 = 100, elect2 = 100;
-        private static string lowagv1, lowagv2;
+        private static string[] lowagv = new string[2];
+        private static Dictionary<string,int> eledic = new Dictionary<string, int>();
 
         /// <summary>
         /// 比较电量记录最低了两个电量和AGV名称
@@ -389,26 +440,60 @@ namespace FormTest
         /// <param name="agv"></param>
         public static void CompareAgv(DeviceBackImf agv)
         {
-            int ele = int.Parse(agv.IGet("0007").RValue);
-            if (ele < elect1 && elect1 > elect2)
+
+            if (agv.DevType == "Magnet_Basic" && agv.IsAlive && agv.ProtyList[ErrorType.脱轨].RValue == "0")
             {
-                elect1 = ele;
-                lowagv1 = agv.DevId + 100;
+                int ele = int.Parse(agv.IGet("0007").RValue);
+
+                if (eledic.ContainsKey(agv.DevId))
+                {
+                    eledic.Remove(agv.DevId);
+                }
+
+                eledic.Add(agv.DevId, ele);
+
+                if (eledic.Count > 0)
+                {
+                    //Dictionary<string, int> eledic_SortedByValue1 = DictonarySort(eledic);
+
+                    Dictionary<string, int> eledic_SortedByValue2 = eledic.OrderBy(o => o.Value).ToDictionary(p => p.Key, o => o.Value);
+
+                    int count = 0;
+
+                    foreach(KeyValuePair<string, int> kvp in eledic_SortedByValue2)
+                    {
+                        lowagv[count++] = kvp.Key + 100;
+
+                        if (count > 1)
+                        {
+                            break;
+                        }
+                    }
+                }
+                
             }
-            else if (ele < elect2)
+            else
             {
-                elect2 = ele;
-                lowagv2 = agv.DevId + 100;
+                eledic.Remove(agv.DevId);
             }
+            
         }
+
+        //private Dictionary<string, int> DictonarySort(Dictionary<string, int> dic)
+        //{
+        //    Dictionary<string, int> dicSort = from objDic in dic orderby objDic.Value select objDic;
+
+        //    return dicSort;
+                
+        //}
 
         /// <summary>
         /// 改变最低电量两个AGV状态的颜色为红色
         /// </summary>
         public static void SetRedText()
         {
-            IWord agv1 = DevMsg.Find(c => { return c.Id.Equals(lowagv1); });
-            IWord agv2 = DevMsg.Find(c => { return c.Id.Equals(lowagv2); });
+            IWord agv1 = DevMsg.Find(c => { return c.Id.Equals(lowagv[0]); });
+            IWord agv2 = DevMsg.Find(c => { return c.Id.Equals(lowagv[1]); });
             if (agv1 != null)
             {
                 agv1.IColor = Color.Red;
@@ -449,7 +534,7 @@ namespace FormTest
             DevMsg.Clear();
             SwichLineCount = 0;
         }
-
+        static Color color = Color.Black;
         /// <summary>
         /// 6.组装上方的AGV状态列表信息
         /// </summary>
@@ -462,24 +547,40 @@ namespace FormTest
                 foreach (var agv in list)
                 {
                     if (!agv.DevType.Equals("Magnet_Basic")) continue;
-                    DevMsg.Add(new IWord
+                    //找不到上方AGV名称的时候才去添加
+                    if (DevMsg.Find(c => { return c.Id.Equals(agv.DevId + 10); }) == null)
                     {
-                        Id = agv.DevId + 10,
-                        Text = agv.DevId,
-                        ILocPoint = NextPoint(),
-                        IColor = Color.Black,
-                        IFont = _font
+                        DevMsg.Add(new IWord
+                        {
+                            Id = agv.DevId + 10,
+                            Text = agv.DevId,
+                            ILocPoint = NextPoint(),
+                            IColor = Color.Black,
+                            IFont = _font
 
-                    });
-                    Color color = Color.Black;
-                    DevMsg.Add(new IWord
+                        });
+                    }
+                    
+                    //找不到上方AGV状态的时候才添加
+                    IWord agvstatus = DevMsg.Find(c => { return c.Id.Equals(agv.DevId + 100); });
+                    if (agvstatus == null)
                     {
-                        Id = agv.DevId + 100,
-                        Text = GetDevStatus(agv, out color),
-                        ILocPoint = NextPoint(),
-                        IColor = color,
-                        IFont = _font
-                    });
+                        DevMsg.Add(new IWord
+                        {
+                            Id = agv.DevId + 100,
+                            Text = GetDevStatus(agv, out color),
+                            ILocPoint = NextPoint(),
+                            IColor = color,
+                            IFont = _font
+                        });
+                    }
+                    else
+                    {
+                        //找到对应的Iword只更新文字和颜色。避免不断新增
+                        agvstatus.Text = GetDevStatus(agv, out color);
+                        agvstatus.IColor = color;
+                    }
+                   
                     CompareAgv(agv);
                 }
                 SetRedText();
@@ -548,7 +649,7 @@ namespace FormTest
                 }
                 else
                 {
-                    status = "未知";
+                    status = "任务";
                     color = Color.LightGreen;
                 }
                 return status;
