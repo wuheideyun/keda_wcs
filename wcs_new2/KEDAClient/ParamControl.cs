@@ -549,7 +549,7 @@ namespace KEDAClient
             }
             else
             {
-                status = "其他";
+                status = "任务中";
             }
 
             return status;
