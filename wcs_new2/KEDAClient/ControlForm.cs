@@ -154,17 +154,25 @@ namespace KEDAClient
 
             currentTaskList.BeginUpdate();
             currentTaskList.Items.Clear();
-            foreach (var data in taskDatas)
-            {
-                if(data != null)
-                {
-                    ListViewItem item = new ListViewItem(data.NO + ""); // 任务信息
-                    //item.Text = data.NO + "" ;
-                    item.SubItems.Add(data.Msg); //站点信息
-                    item.SubItems.Add(data.SiteMsg); //站点信息
-                    currentTaskList.Items.Add(item);
-                }
+            //foreach (var data in taskDatas)
+            //{
+            //    if(data != null)
+            //    {
+            //        ListViewItem item = new ListViewItem(data.NO + ""); // 任务信息
+            //        //item.Text = data.NO + "" ;
+            //        item.SubItems.Add(data.Msg); //站点信息
+            //        item.SubItems.Add(data.SiteMsg); //站点信息
+            //        currentTaskList.Items.Add(item);
+            //    }
                
+            //}
+            for (int i = 0; i < taskDatas.Count; i++)
+            {
+                ListViewItem item = new ListViewItem(taskDatas[i].NO + ""); // 任务信息
+                //item.Text = taskDatas[i].NO + "" ;
+                item.SubItems.Add(taskDatas[i].Msg); //站点信息
+                item.SubItems.Add(taskDatas[i].SiteMsg); //站点信息
+                currentTaskList.Items.Add(item);
             }
             // 结束数据处理
             currentTaskList.EndUpdate();

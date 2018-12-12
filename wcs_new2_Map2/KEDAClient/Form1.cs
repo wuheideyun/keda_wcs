@@ -114,15 +114,26 @@ namespace FormTest
                 count = 0;
             }
             //1.AGV地图的坐标图片信息放在 MapItemMaster.Mapitmes
-            foreach (var agv in MapItemMaster.Mapitmes)
-            {
-                mapEditorControlMap.MapObj.IGExpand.ISetWoed(agv.word);
-                mapEditorControlMap.MapObj.IGExpand.ISetBitMap(agv.map);
-            }
+            //foreach (var agv in MapItemMaster.Mapitmes)
+            //{
+            //    mapEditorControlMap.MapObj.IGExpand.ISetWoed(agv.word);
+            //    mapEditorControlMap.MapObj.IGExpand.ISetBitMap(agv.map);
+            //}
 
-            foreach (var msg in MapDevMsgMaster.DevMsg)
+            //foreach (var msg in MapDevMsgMaster.DevMsg)
+            //{
+            //    mapEditorControlMap.MapObj.IGExpand.ISetWoed(msg);
+            //}
+
+            //1.AGV地图的坐标图片信息放在 MapItemMaster.Mapitmes
+            for (int i = 0; i < MapItemMaster.Mapitmes.Count; i++)
             {
-                mapEditorControlMap.MapObj.IGExpand.ISetWoed(msg);
+                mapEditorControlMap.MapObj.IGExpand.ISetWoed(MapItemMaster.Mapitmes[i].word);
+                mapEditorControlMap.MapObj.IGExpand.ISetBitMap(MapItemMaster.Mapitmes[i].map);
+            }
+            for (int i = 0; i < MapDevMsgMaster.DevMsg.Count; i++)
+            {
+                mapEditorControlMap.MapObj.IGExpand.ISetWoed(MapDevMsgMaster.DevMsg[i]);
             }
 
             try
