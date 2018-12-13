@@ -123,6 +123,60 @@ namespace KEDAClient
         #endregion
 
         #region ListView刷新等
+
+        private int timeCount = 0;//计算时间
+        private bool startSwitch = false;//开始切换
+        private void AgvListAutoSwicth()
+        {
+            //500毫秒加一  
+            timeCount++;//120=1分钟  1200=10分钟
+            if (timeCount > 1200 && !startSwitch)
+            {
+                timeCount = 0;
+                startSwitch = true;//十分钟后，自动切换
+            }else if(startSwitch && timeCount % 20 == 0)//20=10秒
+            {
+                int index = FindNextAgvOnLine(_agvListIndex + 1);
+                if (index != -1)
+                {
+                    _agvListIndex = index;
+                    _agvListText = agvList.Items[_agvListIndex].Text;
+                    agvList.FocusedItem = agvList.Items[_agvListIndex];
+                    agvList.FocusedItem.BackColor = Color.LightGray;
+                    AfterAgvSelectChange();
+                }
+                timeCount = 0;
+            }
+            else
+            {
+                return;
+            }
+            
+        }
+        private int roolcount = 0;
+        private int FindNextAgvOnLine(int index)
+        {
+            roolcount++;
+            if (agvList.Items == null) return 0;
+            if (agvList.Items.Count < index || agvList.Items.Count==1) index = 0;
+            if (roolcount > agvList.Items.Count)
+            {
+                roolcount = 0;
+                return -1;
+            }
+            if (_agvListIndex == -1) _agvListIndex = 0;
+            if(index < agvList.Items.Count && agvList.Items[index].Text.StartsWith("AGV") &&
+                agvList.Items[index].BackColor == Color.Gray)
+            {
+                roolcount = 0;
+                return index;
+            }
+            else
+            {
+                return FindNextAgvOnLine(index+1);
+            }
+        }
+
         /// <summary>
         /// ListBox的刷新线程
         /// </summary>
@@ -132,6 +186,8 @@ namespace KEDAClient
         {
             timerForListRefresh.Enabled = false;
             AgvList_Refresh();
+            AgvListAutoSwicth();
+            SetOnCheckStatusStyle();
             CurrentTaskList_Refresh();
             agvData_Refresh();
             plcData_Refresh();
@@ -229,6 +285,10 @@ namespace KEDAClient
             // 结束数据处理
             agvList.EndUpdate();
 
+        }
+        private void SetOnCheckStatusStyle()
+        {
+
             if (_agvListIndex != -1)
             {
                 if (agvList.Items.Count > _agvListIndex && _agvListText.Equals(agvList.Items[_agvListIndex].Text))
@@ -263,6 +323,7 @@ namespace KEDAClient
                 }
             }
         }
+
         /// <summary>
         /// Agv列表选择改变
         /// </summary>
@@ -277,58 +338,76 @@ namespace KEDAClient
             }
             else
             {
+                timeCount = 0;
+                startSwitch = false;
                 _agvListIndex = agvList.FocusedItem.Index;
                 _agvListText = agvList.FocusedItem.Text;
                 agvList.FocusedItem.BackColor = Color.LightGray;
-                if (agvList.FocusedItem.Text.StartsWith("AGV"))
-                {
-                    mainTabControl.SelectedIndex = 0;
-                    _agvSelectName = agvList.FocusedItem.Text;
-                    agvData_Refresh();
-
-                    string status = agvStatus[agvList.FocusedItem.Text];
-
-                    if (AgvStatusLab.Text == "在线")
-                    {
-                        if (status == "forwardmove")
-                        {
-                            AgvForwardBtn.Enabled = false;
-                            AgvBackwardBtn.Enabled = true;
-                            AgvStopBtn.Enabled = true;
-                        }
-                        else if (status == "backmove")
-                        {
-                            AgvForwardBtn.Enabled = true;
-                            AgvBackwardBtn.Enabled = false;
-                            AgvStopBtn.Enabled = true;
-                        }
-                        else if (status == "stop")
-                        {
-                            AgvForwardBtn.Enabled = true;
-                            AgvBackwardBtn.Enabled = true;
-                            AgvStopBtn.Enabled = true;
-                        }
-                        AgvClearSiteBtn.Enabled = true;
-                        AgvInitBtn.Enabled = true;
-                    }
-                    else if (AgvStatusLab.Text == "离线")
-                    {
-                        AgvForwardBtn.Enabled = false;
-                        AgvBackwardBtn.Enabled = false;
-                        AgvStopBtn.Enabled = false;
-                        AgvClearSiteBtn.Enabled = false;
-                        AgvInitBtn.Enabled = false;
-                    }
-                }
-                else
-                {
-                    mainTabControl.SelectedIndex = 1;
-                    _plcSelectName = agvList.FocusedItem.Text;
-                    plcData_Refresh();
-                }
+                AfterAgvSelectChange();
             }
         }
 
+        /// <summary>
+        /// 根据当前选中的AGV/PLC刷新数据
+        /// </summary>
+        private void AfterAgvSelectChange()
+        {
+            
+            if (agvList.FocusedItem.Text.StartsWith("AGV"))
+            {
+                mainTabControl.SelectedIndex = 0;
+                AfterSelectAGV();
+            }
+            else
+            {
+                mainTabControl.SelectedIndex = 1;
+                _plcSelectName = agvList.FocusedItem.Text;
+                plcData_Refresh();
+            }
+        }
+
+        /// <summary>
+        /// 更新按钮状态
+        /// </summary>
+        private void AfterSelectAGV()
+        {
+            _agvSelectName = agvList.FocusedItem.Text;
+            agvData_Refresh();
+
+            string status = agvStatus[agvList.FocusedItem.Text];
+
+            if (AgvStatusLab.Text == "在线")
+            {
+                if (status == "forwardmove")
+                {
+                    AgvForwardBtn.Enabled = false;
+                    AgvBackwardBtn.Enabled = true;
+                    AgvStopBtn.Enabled = true;
+                }
+                else if (status == "backmove")
+                {
+                    AgvForwardBtn.Enabled = true;
+                    AgvBackwardBtn.Enabled = false;
+                    AgvStopBtn.Enabled = true;
+                }
+                else if (status == "stop")
+                {
+                    AgvForwardBtn.Enabled = true;
+                    AgvBackwardBtn.Enabled = true;
+                    AgvStopBtn.Enabled = true;
+                }
+                AgvClearSiteBtn.Enabled = true;
+                AgvInitBtn.Enabled = true;
+            }
+            else if (AgvStatusLab.Text == "离线")
+            {
+                AgvForwardBtn.Enabled = false;
+                AgvBackwardBtn.Enabled = false;
+                AgvStopBtn.Enabled = false;
+                AgvClearSiteBtn.Enabled = false;
+                AgvInitBtn.Enabled = false;
+            }
+        }
 
         /// <summary>
         /// 刷新Agv信息
