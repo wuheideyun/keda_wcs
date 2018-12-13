@@ -239,7 +239,7 @@ namespace FormTest
         public static IMap HeadPlcMap = new IMap();
         public static IMap TailPlcMap = new IMap();
 
-        public static Size MapSize = new Size(500, 500);
+        public static Size MapSize = new Size(1200, 800);
 
         /// <summary>
         /// 初始化窑头的信息
@@ -370,7 +370,7 @@ namespace FormTest
         /// <summary>
         /// AGV图片的尺寸
         /// </summary>
-        public static Size MapSize = new Size(500, 500);
+        public static Size MapSize = new Size(1200, 800);
 
         /// <summary>
         /// 4. 这里是组装一个AGV的图片和agv名字的构造方法
@@ -405,10 +405,10 @@ namespace FormTest
         public void Update(DeviceBackImf agv)
         {
             //获取AGV的 X坐标值
-            int x = agv.IGet("B02") == null ? 0 : int.Parse(agv.IGet("B02").RValue);
+            int x = agv.IGet("B02") == null ? 0 : (int)Double.Parse(agv.IGet("B02").RValue);
 
             //获取AGV Y坐标值
-            int y = agv.IGet("B03") == null ? 0 : int.Parse(agv.IGet("B03").RValue);
+            int y = agv.IGet("B03") == null ? 0 : (int)Double.Parse(agv.IGet("B03").RValue);
 
             word.ILocPoint = new Point(x - 300, y - 250);
 
