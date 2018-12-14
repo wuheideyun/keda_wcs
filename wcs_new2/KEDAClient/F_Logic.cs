@@ -325,12 +325,14 @@ namespace KEDAClient
             if (d_agv != null)
             {
                 _plcHead.IsExitBatteryLock = true;
+                ParamControl.Do_ExitHeadChargeLock = false;
 
                 _plcHead.ExitChargeAgv = d_agv.Id;
             }
             else if (d_agv2 != null)
             {
                 _plcHead.IsExitBatteryLock = true;
+                ParamControl.Do_ExitHeadChargeLock = false;
 
                 _plcHead.ExitChargeAgv = d_agv2.Id;
             }
@@ -353,6 +355,8 @@ namespace KEDAClient
 
                     //出窑头充电，锁定出窑头充电桩
                     _plcHead.IsExitBatteryLock = true;
+
+                    ParamControl.Do_ExitHeadChargeLock = false;
 
                     _plcHead.ExitChargeAgv = agv.Id;
 
@@ -731,7 +735,7 @@ namespace KEDAClient
 
             if (d_agv != null || d_agv2 != null  )
             {
-                ParamControl.Do_EnterEndChargeLock = true;
+                ParamControl.Do_EnterEndChargeLock = false ;
 
                 if (d_agv != null)
                 {
