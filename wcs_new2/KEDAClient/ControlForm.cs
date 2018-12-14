@@ -130,10 +130,10 @@ namespace KEDAClient
         {
             //500毫秒加一  
             timeCount++;//120=1分钟  1200=10分钟
-            if (timeCount > 1200 && !startSwitch)
+            if (timeCount > 120 && !startSwitch)
             {
                 timeCount = 0;
-                startSwitch = true;//十分钟后，自动切换
+                startSwitch = true;//一分钟后，自动切换
             }else if(startSwitch && timeCount % 20 == 0)//20=10秒
             {
                 int index = FindNextAgvOnLine(_agvListIndex + 1);
@@ -166,7 +166,7 @@ namespace KEDAClient
             }
             if (_agvListIndex == -1) _agvListIndex = 0;
             if(index < agvList.Items.Count && agvList.Items[index].Text.StartsWith("AGV") &&
-                agvList.Items[index].BackColor == Color.Gray)
+                agvList.Items[index].BackColor != Color.Gray)
             {
                 roolcount = 0;
                 return index;
