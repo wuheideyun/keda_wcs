@@ -148,6 +148,7 @@
     <Compile Include="EditButton.Designer.cs">
       <DependentUpon>EditButton.cs</DependentUpon>
     </Compile>
+    <Compile Include="FLog.cs" />
     <Compile Include="F_AGV.cs" />
     <Compile Include="F_DataCenter.cs" />
     <Compile Include="F_DevManager.cs" />

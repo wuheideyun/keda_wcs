@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using LogHelper;
+//using LogHelper;
 using FLCommonInterfaces;
 using WcfHelper;
 using System.Collections;
@@ -293,8 +293,8 @@ namespace KEDAClient
 
                     sendServerLog(agv.Id + TaskPlcHeadPutMsg);
 
-                    LogFactory.LogDispatch(agv.Id, "卸货", TaskPlcHeadPutMsg);
-
+                    //LogFactory.LogDispatch(agv.Id, "卸货", TaskPlcHeadPutMsg);
+                    FLog.Log(agv.Id+ "卸货"+TaskPlcHeadPutMsg);
                     
                 }
                 else
@@ -362,8 +362,8 @@ namespace KEDAClient
 
                     sendServerLog(agv.Id + TaskHeadToExitBatteryMsg);
 
-                    LogFactory.LogDispatch(agv.Id, "AGV出窑头充电", TaskHeadToExitBatteryMsg);
-                    
+                    //LogFactory.LogDispatch(agv.Id, "AGV出窑头充电", TaskHeadToExitBatteryMsg);
+                    FLog.Log(agv.Id + TaskHeadToExitBatteryMsg);
                 }
             }
         }
@@ -403,7 +403,8 @@ namespace KEDAClient
 
                     sendServerLog(agv.Id + TaskHeadToHeadSucMsg);
 
-                    LogFactory.LogDispatch(agv.Id, "卸货完成", TaskHeadToHeadSucMsg);
+                    //LogFactory.LogDispatch(agv.Id, "卸货完成", TaskHeadToHeadSucMsg);
+                    FLog.Log(agv.Id + TaskHeadToHeadSucMsg);
                 }
                 //else
                 //{
@@ -441,7 +442,8 @@ namespace KEDAClient
 
                 sendServerLog(agv.Id + TaskHeadSucToEndWaitMsg);
 
-                LogFactory.LogDispatch(agv.Id, " ", TaskHeadSucToEndWaitMsg);
+                //LogFactory.LogDispatch(agv.Id, " ", TaskHeadSucToEndWaitMsg);
+                FLog.Log(agv.Id + TaskHeadSucToEndWaitMsg);
             }
 
         }
@@ -494,8 +496,8 @@ namespace KEDAClient
 
                     sendServerLog(agv.Id + TaskPlcEndGetMsg);
 
-                    LogFactory.LogDispatch(agv.Id, "到窑尾取货", TaskPlcEndGetMsg);
-
+                    //LogFactory.LogDispatch(agv.Id, "到窑尾取货", TaskPlcEndGetMsg);
+                    FLog.Log(agv.Id+TaskPlcEndGetMsg);
                 }
                 else
                 {
@@ -545,7 +547,8 @@ namespace KEDAClient
 
                         sendServerLog(agv.Id + TaskEndToExitBatteryMsg);
 
-                        LogFactory.LogDispatch(agv.Id, "AGV出窑尾充电", TaskEndToExitBatteryMsg);
+                        //LogFactory.LogDispatch(agv.Id, "AGV出窑尾充电", TaskEndToExitBatteryMsg);
+                        FLog.Log(agv.Id +TaskEndToExitBatteryMsg);
                     }
                 }
             }
@@ -594,7 +597,8 @@ namespace KEDAClient
 
                         sendServerLog(agv.Id + TaskEndToEndSucMsg);
 
-                        LogFactory.LogDispatch(agv.Id, "取货完成", TaskEndToEndSucMsg);
+                        //LogFactory.LogDispatch(agv.Id, "取货完成", TaskEndToEndSucMsg);
+                        FLog.Log(agv.Id + TaskEndToEndSucMsg);
                     }
                 }
             }
@@ -620,7 +624,8 @@ namespace KEDAClient
 
                 sendServerLog(agv.Id + TaskEndSucToHeadWaitMsg);
 
-                LogFactory.LogDispatch(agv.Id, " ", TaskEndSucToHeadWaitMsg);
+                //LogFactory.LogDispatch(agv.Id, " ", TaskEndSucToHeadWaitMsg);
+                FLog.Log(agv.Id + TaskEndSucToHeadWaitMsg);
             }
         }
 
@@ -655,8 +660,8 @@ namespace KEDAClient
 
                     sendServerLog(agv.Id + ExitPlcEndChargeSucMsg);
 
-                    LogFactory.LogDispatch(agv.Id, "充电完成", ExitPlcEndChargeSucMsg);
-
+                    //LogFactory.LogDispatch(agv.Id, "充电完成", ExitPlcEndChargeSucMsg);
+                    FLog.Log(agv.Id+ ExitPlcEndChargeSucMsg);
                 }
             }
             else
@@ -695,7 +700,8 @@ namespace KEDAClient
 
                     sendServerLog(agv.Id + ExitPlcHeadChargeSucMsg);
 
-                    LogFactory.LogDispatch(agv.Id, "充电完成", ExitPlcHeadChargeSucMsg);
+                    //LogFactory.LogDispatch(agv.Id, "充电完成", ExitPlcHeadChargeSucMsg);
+                    FLog.Log(agv.Id+ ExitPlcHeadChargeSucMsg);
 
                 }
                 else
@@ -768,7 +774,8 @@ namespace KEDAClient
 
                 sendServerLog(agv.Id + PlcEndChargeMsg);
 
-                LogFactory.LogDispatch(agv.Id, "充电", PlcEndChargeMsg);
+                //LogFactory.LogDispatch(agv.Id, "充电", PlcEndChargeMsg);
+                FLog.Log(agv.Id+ PlcEndChargeMsg);
 
             }
             else
@@ -811,7 +818,8 @@ namespace KEDAClient
 
                 sendServerLog(agv.Id + PlcHeadChargeMsg);
 
-                LogFactory.LogDispatch(agv.Id, "充电", PlcHeadChargeMsg);
+                //LogFactory.LogDispatch(agv.Id, "充电", PlcHeadChargeMsg);
+                FLog.Log(agv.Id + PlcHeadChargeMsg);
 
             }
         }
@@ -861,7 +869,8 @@ namespace KEDAClient
 
                     sendServerLog(agv.Id + PlcEndChargeSucMsg);
 
-                    LogFactory.LogDispatch(agv.Id, "充电完成", PlcEndChargeSucMsg);
+                    //LogFactory.LogDispatch(agv.Id, "充电完成", PlcEndChargeSucMsg);
+                    FLog.Log(agv.Id +PlcEndChargeSucMsg);
 
                 }
             }
@@ -907,7 +916,8 @@ namespace KEDAClient
 
                     sendServerLog(agv.Id + PlcHeadChargeSucMsg);
 
-                    LogFactory.LogDispatch(agv.Id, "充电完成", PlcHeadChargeSucMsg);
+                    //LogFactory.LogDispatch(agv.Id, "充电完成", PlcHeadChargeSucMsg);
+                    FLog.Log(agv.Id+  PlcHeadChargeSucMsg);
 
                 }
             }
@@ -941,7 +951,8 @@ namespace KEDAClient
 
                 sendServerLog(agv.Id + PlcEndStartSucMsg);
 
-                LogFactory.LogDispatch(agv.Id, "窑尾启动辊台", PlcEndStartSucMsg);
+                //LogFactory.LogDispatch(agv.Id, "窑尾启动辊台", PlcEndStartSucMsg);
+                FLog.Log(agv.Id + PlcEndStartSucMsg);
 
             }
     
@@ -971,7 +982,8 @@ namespace KEDAClient
 
                 sendServerLog(agv.Id + PlcHeadStartSucMsg);
 
-                LogFactory.LogDispatch(agv.Id, "窑头启动辊台", PlcHeadStartSucMsg);
+                //LogFactory.LogDispatch(agv.Id, "窑头启动辊台", PlcHeadStartSucMsg);
+                FLog.Log(agv.Id + PlcHeadStartSucMsg);
 
             }
 
@@ -1014,7 +1026,8 @@ namespace KEDAClient
 
                                 sendServerLog(agv.Id + initToEndSucMsg);
 
-                                LogFactory.LogDispatch(agv.Id, "车辆初始化", initToEndSucMsg);
+                                //LogFactory.LogDispatch(agv.Id, "车辆初始化", initToEndSucMsg);
+                                FLog.Log(agv.Id + initToEndSucMsg);
                             }
                             // 初始化，在窑尾装载点且无货，执行取货任务
                             else
@@ -1031,7 +1044,8 @@ namespace KEDAClient
 
                                 sendServerLog(agv.Id + "初始化，位于装载点且无货的AGV，执行取货任务");
 
-                                LogFactory.LogDispatch(agv.Id, "车辆初始化", "位于装载点且无货的AGV，执行取货任务");
+                                //LogFactory.LogDispatch(agv.Id, "车辆初始化", "位于装载点且无货的AGV，执行取货任务");
+                                FLog.Log(agv.Id + "位于装载点且无货的AGV，执行取货任务");
                             }
                         }
                         // 不在装载点的车，判断地标是否为正反卡的21,若为取货完成的车去到窑尾对接完成点
@@ -1045,7 +1059,8 @@ namespace KEDAClient
 
                             sendServerLog(agv.Id + initToEndSucMsg);
 
-                            LogFactory.LogDispatch(agv.Id, "车辆初始化 ,有货的AGV", initToEndSucMsg);
+                            //LogFactory.LogDispatch(agv.Id, "车辆初始化 ,有货的AGV", initToEndSucMsg);
+                            FLog.Log(agv.Id + initToEndSucMsg);
                         }
                         else
                         {
@@ -1062,7 +1077,8 @@ namespace KEDAClient
 
                             sendServerLog(agv.Id + "初始化，准备取货的AGV，去到窑尾装载点取货");
 
-                            LogFactory.LogDispatch(agv.Id, "车辆初始化", "准备取货的AGV，去到窑尾装载点取货");
+                            //LogFactory.LogDispatch(agv.Id, "车辆初始化", "准备取货的AGV，去到窑尾装载点取货");
+                            FLog.Log(agv.Id + "车辆初始化"+"准备取货的AGV，去到窑尾装载点取货");
                         }
                     }
                     // 窑头交通管制点是否有车
@@ -1081,7 +1097,8 @@ namespace KEDAClient
 
                                 sendServerLog(agv.Id + TaskHeadToHeadSucMsg);
 
-                                LogFactory.LogDispatch(agv.Id, "车辆初始化", initToHeadSucMsg);
+                                //LogFactory.LogDispatch(agv.Id, "车辆初始化", initToHeadSucMsg);
+                                FLog.Log(agv.Id + initToHeadSucMsg);
                             }
                             // 初始化，在窑头卸载点且无货，执行放货任务
                             else
@@ -1098,7 +1115,8 @@ namespace KEDAClient
 
                                 sendServerLog(agv.Id + "初始化，位于窑头卸载点且有货，执行放货任务");
 
-                                LogFactory.LogDispatch(agv.Id, "车辆初始化", "位于窑头卸载点且有货，执行放货任务");
+                                //LogFactory.LogDispatch(agv.Id, "车辆初始化", "位于窑头卸载点且有货，执行放货任务");
+                                FLog.Log(agv.Id+ "车辆初始化，"+ "位于窑头卸载点且有货，执行放货任务");
                             }
                         }
                         // 不在卸载点的车，判断地标是否为正反卡的24，若为放货完成的车去到窑头对接完成点
@@ -1112,7 +1130,8 @@ namespace KEDAClient
 
                             sendServerLog(agv.Id + initToHeadSucMsg);
 
-                            LogFactory.LogDispatch(agv.Id, "车辆初始化 ,无货的AGV", initToHeadSucMsg);
+                            //LogFactory.LogDispatch(agv.Id, "车辆初始化 ,无货的AGV", initToHeadSucMsg);
+                            FLog.Log(agv.Id+ "车辆初始化 ,无货的AGV"+ initToHeadSucMsg);
                         }
                         else
                         {
@@ -1129,7 +1148,8 @@ namespace KEDAClient
 
                             sendServerLog(agv.Id + "初始化， 准备卸货的AGV，去到窑头卸载点放货");
 
-                            LogFactory.LogDispatch(agv.Id, "车辆初始化", " 准备卸货的AGV，去到窑头卸载点放货");
+                            //LogFactory.LogDispatch(agv.Id, "车辆初始化", " 准备卸货的AGV，去到窑头卸载点放货");
+                            FLog.Log(agv.Id + "车辆初始化， 准备卸货的AGV，去到窑头卸载点放货");
                         }
                     }
                     /// 不在任何交通管制点的车，去到相应的等待点
@@ -1144,7 +1164,8 @@ namespace KEDAClient
 
                         sendServerLog(agv.Id + initToEndWaitMsg);
 
-                        LogFactory.LogDispatch(agv.Id, "车辆初始化 ,窑头交管解除点的AGV", initToEndWaitMsg);
+                        //LogFactory.LogDispatch(agv.Id, "车辆初始化 ,窑头交管解除点的AGV", initToEndWaitMsg);
+                        FLog.Log(agv.Id +"车辆初始化 ,窑头交管解除点的AGV");
                     }
                     ///  窑尾取货完成的车，直接去到窑头卸载等待点
                     else if (PLCEndToHeadWaitSite.Contains(agv.Site) && agv.Sta_Material == EnumagvSta_Material.有货)
@@ -1157,7 +1178,8 @@ namespace KEDAClient
 
                         sendServerLog(agv.Id + initToHeadWaitMsg);
 
-                        LogFactory.LogDispatch(agv.Id, "车辆初始化 ,窑尾交管解除点的AGV", initToHeadWaitMsg);
+                        //LogFactory.LogDispatch(agv.Id, "车辆初始化 ,窑尾交管解除点的AGV", initToHeadWaitMsg);
+                        FLog.Log(agv.Id +"车辆初始化 ,窑尾交管解除点的AGV");
                     }
                 }
             }
@@ -1218,7 +1240,8 @@ namespace KEDAClient
                                         WcfMainHelper.CtrDispatch(dispatch.Id, EnumCtrType.Stop);
                                         sendServerLog("终止异常的 " + agv.Id + "正在执行的任务");
 
-                                        LogFactory.LogRunning("终止异常的 " + agv.Id + "正在执行的任务");
+                                        //LogFactory.LogRunning("终止异常的 " + agv.Id + "正在执行的任务");
+                                        FLog.Log("终止异常的 " + agv.Id + "正在执行的任务");
 
                                         count = 0;
 
@@ -1230,7 +1253,8 @@ namespace KEDAClient
                                         count++;
                                         sendServerLog("异常的 " + agv.Id + "已等待处理 " + count + " 次");
 
-                                        LogFactory.LogRunning("异常的 " + agv.Id + "已等待处理 " + count + " 次");
+                                        //LogFactory.LogRunning("异常的 " + agv.Id + "已等待处理 " + count + " 次");
+                                        FLog.Log("异常的 " + agv.Id + "已等待处理 " + count + " 次");
 
                                     }
                                     dic.Remove(agv.Id);

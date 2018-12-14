@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using LogHelper;
+//using LogHelper;
 using FLCommonInterfaces;
 using WcfHelper;
 
@@ -613,7 +613,8 @@ namespace KEDAClient
                 if (exit != null && _taskList.Contains(exit))
                 {
 
-                    LogFactory.LogAdd(LOGTYPE.FINISH, exit.Id, exit.GetTaskInfo(), "调度完成", exit.GetTaskInfo());//任务完成日志
+                    //LogFactory.LogAdd(LOGTYPE.FINISH, exit.Id, exit.GetTaskInfo(), "调度完成", exit.GetTaskInfo());//任务完成日志
+                    FLog.Log("调度完成" + exit.GetTaskInfo());//任务完成日志
                     PublicDataContorl.TaskIsSucc(exit.NO);
                     _taskList.Remove(exit);
                 }
@@ -631,7 +632,8 @@ namespace KEDAClient
                 F_ExcTask excTask = _taskList.Find(c => { return c.NO == no; });
                 if (excTask != null && _taskList.Contains(excTask))
                 {
-                    LogFactory.LogAdd(LOGTYPE.FINISH, excTask.Id, excTask.GetTaskInfo(), "调度终止", excTask.GetTaskInfo());//任务完成日志
+                    //LogFactory.LogAdd(LOGTYPE.FINISH, excTask.Id, excTask.GetTaskInfo(), "调度终止", excTask.GetTaskInfo());//任务完成日志
+                    FLog.Log("调度终止"+ excTask.GetTaskInfo());//任务完成日志
                     PublicDataContorl.TaskIsSucc(excTask.NO);
                     excTask.ISetTaskSuc();
                     _taskList.Remove(excTask);

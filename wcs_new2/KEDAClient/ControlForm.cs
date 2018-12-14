@@ -65,7 +65,8 @@ namespace KEDAClient
             InitPara();
             F_DataCenter.Init(SynchronizationContext.Current, listBoxOutput);
 
-            LogHelper.LogFactory.Init();
+            //LogHelper.LogFactory.Init();
+            FLog.Init();
         }
 
         private void ControlForm_Load(object sender, EventArgs e)
@@ -523,6 +524,7 @@ namespace KEDAClient
                 F_DataCenter.MLogic.InitAgv();
                 InitAllBtn.Checked = false;
                 MessageBox.Show("初始化了全部AGV");
+                FLog.Log("初始化了全部AGV");
             }
         }
 
@@ -540,6 +542,12 @@ namespace KEDAClient
             {
                 ExecuteTaskBtn.Checked = true;
                 ParamControl.Is_AutoExecuteTask = true;
+                FLog.Log("启动：自动生成任务");
+                FLog.Log("启动：自动执行任务");
+            }
+            else
+            {
+                FLog.Log("关闭：自动生成任务");
             }
 
         }
@@ -571,6 +579,7 @@ namespace KEDAClient
             }
             F_DataCenter.MLogic.InitAgv(agvList.FocusedItem.Text);
             MessageBox.Show(agvList.FocusedItem.Text + "已经初始化！");
+            FLog.Log(agvList.FocusedItem.Text + "已经初始化！");
         }
 
         /// <summary>
@@ -585,6 +594,7 @@ namespace KEDAClient
                 StopAGV();
                 //记录agv状态
                 agvStatus[agvList.FocusedItem.Text] = "stop";
+                FLog.Log("操作：停止" + agvList.FocusedItem.Text);
             }
             else
             {

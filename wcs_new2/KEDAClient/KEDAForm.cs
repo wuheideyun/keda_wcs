@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using LogHelper;
+//using LogHelper;
 using System.IO;
 using DataContract;
 using FLCommonInterfaces;
@@ -337,8 +337,8 @@ namespace KEDAClient
             //启动作业线程
             //F_DataCenter.Init();
 
-            LogFactory.Init();
-            LogFactory.LogRunning("启动应用");
+            //LogFactory.Init();
+            //LogFactory.LogRunning("启动应用");
 
             this.WindowState = FormWindowState.Maximized;
 
@@ -3157,7 +3157,7 @@ namespace KEDAClient
             startServer.Enabled = false;
             stopServer.Enabled = true;
 
-            LogFactory.LogRunning("服务启动");
+            //LogFactory.LogRunning("服务启动");
         }
 
         /// <summary>
@@ -3170,7 +3170,7 @@ namespace KEDAClient
             startServer.Enabled = true;
             stopServer.Enabled = false;
 
-            LogFactory.LogRunning("服务停止");
+            //LogFactory.LogRunning("服务停止");
 
         }
 
