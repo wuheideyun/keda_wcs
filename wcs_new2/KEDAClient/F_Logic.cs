@@ -328,13 +328,21 @@ namespace KEDAClient
                 ParamControl.Do_ExitHeadChargeLock = false;
 
                 _plcHead.ExitChargeAgv = d_agv.Id;
-            }
+
+
+
+                ParamControl.ChargeAGV = _plcHead.ExitChargeAgv;
+                ParamControl.HeadChargeLock = _plcHead.IsExitBatteryLock;
+    }
             else if (d_agv2 != null)
             {
                 _plcHead.IsExitBatteryLock = true;
                 ParamControl.Do_ExitHeadChargeLock = false;
 
                 _plcHead.ExitChargeAgv = d_agv2.Id;
+
+                ParamControl.ChargeAGV = _plcHead.ExitChargeAgv;
+                ParamControl.HeadChargeLock = _plcHead.IsExitBatteryLock;
             }
             
             if (agv != null
@@ -359,6 +367,9 @@ namespace KEDAClient
                     ParamControl.Do_ExitHeadChargeLock = false;
 
                     _plcHead.ExitChargeAgv = agv.Id;
+
+                    ParamControl.ChargeAGV = _plcHead.ExitChargeAgv;
+                    ParamControl.HeadChargeLock = _plcHead.IsExitBatteryLock;
 
                     _plcHead.ExitFlag = false;
 

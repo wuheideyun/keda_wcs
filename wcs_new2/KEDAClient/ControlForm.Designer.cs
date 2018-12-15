@@ -188,6 +188,7 @@
             this.AutoGenerateTaskBtn = new KEDAClient.SwitchButton();
             this.InitAllBtn = new KEDAClient.SwitchButton();
             this.ExecuteTaskBtn = new KEDAClient.SwitchButton();
+            this.lable1 = new System.Windows.Forms.Label();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -492,6 +493,7 @@
             // 
             // panel5
             // 
+            this.panel5.Controls.Add(this.lable1);
             this.panel5.Controls.Add(this.ExitHeadChargeLBtn);
             this.panel5.Controls.Add(this.label56);
             this.panel5.Controls.Add(this.EnterHeadChargeLBtn);
@@ -2348,6 +2350,15 @@
             this.ExecuteTaskBtn.TextStartPoint = new System.Drawing.Point(6, 10);
             this.ExecuteTaskBtn.Click += new System.EventHandler(this.ExecuteTaskBtn_Click);
             // 
+            // lable1
+            // 
+            this.lable1.AutoSize = true;
+            this.lable1.Location = new System.Drawing.Point(142, 7);
+            this.lable1.Name = "lable1";
+            this.lable1.Size = new System.Drawing.Size(87, 22);
+            this.lable1.TabIndex = 20;
+            this.lable1.Text = "label62";
+            // 
             // ControlForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 21F);
@@ -2567,5 +2578,6 @@
         private SwitchButton endPlcLoadBtn;
         private System.Windows.Forms.Label label60;
         private System.Windows.Forms.Label label61;
+        private System.Windows.Forms.Label lable1;
     }
 }

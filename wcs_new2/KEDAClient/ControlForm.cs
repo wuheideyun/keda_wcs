@@ -135,7 +135,8 @@ namespace KEDAClient
             {
                 timeCount = 0;
                 startSwitch = true;//一分钟后，自动切换
-            }else if(startSwitch && timeCount % 20 == 0)//20=10秒
+            }
+            else if (startSwitch && timeCount % 20 == 0)//20=10秒
             {
                 int index = FindNextAgvOnLine(_agvListIndex + 1);
                 if (index != -1)
@@ -152,21 +153,21 @@ namespace KEDAClient
             {
                 return;
             }
-            
+
         }
         private int roolcount = 0;
         private int FindNextAgvOnLine(int index)
         {
             roolcount++;
             if (agvList.Items == null) return 0;
-            if (agvList.Items.Count < index || agvList.Items.Count==1) index = 0;
+            if (agvList.Items.Count < index || agvList.Items.Count == 1) index = 0;
             if (roolcount > agvList.Items.Count)
             {
                 roolcount = 0;
                 return -1;
             }
             if (_agvListIndex == -1) _agvListIndex = 0;
-            if(index < agvList.Items.Count && agvList.Items[index].Text.StartsWith("AGV") &&
+            if (index < agvList.Items.Count && agvList.Items[index].Text.StartsWith("AGV") &&
                 agvList.Items[index].BackColor != Color.Gray)
             {
                 roolcount = 0;
@@ -174,7 +175,7 @@ namespace KEDAClient
             }
             else
             {
-                return FindNextAgvOnLine(index+1);
+                return FindNextAgvOnLine(index + 1);
             }
         }
 
@@ -221,7 +222,7 @@ namespace KEDAClient
             //        item.SubItems.Add(data.SiteMsg); //站点信息
             //        currentTaskList.Items.Add(item);
             //    }
-               
+
             //}
             for (int i = 0; i < taskDatas.Count; i++)
             {
@@ -353,7 +354,7 @@ namespace KEDAClient
         /// </summary>
         private void AfterAgvSelectChange()
         {
-            
+
             if (agvList.FocusedItem.Text.StartsWith("AGV"))
             {
                 mainTabControl.SelectedIndex = 0;
@@ -683,7 +684,7 @@ namespace KEDAClient
             }
             else
             {
-                WcfMainHelper.SendOrder(agvList.FocusedItem.Text, new FControlOrder("清除站点",3, 0));
+                WcfMainHelper.SendOrder(agvList.FocusedItem.Text, new FControlOrder("清除站点", 3, 0));
             }
         }
 
@@ -1159,6 +1160,19 @@ namespace KEDAClient
             EnterEndChargeLBtn.Checked = ParamControl.Do_EnterEndChargeLock;
 
             ExitEndChargeLBtn.Checked = ParamControl.Do_ExitEndChargeLock;
+
+
+
+            if (ParamControl.HeadChargeLock)
+            {
+                lable1.Text = ParamControl.ChargeAGV;
+
+            }
+            else
+            {
+                lable1.Text = "未锁定";
+            }
+
 
         }
 

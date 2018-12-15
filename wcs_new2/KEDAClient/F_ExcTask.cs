@@ -440,16 +440,20 @@ namespace KEDAClient
                         {
                             if (_plc.Site == "14")
                             {
-                               ParamControl.Do_ExitHeadChargeLock = false;
+                               ParamControl.Do_ExitHeadChargeLock = true ;
+
                             }
-                            else if (_plc.Site == "11")
-                            {
-                                ParamControl.Do_ExitEndChargeLock = false;
-                            }
+                            //else if (_plc.Site == "11")
+                            //{
+                            //    ParamControl.Do_ExitEndChargeLock = true ;
+                            //}
 
                             _plc.IsExitBatteryLock = false;
 
                             _plc.ExitChargeAgv = null;
+
+                            ParamControl.ChargeAGV = _plc.ExitChargeAgv;
+                            ParamControl.HeadChargeLock = _plc.IsExitBatteryLock;
 
                         }
 
