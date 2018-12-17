@@ -755,7 +755,7 @@ namespace KEDAClient
                     _plcEnd.EnterChargeAgv = d_agv.Id;
 
                     ParamControl.EndChargeLock = _plcEnd.IsEnterBatteryLock;
-                    ParamControl.HeadChargeAGV = _plcEnd.EnterChargeAgv;
+                    ParamControl.EndChargeAGV = _plcEnd.EnterChargeAgv;
                 }
                 else if (d_agv2 != null)
                 {
@@ -763,7 +763,7 @@ namespace KEDAClient
 
                     _plcEnd.EnterChargeAgv = d_agv2.Id;
                     ParamControl.EndChargeLock = _plcEnd.IsEnterBatteryLock;
-                    ParamControl.HeadChargeAGV = _plcEnd.EnterChargeAgv;
+                    ParamControl.EndChargeAGV = _plcEnd.EnterChargeAgv;
                 }
             }
 
@@ -791,7 +791,7 @@ namespace KEDAClient
 
                 ParamControl.EndChargeLock = _plcEnd.IsEnterBatteryLock;
 
-                ParamControl.HeadChargeAGV = _plcEnd.EnterChargeAgv;
+                ParamControl.EndChargeAGV = _plcEnd.EnterChargeAgv;
 
                 task.Id = agv.Id;
 
