@@ -29,17 +29,17 @@ namespace KEDAClient
         /// <summary>
         /// 保存listview选中的文字
         /// </summary>
-        private String _agvListText, _currentTaskText;
+        private string _agvListText = "AGV01", _currentTaskText;
 
         /// <summary>
         /// 选中的PLC名称
         /// </summary>
-        private String _plcSelectName = "";
+        private string _plcSelectName = "";
 
         /// <summary>
         /// 选中的AGV名称
         /// </summary>
-        private String _agvSelectName = "";
+        private string _agvSelectName = "";
 
         /// <summary>
         /// AGV信息
@@ -56,6 +56,8 @@ namespace KEDAClient
         /// </summary>
         Dictionary<string, string> agvStatus = new Dictionary<string, string>();
 
+        private XmlAnalyze XMLConfig;
+
         /// <summary>
         /// 构造函数
         /// </summary>
@@ -67,6 +69,9 @@ namespace KEDAClient
 
             //LogHelper.LogFactory.Init();
             FLog.Init();
+
+            XMLConfig = new XmlAnalyze();
+            InitXmlConfigSetting();
         }
 
         private void ControlForm_Load(object sender, EventArgs e)
@@ -543,6 +548,7 @@ namespace KEDAClient
             {
                 ExecuteTaskBtn.Checked = true;
                 ParamControl.Is_AutoExecuteTask = true;
+                XMLConfig.SetConfig("autoexecute", ExecuteTaskBtn.Checked);
                 FLog.Log("启动：自动生成任务");
                 FLog.Log("启动：自动执行任务");
             }
@@ -550,6 +556,7 @@ namespace KEDAClient
             {
                 FLog.Log("关闭：自动生成任务");
             }
+            XMLConfig.SetConfig("autoaddtask", AutoGenerateTaskBtn.Checked);
 
         }
 
@@ -561,6 +568,7 @@ namespace KEDAClient
         private void ExecuteTaskBtn_Click(object sender, EventArgs e)
         {
             ParamControl.Is_AutoExecuteTask = ExecuteTaskBtn.Checked;
+            XMLConfig.SetConfig("autoexecute", ExecuteTaskBtn.Checked);
 
         }
         #endregion
@@ -723,7 +731,7 @@ namespace KEDAClient
         private void enterheadChargeBtn_Click(object sender, EventArgs e)
         {
             ParamControl.Do_EnterHeadCharge = enterheadChargeBtn.Checked;
-
+            XMLConfig.SetConfig("inheadcharge", enterheadChargeBtn.Checked);//进窑头充
         }
 
         /// <summary>
@@ -734,7 +742,7 @@ namespace KEDAClient
         private void enterendChargeBtn_Click(object sender, EventArgs e)
         {
             ParamControl.Do_EnterEndCharge = enterendChargeBtn.Checked;
-
+            XMLConfig.SetConfig("inendcharge", enterendChargeBtn.Checked);
         }
 
         /// <summary>
@@ -745,7 +753,7 @@ namespace KEDAClient
         private void exitheadChargeBtn_Click(object sender, EventArgs e)
         {
             ParamControl.Do_ExitHeadCharge = exitheadChargeBtn.Checked;
-
+            XMLConfig.SetConfig("outheadcharge", exitheadChargeBtn.Checked);
         }
 
         /// <summary>
@@ -756,6 +764,8 @@ namespace KEDAClient
         private void exitendChargeBtn_Click(object sender, EventArgs e)
         {
             ParamControl.Do_ExitEndCharge = exitendChargeBtn.Checked;
+            XMLConfig.SetConfig("outendcharge", enterendChargeBtn.Checked);
+
         }
 
         /// <summary>
@@ -766,6 +776,8 @@ namespace KEDAClient
         private void enterheadChargSucBtn_Click(object sender, EventArgs e)
         {
             ParamControl.Do_EnterHeadChargeSucc = enterheadChargSucBtn.Checked;
+            XMLConfig.SetConfig("inheadchargesucc", enterheadChargSucBtn.Checked);
+
         }
 
         /// <summary>
@@ -776,6 +788,7 @@ namespace KEDAClient
         private void enterendChargSucBtn_Click(object sender, EventArgs e)
         {
             ParamControl.Do_EnterEndChargeSucc = enterendChargSucBtn.Checked;
+            XMLConfig.SetConfig("inendchargesucc", enterendChargSucBtn.Checked); 
         }
 
         /// <summary>
@@ -787,6 +800,8 @@ namespace KEDAClient
         {
 
             ParamControl.Do_ExitHeadChargeSucc = exitheadChargSucBtn.Checked;
+            XMLConfig.SetConfig("outheadchargesucc", exitheadChargSucBtn.Checked);
+            
         }
 
         /// <summary>
@@ -797,6 +812,7 @@ namespace KEDAClient
         private void exitendChargSucBtn_Click(object sender, EventArgs e)
         {
             ParamControl.Do_ExitEndChargeSucc = exitendChargSucBtn.Checked;
+            XMLConfig.SetConfig("outendchargesucc", exitendChargSucBtn.Checked); 
         }
 
         /// <summary>
@@ -807,7 +823,7 @@ namespace KEDAClient
         private void headUnloadBtn_Click(object sender, EventArgs e)
         {
             ParamControl.Do_HeadUnload = headUnloadBtn.Checked;
-
+            XMLConfig.SetConfig("headunload", headUnloadBtn.Checked); 
         }
 
         /// <summary>
@@ -818,6 +834,7 @@ namespace KEDAClient
         private void endLoadBtn_Click(object sender, EventArgs e)
         {
             ParamControl.Do_EndLoad = endLoadBtn.Checked;
+            XMLConfig.SetConfig("endload", endLoadBtn.Checked);
 
         }
 
@@ -829,6 +846,7 @@ namespace KEDAClient
         private void endSucBtn_Click(object sender, EventArgs e)
         {
             ParamControl.Do_ToEndSuc = endSucBtn.Checked;
+            XMLConfig.SetConfig("endsuc", endSucBtn.Checked);
 
         }
 
@@ -840,7 +858,7 @@ namespace KEDAClient
         private void headSucBtn_Click(object sender, EventArgs e)
         {
             ParamControl.Do_ToHeadSuc = headSucBtn.Checked;
-
+            XMLConfig.SetConfig("headsuc", headSucBtn.Checked); 
         }
 
         /// <summary>
@@ -851,6 +869,7 @@ namespace KEDAClient
         private void endWaitBtn_Click(object sender, EventArgs e)
         {
             ParamControl.Do_ToEndWait = endWaitBtn.Checked;
+            XMLConfig.SetConfig("endwait", endWaitBtn.Checked);
 
         }
 
@@ -862,6 +881,7 @@ namespace KEDAClient
         private void headWaitBtn_Click(object sender, EventArgs e)
         {
             ParamControl.Do_ToHeadWait = headWaitBtn.Checked;
+            XMLConfig.SetConfig("headwait", headWaitBtn.Checked);
 
         }
 
@@ -873,6 +893,8 @@ namespace KEDAClient
         private void headPlcUnloadBtn_Click(object sender, EventArgs e)
         {
             ParamControl.Do_HeadPlcUnload = headPlcUnloadBtn.Checked;
+            XMLConfig.SetConfig("headplcunload", headPlcUnloadBtn.Checked);
+
         }
 
         /// <summary>
@@ -883,6 +905,8 @@ namespace KEDAClient
         private void endPlcLoadBtn_Click(object sender, EventArgs e)
         {
             ParamControl.Do_EndPlcLoad = endPlcLoadBtn.Checked;
+            XMLConfig.SetConfig("endplcload", endPlcLoadBtn.Checked);
+
         }
 
         /// <summary>
@@ -1177,6 +1201,90 @@ namespace KEDAClient
         }
 
 
+        #endregion
+
+        #region 读取配置文件，更新状态
+
+        private void InitXmlConfigSetting()
+        {
+            bool v;
+            v = XMLConfig.GetConfig("inheadcharge");//进窑头充
+            ParamControl.Do_EnterHeadCharge = v;
+            enterheadChargeBtn.Checked =v;
+
+            v = XMLConfig.GetConfig("outheadcharge");//出窑头充
+            ParamControl.Do_ExitHeadCharge = v;
+            exitheadChargeBtn.Checked = v;
+
+
+            v = XMLConfig.GetConfig("inendcharge");//进窑尾充
+            ParamControl.Do_EnterEndCharge = v;
+            enterendChargeBtn.Checked = v;
+
+
+            v = XMLConfig.GetConfig("outendcharge");//进窑尾充
+            ParamControl.Do_ExitEndCharge = v;
+            exitendChargeBtn.Checked = v;
+
+            v = XMLConfig.GetConfig("inheadchargesucc");//进窑头充完成
+            ParamControl.Do_EnterHeadChargeSucc = v;
+            enterheadChargSucBtn.Checked =v ;
+
+            v = XMLConfig.GetConfig("outheadchargesucc");//出窑头充完成
+            ParamControl.Do_ExitHeadChargeSucc = v;
+            exitheadChargSucBtn.Checked = v;
+
+
+            v = XMLConfig.GetConfig("inendchargesucc");//进窑尾充完成
+            ParamControl.Do_EnterEndChargeSucc = v;
+            enterendChargSucBtn.Checked = v;
+
+
+            v = XMLConfig.GetConfig("outendchargesucc");//进窑尾充完成
+            ParamControl.Do_ExitEndChargeSucc = v;
+            exitendChargSucBtn.Checked = v;
+
+            v = XMLConfig.GetConfig("headunload");//窑头等到窑头卸
+            ParamControl.Do_HeadUnload = v;
+            headUnloadBtn.Checked = v;
+
+            v = XMLConfig.GetConfig("headsuc");//窑头卸到窑头完
+            ParamControl.Do_ToHeadSuc = v;
+            headSucBtn.Checked = v;
+
+            v = XMLConfig.GetConfig("endwait");//窑头完到窑尾等
+            ParamControl.Do_ToEndWait = v;
+            endWaitBtn.Checked = v;
+
+            v = XMLConfig.GetConfig("endload");//窑尾完到窑尾取
+            ParamControl.Do_EndLoad = v;
+            endLoadBtn.Checked = v;
+
+            v = XMLConfig.GetConfig("endsuc");//窑尾取到窑尾完
+            ParamControl.Do_ToEndSuc = v;
+            endSucBtn.Checked = v;
+
+            v = XMLConfig.GetConfig("headwait");//窑尾完到窑头等
+            ParamControl.Do_ToHeadWait = v;
+            headWaitBtn.Checked = v;
+
+            v = XMLConfig.GetConfig("headplcunload");//
+            ParamControl.Do_HeadPlcUnload = v;
+            headPlcUnloadBtn.Checked = v;
+
+            v = XMLConfig.GetConfig("endplcload");//
+            ParamControl.Do_EndPlcLoad = v;
+            endPlcLoadBtn.Checked = v;
+
+            v = XMLConfig.GetConfig("autoaddtask");//自动生成任务
+            ParamControl.Is_AutoAddTask = v;
+            AutoGenerateTaskBtn.Checked = v;
+
+            v = XMLConfig.GetConfig("autoexecute");//自动执行任务
+            ParamControl.Is_AutoExecuteTask = v;
+            ExecuteTaskBtn.Checked = v;
+
+        }
         #endregion
     }
 }

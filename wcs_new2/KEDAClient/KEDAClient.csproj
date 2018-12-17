@@ -186,6 +186,8 @@
     <Compile Include="TabContorlEx.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="XmlAnalyze.cs" />
+    <Compile Include="XmlHelper.cs" />
     <EmbeddedResource Include="ControlForm.resx">
       <DependentUpon>ControlForm.cs</DependentUpon>
     </EmbeddedResource>
