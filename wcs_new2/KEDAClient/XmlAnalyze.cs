@@ -92,28 +92,31 @@ namespace KEDAClient
             {
                 DisplayConfigList.Add(new DisplayConfig { name = n, value = v });
             }
-            if (saveThread == null)
-            {
-                LastSetTime = DateTime.Now;
-                saveThread = new Thread(CountToSave);
-                saveThread.IsBackground = true;
-                saveThread.Start();
-            }
-            else
-            {
-                if (!saveThread.IsAlive && (DateTime.Now - LastSetTime).TotalSeconds > 11)
-                {
-                    LastSetTime = DateTime.Now;
-                    saveThread = new Thread(CountToSave);
-                    saveThread.IsBackground = true;
-                    saveThread.Start();
-                }
-                else
-                {
-                    LastSetTime = DateTime.Now;
-                }
+
+            SaveToFile();
+            DoAnalyze();
+            //if (saveThread == null)
+            //{
+            //    LastSetTime = DateTime.Now;
+            //    saveThread = new Thread(CountToSave);
+            //    saveThread.IsBackground = true;
+            //    saveThread.Start();
+            //}
+            //else
+            //{
+            //    if (!saveThread.IsAlive && (DateTime.Now - LastSetTime).TotalSeconds > 11)
+            //    {
+            //        LastSetTime = DateTime.Now;
+            //        saveThread = new Thread(CountToSave);
+            //        saveThread.IsBackground = true;
+            //        saveThread.Start();
+            //    }
+            //    else
+            //    {
+            //        LastSetTime = DateTime.Now;
+            //    }
                     
-            }
+            //}
         }
         /// <summary>
         /// 保存到配置文件
