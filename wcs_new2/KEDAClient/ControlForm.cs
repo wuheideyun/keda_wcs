@@ -764,7 +764,7 @@ namespace KEDAClient
         private void exitendChargeBtn_Click(object sender, EventArgs e)
         {
             ParamControl.Do_ExitEndCharge = exitendChargeBtn.Checked;
-            XMLConfig.SetConfig("outendcharge", enterendChargeBtn.Checked);
+            XMLConfig.SetConfig("outendcharge", exitendChargeBtn.Checked);
 
         }
 
