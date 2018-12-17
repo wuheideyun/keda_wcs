@@ -44,6 +44,7 @@
             this.agvNameLab = new System.Windows.Forms.Label();
             this.AgvInitBtn = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.label63 = new System.Windows.Forms.Label();
             this.ExitEndChargeLBtn = new KEDAClient.SwitchButton();
             this.label57 = new System.Windows.Forms.Label();
             this.EnterEndChargeLBtn = new KEDAClient.SwitchButton();
@@ -52,6 +53,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.label62 = new System.Windows.Forms.Label();
             this.ExitHeadChargeLBtn = new KEDAClient.SwitchButton();
             this.label56 = new System.Windows.Forms.Label();
             this.EnterHeadChargeLBtn = new KEDAClient.SwitchButton();
@@ -188,7 +190,6 @@
             this.AutoGenerateTaskBtn = new KEDAClient.SwitchButton();
             this.InitAllBtn = new KEDAClient.SwitchButton();
             this.ExecuteTaskBtn = new KEDAClient.SwitchButton();
-            this.lable1 = new System.Windows.Forms.Label();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -390,6 +391,7 @@
             // panel6
             // 
             this.panel6.AutoScroll = true;
+            this.panel6.Controls.Add(this.label63);
             this.panel6.Controls.Add(this.ExitEndChargeLBtn);
             this.panel6.Controls.Add(this.label57);
             this.panel6.Controls.Add(this.EnterEndChargeLBtn);
@@ -401,6 +403,15 @@
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(245, 170);
             this.panel6.TabIndex = 16;
+            // 
+            // label63
+            // 
+            this.label63.AutoSize = true;
+            this.label63.Location = new System.Drawing.Point(148, 4);
+            this.label63.Name = "label63";
+            this.label63.Size = new System.Drawing.Size(87, 22);
+            this.label63.TabIndex = 22;
+            this.label63.Text = "label63";
             // 
             // ExitEndChargeLBtn
             // 
@@ -493,7 +504,7 @@
             // 
             // panel5
             // 
-            this.panel5.Controls.Add(this.lable1);
+            this.panel5.Controls.Add(this.label62);
             this.panel5.Controls.Add(this.ExitHeadChargeLBtn);
             this.panel5.Controls.Add(this.label56);
             this.panel5.Controls.Add(this.EnterHeadChargeLBtn);
@@ -505,6 +516,15 @@
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(246, 172);
             this.panel5.TabIndex = 15;
+            // 
+            // label62
+            // 
+            this.label62.AutoSize = true;
+            this.label62.Location = new System.Drawing.Point(142, 4);
+            this.label62.Name = "label62";
+            this.label62.Size = new System.Drawing.Size(87, 22);
+            this.label62.TabIndex = 20;
+            this.label62.Text = "label62";
             // 
             // ExitHeadChargeLBtn
             // 
@@ -2350,15 +2370,6 @@
             this.ExecuteTaskBtn.TextStartPoint = new System.Drawing.Point(6, 10);
             this.ExecuteTaskBtn.Click += new System.EventHandler(this.ExecuteTaskBtn_Click);
             // 
-            // lable1
-            // 
-            this.lable1.AutoSize = true;
-            this.lable1.Location = new System.Drawing.Point(142, 7);
-            this.lable1.Name = "lable1";
-            this.lable1.Size = new System.Drawing.Size(87, 22);
-            this.lable1.TabIndex = 20;
-            this.lable1.Text = "label62";
-            // 
             // ControlForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 21F);
@@ -2578,6 +2589,7 @@
         private SwitchButton endPlcLoadBtn;
         private System.Windows.Forms.Label label60;
         private System.Windows.Forms.Label label61;
-        private System.Windows.Forms.Label lable1;
+        private System.Windows.Forms.Label label62;
+        private System.Windows.Forms.Label label63;
     }
 }

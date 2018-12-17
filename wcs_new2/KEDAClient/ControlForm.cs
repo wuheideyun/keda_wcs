@@ -1185,18 +1185,25 @@ namespace KEDAClient
 
             ExitEndChargeLBtn.Checked = ParamControl.Do_ExitEndChargeLock;
 
-
-
             if (ParamControl.HeadChargeLock)
             {
-                lable1.Text = ParamControl.ChargeAGV;
+                label62.Text = ParamControl.HeadChargeAGV;
 
             }
             else
             {
-                lable1.Text = "未锁定";
+                label62.Text = "未锁定";
             }
 
+            if (ParamControl.EndChargeLock)
+            {
+                label63.Text = ParamControl.EndChargeAGV;
+
+            }
+            else
+            {
+                label63.Text = "未锁定";
+            }
 
         }
 

@@ -288,6 +288,8 @@ namespace KEDAClient
 
                                     ParamControl.Do_EnterEndChargeLock = true;
 
+                                    ParamControl.EndChargeLock = _plc.IsEnterBatteryLock;
+
                                     _plc.EnterChargeAgv = null;
                                 }
                             }
@@ -452,7 +454,7 @@ namespace KEDAClient
 
                             _plc.ExitChargeAgv = null;
 
-                            ParamControl.ChargeAGV = _plc.ExitChargeAgv;
+                            ParamControl.HeadChargeAGV = _plc.ExitChargeAgv;
                             ParamControl.HeadChargeLock = _plc.IsExitBatteryLock;
 
                         }

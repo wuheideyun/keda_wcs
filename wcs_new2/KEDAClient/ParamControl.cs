@@ -14,8 +14,11 @@ namespace KEDAClient
     public class ParamControl
     {
 
-        public static string ChargeAGV = "";
+        public static string HeadChargeAGV = "";
         public static bool HeadChargeLock = false;
+        public static string EndChargeAGV = "";
+        public static bool EndChargeLock = false;
+
 
         /// <summary>
         /// 最低充电量
