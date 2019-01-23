@@ -41,7 +41,7 @@ namespace KEDAClient
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabelVersion = new System.Windows.Forms.ToolStripLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.刷新ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.登录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.注销登录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.用户登录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -174,7 +174,7 @@ namespace KEDAClient
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.刷新ToolStripMenuItem,
+            this.ToolStripMenuItem,
             this.登录ToolStripMenuItem,
             this.startServer,
             this.stopServer});
@@ -184,12 +184,12 @@ namespace KEDAClient
             this.menuStrip1.TabIndex = 17;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // 刷新ToolStripMenuItem
+            // ToolStripMenuItem
             // 
-            this.刷新ToolStripMenuItem.Name = "刷新ToolStripMenuItem";
-            this.刷新ToolStripMenuItem.Size = new System.Drawing.Size(60, 21);
-            this.刷新ToolStripMenuItem.Text = "刷新(&R)";
-            this.刷新ToolStripMenuItem.Click += new System.EventHandler(this.刷新ToolStripMenuItem_Click);
+            this.ToolStripMenuItem.Name = "ToolStripMenuItem";
+            this.ToolStripMenuItem.Size = new System.Drawing.Size(60, 21);
+            this.ToolStripMenuItem.Text = "刷新(&R)";
+            this.ToolStripMenuItem.Click += new System.EventHandler(this.ToolStripMenuItem_Click);
             // 
             // 登录ToolStripMenuItem
             // 
@@ -850,7 +850,7 @@ namespace KEDAClient
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripLabel toolStripLabelVersion;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem 刷新ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 登录ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 注销登录ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 用户登录ToolStripMenuItem;

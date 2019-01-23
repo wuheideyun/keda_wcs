@@ -98,6 +98,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="DataContract">
+      <HintPath>..\..\EXP\DataContract.dll</HintPath>
+    </Reference>
+    <Reference Include="FLBasicHelper">
+      <HintPath>..\..\EXP\FLBasicHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="FLCommonInterfaces">
+      <HintPath>..\..\EXP\FLCommonInterfaces.dll</HintPath>
+    </Reference>
     <Reference Include="GfxAgvMapEx, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\EXP\GfxAgvMapEx.dll</HintPath>
@@ -148,6 +157,7 @@
       <HintPath>..\..\EXP\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

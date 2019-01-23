@@ -77,6 +77,7 @@ namespace KEDAClient
         private void displayLogToUi(object obj)
         {
             String msg = (String)obj;
+
             if (string.IsNullOrEmpty(msg)) { msg = "空消息"; }
 
             if (listBox.Items.Count > 200)
@@ -174,7 +175,6 @@ namespace KEDAClient
         {
             lock (_ans)
             {
-
                 return _dispatchList.Find(c => { return c.DisDevId == devid && c.OrderStatue != ResultTypeEnum.Suc; }) != null;
             }
         }
@@ -188,7 +188,11 @@ namespace KEDAClient
         {
             try
             {
-                DeviceBackImf dev = _devList.Find(c => { return c.DevType == "AGV" && c.SensorList[ConstSetBA.地标].RValue == site; });
+                DeviceBackImf dev = _devList.Find(c => { return c.DevType == "AGV"
+                    && c.SensorList[ConstSetBA.地标].RValue == site
+                    && c.SensorList[ConstSetBA.空闲].RValue == "true"
+                    ;
+                });
 
                 if (dev != null) { return new F_AGV(dev.DevId); }
             }
@@ -210,7 +214,9 @@ namespace KEDAClient
                 List<DeviceBackImf> devs = _devList.FindAll(c =>
                 {
                     // 不在窑尾1、窑尾5 且有货的AGV，应到窑头卸载等待区
-                    return c.DevType == "AGV" && c.SensorList[ConstSetBA.地标].RValue != Site.窑尾5 && c.SensorList[ConstSetBA.地标].RValue !=Site.窑尾1 
+                    return c.DevType == "AGV"
+                    && c.SensorList[ConstSetBA.地标].RValue != Site.窑尾5 
+                    && c.SensorList[ConstSetBA.地标].RValue != Site.窑尾1
                     && c.SensorList[ConstSetBA.货物状态].RValue == ConstSetBA.AGV有货
                     ;
                 });
@@ -239,8 +245,13 @@ namespace KEDAClient
         {
             try
             {
-                List<DeviceBackImf> devs = _devList.FindAll(c => { return c.DevType == "AGV" && c.SensorList[ConstSetBA.地标].RValue !=Site.窑尾1  && c.SensorList[ConstSetBA.货物状态].RValue == ConstSetBA.AGV无货
-                    ; });
+                List<DeviceBackImf> devs = _devList.FindAll(c =>
+                {
+                    return c.DevType == "AGV" 
+                    && c.SensorList[ConstSetBA.地标].RValue != Site.窑尾1 
+                    && c.SensorList[ConstSetBA.货物状态].RValue == ConstSetBA.AGV无货
+;
+                });
 
                 if (devs != null)
                 {
@@ -267,9 +278,14 @@ namespace KEDAClient
         {
             try
             {
-                List<DeviceBackImf> devs = _devList.FindAll(c =>{return c.DevType == "AGV" &&
-                (c.DevStatue == "False" || c.SensorList[ErrorType.脱轨].RValue == "1" || c.SensorList[ErrorType.急停触发].RValue == "1" ||
-                 c.SensorList[ErrorType.驱动器故障].RValue == "1" || c.SensorList[ErrorType.轨道错误].RValue == "1" || c.SensorList[ErrorType.机械撞].RValue == "1");
+                List<DeviceBackImf> devs = _devList.FindAll(c =>{return c.DevType == "AGV" 
+                    &&(c.IsAlive  == false  
+                    || c.SensorList[ErrorType.脱轨].RValue == "1" 
+                    || c.SensorList[ErrorType.急停触发].RValue == "1" 
+                    ||c.SensorList[ErrorType.驱动器故障].RValue == "1" 
+                    || c.SensorList[ErrorType.轨道错误].RValue == "1" 
+                    || c.SensorList[ErrorType.机械撞].RValue == "1"
+                    );
                 });
 
                 if (devs != null)
@@ -285,6 +301,11 @@ namespace KEDAClient
             catch { }
 
             return null;
+        }
+
+        public List<DispatchBackMember> DispatchList
+        {
+            get { return _dispatchList; }
         }
 
         /// <summary>

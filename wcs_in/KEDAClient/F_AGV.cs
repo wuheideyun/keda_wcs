@@ -1,8 +1,7 @@
-﻿using GfxCommonInterfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
+using GfxServiceContractClient;
+using GfxCommonInterfaces;
+
 
 namespace KEDAClient
 {
@@ -153,6 +152,16 @@ namespace KEDAClient
             get
             {
                 return F_DataCenter.MDev.IGetSenValue(_id, "0010") == "true" && !(F_DataCenter.MDev.IsDevInDispath(_id));
+            }
+        }
+
+        public bool IsAlive
+        {
+            get
+            {
+                DeviceBackImf dev = F_DataCenter.MDev.IGetDev(Id);
+
+                return dev != null ? dev.IsAlive : false;
             }
         }
 

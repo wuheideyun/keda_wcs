@@ -239,6 +239,9 @@ namespace KEDAClient
     {
         Object _currentTaskObj = new object();
 
+        /// <summary>
+        /// 界面显示的任务数据
+        /// </summary>
         private static List<TaskData> _taskDatas = new List<TaskData>();
 
         /// <summary>

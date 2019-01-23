@@ -13,6 +13,20 @@ namespace KEDAClient
         static bool _init = false;
 
         /// <summary>
+        /// 
+        /// </summary>
+        static int _clearTime = 30;
+
+        /// <summary>
+        /// 任务超时清除时间
+        /// </summary>
+        public static int ClearTime
+        {
+            get { return F_DataCenter._clearTime; }
+        }
+
+
+        /// <summary>
         /// 设备管理器
         /// </summary>
         static F_DevManager _mDev = null;

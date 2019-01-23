@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
+
 namespace KEDAClient
 {
     /// <summary>
@@ -30,6 +31,8 @@ namespace KEDAClient
     public class F_ExcTask
     {
         string _id = Guid.NewGuid().ToString();
+
+        int _objID;
 
         /// <summary>
         /// 任务起点
@@ -57,6 +60,21 @@ namespace KEDAClient
         F_AGV _agv = null;
 
         /// <summary>
+        /// 离线计数
+        /// </summary>
+        int _disAliveCounter = 0;
+
+        /// <summary>
+        /// 计数器
+        /// </summary>
+        int _triggerCounter = 0;
+
+        /// <summary>
+        /// 任务已经开始
+        /// </summary>
+        bool _isStart = false;
+
+        /// <summary>
         /// 是否已经完成
         /// </summary>
         bool _isSuc = false;
@@ -65,6 +83,43 @@ namespace KEDAClient
         /// 此次任务的调度结果
         /// </summary>
         DispatchBackMember _taskDispatch = null;
+
+
+        /// <summary>
+        /// 对象的唯一标识
+        /// </summary>
+        public int NO
+        {
+            get { return _objID; }
+        }
+
+
+        /// <summary>
+        /// 是否超时
+        /// </summary>
+        bool _isOverTime = false;
+
+        /// <summary>
+        /// 是否超时
+        /// </summary>
+        public bool IsOverTime
+        {
+            get { return _isOverTime; }
+        }
+
+
+        /// <summary>
+        /// 是否离线超时
+        /// </summary>
+        bool _isDisaliveOverTime = false;
+
+        /// <summary>
+        /// 是否离线超时
+        /// </summary>
+        public bool IsDisaliveOverTime
+        {
+            get { return _isDisaliveOverTime; }
+        }
 
         public string StartSite
         {
@@ -123,15 +178,17 @@ namespace KEDAClient
             _startSite = startSite;
 
             _endSite = endSite;
+
+            _objID = this.GetHashCode();
         }
 
         /// <summary>
         /// 任务完成
         /// </summary>
-        private void ISetTaskSuc()
+        public  void ISetTaskSuc()
         {
-            if (_plc != null) { _plc.IsLock = false; }
-            if (_agv != null) { _agv.IsLock = false; }
+            //if (_plc != null) { _plc.IsLock = false; }
+            //if (_agv != null) { _agv.IsLock = false; }
 
             if (_taskDispatch != null) { if (JTWcfHelper.WcfMainHelper.CtrDispatch(_taskDispatch.DisGuid, DisOrderCtrTypeEnum.Stop)) { _isSuc = true; } }
             else { _isSuc = true; }
@@ -144,7 +201,28 @@ namespace KEDAClient
         {
             if (_isSuc) { return ""; }
 
-            _taskDispatch = JTWcfHelper.WcfMainHelper.GetDispatch(Id);
+            if (!_isStart)
+            {
+                if (++_triggerCounter > F_DataCenter.ClearTime) { _isOverTime = true; }
+            }
+
+            if (_agv != null)
+            {
+                if (_agv.IsAlive)
+                {
+                    _disAliveCounter = 0;
+                }
+                else
+                {
+                    if (++_disAliveCounter > F_DataCenter.ClearTime) { _isDisaliveOverTime = true; }
+                }
+            }
+            else
+            {
+                if (++_triggerCounter > F_DataCenter.ClearTime) { _isOverTime = true; }
+            }
+
+            _taskDispatch =JTWcfHelper.WcfMainHelper.GetDispatch(Id);
 
             if (_taskDispatch == null)
             {
@@ -156,6 +234,9 @@ namespace KEDAClient
 
 
                 if (!string.IsNullOrEmpty(_startSite)) { dis.StartSiteList.Add(_startSite); }
+                
+                ///修改By fujun
+                dis.DevList.Add(Id);
 
                 string back = "";
 
@@ -164,6 +245,9 @@ namespace KEDAClient
             }
             else
             {
+                ///修改By fujun
+                _isStart = true;
+
                 ///确定此时任务的AGV
                 if (_agv == null) { _agv = new F_AGV(_taskDispatch.DisDevId); }
 
@@ -177,30 +261,55 @@ namespace KEDAClient
                         if (_agv.Site == _plc.Site)
                         {
                             // 判断窑尾PLC的货物状态和AGV货物状态
-                            if ((_plc.Sta_Material == EnumSta_Material.窑尾传输中 || _plc.Sta_Material == EnumSta_Material.AGV未知 || _plc.Sta_Material == EnumSta_Material.窑尾有货) &&
-                            (_agv.Sta_Material == EnumSta_Material.AGV无货 || _agv.Sta_Material == EnumSta_Material.AGV传输中))
+                            if (
+                                //(_plc.Sta_Material == EnumSta_Material.窑尾传输中
+                                //|| _plc.Sta_Material == EnumSta_Material.AGV未知
+                                //|| _plc.Sta_Material == EnumSta_Material.窑尾有货)&&
+                                (_agv.Sta_Material == EnumSta_Material.AGV无货
+                                || _agv.Sta_Material == EnumSta_Material.AGV传输中)
+                                )
                             {
-                                _agv.SendOrdr(EnumType.上料操作, EnumPara.agv上料启动);
+                                if (_agv.Sta_Monitor != EnumSta_Monitor.AGV电机正转)
+                                {
+                                    _agv.SendOrdr(EnumType.上料操作, EnumPara.agv上料启动);
 
-                                _plc.SendOrdr(EnumType.下料操作, EnumPara.窑尾辊台启动);
+                                }
+                                else
+                                {
+                                    _agv.SendOrdr(EnumType.上料操作, EnumPara.agv上料启动);
+
+                                    _plc.SendOrdr(EnumType.下料操作, EnumPara.窑尾辊台启动);
+                                }
                             }
 
                             // // 判断窑尾是否出料完成
-                            if (_plc.Sta_Material == EnumSta_Material.窑尾出料完成 &&
-                               _agv.Sta_Material == EnumSta_Material.AGV有货
-                               && true)
+                            if (//_plc.Sta_Material == EnumSta_Material.窑尾出料完成 &&
+                                _agv.Sta_Material == EnumSta_Material.AGV传输中 &&
+                               //_agv.Sta_Monitor != EnumSta_Monitor.AGV电机正转&&
+                               true)
                             {
+                                Thread.Sleep(3000);
                                 _agv.SendOrdr(EnumType.上料操作, EnumPara.agv辊台停止);
 
                                 _plc.SendOrdr(EnumType.下料操作, EnumPara.窑尾辊台停止);
 
                                 if (true
-                                    &&_agv.Sta_Monitor == EnumSta_Monitor.AGV电机停止
+                                    && _agv.Sta_Monitor == EnumSta_Monitor.AGV电机停止
                                     )
                                 {
+                                    //取货完成，解锁窑尾
+                                    if (_plc != null)
+                                    {
+                                        _plc.IsLock = false;
+
+                                    }
                                     ISetTaskSuc();
                                 }
                             }
+                        }
+                        else
+                        {
+                            ISetTaskSuc();
                         }
                         return "";
                     }
@@ -209,33 +318,56 @@ namespace KEDAClient
                         ///当前AGV的到达的地标 与 棍台绑定地标一致
                         if (_agv.Site == _plc.Site)
                         {
-                            
-                            if ((_plc.Sta_Material == EnumSta_Material.窑头无货 || _plc.Sta_Material == EnumSta_Material.窑头无货 || _plc.Sta_Material == EnumSta_Material.窑头传输中) &&
-                                (_agv.Sta_Material == EnumSta_Material.AGV传输中 || _agv.Sta_Material == EnumSta_Material.AGV有货) )
+
+                            if (//(_plc.Sta_Material == EnumSta_Material.窑头无货
+                                //|| _plc.Sta_Material == EnumSta_Material.窑头无货
+                                //|| _plc.Sta_Material == EnumSta_Material.窑头传输中)
+                                //&& (_agv.Sta_Material == EnumSta_Material.AGV传输中
+                                //|| _agv.Sta_Material == EnumSta_Material.AGV有货)&&
+                                true)
                             {
-                                _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台启动);
+                                if (_agv.Sta_Monitor != EnumSta_Monitor.AGV电机正转)
+                                {
+                                    _agv.SendOrdr(EnumType.下料操作, EnumPara.agv下料启动);
 
-                                _agv.SendOrdr(EnumType.下料操作, EnumPara.agv下料启动);
+                                }
+                                else
+                                {
+                                    _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台启动);
 
+                                    _agv.SendOrdr(EnumType.下料操作, EnumPara.agv下料启动);
+                                }
                             }
 
 
-                            if (_plc.Sta_Material == EnumSta_Material.窑头接料完成 &&
+                            if (//_plc.Sta_Material == EnumSta_Material.窑头接料完成 &&
                                 _agv.Sta_Material == EnumSta_Material.AGV无货 &&
+                                _agv.Sta_Monitor != EnumSta_Monitor.AGV电机正转&&
                                true)
                             {
                                 _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台停止);
 
                                 _agv.SendOrdr(EnumType.下料操作, EnumPara.agv辊台停止);
-                                
+
                                 if (_agv.Sta_Monitor == EnumSta_Monitor.AGV电机停止 &&
                                     true)
                                 {
+                                    //放货完成，解锁窑头
+                                    if (_plc != null)
+                                    {
+                                        _plc.IsLock = false;
+
+                                    }
+
                                     Thread.Sleep(5000);
                                     ISetTaskSuc();
                                 }
                             }
 
+                        }
+                        else
+                        {
+                            ISetTaskSuc();
                         }
                         return "";
                     }
@@ -250,14 +382,14 @@ namespace KEDAClient
                         if (_agv.Site == _plc.Site)
                         {
 
-                            _plc.SendOrdr(EnumType.下料操作, EnumPara.窑尾1号机械手启动);
+                            //_plc.SendOrdr(EnumType.下料操作, EnumPara.窑尾1号机械手启动);
 
-                            if (_plc.Sta_Material == EnumSta_Material.窑尾1号机械手完成 &&
+                            if (//_plc.Sta_Material == EnumSta_Material.窑尾1号机械手完成 &&
                                 true
                                 )
                             {
                                 //1号机械手完成动作
-                                 ISetTaskSuc();
+                                ISetTaskSuc();
                             }
                         }
                         return "";
@@ -268,9 +400,9 @@ namespace KEDAClient
                         if (_agv.Site == Site.窑尾2)
                         {
 
-                            _plc.SendOrdr(EnumType.下料操作, EnumPara.窑尾2号机械手启动);
+                            //_plc.SendOrdr(EnumType.下料操作, EnumPara.窑尾2号机械手启动);
 
-                            if (_plc.Sta_Material == EnumSta_Material.窑尾2号机械手完成 &&
+                            if (//_plc.Sta_Material == EnumSta_Material.窑尾2号机械手完成 &&
                                 true
                                 )
                             {
@@ -285,10 +417,10 @@ namespace KEDAClient
                         if (_agv.Site == Site.窑头3)
                         {
 
-                            _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头机械手启动);
+                            //_plc.SendOrdr(EnumType.上料操作, EnumPara.窑头机械手启动);
 
                             if (true
-                                && _plc.Sta_Material == EnumSta_Material.窑头机械手完成
+                                //&& _plc.Sta_Material == EnumSta_Material.窑头机械手完成
                                 )
                             {
                                 ISetTaskSuc();
@@ -384,6 +516,9 @@ namespace KEDAClient
 
                 try
                 {
+                    //同步任务
+                    ClearLeftDispatch();
+
                     lock (_ans) { taskList.Clear(); taskList.AddRange(_taskList); }
 
                     foreach (var item in taskList)
@@ -391,7 +526,8 @@ namespace KEDAClient
                         String msg = item.DoWork();
                         if (msg != "") sendServerLog(msg);
 
-                        if (item.IsSuc) { IDeletTask(item.Id); }
+                        ///任务完成 或者 超时 或者离线超时
+                        if (item.IsSuc || item.IsOverTime || item.IsDisaliveOverTime) { IDeletTask(item.Id); }
                     }
                 }
                 catch { }
@@ -407,12 +543,32 @@ namespace KEDAClient
         {
             lock (_ans)
             {
-                F_ExcTask exit = _taskList.Find(c => { return (c.Plc == task.Plc && task.Plc != null) || c.Id == task.Id; });
+                F_ExcTask exit = _taskList.Find(c =>{return //(c.Plc == task.Plc && task.Plc != null) || 
+                    c.Id == task.Id;
+                });
 
-                if (exit == null) { _taskList.Add(task); return true; }
+                if (exit == null)
+                {
+                    _taskList.Add(task);
+                    return true;
+                }
+                else if (task.EndSite != exit.EndSite)
+                {
+                    _taskList.Remove(exit);
+                    _taskList.Add(task);
+                    return true;
+                }
+                else if (task.StartSite != exit.StartSite)
+                {
+                    _taskList.Remove(exit);
+                    _taskList.Add(task);
+                    return true;
+                }
+                else
+                {
+                    return true;
+                }
             }
-
-            return false;
         }
 
         /// <summary>
@@ -436,6 +592,65 @@ namespace KEDAClient
                 }
             }
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="no"></param>
+        public void StopTask(int no)
+        {
+            lock (_ans)
+            {
+                F_ExcTask excTask = _taskList.Find(c => { return c.NO == no; });
+                if (excTask != null && _taskList.Contains(excTask))
+                {
+                    LogFactory.LogAdd(LOGTYPE.FINISH, excTask.Id, excTask.GetTaskInfo(), "调度终止", excTask.GetTaskInfo());//任务完成日志
+                    //FLog.Log("调度终止" + excTask.GetTaskInfo());//任务完成日志
+                    //PublicDataContorl.TaskIsSucc(excTask.NO);
+                    excTask.ISetTaskSuc();
+                    _taskList.Remove(excTask);
+                }
+                //else
+                //{
+                //    PublicDataContorl.TaskIsSucc(no);
+                //}
+            }
+        }
+
+
+        /// <summary>
+        /// 清除不在任务链表中的调度任务
+        /// </summary>
+        public void ClearLeftDispatch()
+        {
+            List<DispatchBackMember> diss = F_DataCenter.MDev.DispatchList;
+
+            if (diss != null)
+            {
+                diss.ForEach(c =>
+                {
+                    if (!IsDispatchInTask(c.DisDevId))
+                    {
+                        JTWcfHelper.WcfMainHelper.CtrDispatch(c.DisGuid, DisOrderCtrTypeEnum.Stop);
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// 调度任务是否在任务链表中
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public bool IsDispatchInTask(string id)
+        {
+            lock (_ans)
+            {
+                return _taskList.Find(c => { return c.Id == id; }) != null;
+            }
+        }
+
 
         /// <summary>
         /// 停止事务线程

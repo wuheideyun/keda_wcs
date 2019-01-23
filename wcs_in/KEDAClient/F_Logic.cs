@@ -87,15 +87,22 @@ namespace KEDAClient
             //tr2.IsBackground = true;
             //tr2.Start();
 
+            // 发生故障、离线的车，清除其相应的任务
             Thread tr3 = new Thread(ClearTask);
             tr3.IsBackground = true;
             tr3.Start();
 
+            //检查线边辊台PLC连接状态
+            Thread tr4 = new Thread(CheckPlcStatus);
+            tr4.IsBackground = true;
+            tr4.Start();
+
+
             _thread = new Thread(ThreadFunc);
-
             _thread.IsBackground = true;
-
             _thread.Start();
+
+
 
 
 
@@ -140,53 +147,114 @@ namespace KEDAClient
 
                 try
                 {
-                    EndHolder1(); //窑尾机械手1操作
+                    PlcCharge();            //窑头4去充电
 
-                    EndToEndWait(); // 从窑尾1 去 窑尾等待5
+                    PlcChargeSuc();         //充电完成去到窑尾1
 
-                    EndWaitToHolder2(); // 从窑尾等待5 去 窑尾夹具点2                                     
+                    //HeadHolder();           //窑头启动辊台
 
-                    EndHolderToHeadWait();// 窑尾机械手2 到 窑头等待点7
+                    //EndHolder();            //窑尾启动辊台
 
-                    PlcHeadCharge();// 窑头等待点7的AGV去充电点50
+                    //EndHolder1();           //窑尾机械手1操作
 
-                    PlcHeadChargeSuc();//充电点50有充电完成的AGV,回到窑头7
+                    EndToEndWait();         // 从窑尾1 去 窑尾等待5
 
-                    HeadWaitToHolder(); //  从窑头等待7 去 窑头夹具点3
+                    EndWaitToHolder2();     // 从窑尾等待5 去 窑尾夹具点2                                     
 
-                    HolderToHeadWait(); // 从窑头机械手3 去 窑头等待8
+                    EndHolderToHeadWait();  // 窑尾机械手2 到 窑头等待点7
 
-                    TaskPlcHeadPut();// 窑头8到4，放货任务
+                    HeadWaitToHolder();     //  从窑头等待7 去 窑头夹具点3
 
-                    TaskHeadToEnd();// 窑头卸货完成Agv从窑头4 到 窑尾1
-    
+                    HolderToHeadWait();     // 从窑头机械手3 去 窑头等待8
+
+                    TaskPlcHeadPut();       // 窑头8到4，放货任务
+
+                    TaskHeadToEnd();        // 窑头卸货完成Agv从窑头4 到 窑尾1
+
 
                 }
                 catch { }
             }
         }
-       
+
         /// <summary>
-        /// 窑尾取货完成Agv从窑尾夹具2 到 窑头卸载等待点7
+        /// 窑尾1 去 窑尾等待5   
+        /// </summary>
+        public void EndToEndWait()
+        {
+            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(Site.窑尾1);
+
+            // 判断窑尾1 号机械手是否完成 
+            if (agv != null && agv.IsFree //&& !agv.IsLock
+                //&& agv.Sta_Material == EnumSta_Material.AGV有货
+                //&& _plcEnd.Sta_Material == EnumSta_Material.窑尾1号机械手完成
+
+                )
+            {
+                // 从窑尾1 去 窑尾等待5
+                F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.无动作, Site.窑尾1, Site.窑尾5);
+
+                task.Id = agv.Id;
+
+                //agv.IsLock = true;
+
+                F_DataCenter.MTask.IStartTask(task);
+
+                sendServerLog(agv.Id + ", 从窑尾1 去 窑尾等待5");
+
+                LogFactory.LogDispatch(agv.Id, "取货完成", ", 从窑尾1 去 窑尾等待5");
+            }
+        }
+
+
+        /// <summary>
+        /// 窑尾等待5 去 窑尾机械手2   
+        /// </summary>
+        public void EndWaitToHolder2()
+        {
+            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(Site.窑尾5);
+
+            // 判断窑尾2号机械手的状态 
+            if (agv != null && agv.IsFree //&& !agv.IsLock
+                //&& agv.Sta_Material == EnumSta_Material.AGV有货
+                )
+            {
+                // 从窑尾夹具点2 到 窑尾等待点5  
+                F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.窑尾2号机械手, Site.窑尾5, Site.窑尾2);
+
+                task.Id = agv.Id;
+
+                //agv.IsLock = true;
+
+                F_DataCenter.MTask.IStartTask(task);
+
+                sendServerLog(agv.Id + ",  从窑尾等待5  去 窑尾夹具点2");
+
+                LogFactory.LogDispatch(agv.Id, "取货完成", "从窑尾等待5  去 窑尾夹具点2");
+            }
+        }
+
+
+        /// <summary>
+        /// 窑尾机械手2 到 窑头等待7
         /// </summary>
         private void EndHolderToHeadWait()
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(Site.窑尾2);
 
             // 判断窑尾机械手2号是否完成
-          if (agv != null && agv.IsFree && !agv.IsLock                
-                && agv.Sta_Material == EnumSta_Material.AGV有货
-                && _plcEnd.Sta_Material == EnumSta_Material.窑尾2号机械手完成 
-                )
+            if (agv != null && agv.IsFree //&& !agv.IsLock
+                  //&& agv.Sta_Material == EnumSta_Material.AGV有货
+                  //&& _plcEnd.Sta_Material == EnumSta_Material.窑尾2号机械手完成
+                  )
             {
                 F_ExcTask task = new F_ExcTask(null, EnumOper.无动作, Site.窑尾2, Site.窑头7);
 
                 task.Id = agv.Id;
 
-                agv.IsLock = true;
+                //agv.IsLock = true;
 
                 F_DataCenter.MTask.IStartTask(task);
-
 
                 sendServerLog(agv.Id + "窑尾取货完成Agv从窑尾夹具2 到 窑头等待点7");
 
@@ -194,30 +262,98 @@ namespace KEDAClient
             }
         }
 
+
         /// <summary>
-        /// 从窑头8到窑头4，窑头放货任务
+        /// 窑头等待7 去 窑头机械手3
+        /// </summary>
+        public void HeadWaitToHolder()
+        {
+            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(Site.窑头7);
+
+            //窑头等待区7的车不需要充电、没有充电完成的车 、没有初始化时要去窑头装载点的车
+            if (agv != null && agv.IsFree //&& !agv.IsLock
+                 && !_ToPlcHead
+                )
+            {
+                // 判断夹具的状态 及 窑尾货物状态、AGV货物状态
+                if (true
+                   //&& agv.Sta_Material == EnumSta_Material.AGV有货
+                   //&& _plcHeadHolder.Sta_Material == EnumSta_Material.窑头机械手就绪
+                    )
+                {
+                    // 从窑头等待7 去 窑头夹具点3
+                    F_ExcTask task = new F_ExcTask(_plcHeadHolder, EnumOper.窑头机械手, Site.窑头7, Site.窑头3);
+
+                    task.Id = agv.Id;
+
+                    //agv.IsLock = true;
+
+                    F_DataCenter.MTask.IStartTask(task);
+
+                    sendServerLog(agv.Id + ",  从窑头等待7 去 窑头夹具点3");
+
+                    LogFactory.LogDispatch(agv.Id, "卸货", "从窑头等待7去窑头夹具点3");
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// 窑头机械手3 去 窑头等待8 
+        /// </summary>
+        public void HolderToHeadWait()
+        {
+            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(Site.窑头3);
+
+            // 判断窑头机械手是否完成的状态 
+            if (agv != null && agv.IsFree //&& !agv.IsLock
+                //&& agv.Sta_Material == EnumSta_Material.AGV有货
+                //&& _plcHeadHolder.Sta_Material == EnumSta_Material.窑头机械手完成
+                )
+            {
+                // 从窑头机械手3 到窑头8
+                F_ExcTask task = new F_ExcTask(_plcHeadHolder, EnumOper.无动作, Site.窑头3, Site.窑头8);
+
+                task.Id = agv.Id;
+
+                //agv.IsLock = true;
+
+                F_DataCenter.MTask.IStartTask(task);
+
+                sendServerLog(agv.Id + ", 从窑头夹具点3 去 窑头等待8 ");
+
+                LogFactory.LogDispatch(agv.Id, "卸货", "从窑头夹具点3去窑头等待8");
+            }
+        }
+
+
+        /// <summary>
+        /// 窑头等待8 去 窑头4
         /// </summary>
         private void TaskPlcHeadPut()
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(Site.窑头8);
 
             /// 窑头AGV未锁定 并且 此次任务没有被响应
-            if (!_plcHead.IsLock && agv != null && !agv.IsLock
-                && agv.Sta_Material == EnumSta_Material.AGV有货
+            if (agv != null && agv.IsFree //&& !agv.IsLock 
+                //&& !_plcHead.IsLock
+                //&& agv.Sta_Material == EnumSta_Material.AGV有货
                )
             {
                 // 从窑头卸载等待点2 到 窑头卸载点的放货任务
-                if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcHead, EnumOper.放货, Site.窑头8, Site.窑头4)))
-                {
-                    _plcHead.IsLock = true;
+                F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.放货, Site.窑头8, Site.窑头4);
 
-                    agv.IsLock = true;
+                task.Id = agv.Id;
 
-                    sendServerLog(agv.Id + "从窑头卸载等待点8 到 窑头卸载点4的任务");
+                _plcHead.IsLock = true;
 
-                    LogFactory.LogDispatch(agv.Id, "窑头卸货", "从窑头卸载等待点8 到 窑头卸载点4的任务");
+                //agv.IsLock = true;
 
-                }
+                F_DataCenter.MTask.IStartTask(task);
+
+                sendServerLog(agv.Id + "从窑头卸载等待点8 到 窑头卸载点4的任务");
+
+                LogFactory.LogDispatch(agv.Id, "窑头卸货", "从窑头卸载等待点8 到 窑头卸载点4的任务");
             }
             else
             {
@@ -225,23 +361,27 @@ namespace KEDAClient
             }
         }
 
+
         /// <summary>
-        /// 窑头卸货完成Agv从窑头4 到 窑尾1
+        /// 窑头4 到 窑尾1
         /// </summary>
         private void TaskHeadToEnd()
         {
-            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(_plcHead.Site);
+            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(Site.窑头4);
 
-           if (agv != null && agv.IsFree && !agv.IsLock
-                && agv.Sta_Material == EnumSta_Material.AGV无货
-               && _plcHead.Sta_Material == EnumSta_Material.窑头接料完成
-                )
+            if (agv != null && agv.IsFree //&& !agv.IsLock
+                 && agv.Sta_Material == EnumSta_Material.AGV无货
+                //&& _plcHead.Sta_Material == EnumSta_Material.窑头接料完成
+                && agv.Electicity > ConstSetBA.最低电量
+                 )
             {
                 F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.取货, Site.窑头4, Site.窑尾1);
 
-                agv.IsLock = true;
-
                 task.Id = agv.Id;
+
+                //agv.IsLock = true;
+
+                _plcEnd.IsLock = true;
 
                 F_DataCenter.MTask.IStartTask(task);
 
@@ -251,24 +391,100 @@ namespace KEDAClient
 
             }
         }
+
+
+        /// <summary>
+        /// 窑头4去充电
+        /// </summary>
+        private void PlcCharge()
+        {
+            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(Site.窑头4);
+
+            if (agv != null && agv.IsFree
+                && agv.Sta_Material == EnumSta_Material.AGV无货
+                //&& _plcHead.Sta_Material == EnumSta_Material.窑头接料完成
+                && agv.Electicity <= ConstSetBA.最低电量
+                && agv.ChargeStatus == EnumChargeStatus.未充电)
+            {
+                _PlcHeadNeedCharge = true;
+
+                F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.充电, Site.窑头4, Site.充电点);
+
+                //agv.IsLock = true;
+
+                task.Id = agv.Id;
+
+                F_DataCenter.MTask.IStartTask(task);
+
+                sendServerLog(agv.Id + ",去到充电点充电");
+
+                LogFactory.LogDispatch(agv.Id, "充电", "去到充电点充电");
+
+            }
+            else
+            {
+                _PlcHeadNeedCharge = false;
+            }
+        }
+
+
+        /// <summary>
+        ///充电完成的AGV去窑尾1
+        /// </summary>
+        public void PlcChargeSuc()
+        {
+            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(Site.充电点);
+
+            // 有未上锁的、充电完成的AGV,且窑头卸载点无货、AGV上有货
+            if (agv != null && agv.IsFree //&& !agv.IsLock
+                && agv.ChargeStatus == EnumChargeStatus.充电完成
+                && agv.Sta_Material == EnumSta_Material.AGV无货
+                )
+            {
+
+                //return;
+                _PlcHeadChargeSuc = true;
+
+                F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.取货, Site.充电点, Site.窑尾1);
+
+                //agv.IsLock = true;
+
+                _plcEnd.IsLock = true;
+
+                task.Id = agv.Id;
+
+                F_DataCenter.MTask.IStartTask(task);
+
+                sendServerLog(agv.Id + ",充电完成，派充电完成的车去窑尾1");
+
+                LogFactory.LogDispatch(agv.Id, "充电完成", "派充电完成的车去窑尾1");
+
+            }
+            else
+            {
+                _PlcHeadChargeSuc = false;
+            }
+        }
+
+
         /// <summary>
         /// 窑尾机械手1操作
         /// </summary>
-        private void EndHolder1()  
+        private void EndHolder1()
         {
-            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(_plcEnd.Site);
+            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(Site.窑尾1);
 
             // AGV已经取货完成，
-            if (agv != null && agv.IsFree && !agv.IsLock && !_plcEnd.IsLock
+            if (agv != null && agv.IsFree //&& !agv.IsLock 
+                && !_plcEnd.IsLock
                 && agv.Sta_Material == EnumSta_Material.AGV有货
-                && !(_plcEnd.Sta_Material== EnumSta_Material.窑尾1号机械手完成)
+                && !(_plcEnd.Sta_Material == EnumSta_Material.窑尾1号机械手完成)
                 && true
-               
                 )
             {
                 F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.窑尾1号机械手, Site.窑尾1, Site.窑尾1);
 
-                agv.IsLock = true;
+                //agv.IsLock = true;
 
                 task.Id = agv.Id;
 
@@ -282,6 +498,69 @@ namespace KEDAClient
 
             }
         }
+
+        /// <summary>
+        /// 窑头启动辊台
+        /// </summary>
+        private void HeadHolder()
+        {
+            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(Site.窑头4);
+
+
+            if (agv != null && agv.IsFree //&& !agv.IsLock 
+                //&& agv.Sta_Material == EnumSta_Material.AGV有货
+                && true
+                )
+            {
+
+                F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.放货, Site.窑头4, Site.窑头4);
+
+                //agv.IsLock = true;
+
+                _plcHead.IsLock = true;
+
+                task.Id = agv.Id;
+
+                F_DataCenter.MTask.IStartTask(task);
+
+                sendServerLog(agv.Id + "窑头辊台启动卸货");
+
+                LogFactory.LogDispatch(agv.Id, "窑头卸货", " 窑头辊台启动");
+
+            }
+        }
+
+        /// <summary>
+        /// 窑尾启动辊台
+        /// </summary>
+        private void EndHolder()
+        {
+            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(Site.窑尾1);
+
+
+            if (agv != null && agv.IsFree //&& !agv.IsLock 
+                && agv.Sta_Material == EnumSta_Material.AGV无货
+                && true
+                )
+            {
+
+                F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.取货, Site.窑尾1, Site.窑尾1);
+
+                //agv.IsLock = true;
+
+                _plcEnd.IsLock = true;
+
+                task.Id = agv.Id;
+
+                F_DataCenter.MTask.IStartTask(task);
+
+                sendServerLog(agv.Id + "窑尾辊台启动取货");
+
+                LogFactory.LogDispatch(agv.Id, "窑尾取货", " 窑尾辊台启动");
+
+            }
+        }
+
 
         /// <summary>
         /// 初始化按钮方法
@@ -323,9 +602,9 @@ namespace KEDAClient
                         LogFactory.LogDispatch(agv.Id, "车辆初始化", "回到窑头卸载等待点7");
                     }
                     else
-                    {   
+                    {
                         /// 如果agv有货 且位于等待点8和 卸载点4之间，回到窑头卸载点
-                         _ToPlcHead = true;
+                        _ToPlcHead = true;
 
                         F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.放货, agv.Site, Site.窑头4);
 
@@ -350,7 +629,7 @@ namespace KEDAClient
         {
             Thread.Sleep(1000);
 
-                List<F_AGV> agvs = F_DataCenter.MDev.IGetDevNotLoadOnWaitSite();
+            List<F_AGV> agvs = F_DataCenter.MDev.IGetDevNotLoadOnWaitSite();
 
             if (agvs != null)
             {
@@ -370,189 +649,34 @@ namespace KEDAClient
 
                         LogFactory.LogDispatch(agv.Id, "车辆初始化", "回到窑尾装载点1");
 
-                    }                  
-                }
-            }          
-        }
-
-        /// <summary>
-        /// 窑头等待点7的AGV去充电
-        /// </summary>
-        private void PlcHeadCharge()
-        {
-            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(Site.窑头7);
-
-            // 让未上锁的、电量低于60且未充电的AGV去充电
-            if (agv != null && agv.IsFree && agv.Electicity <= 90 &&//ConstSetBA.最低电量 &&
-                agv.ChargeStatus == EnumChargeStatus.未充电                
-                )
-            {
-                _PlcHeadNeedCharge = true;
-
-                F_ExcTask task = new F_ExcTask(null, EnumOper.充电, Site.窑头7, Site.充电点);
-
-                agv.IsLock = true;
-
-                task.Id = agv.Id;
-
-                F_DataCenter.MTask.IStartTask(task);
-
-                sendServerLog(agv.Id + ",去到充电点充电");
-
-                LogFactory.LogDispatch(agv.Id, "充电", "去到充电点充电");
-
-            }
-            else
-            {
-                _PlcHeadNeedCharge = false;
-
-            }
-
-        }
-
-        /// <summary>
-        ///窑头充电点有充电完成的AGV
-        ///回到窑头7
-        /// </summary>
-        public void PlcHeadChargeSuc()
-        {
-            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(Site.充电点);
-
-            // 有未上锁的、充电完成的AGV,且窑头卸载点无货、AGV上有货
-            if (agv != null && !agv.IsLock && agv.ChargeStatus == EnumChargeStatus.充电完成
-                )
-            {
-
-                //return;
-                _PlcHeadChargeSuc = true;
-
-                F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.无动作, Site.充电点, Site.窑头7);
-
-                agv.IsLock = true;
-
-                _plcHead.IsLock = true;
-
-                task.Id = agv.Id;
-
-                F_DataCenter.MTask.IStartTask(task);
-
-                sendServerLog(agv.Id + ",充电完成，派充电完成的车去卸载等待点7");
-
-                LogFactory.LogDispatch(agv.Id, "充电完成", "派充电完成的车去卸载等待点7");
-
-            }
-            else
-            {
-                _PlcHeadChargeSuc = false;
-            }
-        }
-
-        /// <summary>
-        /// 从窑尾1 去 窑尾等待5   
-        /// </summary>
-        public void EndToEndWait()
-        {
-            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(_plcEnd.Site);
-
-            // 判断窑尾1 号机械手是否完成 
-            if (agv != null && !agv.IsLock
-                && agv.Sta_Material == EnumSta_Material.AGV有货
-                && _plcEnd.Sta_Material== EnumSta_Material.窑尾1号机械手完成 
-               
-                )
-            {
-                // 从窑尾1 去 窑尾等待5
-                if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcEnd, EnumOper.无动作, Site.窑尾1, Site.窑尾5)))
-                {
-
-                    sendServerLog(agv.Id + ", 从窑尾1 去 窑尾等待5");
-
-                    LogFactory.LogDispatch(agv.Id, "取货完成", ", 从窑尾1 去 窑尾等待5");
-
-                    agv.IsLock = true;
-
-                }
-            }
-        }
-
-        /// <summary>
-        /// 从窑尾等待5 去 窑尾2号机械手   
-        /// </summary>
-        public void EndWaitToHolder2()
-        {
-            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(Site.窑尾5);
-
-            // 判断窑尾2号机械手的状态 
-            if (agv != null && !agv.IsLock 
-                && agv.Sta_Material == EnumSta_Material.AGV有货
-                )
-            {
-                // 从窑尾夹具点2 到 窑尾等待点5  
-                if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcEnd, EnumOper.窑尾2号机械手, Site.窑尾5, Site.窑尾2)))
-                {
-                    sendServerLog(agv.Id + ",  从窑尾等待5  去 窑尾夹具点2");
-
-                    LogFactory.LogDispatch(agv.Id, "取货完成", "从窑尾等待5  去 窑尾夹具点2");
-
-                    agv.IsLock = true;
-                }
-            }
-        }
-
-        /// <summary>
-        /// 从窑头等待7 去 窑头夹具点3
-        /// </summary>
-        public void HeadWaitToHolder()
-        {
-            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(Site.窑头7);
-
-            //窑头等待区7的车不需要充电、没有充电完成的车 、没有初始化时要去窑头装载点的车
-            if (agv != null 
-                && !agv.IsLock && !_PlcHeadNeedCharge && agv.IsFree 
-                &&  !_PlcHeadChargeSuc && !_ToPlcHead 
-                && agv.Electicity > ConstSetBA.最低电量
-                && agv.Electicity > 90)
-            {
-                // 判断夹具的状态 及 窑尾货物状态、AGV货物状态
-                if (true
-                   && agv.Sta_Material == EnumSta_Material.AGV有货
-                   && _plcHeadHolder.Sta_Material == EnumSta_Material.窑头机械手就绪
-                    )
-                {
-                    // 从窑头等待7 去 窑头夹具点3
-                    if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcHeadHolder, EnumOper.窑头机械手, Site.窑头7, Site.窑头3)))
-                    {
-                        sendServerLog(agv.Id + ",  从窑头等待7 去 窑头夹具点3");
-
-                        LogFactory.LogDispatch(agv.Id, "卸货", "从窑头等待7去窑头夹具点3");
-
-                        agv.IsLock = true;
                     }
                 }
             }
         }
 
+
+
         /// <summary>
-        /// 从窑头夹具点3 去 窑头等待8 
+        /// 检查线边辊台PLC连接状态
         /// </summary>
-        public void HolderToHeadWait()
+        public void CheckPlcStatus()
         {
-            F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(Site.窑头3);
+            while (true)
+            {
+                Thread.Sleep(5000);
 
-            // 判断窑头机械手是否完成的状态 
-            if (agv != null && !agv.IsLock 
-                && agv.Sta_Material== EnumSta_Material.AGV有货
-                && _plcHeadHolder.Sta_Material == EnumSta_Material.窑头机械手完成
-                )
-            {   
-                // 从窑头机械手3 到窑头8
-                if (F_DataCenter.MTask.IStartTask(new F_ExcTask(_plcHeadHolder, EnumOper.无动作, Site.窑头3, Site.窑头8)))
+                List<DeviceBackImf> devsList = JTWcfHelper.WcfMainHelper.GetDevList();
+                if (devsList != null && devsList.Count > 0)
                 {
-                    sendServerLog(agv.Id + ", 从窑头夹具点3 去 窑头等待8 ");
+                    foreach (var dev in devsList)
+                    {
+                        if (dev.DevType == "WK_PLC" && !dev.IsAlive)
+                        {
+                            F_PLCLine plc = new F_PLCLine(dev.DevId);
 
-                    LogFactory.LogDispatch(agv.Id, "卸货", "从窑头夹具点3去窑头等待8");
-
-                    agv.IsLock = true;
+                            plc.SendOrdr(0, 0);
+                        }
+                    }
                 }
             }
         }
@@ -567,12 +691,12 @@ namespace KEDAClient
             {
                 Thread.Sleep(5000);
                 List<F_AGV> agvs = F_DataCenter.MDev.ErrorOrFalse();
-                List<DispatchBackMember> dispatchlist = JTWcfHelper.WcfMainHelper.GetDispatchList();
-                if (agvs != null&&dispatchlist!=null  && dispatchlist.Count > 0)
+                List<DispatchBackMember> dispatchList = JTWcfHelper.WcfMainHelper.GetDispatchList();
+                if (agvs != null && dispatchList != null && dispatchList.Count > 0)
                 {
                     foreach (var agv in agvs)
                     {
-                        foreach (var dispatch in dispatchlist)
+                        foreach (var dispatch in dispatchList)
                         {
                             // 有故障的车是否对应任务的设备ID
                             if (agv.Id == dispatch.DisDevId)
@@ -581,11 +705,11 @@ namespace KEDAClient
                                 {
                                     int count = 0;
                                     dic.TryGetValue(agv.Id, out count);
-                                    if (count >= 10)
+                                    if (count >= 5)
                                     {
                                         // 终止该任务
                                         JTWcfHelper.WcfMainHelper.CtrDispatch(dispatch.DisGuid, DisOrderCtrTypeEnum.Stop);
-
+                                        F_DataCenter.MTask.IDeletTask(dispatch.DisGuid );
                                         sendServerLog("终止异常的 " + agv.Id + "正在执行的任务");
 
                                         LogFactory.LogRunning("终止异常的 " + agv.Id + "正在执行的任务");
