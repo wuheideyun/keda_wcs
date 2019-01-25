@@ -6,34 +6,44 @@ using System.Text;
 
 namespace KEDAClient
 {
+    
     /// <summary>
-    /// 货物状态
+    /// 窑头货物状态
     /// </summary>
-    public enum EnumSta_Material
+    public enum EnumSta_Material_Head
     {
-        
-        AGV未知 ,
-        AGV有货 = 1,
-        AGV无货 = 2,
-        AGV传输中 = 3,
+        状态未知,
+        窑头无货 = 4,
+        窑头传输中 = 5,
+        窑头接料完成 = 6,
+    }
 
-        窑尾无货 = 1 ,        
+    /// <summary>
+    /// 窑头机械手状态
+    /// </summary>
+    public enum EnumSta_Material_HeadMLP
+    {
+        状态未知,
+        窑头机械手就绪 = 1,
+        窑头机械手运动 = 2,
+        窑头机械手完成 = 3,
+    }
+
+
+    /// <summary>
+    /// 窑尾货物状态
+    /// </summary>
+    public enum EnumSta_Material_End
+    {
+        状态未知,
+        窑尾无货 = 1,
         窑尾有货 = 2,
-        窑尾传输中 =3,    
-        窑尾出料完成 =4,
+        窑尾传输中 = 3,
+        窑尾出料完成 = 4,
         窑尾1号机械手运动 = 5,
         窑尾1号机械手完成 = 6,
         窑尾2号机械手运动 = 7,
         窑尾2号机械手完成 = 8,
-
-        窑头机械手就绪 =1,
-        窑头机械手运动 =2,
-        窑头机械手完成 =3,
-        窑头无货 =4,
-        窑头传输中 =5,
-        窑头接料完成 =6,
-
-
     }
 
     /// <summary>
@@ -41,63 +51,40 @@ namespace KEDAClient
     /// </summary>
     public enum EnumSta_Monitor
     {
-
-        //AGV电机状态
-
-        AGV电机正转 = 1,
-
-        AGV电机反转 = 2,
-
-        AGV电机停止 = 3,
-
-
         未知,
 
         窑尾正常 = 1,
 
-       窑尾电机运行 = 2,
+        窑尾电机运行 = 2,
 
-       窑尾电机停止 = 3,
+        窑尾电机停止 = 3,
 
-       窑尾1号机械手启动 = 4,
+        窑尾1号机械手启动 = 4,
 
-       窑尾1号机械手停止 = 5,
+        窑尾1号机械手停止 = 5,
 
-       窑尾2号机械手启动 = 6,
+        窑尾2号机械手启动 = 6,
 
-       窑尾2号机械手停止 = 7,
+        窑尾2号机械手停止 = 7,
 
-       窑头正常 = 1,
+        窑头正常 = 1,
 
-       窑头机械手启动 = 2,
+        窑头机械手启动 = 2,
 
-       窑头机械手停止 = 3,
+        窑头机械手停止 = 3,
 
-       窑头电机运行 = 4,
+        窑头电机运行 = 4,
 
-       窑头电机停止 = 5,
+        窑头电机停止 = 5,
     }
 
-    /// <summary>
-    /// 充电状态
-    /// </summary>
-    public enum EnumChargeStatus
-    {
-        正在充电 = 1,
 
-        充电完成 = 2,
-
-        未充电 = 3,
-
-        未知
-
-    }
 
     /// <summary>
     /// 上下料操作枚举
     /// </summary>
     public enum EnumType
-    { 
+    {
         上料操作 = 1,
 
         下料操作 = 2,
@@ -117,7 +104,7 @@ namespace KEDAClient
 
         窑尾辊台启动 = 1,
         窑尾辊台停止 = 2,
-        窑尾1号机械手启动 = 3 ,
+        窑尾1号机械手启动 = 3,
         窑尾2号机械手启动 = 4,
 
         窑头辊台启动 = 1,
@@ -145,20 +132,80 @@ namespace KEDAClient
         /// </summary>
         string _site = "0";
 
+        ///// <summary>
+        ///// 货物状态
+        ///// </summary>
+        //public EnumSta_Material Sta_Material
+        //{
+        //    get
+        //    {
+        //        EnumSta_Material result = EnumSta_Material.状态未知;
+
+        //        try
+        //        {
+        //            if (true)
+        //            {
+
+        //            }
+        //            result = (EnumSta_Material)Convert.ToInt32((F_DataCenter.MDev.IGetSenValue(_id, "0001")));
+        //        }
+        //        catch { result = EnumSta_Material.状态未知; }
+
+        //        return result;
+        //    }
+        //}
+
         /// <summary>
-        /// 货物状态
+        /// 窑头货物状态
         /// </summary>
-        public EnumSta_Material Sta_Material
+        public EnumSta_Material_Head Sta_Material_Head
         {
-            get 
+            get
             {
-                EnumSta_Material result = EnumSta_Material.AGV未知;
+                EnumSta_Material_Head result = EnumSta_Material_Head.状态未知;
+
+                try
+                {                    
+                    result = (EnumSta_Material_Head)Convert.ToInt32((F_DataCenter.MDev.IGetSenValue(_id, "0001")));
+                }
+                catch { result = EnumSta_Material_Head.状态未知; }
+
+                return result;
+            }
+        }
+        /// <summary>
+        /// 窑尾货物状态
+        /// </summary>
+        public EnumSta_Material_End Sta_Material_End
+        {
+            get
+            {
+                EnumSta_Material_End result = EnumSta_Material_End.状态未知;
 
                 try
                 {
-                    result = (EnumSta_Material)Convert.ToInt32((F_DataCenter.MDev.IGetSenValue(_id, "0001")));
+                    result = (EnumSta_Material_End)Convert.ToInt32((F_DataCenter.MDev.IGetSenValue(_id, "0001")));
                 }
-                catch { result = EnumSta_Material.AGV未知; }
+                catch { result = EnumSta_Material_End.状态未知; }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// 窑头机械手状态
+        /// </summary>
+        public EnumSta_Material_HeadMLP Sta_Material_HeadMLP
+        {
+            get
+            {
+                EnumSta_Material_HeadMLP result = EnumSta_Material_HeadMLP.状态未知;
+
+                try
+                {
+                    result = (EnumSta_Material_HeadMLP)Convert.ToInt32((F_DataCenter.MDev.IGetSenValue(_id, "0001")));
+                }
+                catch { result = EnumSta_Material_HeadMLP.状态未知; }
 
                 return result;
             }
@@ -189,7 +236,7 @@ namespace KEDAClient
         /// <returns></returns>
         public string Error_Code
         {
-            get 
+            get
             {
                 return F_DataCenter.MDev.IGetSenValue(_id, "0003");
             }
