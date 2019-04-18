@@ -304,23 +304,24 @@ namespace KEDAClient
                     foreach (DeviceBackImf dev in devs)
                     {
                         int Electric = new F_AGV(dev.DevId).Electicity;
-                        //电量低于80加入列表1
-                        if (Electric < 80)
-                        { list.Add(Electric); }
                         //电量40-80加入列表2
-                        if (Electric <= 80 && Electric > 40)
+                        if (Electric <= ConstSetBA.电池充电临界点 && Electric > ConstSetBA.电池充电优先点)
                         { list1.Add(Electric); }
                         //电量低于40加入列表3
-                        if (Electric <= 40)
+                        if (Electric <= ConstSetBA.电池充电优先点)
                         { list2.Add(Electric); }
 
                     }
-                    //对列表1进行由低到高排序
-                    list.Sort();
                     //对列表2进行由低到高排序
-                    list1.Sort();
+                    if (list1.Count > 0)
+                    {
+                        list1.Sort();
+                    }
                     //对列表3进行由低到高排序
-                    list2.Sort();
+                    if (list2.Count > 0)
+                    {
+                        list2.Sort();
+                    }
                 }
                 //如有电量低于40的车返回列表2
                 if (list2.Count >= 1)
@@ -336,14 +337,6 @@ namespace KEDAClient
                     return list1;
 
                 }
-                else
-                {
-
-                    return list;
-
-                }
-
-
             }
             catch { }
 
@@ -364,12 +357,18 @@ namespace KEDAClient
                 foreach (DeviceBackImf dev in devs1)
                 {
                     //电量低于80加入列表1
-                    if (new F_AGV(dev.DevId).Electicity < 80)
+                    if (new F_AGV(dev.DevId).Electicity < ConstSetBA.电池充电临界点)
                     { list4.Add(new F_AGV(dev.DevId).Electicity); }
                 }
 
-                //对列表4进行由低到高排序
-                list4.Sort();
+                if (list4.Count > 0)
+                {
+                    list4.Sort();
+                }
+                else
+                {
+                    list4 = null;
+                }
             }
 
             return list4;
