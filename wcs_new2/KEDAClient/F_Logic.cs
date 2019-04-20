@@ -365,7 +365,17 @@ namespace KEDAClient
                     case 0:
                         //电池电量在40-80
                         {
-                            if (agv.Electicity <= list[0])
+                            int z = 0;/*列表数量标志*/
+                            if (list.Count < 3)
+                            {
+                                z = list.Count - 1;
+                            }
+                            if (list.Count >= 3)
+                            {
+                                z = ConstSetBA.最低电量排序序号;
+                            }
+
+                            if (agv.Electicity <= list[z])
                             {
                                 // 判断出窑头充电站是否被锁
                                 if ((!_plcHead.IsExitBatteryLock)
@@ -400,32 +410,35 @@ namespace KEDAClient
                     case 1:
                         //电池电量低于40
                         {
-                            // 判断出窑头充电站是否被锁
-                            if ((!_plcHead.IsExitBatteryLock)
-                                && (d_agv == null && d_agv2 == null))
+                            if (agv.Electicity <= ConstSetBA.电池充电优先点)
                             {
-                                F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.充电, ConstSetBA.窑头卸载点, ConstSetBA.出窑头充电点);
+                                // 判断出窑头充电站是否被锁
+                                if ((!_plcHead.IsExitBatteryLock)
+                                && (d_agv == null && d_agv2 == null))
+                                {
+                                    F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.充电, ConstSetBA.窑头卸载点, ConstSetBA.出窑头充电点);
 
-                                task.Id = agv.Id;
+                                    task.Id = agv.Id;
 
-                                //出窑头充电，锁定出窑头充电桩
-                                _plcHead.IsExitBatteryLock = true;
+                                    //出窑头充电，锁定出窑头充电桩
+                                    _plcHead.IsExitBatteryLock = true;
 
-                                ParamControl.Do_ExitHeadChargeLock = false;
+                                    ParamControl.Do_ExitHeadChargeLock = false;
 
-                                _plcHead.ExitChargeAgv = agv.Id;
+                                    _plcHead.ExitChargeAgv = agv.Id;
 
-                                ParamControl.HeadChargeAGV = _plcHead.ExitChargeAgv;
-                                ParamControl.HeadChargeLock = _plcHead.IsExitBatteryLock;
+                                    ParamControl.HeadChargeAGV = _plcHead.ExitChargeAgv;
+                                    ParamControl.HeadChargeLock = _plcHead.IsExitBatteryLock;
 
-                                _plcHead.ExitFlag = false;
+                                    _plcHead.ExitFlag = false;
 
-                                F_DataCenter.MTask.IStartTask(task, agv.Id + TaskHeadToExitBatteryMsg);
+                                    F_DataCenter.MTask.IStartTask(task, agv.Id + TaskHeadToExitBatteryMsg);
 
-                                sendServerLog(agv.Id + TaskHeadToExitBatteryMsg);
+                                    sendServerLog(agv.Id + TaskHeadToExitBatteryMsg);
 
-                                //LogFactory.LogDispatch(agv.Id, "AGV出窑头充电", TaskHeadToExitBatteryMsg);
-                                FLog.Log(agv.Id + TaskHeadToExitBatteryMsg);
+                                    //LogFactory.LogDispatch(agv.Id, "AGV出窑头充电", TaskHeadToExitBatteryMsg);
+                                    FLog.Log(agv.Id + TaskHeadToExitBatteryMsg);
+                                }
                             }
                         }
                         break;
@@ -853,7 +866,17 @@ namespace KEDAClient
                 {
                     case 0:
                         //电量在40-80之间
-                        if (agv.Electicity <= list[0])
+                        int z = 0;/*列表数量标志*/
+                        if (list.Count < 3)
+                        {
+                            z = list.Count - 1;
+                        }
+                        if (list.Count >= 3)
+                        {
+                            z = ConstSetBA.最低电量排序序号;
+                        }
+
+                        if (agv.Electicity <= list[z] )
                         {
                             _PlcEndNeedCharge = true;
 
@@ -885,31 +908,34 @@ namespace KEDAClient
                     case 1:
                         //电量低于40                     
                         {
-                            _PlcEndNeedCharge = true;
+                            if (agv.Electicity <= ConstSetBA.电池充电优先点)
+                            {
+                                _PlcEndNeedCharge = true;
 
-                            F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.充电, ConstSetBA.窑尾装载等待区, ConstSetBA.进窑尾充电点);
+                                F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.充电, ConstSetBA.窑尾装载等待区, ConstSetBA.进窑尾充电点);
 
-                            F_AGV.AgvLock(agv.Id);
+                                F_AGV.AgvLock(agv.Id);
 
-                            //进窑尾充电，锁定进窑尾充电桩
-                            _plcEnd.IsEnterBatteryLock = true;
+                                //进窑尾充电，锁定进窑尾充电桩
+                                _plcEnd.IsEnterBatteryLock = true;
 
-                            ParamControl.Do_EnterEndChargeLock = false;
+                                ParamControl.Do_EnterEndChargeLock = false;
 
-                            _plcEnd.EnterChargeAgv = agv.Id;
+                                _plcEnd.EnterChargeAgv = agv.Id;
 
-                            ParamControl.EndChargeLock = _plcEnd.IsEnterBatteryLock;
+                                ParamControl.EndChargeLock = _plcEnd.IsEnterBatteryLock;
 
-                            ParamControl.EndChargeAGV = _plcEnd.EnterChargeAgv;
+                                ParamControl.EndChargeAGV = _plcEnd.EnterChargeAgv;
 
-                            task.Id = agv.Id;
+                                task.Id = agv.Id;
 
-                            F_DataCenter.MTask.IStartTask(task, agv.Id + PlcEndChargeMsg);
+                                F_DataCenter.MTask.IStartTask(task, agv.Id + PlcEndChargeMsg);
 
-                            sendServerLog(agv.Id + PlcEndChargeMsg);
+                                sendServerLog(agv.Id + PlcEndChargeMsg);
 
-                            //LogFactory.LogDispatch(agv.Id, "充电", PlcEndChargeMsg);
-                            FLog.Log(agv.Id + PlcEndChargeMsg);
+                                //LogFactory.LogDispatch(agv.Id, "充电", PlcEndChargeMsg);
+                                FLog.Log(agv.Id + PlcEndChargeMsg);
+                            }
                         }
                         break;
                     default:
