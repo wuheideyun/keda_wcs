@@ -19,6 +19,10 @@ namespace KEDAClient
         public static string EndChargeAGV = "";
         public static bool EndChargeLock = false;
 
+        /// <summary>
+        /// 最低电量排序序号
+        /// </summary>
+        public static int LowBatteryNum = 2;
 
         /// <summary>
         /// 最低充电量

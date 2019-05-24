@@ -70,6 +70,8 @@ namespace KEDAClient
             //LogHelper.LogFactory.Init();
             FLog.Init();
 
+            InitChargeNum();
+
             XMLConfig = new XmlAnalyze();
             InitXmlConfigSetting();
         }
@@ -92,6 +94,29 @@ namespace KEDAClient
             _severIp = "192.168.6.79";
 
             WcfMainHelper.InitPara(_severIp, "", "");
+        }
+
+        /// <summary>
+        /// 初始化读取配置文件Default.ini获取最低电量排序序号
+        /// </summary>
+        public void InitChargeNum()
+        {
+            ////最低电量排序序号
+            //int lowbatterynum = 0;
+
+            string section = "ChargeNumConfig";
+            string key = string.Format("允许充电车辆数");
+            //string key = "AllowNum";
+            string read = ConfigHelper.IniReadValue(section, key, 100);
+
+            if (string.IsNullOrEmpty(read))
+            {
+                read = "2";
+
+                ConfigHelper.IniWriteValue(section, key, read);
+            }
+
+            Int32.TryParse(read, out ParamControl.LowBatteryNum);
         }
 
         /// <summary>

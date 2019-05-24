@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using DataContract;
+using FLBasicHelper;
 using FLCommonInterfaces;
 using WcfHelper;
 
@@ -304,10 +305,10 @@ namespace KEDAClient
 
                 }
 
-                if(list.Count > ConstSetBA.最低电量排序序号)
+                if(list.Count > ParamControl.LowBatteryNum)
                 {
 
-                     return list[ConstSetBA.最低电量排序序号 - 1];
+                     return list[ParamControl.LowBatteryNum - 1];
 
                 }
                 else
