@@ -315,13 +315,13 @@ namespace KEDAClient
             //搜索车辆电量列表
             List<int> list = F_DataCenter.MDev.IGetDevElectricity();
 
-            //电量列表不为空,电量小于百分之80才进行充电判断
-            if (list != null && list[0] <= ConstSetBA.电池充电临界点)
+            //如果电量小于百分之80才进行充电判断
+            if (list[0] <= 80)
             {
                 //是否到达电池最低点的标志
                 int BatteryLim = 0;
 
-                if (list[0] <= ConstSetBA.电池充电优先点)
+                if (list[0] <= 40)
                 {
                     BatteryLim = 1;/*电量有低于40的车*/
                 }
@@ -838,12 +838,12 @@ namespace KEDAClient
             List<int> list = F_DataCenter.MDev.IGetDevElectricity();
 
             //如果电量小于百分之80才进行充电判断
-            if (list != null && list[0] <= ConstSetBA.电池充电临界点)
+            if (list[0] <= 80)
             {
                 //是否到达电池最低点的标志
                 int BatteryLim = 0;
 
-                if (list[0] <= ConstSetBA.电池充电优先点)
+                if (list[0] <= 40)
                 {
                     BatteryLim = 1;/*电量有低于40的车*/
                 }
