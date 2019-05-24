@@ -293,6 +293,8 @@ namespace KEDAClient
                     && c.ProtyList[ErrorType.脱轨].RValue == "0"
                     ;
                 });
+                //列表1为电量低于80的AGV
+                List<int> list = new List<int>();
                 //列表2为电量40-80之间的AGV
                 List<int> list1 = new List<int>();
                 //列表3为电量低于40的AGV
@@ -337,6 +339,9 @@ namespace KEDAClient
                 }
             }
             catch { }
+
+
+
             //考虑范围只有正在作业的车辆，非作业车辆不纳入考虑
             List<DeviceBackImf> devs1 = _devList.FindAll(c =>
             {

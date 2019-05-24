@@ -312,132 +312,170 @@ namespace KEDAClient
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.窑头卸载点);
 
-            //查找是否存在目标站点是出窑头充电站的AGV
-            F_AGV d_agv = F_DataCenter.MDev.IGetDevOnDestination(ConstSetBA.充电桩站);//目的站点
-            F_AGV d_agv2 = F_DataCenter.MDev.IGetAliveDevOnSite(ConstSetBA.出窑头充电点);//地标
+            //搜索车辆电量列表
+            List<int> list = F_DataCenter.MDev.IGetDevElectricity();
 
-            //去出窑头充电站的车是否是窑头的车
-            if (d_agv != null && (d_agv.Site != "24" && d_agv.Site != "65" && d_agv.Site != "25" && d_agv.Site != "14"))
+            //电量列表不为空,电量小于百分之80才进行充电判断
+            if (list != null && list[0] <= ConstSetBA.电池充电临界点)
             {
-                d_agv = null;
-            }
-
-            if (d_agv != null)
-            {
-                _plcHead.IsExitBatteryLock = true;
-                ParamControl.Do_ExitHeadChargeLock = false;
-
-                _plcHead.ExitChargeAgv = d_agv.Id;
-
-                ParamControl.HeadChargeAGV = _plcHead.ExitChargeAgv;
-                ParamControl.HeadChargeLock = _plcHead.IsExitBatteryLock;
-            }
-            else if (d_agv2 != null)
-            {
-                _plcHead.IsExitBatteryLock = true;
-                ParamControl.Do_ExitHeadChargeLock = false;
-
-                _plcHead.ExitChargeAgv = d_agv2.Id;
-
-                ParamControl.HeadChargeAGV = _plcHead.ExitChargeAgv;
-                ParamControl.HeadChargeLock = _plcHead.IsExitBatteryLock;
-            }
-
-            if (agv != null
-                && agv.IsFree
-                && agv.Electicity < ConstSetBA.电池充电临界点
-                && agv.Sta_Material == EnumagvSta_Material.无货
-                && agv.ChargeStatus == EnumChargeStatus.未充电
-                )
-            {
-                //搜索车辆电量列表
-                List<int> list = F_DataCenter.MDev.IGetDevElectricity();
-
-                //是否到达电池充电优先点的标志
+                //是否到达电池最低点的标志
                 int BatteryLim = 0;
 
-                if (list[list.Count-1] <= ConstSetBA.电池充电优先点)
+                if (list[0] <= ConstSetBA.电池充电优先点)
                 {
                     BatteryLim = 1;/*电量有低于40的车*/
                 }
-                switch (BatteryLim)
+                if(agv.Electicity<=list[0])
                 {
-                    case 0:
-                        //电池电量在40-80
-                        {
-                            if (agv.Electicity <= list[0])
+                    switch(BatteryLim)
+                    {
+                        case 0:
+                            //本来的充电逻辑
                             {
-                                // 判断出窑头充电站是否被锁
-                                if ((!_plcHead.IsExitBatteryLock)
-                                    && (d_agv == null && d_agv2 == null))
+                                //查找是否存在目标站点是出窑头充电站的AGV
+                                F_AGV d_agv = F_DataCenter.MDev.IGetDevOnDestination(ConstSetBA.充电桩站);//目的站点
+                                F_AGV d_agv2 = F_DataCenter.MDev.IGetAliveDevOnSite(ConstSetBA.出窑头充电点);//地标
+
+                                //去出窑头充电站的车是否是窑头的车
+                                if (d_agv != null && (d_agv.Site != "24" && d_agv.Site != "65" && d_agv.Site != "25" && d_agv.Site != "14"))
                                 {
-                                    F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.充电, ConstSetBA.窑头卸载点, ConstSetBA.出窑头充电点);
+                                    d_agv = null;
+                                }
 
-                                    task.Id = agv.Id;
-
-                                    //出窑头充电，锁定出窑头充电桩
+                                if (d_agv != null)
+                                {
                                     _plcHead.IsExitBatteryLock = true;
-
                                     ParamControl.Do_ExitHeadChargeLock = false;
 
-                                    _plcHead.ExitChargeAgv = agv.Id;
+                                    _plcHead.ExitChargeAgv = d_agv.Id;
 
                                     ParamControl.HeadChargeAGV = _plcHead.ExitChargeAgv;
                                     ParamControl.HeadChargeLock = _plcHead.IsExitBatteryLock;
+                                }
+                                else if (d_agv2 != null)
+                                {
+                                    _plcHead.IsExitBatteryLock = true;
+                                    ParamControl.Do_ExitHeadChargeLock = false;
 
-                                    _plcHead.ExitFlag = false;
+                                    _plcHead.ExitChargeAgv = d_agv2.Id;
 
-                                    F_DataCenter.MTask.IStartTask(task, agv.Id + TaskHeadToExitBatteryMsg);
+                                    ParamControl.HeadChargeAGV = _plcHead.ExitChargeAgv;
+                                    ParamControl.HeadChargeLock = _plcHead.IsExitBatteryLock;
+                                }
+                                if (agv != null
+                                    && agv.IsFree
+                                    //&& agv.Electicity < list[0]
+                                    && agv.Sta_Material == EnumagvSta_Material.无货
+                                    && agv.ChargeStatus == EnumChargeStatus.未充电
+                                    )
+                                {
+                                    // 判断出窑头充电站是否被锁
+                                    if ((!_plcHead.IsExitBatteryLock)
+                                        && (d_agv == null && d_agv2 == null)
+                                        )
+                                    {
+                                        F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.充电, ConstSetBA.窑头卸载点, ConstSetBA.出窑头充电点);
 
-                                    sendServerLog(agv.Id + TaskHeadToExitBatteryMsg);
+                                        task.Id = agv.Id;
 
-                                    //LogFactory.LogDispatch(agv.Id, "AGV出窑头充电", TaskHeadToExitBatteryMsg);
-                                    FLog.Log(agv.Id + TaskHeadToExitBatteryMsg);
+                                        //出窑头充电，锁定出窑头充电桩
+                                        _plcHead.IsExitBatteryLock = true;
+
+                                        ParamControl.Do_ExitHeadChargeLock = false;
+
+                                        _plcHead.ExitChargeAgv = agv.Id;
+
+                                        ParamControl.HeadChargeAGV = _plcHead.ExitChargeAgv;
+                                        ParamControl.HeadChargeLock = _plcHead.IsExitBatteryLock;
+
+                                        _plcHead.ExitFlag = false;
+
+                                        F_DataCenter.MTask.IStartTask(task, agv.Id + TaskHeadToExitBatteryMsg);
+
+                                        sendServerLog(agv.Id + TaskHeadToExitBatteryMsg);
+
+                                        //LogFactory.LogDispatch(agv.Id, "AGV出窑头充电", TaskHeadToExitBatteryMsg);
+                                        FLog.Log(agv.Id + TaskHeadToExitBatteryMsg);
+                                    }
                                 }
                             }
-                        }
-                        break;
-                    case 1:
-                        //电池电量低于40
-                        {
-                            // 判断出窑头充电站是否被锁
-                            if ((!_plcHead.IsExitBatteryLock)
-                                && (d_agv == null && d_agv2 == null))
+                            break;
+                        case 1:
+                            //本来的充电逻辑
                             {
-                                F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.充电, ConstSetBA.窑头卸载点, ConstSetBA.出窑头充电点);
+                                //查找是否存在目标站点是出窑头充电站的AGV
+                                F_AGV d_agv = F_DataCenter.MDev.IGetDevOnDestination(ConstSetBA.充电桩站);//目的站点
+                                F_AGV d_agv2 = F_DataCenter.MDev.IGetAliveDevOnSite(ConstSetBA.出窑头充电点);//地标
 
-                                task.Id = agv.Id;
+                                //去出窑头充电站的车是否是窑头的车
+                                if (d_agv != null && (d_agv.Site != "24" && d_agv.Site != "65" && d_agv.Site != "25" && d_agv.Site != "14"))
+                                {
+                                    d_agv = null;
+                                }
 
-                                //出窑头充电，锁定出窑头充电桩
-                                _plcHead.IsExitBatteryLock = true;
+                                if (d_agv != null)
+                                {
+                                    _plcHead.IsExitBatteryLock = true;
+                                    ParamControl.Do_ExitHeadChargeLock = false;
 
-                                ParamControl.Do_ExitHeadChargeLock = false;
+                                    _plcHead.ExitChargeAgv = d_agv.Id;
 
-                                _plcHead.ExitChargeAgv = agv.Id;
+                                    ParamControl.HeadChargeAGV = _plcHead.ExitChargeAgv;
+                                    ParamControl.HeadChargeLock = _plcHead.IsExitBatteryLock;
+                                }
+                                else if (d_agv2 != null)
+                                {
+                                    _plcHead.IsExitBatteryLock = true;
+                                    ParamControl.Do_ExitHeadChargeLock = false;
 
-                                ParamControl.HeadChargeAGV = _plcHead.ExitChargeAgv;
-                                ParamControl.HeadChargeLock = _plcHead.IsExitBatteryLock;
+                                    _plcHead.ExitChargeAgv = d_agv2.Id;
 
-                                _plcHead.ExitFlag = false;
+                                    ParamControl.HeadChargeAGV = _plcHead.ExitChargeAgv;
+                                    ParamControl.HeadChargeLock = _plcHead.IsExitBatteryLock;
+                                }
+                                if (agv != null
+                                    && agv.IsFree
+                                    //&& agv.Electicity < list[0]
+                                    && agv.Sta_Material == EnumagvSta_Material.无货
+                                    && agv.ChargeStatus == EnumChargeStatus.未充电
+                                    )
+                                {
+                                    // 判断出窑头充电站是否被锁
+                                    if ((!_plcHead.IsExitBatteryLock)
+                                        && (d_agv == null && d_agv2 == null)
+                                        )
+                                    {
+                                        F_ExcTask task = new F_ExcTask(_plcHead, EnumOper.充电, ConstSetBA.窑头卸载点, ConstSetBA.出窑头充电点);
 
-                                F_DataCenter.MTask.IStartTask(task, agv.Id + TaskHeadToExitBatteryMsg);
+                                        task.Id = agv.Id;
 
-                                sendServerLog(agv.Id + TaskHeadToExitBatteryMsg);
+                                        //出窑头充电，锁定出窑头充电桩
+                                        _plcHead.IsExitBatteryLock = true;
 
-                                //LogFactory.LogDispatch(agv.Id, "AGV出窑头充电", TaskHeadToExitBatteryMsg);
-                                FLog.Log(agv.Id + TaskHeadToExitBatteryMsg);
+                                        ParamControl.Do_ExitHeadChargeLock = false;
+
+                                        _plcHead.ExitChargeAgv = agv.Id;
+
+                                        ParamControl.HeadChargeAGV = _plcHead.ExitChargeAgv;
+                                        ParamControl.HeadChargeLock = _plcHead.IsExitBatteryLock;
+
+                                        _plcHead.ExitFlag = false;
+
+                                        F_DataCenter.MTask.IStartTask(task, agv.Id + TaskHeadToExitBatteryMsg);
+
+                                        sendServerLog(agv.Id + TaskHeadToExitBatteryMsg);
+
+                                        //LogFactory.LogDispatch(agv.Id, "AGV出窑头充电", TaskHeadToExitBatteryMsg);
+                                        FLog.Log(agv.Id + TaskHeadToExitBatteryMsg);
+                                    }
+                                }
                             }
-                        }
-                        break;
-                    default:
-                        break;
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
-            else
-            {
-                _PlcHeadNeedCharge = false;
-            }
-
         }
 
         private string TaskHeadToHeadSucMsg = "窑头放 到 窑头对接完成点";
@@ -796,129 +834,189 @@ namespace KEDAClient
         {
             F_AGV agv = F_DataCenter.MDev.IGetDevOnSite(ConstSetBA.窑尾装载等待区);
 
-            //查找是否存在目标站点是进窑尾充电站的AGV
-            F_AGV d_agv = F_DataCenter.MDev.IGetDevOnDestination(ConstSetBA.充电桩站);/*在充电桩*/
-            F_AGV d_agv2 = F_DataCenter.MDev.IGetAliveDevOnSite(ConstSetBA.进窑尾充电点);/*进充电桩*/
+            //搜索车辆电量列表
+            List<int> list = F_DataCenter.MDev.IGetDevElectricity();
 
-            //去进窑尾充电站的车是否是窑尾的车
-            if (d_agv != null && (d_agv.Site != "26" && d_agv.Site != "36" && d_agv.Site != "66"))
+            //如果电量小于百分之80才进行充电判断
+            if (list != null && list[0] <= ConstSetBA.电池充电临界点)
             {
-                d_agv = null;
-            }
-
-            if (d_agv != null || d_agv2 != null)
-            {
-                ParamControl.Do_EnterEndChargeLock = false;
-
-                if (d_agv != null)
-                {
-                    _plcEnd.IsEnterBatteryLock = true;
-
-                    _plcEnd.EnterChargeAgv = d_agv.Id;
-
-                    ParamControl.EndChargeLock = _plcEnd.IsEnterBatteryLock;
-                    ParamControl.EndChargeAGV = _plcEnd.EnterChargeAgv;
-                }
-                else if (d_agv2 != null)
-                {
-                    _plcEnd.IsEnterBatteryLock = true;
-
-                    _plcEnd.EnterChargeAgv = d_agv2.Id;
-                    ParamControl.EndChargeLock = _plcEnd.IsEnterBatteryLock;
-                    ParamControl.EndChargeAGV = _plcEnd.EnterChargeAgv;
-                }
-            }
-            // 让未上锁的、电量低于60且未充电的AGV去充电，且接货充电点没有AGV
-            if (agv != null
-                && agv.IsFree
-                && agv.Electicity <= ConstSetBA.电池充电临界点 /*电量小于80才进行充电*/
-                && agv.ChargeStatus == EnumChargeStatus.未充电
-                && (d_agv == null && d_agv2 == null)
-                && !_plcEnd.IsEnterBatteryLock
-                //&& ParamControl.Do_EnterEndChargeLock
-                )
-            {
-                //搜索车辆电量列表
-                List<int> list = F_DataCenter.MDev.IGetDevElectricity();
-
-                //是否到达电池优先点的标志
+                //是否到达电池最低点的标志
                 int BatteryLim = 0;
 
-                if (list[list.Count-1] <= ConstSetBA.电池充电优先点)
+                if (list[0] <= ConstSetBA.电池充电优先点)
                 {
                     BatteryLim = 1;/*电量有低于40的车*/
                 }
-
-                switch (BatteryLim)
+                if (agv.Electicity <= list[0])
                 {
-                    case 0:
-                        //电量在40-80之间
-                        if (agv.Electicity <= list[0])
-                        {
-                            _PlcEndNeedCharge = true;
+                    switch (BatteryLim)
+                    {
+                        case 0:
+                            //本来的充电逻辑
+                            {
+                                //查找是否存在目标站点是进窑尾充电站的AGV
+                                F_AGV d_agv = F_DataCenter.MDev.IGetDevOnDestination(ConstSetBA.充电桩站);/*在充电桩*/
+                                F_AGV d_agv2 = F_DataCenter.MDev.IGetAliveDevOnSite(ConstSetBA.进窑尾充电点);/*进充电桩*/
 
-                            F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.充电, ConstSetBA.窑尾装载等待区, ConstSetBA.进窑尾充电点);
+                                //去进窑尾充电站的车是否是窑尾的车
+                                if (d_agv != null && (d_agv.Site != "26" && d_agv.Site != "36" && d_agv.Site != "66"))
+                                {
+                                    d_agv = null;
+                                }
 
-                            F_AGV.AgvLock(agv.Id);
+                                if (d_agv != null || d_agv2 != null)
+                                {
+                                    ParamControl.Do_EnterEndChargeLock = false;
 
-                            //进窑尾充电，锁定进窑尾充电桩
-                            _plcEnd.IsEnterBatteryLock = true;
+                                    if (d_agv != null)
+                                    {
+                                        _plcEnd.IsEnterBatteryLock = true;
 
-                            ParamControl.Do_EnterEndChargeLock = false;
+                                        _plcEnd.EnterChargeAgv = d_agv.Id;
 
-                            _plcEnd.EnterChargeAgv = agv.Id;
+                                        ParamControl.EndChargeLock = _plcEnd.IsEnterBatteryLock;
+                                        ParamControl.EndChargeAGV = _plcEnd.EnterChargeAgv;
+                                    }
+                                    else if (d_agv2 != null)
+                                    {
+                                        _plcEnd.IsEnterBatteryLock = true;
 
-                            ParamControl.EndChargeLock = _plcEnd.IsEnterBatteryLock;
+                                        _plcEnd.EnterChargeAgv = d_agv2.Id;
+                                        ParamControl.EndChargeLock = _plcEnd.IsEnterBatteryLock;
+                                        ParamControl.EndChargeAGV = _plcEnd.EnterChargeAgv;
+                                    }
+                                }
 
-                            ParamControl.EndChargeAGV = _plcEnd.EnterChargeAgv;
 
-                            task.Id = agv.Id;
+                                // 让未上锁的、电量低于60且未充电的AGV去充电，且接货充电点没有AGV
+                                if (agv != null
+                                    && agv.IsFree
+                                    //&& agv.Electicity <= list[0]
+                                    && agv.ChargeStatus == EnumChargeStatus.未充电
+                                    && (d_agv == null && d_agv2 == null)
+                                    && !_plcEnd.IsEnterBatteryLock
+                                    //&& ParamControl.Do_EnterEndChargeLock
+                                    )
+                                {
+                                    _PlcEndNeedCharge = true;
 
-                            F_DataCenter.MTask.IStartTask(task, agv.Id + PlcEndChargeMsg);
+                                    F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.充电, ConstSetBA.窑尾装载等待区, ConstSetBA.进窑尾充电点);
 
-                            sendServerLog(agv.Id + PlcEndChargeMsg);
+                                    F_AGV.AgvLock(agv.Id);
 
-                            //LogFactory.LogDispatch(agv.Id, "充电", PlcEndChargeMsg);
-                            FLog.Log(agv.Id + PlcEndChargeMsg);
-                        }
-                        break;
-                    case 1:
-                        //电量低于40                     
-                        {
-                            _PlcEndNeedCharge = true;
+                                    //进窑尾充电，锁定进窑尾充电桩
+                                    _plcEnd.IsEnterBatteryLock = true;
 
-                            F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.充电, ConstSetBA.窑尾装载等待区, ConstSetBA.进窑尾充电点);
+                                    ParamControl.Do_EnterEndChargeLock = false;
 
-                            F_AGV.AgvLock(agv.Id);
+                                    _plcEnd.EnterChargeAgv = agv.Id;
 
-                            //进窑尾充电，锁定进窑尾充电桩
-                            _plcEnd.IsEnterBatteryLock = true;
+                                    ParamControl.EndChargeLock = _plcEnd.IsEnterBatteryLock;
 
-                            ParamControl.Do_EnterEndChargeLock = false;
+                                    ParamControl.EndChargeAGV = _plcEnd.EnterChargeAgv;
 
-                            _plcEnd.EnterChargeAgv = agv.Id;
+                                    task.Id = agv.Id;
 
-                            ParamControl.EndChargeLock = _plcEnd.IsEnterBatteryLock;
+                                    F_DataCenter.MTask.IStartTask(task, agv.Id + PlcEndChargeMsg);
 
-                            ParamControl.EndChargeAGV = _plcEnd.EnterChargeAgv;
+                                    sendServerLog(agv.Id + PlcEndChargeMsg);
 
-                            task.Id = agv.Id;
+                                    //LogFactory.LogDispatch(agv.Id, "充电", PlcEndChargeMsg);
+                                    FLog.Log(agv.Id + PlcEndChargeMsg);
 
-                            F_DataCenter.MTask.IStartTask(task, agv.Id + PlcEndChargeMsg);
+                                }
+                                else
+                                {
+                                    _PlcEndNeedCharge = false;
+                                }
+                            }
+                            break;
+                        case 1:
+                            //本来的充电逻辑
+                            {
+                                //查找是否存在目标站点是进窑尾充电站的AGV
+                                F_AGV d_agv = F_DataCenter.MDev.IGetDevOnDestination(ConstSetBA.充电桩站);/*在充电桩*/
+                                F_AGV d_agv2 = F_DataCenter.MDev.IGetAliveDevOnSite(ConstSetBA.进窑尾充电点);/*进充电桩*/
 
-                            sendServerLog(agv.Id + PlcEndChargeMsg);
+                                //去进窑尾充电站的车是否是窑尾的车
+                                if (d_agv != null && (d_agv.Site != "26" && d_agv.Site != "36" && d_agv.Site != "66"))
+                                {
+                                    d_agv = null;
+                                }
 
-                            //LogFactory.LogDispatch(agv.Id, "充电", PlcEndChargeMsg);
-                            FLog.Log(agv.Id + PlcEndChargeMsg);
-                        }
-                        break;
-                    default:
-                        break;
+                                if (d_agv != null || d_agv2 != null)
+                                {
+                                    ParamControl.Do_EnterEndChargeLock = false;
+
+                                    if (d_agv != null)
+                                    {
+                                        _plcEnd.IsEnterBatteryLock = true;
+
+                                        _plcEnd.EnterChargeAgv = d_agv.Id;
+
+                                        ParamControl.EndChargeLock = _plcEnd.IsEnterBatteryLock;
+                                        ParamControl.EndChargeAGV = _plcEnd.EnterChargeAgv;
+                                    }
+                                    else if (d_agv2 != null)
+                                    {
+                                        _plcEnd.IsEnterBatteryLock = true;
+
+                                        _plcEnd.EnterChargeAgv = d_agv2.Id;
+                                        ParamControl.EndChargeLock = _plcEnd.IsEnterBatteryLock;
+                                        ParamControl.EndChargeAGV = _plcEnd.EnterChargeAgv;
+                                    }
+                                }
+
+
+                                // 让未上锁的、电量低于60且未充电的AGV去充电，且接货充电点没有AGV
+                                if (agv != null
+                                    && agv.IsFree
+                                    //&& agv.Electicity <= list[0]
+                                    && agv.ChargeStatus == EnumChargeStatus.未充电
+                                    && (d_agv == null && d_agv2 == null)
+                                    && !_plcEnd.IsEnterBatteryLock
+                                    //&& ParamControl.Do_EnterEndChargeLock
+                                    )
+                                {
+                                    _PlcEndNeedCharge = true;
+
+                                    F_ExcTask task = new F_ExcTask(_plcEnd, EnumOper.充电, ConstSetBA.窑尾装载等待区, ConstSetBA.进窑尾充电点);
+
+                                    F_AGV.AgvLock(agv.Id);
+
+                                    //进窑尾充电，锁定进窑尾充电桩
+                                    _plcEnd.IsEnterBatteryLock = true;
+
+                                    ParamControl.Do_EnterEndChargeLock = false;
+
+                                    _plcEnd.EnterChargeAgv = agv.Id;
+
+                                    ParamControl.EndChargeLock = _plcEnd.IsEnterBatteryLock;
+
+                                    ParamControl.EndChargeAGV = _plcEnd.EnterChargeAgv;
+
+                                    task.Id = agv.Id;
+
+                                    F_DataCenter.MTask.IStartTask(task, agv.Id + PlcEndChargeMsg);
+
+                                    sendServerLog(agv.Id + PlcEndChargeMsg);
+
+                                    //LogFactory.LogDispatch(agv.Id, "充电", PlcEndChargeMsg);
+                                    FLog.Log(agv.Id + PlcEndChargeMsg);
+
+                                }
+                                else
+                                {
+                                    _PlcEndNeedCharge = false;
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
                 }
-            }
-            else
-            {
-                _PlcEndNeedCharge = false;
+
+
             }
         }
 
