@@ -5,49 +5,23 @@ using GfxCommonInterfaces;
 
 namespace KEDAClient
 {
+
     /// <summary>
-    ///AGV货物状态
+    ///运行状态
     /// </summary>
     public enum EnumSta_AGV
     {
-        AGV未知,
-        AGV有货 = 1,
-        AGV无货 = 2,
-        AGV传输中 = 3,
-    }
+        运行 = 1,
 
-    /// <summary>
-    /// 电机状态
-    /// </summary>
-    public enum EnumSta_AGVMonitor
-    {
-        //AGV电机状态
-        未知,
-        AGV电机正转 = 1,
+        暂停 = 2,
 
-        AGV电机反转 = 2,
-
-        AGV电机停止 = 3,
-                
-    }
-
-    /// <summary>
-    /// 充电状态
-    /// </summary>
-    public enum EnumChargeStatus
-    {
-        正在充电 = 1,
-
-        充电完成 = 2,
-
-        未充电 = 3,
+        停止 = 3,
 
         未知
-
     }
 
     /// <summary>
-    /// AGV
+    /// 线边滚筒PLC对象
     /// </summary>
     public class F_AGV
     {
@@ -79,17 +53,17 @@ namespace KEDAClient
         /// <summary>
         /// 货物状态
         /// </summary>
-        public EnumSta_AGV Sta_Material
+        public EnumSta_Material Sta_Material
         {
             get 
             {
-                EnumSta_AGV result = EnumSta_AGV.AGV未知;
+                EnumSta_Material result = EnumSta_Material.AGV未知;
 
                 try
                 {
-                    result = (EnumSta_AGV)Convert.ToInt32((F_DataCenter.MDev.IGetSenValue(_id, "0036")));
+                    result = (EnumSta_Material)Convert.ToInt32((F_DataCenter.MDev.IGetSenValue(_id, "0036")));
                 }
-                catch { result = EnumSta_AGV.AGV未知; }
+                catch { result = EnumSta_Material.AGV未知; }
 
                 return result;
             }
@@ -98,17 +72,17 @@ namespace KEDAClient
         /// <summary>
         /// 电机状态
         /// </summary>
-        public EnumSta_AGVMonitor Sta_Monitor
+        public EnumSta_Monitor Sta_Monitor
         {
             get
             {
-                EnumSta_AGVMonitor result = EnumSta_AGVMonitor.未知;
+                EnumSta_Monitor result = EnumSta_Monitor.未知;
 
                 try
                 {
-                    result = (EnumSta_AGVMonitor)Convert.ToInt32((F_DataCenter.MDev.IGetSenValue(_id, "0037")));
+                    result = (EnumSta_Monitor)Convert.ToInt32((F_DataCenter.MDev.IGetSenValue(_id, "0037")));
                 }
-                catch { result = EnumSta_AGVMonitor.未知; }
+                catch { result = EnumSta_Monitor.未知; }
 
                 return result;
             }
