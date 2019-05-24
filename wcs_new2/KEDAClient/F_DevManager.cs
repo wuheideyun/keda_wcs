@@ -188,12 +188,10 @@ namespace KEDAClient
         {
             try
             {
-                DeviceBackImf dev = _devList.Find(c =>
-                {
-                    return c.DevType == "Magnet_Basic"
-&& c.ProtyList[ConstSetBA.地标].RValue == site
-&& c.ProtyList[ConstSetBA.空闲].RValue == "True"
-;
+                DeviceBackImf dev = _devList.Find(c => { return c.DevType == "Magnet_Basic" 
+                    && c.ProtyList[ConstSetBA.地标].RValue == site
+                    && c.ProtyList[ConstSetBA.空闲].RValue == "True"
+                    ;
                 });
 
                 if (dev != null) { return new F_AGV(dev.DevId); }
@@ -211,8 +209,7 @@ namespace KEDAClient
         {
             try
             {
-                DeviceBackImf dev = _devList.Find(c =>
-                {
+                DeviceBackImf dev = _devList.Find(c => {
                     return c.DevType == "Magnet_Basic"
                     && c.ProtyList[ConstSetBA.地标].RValue == site
                     //&& c.IsAlive == true
@@ -235,8 +232,7 @@ namespace KEDAClient
         {
             try
             {
-                DeviceBackImf dev = _devList.Find(c =>
-                {
+                DeviceBackImf dev = _devList.Find(c => {
                     return c.DevType == "Magnet_Basic"
                     && c.IsAlive
                     && (c.ProtyList[ConstSetBA.站点].RValue == dest);
@@ -249,9 +245,9 @@ namespace KEDAClient
             return null;
         }
 
-        public List<FDispatchBackImf> DispatchList
+        public List< FDispatchBackImf> DispatchList
         {
-            get { return _dispatchList; }
+            get  {return  _dispatchList; }
         }
 
         /// <summary>
@@ -263,8 +259,7 @@ namespace KEDAClient
         {
             try
             {
-                DeviceBackImf dev = _devList.Find(c =>
-                {
+                DeviceBackImf dev = _devList.Find(c => {
                     return c.DevType == "Magnet_Basic"
                     && !c.IsAlive;
                 });
@@ -281,99 +276,51 @@ namespace KEDAClient
         /// </summary>
         /// <param name="site"></param>
         /// <returns></returns>
-        public List<int> IGetDevElectricity()
+        public int IGetDevElectricity()
         {
             try
             {
                 //考虑范围只有正在作业的车辆，非作业车辆不纳入考虑
                 List<DeviceBackImf> devs = _devList.FindAll(c =>
                 {
-                    return c.DevType == "Magnet_Basic"
+                    return c.DevType == "Magnet_Basic" 
                     && c.IsAlive
                     && c.ProtyList[ErrorType.脱轨].RValue == "0"
                     ;
                 });
-                //列表1为电量低于80的AGV
+
                 List<int> list = new List<int>();
-                //列表2为电量40-80之间的AGV
-                List<int> list1 = new List<int>();
-                //列表3为电量低于40的AGV
-                List<int> list2 = new List<int>();
+
                 if (devs != null)
                 {
                     foreach (DeviceBackImf dev in devs)
                     {
-                        int Electric = new F_AGV(dev.DevId).Electicity;
-                        //电量低于80加入列表1
-                        if (Electric < 80)
-                        { list.Add(Electric); }
-                        //电量40-80加入列表2
-                        if (Electric <= 80 && Electric > 40)
-                        { list1.Add(Electric); }
-                        //电量低于40加入列表3
-                        if (Electric <= 40)
-                        { list2.Add(Electric); }
+
+                        list.Add(new F_AGV(dev.DevId).Electicity);
 
                     }
-                    //对列表1进行由低到高排序
+
                     list.Sort();
-                    //对列表2进行由低到高排序
-                    list1.Sort();
-                    //对列表3进行由低到高排序
-                    list2.Sort();
-                }
-                //如有电量低于40的车返回列表2
-                if (list2.Count >= 1)
-                {
-
-                    return list2;
 
                 }
 
-                if (list1.Count >= 1)
+                if(list.Count > ConstSetBA.最低电量排序序号)
                 {
 
-                    return list1;
+                     return list[ConstSetBA.最低电量排序序号 - 1];
 
                 }
                 else
                 {
 
-                    return list;
+                    return ConstSetBA.最低电量;
 
                 }
-
 
             }
             catch { }
 
-
-
-            //考虑范围只有正在作业的车辆，非作业车辆不纳入考虑
-            List<DeviceBackImf> devs1 = _devList.FindAll(c =>
-            {
-                return c.DevType == "Magnet_Basic"
-                && c.IsAlive
-                && c.ProtyList[ErrorType.脱轨].RValue == "0"
-                ;
-            });
-            List<int> list4 = new List<int>();
-            //列表4为电量低于80的AGV
-            if (devs1 != null)
-            {
-                foreach (DeviceBackImf dev in devs1)
-                {
-                    //电量低于80加入列表1
-                    if (new F_AGV(dev.DevId).Electicity < 80)
-                    { list4.Add(new F_AGV(dev.DevId).Electicity); }
-                }
-
-                //对列表4进行由低到高排序
-                list4.Sort();
-            }
-
-            return list4;
-
+            return ConstSetBA.最低电量;
         }
 
         /// <summary>
@@ -418,11 +365,9 @@ namespace KEDAClient
         {
             try
             {
-                List<DeviceBackImf> devs = _devList.FindAll(c =>
-                {
-                 return c.DevType == "Magnet_Basic" &&
-                 (!c.IsAlive || c.ProtyList[ErrorType.脱轨].RValue == "1" || c.ProtyList[ErrorType.急停触发].RValue == "1" ||
-                  c.ProtyList[ErrorType.驱动器故障].RValue == "1" || c.ProtyList[ErrorType.轨道错误].RValue == "1" || c.ProtyList[ErrorType.机械撞].RValue == "1");
+                List<DeviceBackImf> devs = _devList.FindAll(c =>{return c.DevType == "Magnet_Basic" &&
+                (!c.IsAlive|| c.ProtyList[ErrorType.脱轨].RValue == "1" || c.ProtyList[ErrorType.急停触发].RValue == "1" ||
+                 c.ProtyList[ErrorType.驱动器故障].RValue == "1" || c.ProtyList[ErrorType.轨道错误].RValue == "1" || c.ProtyList[ErrorType.机械撞].RValue == "1");
                 });
 
                 if (devs != null)
@@ -464,20 +409,18 @@ namespace KEDAClient
                 //&& c.ProtyList[ConstSetBA.空闲].RValue == "True"
                 foreach (var item in _devList)
                 {
-                    list.Add(new DevData
-                    {
+                    list.Add(new DevData {
                         DevID = item.DevId,
                         Status = AGV.GetDevStatus(item),
-                        Electricity = AGV.GetDevEle(item)
-                    }
+                        Electricity = AGV.GetDevEle(item)}
                     );
                 }
                 return list;
             }
         }
 
-
-
+        
+        
     }
 
     /// <summary>
