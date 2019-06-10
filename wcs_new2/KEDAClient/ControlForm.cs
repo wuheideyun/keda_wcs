@@ -117,6 +117,20 @@ namespace KEDAClient
             }
 
             Int32.TryParse(read, out ParamControl.LowBatteryNum);
+
+            key = string.Format("最低充电量");
+            read = ConfigHelper.IniReadValue(section, key, 100);
+
+            if(string.IsNullOrEmpty(read))
+            {
+                read = "80";
+
+                ConfigHelper.IniWriteValue(section, key, read);
+            }
+
+            Int32.TryParse(read, out ParamControl.MinElectricityCharge);
+
+            
         }
 
         /// <summary>
@@ -224,6 +238,7 @@ namespace KEDAClient
             agvData_Refresh();
             plcData_Refresh();
             RefreshLockBtn();
+            RefreshAvgPower();//更新平均电量
             timerForListRefresh.Enabled = true;
         }
 
@@ -309,9 +324,11 @@ namespace KEDAClient
                 item.SubItems.Add(data.Status); //AGV状态
                 if (data.Status == "离线") item.BackColor = Color.Gray;
                 else if (data.Status == "充电中") item.BackColor = Color.Yellow;
-                else if (data.Electricity <= F_DataCenter.MDev.IGetDevElectricity()) item.BackColor = Color.Red;
-                else if (data.Status == "在线" || data.Status == "任务中" || data.Status == "空闲" || data.Status == "被交管" || data.Status == "障碍物") item.BackColor = Color.Green;
                 else if (data.Status == "脱轨") item.BackColor = Color.Blue;
+                else if (data.Electricity <= ParamControl.MinElectricityCharge && data.Electricity <= F_DataCenter.MDev.IGetDevElectricity()) item.BackColor = Color.Red;
+                else if (data.Electricity <= F_DataCenter.MDev.IGetDevElectricity()) item.BackColor = Color.OrangeRed;
+                else if (data.Status == "在线" || data.Status == "任务中" || data.Status == "空闲" || data.Status == "被交管" || data.Status == "障碍物") item.BackColor = Color.Green;
+                
                 agvList.Items.Add(item);
             }
             // 结束数据处理
@@ -1193,6 +1210,31 @@ namespace KEDAClient
 
         }
 
+        private void AgvSpeedLab_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        
+        /// <summary>
+        /// 刷新平均电量
+        /// </summary>
+        private void RefreshAvgPower()
+        {
+
+           label65.Text = F_DataCenter.MDev.IGetDevAvgElectricity();
+        }
+
+        private void controlPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
         /// <summary>
         /// 刷新锁定状态
         /// </summary>
@@ -1217,7 +1259,7 @@ namespace KEDAClient
             }
             else
             {
-                label62.Text = "未锁定";
+                label62.Text = "无充电";
             }
 
             if (ParamControl.EndChargeLock)
@@ -1227,7 +1269,7 @@ namespace KEDAClient
             }
             else
             {
-                label63.Text = "未锁定";
+                label63.Text = "无充电";
             }
 
         }

@@ -350,6 +350,7 @@ namespace KEDAClient
                 && agv.Electicity <= F_DataCenter.MDev.IGetDevElectricity()
                 && agv.Sta_Material == EnumagvSta_Material.无货
                 && agv.ChargeStatus == EnumChargeStatus.未充电
+                && agv.Electicity <= ParamControl.MinElectricityCharge //低于最低充电量的车才能去充电
                 )
             {
                 // 判断出窑头充电站是否被锁
@@ -398,7 +399,7 @@ namespace KEDAClient
             if (agv != null
                 && agv.IsFree
                 && agv.Sta_Material == EnumagvSta_Material.无货
-                && (agv.Electicity > F_DataCenter.MDev.IGetDevElectricity()
+                && ((agv.Electicity > F_DataCenter.MDev.IGetDevElectricity()) || (agv.Electicity > ParamControl.MinElectricityCharge) //高于最低充电量的车不能去充电
                 || (!ParamControl.Do_ExitHeadCharge || _plcHead.IsExitBatteryLock && (_plcHead.ExitChargeAgv != agv.Id)))
                 )
             {
@@ -484,7 +485,7 @@ namespace KEDAClient
                 //&& d_agv2 == null
                 ) &&
                 agv != null && agv.IsFree
-                && (agv.Electicity > F_DataCenter.MDev.IGetDevElectricity()
+                && (agv.Electicity > F_DataCenter.MDev.IGetDevElectricity() || (agv.Electicity > ParamControl.MinElectricityCharge) //高于最低充电量的车不能去充电
                 || (!ParamControl.Do_EnterEndCharge || _plcEnd.IsEnterBatteryLock && _plcEnd.EnterChargeAgv != agv.Id))
                 //&& _plcEnd.IsLock == false
                 && (d_agv3 == null || (d_agv3 != null && d_agv3.ChargeStatus != EnumChargeStatus.充电完成))
@@ -711,6 +712,8 @@ namespace KEDAClient
 
                     task.Id = agv.Id;
 
+                    Thread.Sleep(5000);
+
                     F_DataCenter.MTask.IStartTask(task, agv.Id + ExitPlcHeadChargeSucMsg);
 
                     sendServerLog(agv.Id + ExitPlcHeadChargeSucMsg);
@@ -774,6 +777,7 @@ namespace KEDAClient
                 && (d_agv == null && d_agv2 == null)
                 && !_plcEnd.IsEnterBatteryLock
                 //&& ParamControl.Do_EnterEndChargeLock
+                && agv.Electicity <= ParamControl.MinElectricityCharge //低于最低充电量的车才能去充电
                 )
             {
                 _PlcEndNeedCharge = true;
@@ -888,7 +892,7 @@ namespace KEDAClient
 
                     task.Id = agv.Id;
 
-                    //Thread.Sleep(2000);
+                    Thread.Sleep(5000);
 
                     F_DataCenter.MTask.IStartTask(task, agv.Id + PlcEndChargeSucMsg);
 

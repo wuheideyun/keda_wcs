@@ -188,6 +188,7 @@ namespace KEDAClient
         {
 
             if (_taskDispatch != null) { if (WcfMainHelper.CtrDispatch(_taskDispatch.Id, EnumCtrType.Stop)) { _isSuc = true; } }
+            FLog.Log(_taskDispatch.Id + "任务完成");
 
         }
 
@@ -275,9 +276,11 @@ namespace KEDAClient
 
                     if (_operType == EnumOper.取货)       //窑尾
                     {
+                        
                         ///当前AGV的到达的地标 与 棍台绑定地标一致
                         if (_agv.Site == _plc.Site)
                         {
+                            FLog.Log(_agv.Id + "到达窑尾，开始取货");
                             if (_agv != null && _plc.EnterChargeAgv == _agv.Id)
                             {
                                 if (_plc.IsEnterBatteryLock
@@ -302,6 +305,7 @@ namespace KEDAClient
                                 if (_agv.Sta_Monitor != EnumSta_Monitor.电机反转)
                                 {
                                     _agv.SendOrdr(EnumType.上料操作, EnumPara.agv上料启动);
+                                    FLog.Log(_agv.Id + "启动车载辊台");
 
                                 }
                                 else
@@ -310,6 +314,8 @@ namespace KEDAClient
                                     _agv.SendOrdr(EnumType.上料操作, EnumPara.agv上料启动);
 
                                     _plc.SendOrdr(EnumType.下料操作, EnumPara.窑尾辊台允许下料);
+
+                                    FLog.Log(_agv.Id + "启动车载辊台，启动窑尾辊台");
                                 }
 
                             }
@@ -320,9 +326,9 @@ namespace KEDAClient
                                 _agv.Sta_Material == EnumagvSta_Material.有货))
                             {
                                 _agv.SendOrdr(EnumType.上料操作, EnumPara.agv辊台停止);
-
+                                
                                 _plc.SendOrdr(EnumType.下料操作, EnumPara.窑头辊台上料完成);
-
+                                FLog.Log(_agv.Id + "停止车载辊台，停止窑尾辊台");
                                 //如果界面打开忽略《窑尾》AGV棍台状态，则进去结束任务
                                 if (ParamControl.Is_IgnoreTailStaStatus ||
                                     _agv.Sta_Monitor == EnumSta_Monitor.电机停止
@@ -353,6 +359,7 @@ namespace KEDAClient
                         ///当前AGV的到达的地标 与 棍台绑定地标一致
                         if (_agv.Site == _plc.Site)
                         {
+                            FLog.Log(_agv.Id + "到达窑头，开始放货");
                             if (_agv != null && _plc.EnterChargeAgv == _agv.Id)
                             {
                                 if (_plc.IsEnterBatteryLock
@@ -373,7 +380,7 @@ namespace KEDAClient
                                 if (_agv.Sta_Monitor != EnumSta_Monitor.电机反转)
                                 {
                                     _agv.SendOrdr(EnumType.下料操作, EnumPara.agv下料启动);
-
+                                    FLog.Log(_agv.Id + "启动车载辊台");
                                 }
                                 else
                                 {
@@ -381,6 +388,7 @@ namespace KEDAClient
                                     _plc.SendOrdr(EnumType.上料操作, EnumPara.窑头辊台上料中);
 
                                     _agv.SendOrdr(EnumType.下料操作, EnumPara.agv下料启动);
+                                    FLog.Log(_agv.Id + "启动车载辊台，启动窑头辊台");
                                 }
 
                             }
@@ -394,6 +402,7 @@ namespace KEDAClient
 
                                 _agv.SendOrdr(EnumType.下料操作, EnumPara.agv辊台停止);
 
+                                FLog.Log(_agv.Id + "停止车载辊台，停止窑头辊台");
                                 //如果界面打开忽略《窑头》AGV棍台状态，则进去结束任务
                                 if (ParamControl.Is_IgnoreHeadStaStatus ||
                                     _agv.Sta_Monitor == EnumSta_Monitor.电机停止
@@ -588,22 +597,27 @@ namespace KEDAClient
                 if (exit == null)
                 {
                     _taskList.Add(task);
+                    FLog.Log(task.Id + "加入任务列表");
                     PublicDataContorl.AddTaskData(new TaskData(task.NO, msg, task.StartSite + "," + task.EndSite));
                     return true;
                 }
                 else if (task.EndSite != exit.EndSite)
                 {
                     _taskList.Remove(exit);
+                    FLog.Log(exit.Id + "移除任务列表");
                     PublicDataContorl.TaskIsSucc(exit.NO);
                     _taskList.Add(task);
+                    FLog.Log(task.Id + "加入任务列表");
                     PublicDataContorl.AddTaskData(new TaskData(task.NO, msg, task.StartSite + "," + task.EndSite));
                     return true;
                 }
                 else if (task.StartSite != exit.StartSite)
                 {
                     _taskList.Remove(exit);
+                    FLog.Log(exit.Id + "移除任务列表");
                     PublicDataContorl.TaskIsSucc(exit.NO);
                     _taskList.Add(task);
+                    FLog.Log(task.Id + "加入任务列表");
                     PublicDataContorl.AddTaskData(new TaskData(task.NO, msg, task.StartSite + "," + task.EndSite));
                     return true;
                 }
@@ -628,7 +642,7 @@ namespace KEDAClient
                 {
 
                     //LogFactory.LogAdd(LOGTYPE.FINISH, exit.Id, exit.GetTaskInfo(), "调度完成", exit.GetTaskInfo());//任务完成日志
-                    FLog.Log("调度完成" + exit.GetTaskInfo());//任务完成日志
+                    FLog.Log(Id + "调度完成" + exit.GetTaskInfo());//任务完成日志
                     PublicDataContorl.TaskIsSucc(exit.NO);
                     _taskList.Remove(exit);
                 }
@@ -647,7 +661,7 @@ namespace KEDAClient
                 if (excTask != null && _taskList.Contains(excTask))
                 {
                     //LogFactory.LogAdd(LOGTYPE.FINISH, excTask.Id, excTask.GetTaskInfo(), "调度终止", excTask.GetTaskInfo());//任务完成日志
-                    FLog.Log("调度终止"+ excTask.GetTaskInfo());//任务完成日志
+                    FLog.Log(no + "调度终止"+ excTask.GetTaskInfo());//任务完成日志
                     PublicDataContorl.TaskIsSucc(excTask.NO);
                     excTask.ISetTaskSuc();
                     _taskList.Remove(excTask);

@@ -32,13 +32,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlForm));
             this.imageRS = new System.Windows.Forms.ImageList(this.components);
             this.panel3 = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.timerForListRefresh = new System.Windows.Forms.Timer(this.components);
-            this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.mainTabControl = new KEDAClient.TabControlEx();
             this.controlPage = new System.Windows.Forms.TabPage();
+            this.label65 = new System.Windows.Forms.Label();
+            this.label64 = new System.Windows.Forms.Label();
             this.AgvNowPoitLab = new System.Windows.Forms.Label();
             this.label30 = new System.Windows.Forms.Label();
             this.agvNameLab = new System.Windows.Forms.Label();
@@ -143,6 +140,7 @@
             this.IgHeadUnLoadTask = new KEDAClient.SwitchButton();
             this.label50 = new System.Windows.Forms.Label();
             this.label51 = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
             this.tabControlEx1 = new KEDAClient.TabControlEx();
             this.taskPages = new System.Windows.Forms.TabPage();
             this.taskStopBtn = new System.Windows.Forms.Button();
@@ -186,16 +184,15 @@
             this.headPlcUnloadBtn = new KEDAClient.SwitchButton();
             this.endPlcLoadBtn = new KEDAClient.SwitchButton();
             this.label60 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.agvList = new KEDAClient.DoubleBufferListView();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.AutoGenerateTaskBtn = new KEDAClient.SwitchButton();
             this.InitAllBtn = new KEDAClient.SwitchButton();
             this.ExecuteTaskBtn = new KEDAClient.SwitchButton();
+            this.timerForListRefresh = new System.Windows.Forms.Timer(this.components);
+            this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.panel3.SuspendLayout();
-            this.panel4.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.toolStripContainer1.ContentPanel.SuspendLayout();
-            this.toolStripContainer1.SuspendLayout();
             this.mainTabControl.SuspendLayout();
             this.controlPage.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -217,10 +214,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panel4.SuspendLayout();
             this.tabControlEx1.SuspendLayout();
             this.taskPages.SuspendLayout();
             this.timeTaskPage.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.toolStripContainer1.ContentPanel.SuspendLayout();
+            this.toolStripContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // imageRS
@@ -240,68 +242,6 @@
             this.panel3.Padding = new System.Windows.Forms.Padding(3);
             this.panel3.Size = new System.Drawing.Size(633, 645);
             this.panel3.TabIndex = 6;
-            // 
-            // panel4
-            // 
-            this.panel4.BackColor = System.Drawing.Color.Transparent;
-            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel4.Controls.Add(this.tabControlEx1);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel4.Location = new System.Drawing.Point(834, 72);
-            this.panel4.Name = "panel4";
-            this.panel4.Padding = new System.Windows.Forms.Padding(3);
-            this.panel4.Size = new System.Drawing.Size(350, 645);
-            this.panel4.TabIndex = 7;
-            // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.Transparent;
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel2.Controls.Add(this.agvList);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel2.Location = new System.Drawing.Point(0, 72);
-            this.panel2.Name = "panel2";
-            this.panel2.Padding = new System.Windows.Forms.Padding(3);
-            this.panel2.Size = new System.Drawing.Size(201, 645);
-            this.panel2.TabIndex = 5;
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.Transparent;
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel1.Controls.Add(this.AutoGenerateTaskBtn);
-            this.panel1.Controls.Add(this.InitAllBtn);
-            this.panel1.Controls.Add(this.ExecuteTaskBtn);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(3);
-            this.panel1.Size = new System.Drawing.Size(1184, 72);
-            this.panel1.TabIndex = 4;
-            // 
-            // timerForListRefresh
-            // 
-            this.timerForListRefresh.Enabled = true;
-            this.timerForListRefresh.Interval = 500;
-            this.timerForListRefresh.Tick += new System.EventHandler(this.timerForListRefresh_Tick);
-            // 
-            // toolStripContainer1
-            // 
-            // 
-            // toolStripContainer1.ContentPanel
-            // 
-            this.toolStripContainer1.ContentPanel.AutoScroll = true;
-            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel3);
-            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel4);
-            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel2);
-            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel1);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(1184, 717);
-            this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
-            this.toolStripContainer1.Name = "toolStripContainer1";
-            this.toolStripContainer1.Size = new System.Drawing.Size(1184, 742);
-            this.toolStripContainer1.TabIndex = 8;
-            this.toolStripContainer1.Text = "toolStripContainer1";
             // 
             // mainTabControl
             // 
@@ -327,6 +267,8 @@
             // controlPage
             // 
             this.controlPage.BackColor = System.Drawing.Color.Transparent;
+            this.controlPage.Controls.Add(this.label65);
+            this.controlPage.Controls.Add(this.label64);
             this.controlPage.Controls.Add(this.AgvNowPoitLab);
             this.controlPage.Controls.Add(this.label30);
             this.controlPage.Controls.Add(this.agvNameLab);
@@ -344,6 +286,30 @@
             this.controlPage.Size = new System.Drawing.Size(495, 607);
             this.controlPage.TabIndex = 0;
             this.controlPage.Text = "综合控制";
+            this.controlPage.Click += new System.EventHandler(this.controlPage_Click);
+            // 
+            // label65
+            // 
+            this.label65.AutoSize = true;
+            this.label65.Font = new System.Drawing.Font("黑体", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label65.ForeColor = System.Drawing.Color.White;
+            this.label65.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label65.Location = new System.Drawing.Point(365, 440);
+            this.label65.Name = "label65";
+            this.label65.Size = new System.Drawing.Size(141, 34);
+            this.label65.TabIndex = 22;
+            this.label65.Text = "label65";
+            // 
+            // label64
+            // 
+            this.label64.AutoSize = true;
+            this.label64.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold);
+            this.label64.ForeColor = System.Drawing.Color.White;
+            this.label64.Location = new System.Drawing.Point(34, 440);
+            this.label64.Name = "label64";
+            this.label64.Size = new System.Drawing.Size(330, 34);
+            this.label64.TabIndex = 21;
+            this.label64.Text = "在线车辆平均电量：";
             // 
             // AgvNowPoitLab
             // 
@@ -352,7 +318,7 @@
             this.AgvNowPoitLab.ForeColor = System.Drawing.Color.White;
             this.AgvNowPoitLab.Location = new System.Drawing.Point(114, 81);
             this.AgvNowPoitLab.Name = "AgvNowPoitLab";
-            this.AgvNowPoitLab.Size = new System.Drawing.Size(27, 27);
+            this.AgvNowPoitLab.Size = new System.Drawing.Size(33, 34);
             this.AgvNowPoitLab.TabIndex = 20;
             this.AgvNowPoitLab.Text = "*";
             // 
@@ -363,7 +329,7 @@
             this.label30.ForeColor = System.Drawing.Color.White;
             this.label30.Location = new System.Drawing.Point(9, 78);
             this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(88, 30);
+            this.label30.Size = new System.Drawing.Size(112, 37);
             this.label30.TabIndex = 19;
             this.label30.Text = "站点:";
             // 
@@ -374,7 +340,7 @@
             this.agvNameLab.ForeColor = System.Drawing.Color.White;
             this.agvNameLab.Location = new System.Drawing.Point(6, 25);
             this.agvNameLab.Name = "agvNameLab";
-            this.agvNameLab.Size = new System.Drawing.Size(130, 44);
+            this.agvNameLab.Size = new System.Drawing.Size(164, 55);
             this.agvNameLab.TabIndex = 18;
             this.agvNameLab.Text = "AGV01";
             // 
@@ -399,7 +365,7 @@
             this.panel6.Controls.Add(this.label10);
             this.panel6.Controls.Add(this.label12);
             this.panel6.Controls.Add(this.label18);
-            this.panel6.Location = new System.Drawing.Point(250, 440);
+            this.panel6.Location = new System.Drawing.Point(250, 474);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(245, 170);
             this.panel6.TabIndex = 16;
@@ -407,9 +373,10 @@
             // label63
             // 
             this.label63.AutoSize = true;
+            this.label63.ForeColor = System.Drawing.Color.White;
             this.label63.Location = new System.Drawing.Point(148, 4);
             this.label63.Name = "label63";
-            this.label63.Size = new System.Drawing.Size(87, 22);
+            this.label63.Size = new System.Drawing.Size(110, 27);
             this.label63.TabIndex = 22;
             this.label63.Text = "label63";
             // 
@@ -420,9 +387,9 @@
             this.ExitEndChargeLBtn.CheckStyleX = KEDAClient.CheckStyle.style8;
             this.ExitEndChargeLBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ExitEndChargeLBtn.Location = new System.Drawing.Point(154, 126);
-            this.ExitEndChargeLBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.ExitEndChargeLBtn.Margin = new System.Windows.Forms.Padding(5);
             this.ExitEndChargeLBtn.Name = "ExitEndChargeLBtn";
-            this.ExitEndChargeLBtn.Size = new System.Drawing.Size(81, 30);
+            this.ExitEndChargeLBtn.Size = new System.Drawing.Size(80, 31);
             this.ExitEndChargeLBtn.TabIndex = 21;
             this.ExitEndChargeLBtn.TextName = null;
             this.ExitEndChargeLBtn.TextStartPoint = new System.Drawing.Point(0, 0);
@@ -435,7 +402,7 @@
             this.label57.ForeColor = System.Drawing.Color.White;
             this.label57.Location = new System.Drawing.Point(3, 131);
             this.label57.Name = "label57";
-            this.label57.Size = new System.Drawing.Size(160, 22);
+            this.label57.Size = new System.Drawing.Size(201, 27);
             this.label57.TabIndex = 20;
             this.label57.Text = "出充电桩状态:";
             // 
@@ -446,9 +413,9 @@
             this.EnterEndChargeLBtn.CheckStyleX = KEDAClient.CheckStyle.style8;
             this.EnterEndChargeLBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.EnterEndChargeLBtn.Location = new System.Drawing.Point(154, 85);
-            this.EnterEndChargeLBtn.Margin = new System.Windows.Forms.Padding(20, 16, 20, 16);
+            this.EnterEndChargeLBtn.Margin = new System.Windows.Forms.Padding(19, 16, 19, 16);
             this.EnterEndChargeLBtn.Name = "EnterEndChargeLBtn";
-            this.EnterEndChargeLBtn.Size = new System.Drawing.Size(81, 30);
+            this.EnterEndChargeLBtn.Size = new System.Drawing.Size(80, 31);
             this.EnterEndChargeLBtn.TabIndex = 19;
             this.EnterEndChargeLBtn.TextName = null;
             this.EnterEndChargeLBtn.TextStartPoint = new System.Drawing.Point(0, 0);
@@ -461,9 +428,9 @@
             this.EndPlcLockBtn.CheckStyleX = KEDAClient.CheckStyle.style8;
             this.EndPlcLockBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.EndPlcLockBtn.Location = new System.Drawing.Point(154, 40);
-            this.EndPlcLockBtn.Margin = new System.Windows.Forms.Padding(11, 9, 11, 9);
+            this.EndPlcLockBtn.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             this.EndPlcLockBtn.Name = "EndPlcLockBtn";
-            this.EndPlcLockBtn.Size = new System.Drawing.Size(81, 30);
+            this.EndPlcLockBtn.Size = new System.Drawing.Size(80, 31);
             this.EndPlcLockBtn.TabIndex = 18;
             this.EndPlcLockBtn.TextName = null;
             this.EndPlcLockBtn.TextStartPoint = new System.Drawing.Point(0, 0);
@@ -476,7 +443,7 @@
             this.label10.ForeColor = System.Drawing.Color.White;
             this.label10.Location = new System.Drawing.Point(4, 48);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(114, 22);
+            this.label10.Size = new System.Drawing.Size(143, 27);
             this.label10.TabIndex = 15;
             this.label10.Text = "窑尾状态:";
             // 
@@ -487,7 +454,7 @@
             this.label12.ForeColor = System.Drawing.Color.White;
             this.label12.Location = new System.Drawing.Point(82, 2);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(70, 27);
+            this.label12.Size = new System.Drawing.Size(85, 34);
             this.label12.TabIndex = 11;
             this.label12.Text = "窑尾";
             // 
@@ -498,7 +465,7 @@
             this.label18.ForeColor = System.Drawing.Color.White;
             this.label18.Location = new System.Drawing.Point(2, 92);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(160, 22);
+            this.label18.Size = new System.Drawing.Size(201, 27);
             this.label18.TabIndex = 14;
             this.label18.Text = "进充电桩状态:";
             // 
@@ -512,7 +479,7 @@
             this.panel5.Controls.Add(this.label16);
             this.panel5.Controls.Add(this.label8);
             this.panel5.Controls.Add(this.label14);
-            this.panel5.Location = new System.Drawing.Point(1, 440);
+            this.panel5.Location = new System.Drawing.Point(2, 474);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(246, 172);
             this.panel5.TabIndex = 15;
@@ -520,9 +487,10 @@
             // label62
             // 
             this.label62.AutoSize = true;
+            this.label62.ForeColor = System.Drawing.Color.White;
             this.label62.Location = new System.Drawing.Point(142, 4);
             this.label62.Name = "label62";
-            this.label62.Size = new System.Drawing.Size(87, 22);
+            this.label62.Size = new System.Drawing.Size(110, 27);
             this.label62.TabIndex = 20;
             this.label62.Text = "label62";
             // 
@@ -548,7 +516,7 @@
             this.label56.ForeColor = System.Drawing.Color.White;
             this.label56.Location = new System.Drawing.Point(0, 132);
             this.label56.Name = "label56";
-            this.label56.Size = new System.Drawing.Size(160, 22);
+            this.label56.Size = new System.Drawing.Size(201, 27);
             this.label56.TabIndex = 18;
             this.label56.Text = "出充电桩状态:";
             // 
@@ -589,7 +557,7 @@
             this.label16.ForeColor = System.Drawing.Color.White;
             this.label16.Location = new System.Drawing.Point(4, 48);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(114, 22);
+            this.label16.Size = new System.Drawing.Size(143, 27);
             this.label16.TabIndex = 15;
             this.label16.Text = "窑头状态:";
             // 
@@ -600,7 +568,7 @@
             this.label8.ForeColor = System.Drawing.Color.White;
             this.label8.Location = new System.Drawing.Point(75, 2);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(70, 27);
+            this.label8.Size = new System.Drawing.Size(85, 34);
             this.label8.TabIndex = 11;
             this.label8.Text = "窑头";
             // 
@@ -611,7 +579,7 @@
             this.label14.ForeColor = System.Drawing.Color.White;
             this.label14.Location = new System.Drawing.Point(0, 90);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(160, 22);
+            this.label14.Size = new System.Drawing.Size(201, 27);
             this.label14.TabIndex = 14;
             this.label14.Text = "进充电桩状态:";
             // 
@@ -664,11 +632,12 @@
             this.AgvSpeedLab.AutoSize = true;
             this.AgvSpeedLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AgvSpeedLab.ForeColor = System.Drawing.Color.White;
-            this.AgvSpeedLab.Location = new System.Drawing.Point(242, 212);
+            this.AgvSpeedLab.Location = new System.Drawing.Point(239, 208);
             this.AgvSpeedLab.Name = "AgvSpeedLab";
-            this.AgvSpeedLab.Size = new System.Drawing.Size(27, 27);
+            this.AgvSpeedLab.Size = new System.Drawing.Size(33, 34);
             this.AgvSpeedLab.TabIndex = 27;
             this.AgvSpeedLab.Text = "*";
+            this.AgvSpeedLab.Click += new System.EventHandler(this.AgvSpeedLab_Click);
             // 
             // AgvStaMaterialLab
             // 
@@ -676,9 +645,9 @@
             this.AgvStaMaterialLab.AutoSize = true;
             this.AgvStaMaterialLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AgvStaMaterialLab.ForeColor = System.Drawing.Color.White;
-            this.AgvStaMaterialLab.Location = new System.Drawing.Point(242, 294);
+            this.AgvStaMaterialLab.Location = new System.Drawing.Point(239, 290);
             this.AgvStaMaterialLab.Name = "AgvStaMaterialLab";
-            this.AgvStaMaterialLab.Size = new System.Drawing.Size(27, 27);
+            this.AgvStaMaterialLab.Size = new System.Drawing.Size(33, 34);
             this.AgvStaMaterialLab.TabIndex = 25;
             this.AgvStaMaterialLab.Text = "*";
             // 
@@ -688,9 +657,9 @@
             this.AgvDirectionLab.AutoSize = true;
             this.AgvDirectionLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AgvDirectionLab.ForeColor = System.Drawing.Color.White;
-            this.AgvDirectionLab.Location = new System.Drawing.Point(242, 130);
+            this.AgvDirectionLab.Location = new System.Drawing.Point(239, 126);
             this.AgvDirectionLab.Name = "AgvDirectionLab";
-            this.AgvDirectionLab.Size = new System.Drawing.Size(27, 27);
+            this.AgvDirectionLab.Size = new System.Drawing.Size(33, 34);
             this.AgvDirectionLab.TabIndex = 19;
             this.AgvDirectionLab.Text = "*";
             // 
@@ -700,9 +669,9 @@
             this.AgvTrafficLab.AutoSize = true;
             this.AgvTrafficLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AgvTrafficLab.ForeColor = System.Drawing.Color.White;
-            this.AgvTrafficLab.Location = new System.Drawing.Point(242, 379);
+            this.AgvTrafficLab.Location = new System.Drawing.Point(239, 376);
             this.AgvTrafficLab.Name = "AgvTrafficLab";
-            this.AgvTrafficLab.Size = new System.Drawing.Size(27, 27);
+            this.AgvTrafficLab.Size = new System.Drawing.Size(33, 34);
             this.AgvTrafficLab.TabIndex = 18;
             this.AgvTrafficLab.Text = "*";
             // 
@@ -712,9 +681,9 @@
             this.AgvFreeLab.AutoSize = true;
             this.AgvFreeLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AgvFreeLab.ForeColor = System.Drawing.Color.White;
-            this.AgvFreeLab.Location = new System.Drawing.Point(242, 253);
+            this.AgvFreeLab.Location = new System.Drawing.Point(239, 249);
             this.AgvFreeLab.Name = "AgvFreeLab";
-            this.AgvFreeLab.Size = new System.Drawing.Size(27, 27);
+            this.AgvFreeLab.Size = new System.Drawing.Size(33, 34);
             this.AgvFreeLab.TabIndex = 17;
             this.AgvFreeLab.Text = "*";
             // 
@@ -725,9 +694,9 @@
             this.AgvSiteLab.BackColor = System.Drawing.Color.Transparent;
             this.AgvSiteLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AgvSiteLab.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.AgvSiteLab.Location = new System.Drawing.Point(242, 7);
+            this.AgvSiteLab.Location = new System.Drawing.Point(239, 3);
             this.AgvSiteLab.Name = "AgvSiteLab";
-            this.AgvSiteLab.Size = new System.Drawing.Size(27, 27);
+            this.AgvSiteLab.Size = new System.Drawing.Size(33, 34);
             this.AgvSiteLab.TabIndex = 9;
             this.AgvSiteLab.Text = "*";
             // 
@@ -737,9 +706,9 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(3, 7);
+            this.label5.Location = new System.Drawing.Point(3, 3);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(85, 27);
+            this.label5.Size = new System.Drawing.Size(103, 34);
             this.label5.TabIndex = 8;
             this.label5.Text = "地标:";
             // 
@@ -749,9 +718,9 @@
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label17.ForeColor = System.Drawing.Color.White;
-            this.label17.Location = new System.Drawing.Point(3, 379);
+            this.label17.Location = new System.Drawing.Point(3, 376);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(143, 27);
+            this.label17.Size = new System.Drawing.Size(173, 34);
             this.label17.TabIndex = 10;
             this.label17.Text = "交管状态:";
             // 
@@ -761,9 +730,9 @@
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label15.ForeColor = System.Drawing.Color.White;
-            this.label15.Location = new System.Drawing.Point(3, 253);
+            this.label15.Location = new System.Drawing.Point(3, 249);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(143, 27);
+            this.label15.Size = new System.Drawing.Size(173, 34);
             this.label15.TabIndex = 8;
             this.label15.Text = "空闲状态:";
             this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -774,9 +743,9 @@
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label13.ForeColor = System.Drawing.Color.White;
-            this.label13.Location = new System.Drawing.Point(3, 212);
+            this.label13.Location = new System.Drawing.Point(3, 208);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(99, 27);
+            this.label13.Size = new System.Drawing.Size(120, 34);
             this.label13.TabIndex = 6;
             this.label13.Text = "速度：";
             // 
@@ -786,9 +755,9 @@
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(3, 171);
+            this.label11.Location = new System.Drawing.Point(3, 164);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(157, 27);
+            this.label11.Size = new System.Drawing.Size(120, 41);
             this.label11.TabIndex = 4;
             this.label11.Text = "当前电量：";
             // 
@@ -798,9 +767,9 @@
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(3, 130);
+            this.label9.Location = new System.Drawing.Point(3, 123);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(157, 27);
+            this.label9.Size = new System.Drawing.Size(120, 41);
             this.label9.TabIndex = 2;
             this.label9.Text = "运行方向：";
             // 
@@ -810,9 +779,9 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(3, 89);
+            this.label7.Location = new System.Drawing.Point(3, 82);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(157, 27);
+            this.label7.Size = new System.Drawing.Size(120, 41);
             this.label7.TabIndex = 0;
             this.label7.Text = "目标站点：";
             // 
@@ -824,9 +793,9 @@
             this.label3.Cursor = System.Windows.Forms.Cursors.Default;
             this.label3.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label3.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label3.Location = new System.Drawing.Point(3, 48);
+            this.label3.Location = new System.Drawing.Point(3, 44);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(143, 27);
+            this.label3.Size = new System.Drawing.Size(173, 34);
             this.label3.TabIndex = 6;
             this.label3.Text = "当前状态:";
             // 
@@ -837,9 +806,9 @@
             this.AgvStatusLab.BackColor = System.Drawing.Color.Transparent;
             this.AgvStatusLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AgvStatusLab.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.AgvStatusLab.Location = new System.Drawing.Point(242, 48);
+            this.AgvStatusLab.Location = new System.Drawing.Point(239, 44);
             this.AgvStatusLab.Name = "AgvStatusLab";
-            this.AgvStatusLab.Size = new System.Drawing.Size(27, 27);
+            this.AgvStatusLab.Size = new System.Drawing.Size(33, 34);
             this.AgvStatusLab.TabIndex = 7;
             this.AgvStatusLab.Text = "*";
             // 
@@ -849,9 +818,9 @@
             this.AgvElectricityLab.AutoSize = true;
             this.AgvElectricityLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AgvElectricityLab.ForeColor = System.Drawing.Color.White;
-            this.AgvElectricityLab.Location = new System.Drawing.Point(242, 171);
+            this.AgvElectricityLab.Location = new System.Drawing.Point(239, 167);
             this.AgvElectricityLab.Name = "AgvElectricityLab";
-            this.AgvElectricityLab.Size = new System.Drawing.Size(27, 27);
+            this.AgvElectricityLab.Size = new System.Drawing.Size(33, 34);
             this.AgvElectricityLab.TabIndex = 16;
             this.AgvElectricityLab.Text = "*";
             // 
@@ -861,9 +830,9 @@
             this.AgvAimLab.AutoSize = true;
             this.AgvAimLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AgvAimLab.ForeColor = System.Drawing.Color.White;
-            this.AgvAimLab.Location = new System.Drawing.Point(242, 89);
+            this.AgvAimLab.Location = new System.Drawing.Point(239, 85);
             this.AgvAimLab.Name = "AgvAimLab";
-            this.AgvAimLab.Size = new System.Drawing.Size(27, 27);
+            this.AgvAimLab.Size = new System.Drawing.Size(33, 34);
             this.AgvAimLab.TabIndex = 20;
             this.AgvAimLab.Text = "*";
             // 
@@ -873,9 +842,9 @@
             this.label28.AutoSize = true;
             this.label28.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label28.ForeColor = System.Drawing.Color.White;
-            this.label28.Location = new System.Drawing.Point(3, 294);
+            this.label28.Location = new System.Drawing.Point(3, 287);
             this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(157, 27);
+            this.label28.Size = new System.Drawing.Size(120, 41);
             this.label28.TabIndex = 21;
             this.label28.Text = "货物状态：";
             // 
@@ -885,9 +854,9 @@
             this.label29.AutoSize = true;
             this.label29.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label29.ForeColor = System.Drawing.Color.White;
-            this.label29.Location = new System.Drawing.Point(3, 335);
+            this.label29.Location = new System.Drawing.Point(3, 328);
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(157, 27);
+            this.label29.Size = new System.Drawing.Size(120, 41);
             this.label29.TabIndex = 22;
             this.label29.Text = "电机状态：";
             // 
@@ -897,9 +866,9 @@
             this.AgvStaMonitorLab.AutoSize = true;
             this.AgvStaMonitorLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AgvStaMonitorLab.ForeColor = System.Drawing.Color.White;
-            this.AgvStaMonitorLab.Location = new System.Drawing.Point(242, 335);
+            this.AgvStaMonitorLab.Location = new System.Drawing.Point(239, 331);
             this.AgvStaMonitorLab.Name = "AgvStaMonitorLab";
-            this.AgvStaMonitorLab.Size = new System.Drawing.Size(27, 27);
+            this.AgvStaMonitorLab.Size = new System.Drawing.Size(33, 34);
             this.AgvStaMonitorLab.TabIndex = 26;
             this.AgvStaMonitorLab.Text = "*";
             // 
@@ -1006,9 +975,9 @@
             this.PlcErrorLab.AutoSize = true;
             this.PlcErrorLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.PlcErrorLab.ForeColor = System.Drawing.Color.White;
-            this.PlcErrorLab.Location = new System.Drawing.Point(267, 124);
+            this.PlcErrorLab.Location = new System.Drawing.Point(264, 120);
             this.PlcErrorLab.Name = "PlcErrorLab";
-            this.PlcErrorLab.Size = new System.Drawing.Size(27, 27);
+            this.PlcErrorLab.Size = new System.Drawing.Size(33, 34);
             this.PlcErrorLab.TabIndex = 19;
             this.PlcErrorLab.Text = "*";
             // 
@@ -1019,9 +988,9 @@
             this.PlcStaMaterialLab.BackColor = System.Drawing.Color.Transparent;
             this.PlcStaMaterialLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.PlcStaMaterialLab.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.PlcStaMaterialLab.Location = new System.Drawing.Point(267, 14);
+            this.PlcStaMaterialLab.Location = new System.Drawing.Point(264, 10);
             this.PlcStaMaterialLab.Name = "PlcStaMaterialLab";
-            this.PlcStaMaterialLab.Size = new System.Drawing.Size(27, 27);
+            this.PlcStaMaterialLab.Size = new System.Drawing.Size(33, 34);
             this.PlcStaMaterialLab.TabIndex = 9;
             this.PlcStaMaterialLab.Text = "*";
             // 
@@ -1031,9 +1000,9 @@
             this.label38.AutoSize = true;
             this.label38.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label38.ForeColor = System.Drawing.Color.White;
-            this.label38.Location = new System.Drawing.Point(3, 14);
+            this.label38.Location = new System.Drawing.Point(3, 10);
             this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(143, 27);
+            this.label38.Size = new System.Drawing.Size(173, 34);
             this.label38.TabIndex = 8;
             this.label38.Text = "货物状态:";
             // 
@@ -1043,9 +1012,9 @@
             this.label42.AutoSize = true;
             this.label42.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label42.ForeColor = System.Drawing.Color.White;
-            this.label42.Location = new System.Drawing.Point(3, 179);
+            this.label42.Location = new System.Drawing.Point(3, 175);
             this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(157, 27);
+            this.label42.Size = new System.Drawing.Size(190, 34);
             this.label42.TabIndex = 4;
             this.label42.Text = "备用信息：";
             // 
@@ -1055,9 +1024,9 @@
             this.label43.AutoSize = true;
             this.label43.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label43.ForeColor = System.Drawing.Color.White;
-            this.label43.Location = new System.Drawing.Point(3, 124);
+            this.label43.Location = new System.Drawing.Point(3, 120);
             this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(157, 27);
+            this.label43.Size = new System.Drawing.Size(190, 34);
             this.label43.TabIndex = 2;
             this.label43.Text = "故障状态：";
             // 
@@ -1069,9 +1038,9 @@
             this.label45.Cursor = System.Windows.Forms.Cursors.Default;
             this.label45.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label45.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label45.Location = new System.Drawing.Point(3, 69);
+            this.label45.Location = new System.Drawing.Point(3, 65);
             this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(143, 27);
+            this.label45.Size = new System.Drawing.Size(173, 34);
             this.label45.TabIndex = 6;
             this.label45.Text = "电机状态:";
             // 
@@ -1082,9 +1051,9 @@
             this.PlcStaMonitorLab.BackColor = System.Drawing.Color.Transparent;
             this.PlcStaMonitorLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.PlcStaMonitorLab.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.PlcStaMonitorLab.Location = new System.Drawing.Point(267, 69);
+            this.PlcStaMonitorLab.Location = new System.Drawing.Point(264, 65);
             this.PlcStaMonitorLab.Name = "PlcStaMonitorLab";
-            this.PlcStaMonitorLab.Size = new System.Drawing.Size(27, 27);
+            this.PlcStaMonitorLab.Size = new System.Drawing.Size(33, 34);
             this.PlcStaMonitorLab.TabIndex = 7;
             this.PlcStaMonitorLab.Text = "*";
             // 
@@ -1094,9 +1063,9 @@
             this.PlcSpareLab.AutoSize = true;
             this.PlcSpareLab.Font = new System.Drawing.Font("黑体", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.PlcSpareLab.ForeColor = System.Drawing.Color.White;
-            this.PlcSpareLab.Location = new System.Drawing.Point(267, 179);
+            this.PlcSpareLab.Location = new System.Drawing.Point(264, 175);
             this.PlcSpareLab.Name = "PlcSpareLab";
-            this.PlcSpareLab.Size = new System.Drawing.Size(27, 27);
+            this.PlcSpareLab.Size = new System.Drawing.Size(33, 34);
             this.PlcSpareLab.TabIndex = 16;
             this.PlcSpareLab.Text = "*";
             // 
@@ -1107,7 +1076,7 @@
             this.PlcLocationLab.ForeColor = System.Drawing.Color.White;
             this.PlcLocationLab.Location = new System.Drawing.Point(112, 102);
             this.PlcLocationLab.Name = "PlcLocationLab";
-            this.PlcLocationLab.Size = new System.Drawing.Size(27, 27);
+            this.PlcLocationLab.Size = new System.Drawing.Size(33, 34);
             this.PlcLocationLab.TabIndex = 23;
             this.PlcLocationLab.Text = "*";
             // 
@@ -1118,7 +1087,7 @@
             this.label6.ForeColor = System.Drawing.Color.White;
             this.label6.Location = new System.Drawing.Point(18, 99);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(88, 30);
+            this.label6.Size = new System.Drawing.Size(112, 37);
             this.label6.TabIndex = 22;
             this.label6.Text = "位置:";
             // 
@@ -1129,7 +1098,7 @@
             this.plcNameLab.ForeColor = System.Drawing.Color.White;
             this.plcNameLab.Location = new System.Drawing.Point(15, 21);
             this.plcNameLab.Name = "plcNameLab";
-            this.plcNameLab.Size = new System.Drawing.Size(152, 44);
+            this.plcNameLab.Size = new System.Drawing.Size(192, 55);
             this.plcNameLab.TabIndex = 21;
             this.plcNameLab.Text = "PLC001";
             // 
@@ -1151,7 +1120,7 @@
             this.listBoxOutput.ForeColor = System.Drawing.Color.White;
             this.listBoxOutput.FormattingEnabled = true;
             this.listBoxOutput.HorizontalScrollbar = true;
-            this.listBoxOutput.ItemHeight = 16;
+            this.listBoxOutput.ItemHeight = 20;
             this.listBoxOutput.Location = new System.Drawing.Point(0, 0);
             this.listBoxOutput.Name = "listBoxOutput";
             this.listBoxOutput.Size = new System.Drawing.Size(495, 607);
@@ -1229,7 +1198,7 @@
             this.label39.ForeColor = System.Drawing.Color.White;
             this.label39.Location = new System.Drawing.Point(17, 185);
             this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(315, 19);
+            this.label39.Size = new System.Drawing.Size(374, 24);
             this.label39.TabIndex = 14;
             this.label39.Text = "忽略AGV棍台停止状态完成任务：\r\n";
             // 
@@ -1237,7 +1206,7 @@
             // 
             this.tailAgvPlcRunTimeBox.Location = new System.Drawing.Point(342, 128);
             this.tailAgvPlcRunTimeBox.Name = "tailAgvPlcRunTimeBox";
-            this.tailAgvPlcRunTimeBox.Size = new System.Drawing.Size(100, 32);
+            this.tailAgvPlcRunTimeBox.Size = new System.Drawing.Size(100, 38);
             this.tailAgvPlcRunTimeBox.TabIndex = 5;
             this.tailAgvPlcRunTimeBox.Text = "30";
             this.tailAgvPlcRunTimeBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -1251,7 +1220,7 @@
             this.label34.ForeColor = System.Drawing.Color.White;
             this.label34.Location = new System.Drawing.Point(18, 133);
             this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(266, 19);
+            this.label34.Size = new System.Drawing.Size(315, 24);
             this.label34.TabIndex = 4;
             this.label34.Text = "发送AGV/PLC滚动时间(s)：";
             // 
@@ -1277,7 +1246,7 @@
             this.label33.ForeColor = System.Drawing.Color.White;
             this.label33.Location = new System.Drawing.Point(17, 72);
             this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(243, 19);
+            this.label33.Size = new System.Drawing.Size(288, 24);
             this.label33.TabIndex = 2;
             this.label33.Text = "忽略AGV和PLC货物状态：";
             // 
@@ -1288,7 +1257,7 @@
             this.label32.ForeColor = System.Drawing.Color.HotPink;
             this.label32.Location = new System.Drawing.Point(17, 18);
             this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(126, 22);
+            this.label32.Size = new System.Drawing.Size(158, 27);
             this.label32.TabIndex = 1;
             this.label32.Text = "窑尾(出货)";
             // 
@@ -1330,7 +1299,7 @@
             this.label37.ForeColor = System.Drawing.Color.White;
             this.label37.Location = new System.Drawing.Point(18, 211);
             this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(315, 19);
+            this.label37.Size = new System.Drawing.Size(374, 24);
             this.label37.TabIndex = 12;
             this.label37.Text = "忽略AGV棍台停止状态完成任务：\r\n";
             // 
@@ -1353,7 +1322,7 @@
             this.label31.Location = new System.Drawing.Point(19, 123);
             this.label31.Name = "label31";
             this.label31.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label31.Size = new System.Drawing.Size(457, 28);
+            this.label31.Size = new System.Drawing.Size(578, 34);
             this.label31.TabIndex = 11;
             this.label31.Text = "注：忽略开启后，将发送指定滚动时间后，进入发送电机停止命令，\r\n然后电机能够正常停止后完成任务\r\n";
             // 
@@ -1376,7 +1345,7 @@
             // 
             this.headAgvPlcRunTimeBox.Location = new System.Drawing.Point(342, 154);
             this.headAgvPlcRunTimeBox.Name = "headAgvPlcRunTimeBox";
-            this.headAgvPlcRunTimeBox.Size = new System.Drawing.Size(100, 32);
+            this.headAgvPlcRunTimeBox.Size = new System.Drawing.Size(100, 38);
             this.headAgvPlcRunTimeBox.TabIndex = 9;
             this.headAgvPlcRunTimeBox.Text = "30";
             this.headAgvPlcRunTimeBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -1390,7 +1359,7 @@
             this.label35.ForeColor = System.Drawing.Color.White;
             this.label35.Location = new System.Drawing.Point(18, 160);
             this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(266, 19);
+            this.label35.Size = new System.Drawing.Size(315, 24);
             this.label35.TabIndex = 8;
             this.label35.Text = "发送AGV/PLC滚动时间(s)：";
             // 
@@ -1401,7 +1370,7 @@
             this.label36.ForeColor = System.Drawing.Color.White;
             this.label36.Location = new System.Drawing.Point(17, 91);
             this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(243, 19);
+            this.label36.Size = new System.Drawing.Size(288, 24);
             this.label36.TabIndex = 6;
             this.label36.Text = "忽略AGV和PLC货物状态：";
             // 
@@ -1412,7 +1381,7 @@
             this.label4.ForeColor = System.Drawing.Color.GreenYellow;
             this.label4.Location = new System.Drawing.Point(17, 13);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(126, 22);
+            this.label4.Size = new System.Drawing.Size(158, 27);
             this.label4.TabIndex = 0;
             this.label4.Text = "窑头(放料)";
             // 
@@ -1497,7 +1466,7 @@
             this.label44.ForeColor = System.Drawing.Color.White;
             this.label44.Location = new System.Drawing.Point(3, 407);
             this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(158, 19);
+            this.label44.Size = new System.Drawing.Size(187, 24);
             this.label44.TabIndex = 26;
             this.label44.Text = "不判断AGV有货:";
             // 
@@ -1508,7 +1477,7 @@
             this.label41.ForeColor = System.Drawing.Color.White;
             this.label41.Location = new System.Drawing.Point(266, 407);
             this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(167, 19);
+            this.label41.Size = new System.Drawing.Size(198, 24);
             this.label41.TabIndex = 25;
             this.label41.Text = "不判断窑尾有货:";
             // 
@@ -1534,7 +1503,7 @@
             this.label40.ForeColor = System.Drawing.Color.White;
             this.label40.Location = new System.Drawing.Point(267, 145);
             this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(158, 19);
+            this.label40.Size = new System.Drawing.Size(187, 24);
             this.label40.TabIndex = 23;
             this.label40.Text = "不判断AGV无货:";
             // 
@@ -1585,7 +1554,7 @@
             this.label49.ForeColor = System.Drawing.Color.GreenYellow;
             this.label49.Location = new System.Drawing.Point(-4, 354);
             this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(219, 22);
+            this.label49.Size = new System.Drawing.Size(275, 27);
             this.label49.TabIndex = 16;
             this.label49.Text = "4)窑尾取 去 窑头等";
             // 
@@ -1596,7 +1565,7 @@
             this.label53.ForeColor = System.Drawing.Color.GreenYellow;
             this.label53.Location = new System.Drawing.Point(266, 104);
             this.label53.Name = "label53";
-            this.label53.Size = new System.Drawing.Size(219, 22);
+            this.label53.Size = new System.Drawing.Size(275, 27);
             this.label53.TabIndex = 15;
             this.label53.Text = "2)窑头卸 去 窑尾等";
             // 
@@ -1607,7 +1576,7 @@
             this.label52.ForeColor = System.Drawing.Color.GreenYellow;
             this.label52.Location = new System.Drawing.Point(3, 104);
             this.label52.Name = "label52";
-            this.label52.Size = new System.Drawing.Size(219, 22);
+            this.label52.Size = new System.Drawing.Size(275, 27);
             this.label52.TabIndex = 14;
             this.label52.Text = "1)窑头等 去 窑头卸";
             // 
@@ -1633,7 +1602,7 @@
             this.label50.ForeColor = System.Drawing.Color.White;
             this.label50.Location = new System.Drawing.Point(4, 145);
             this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(167, 19);
+            this.label50.Size = new System.Drawing.Size(198, 24);
             this.label50.TabIndex = 6;
             this.label50.Text = "不判断窑头无货:";
             // 
@@ -1644,9 +1613,21 @@
             this.label51.ForeColor = System.Drawing.Color.GreenYellow;
             this.label51.Location = new System.Drawing.Point(266, 354);
             this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(219, 22);
+            this.label51.Size = new System.Drawing.Size(275, 27);
             this.label51.TabIndex = 0;
             this.label51.Text = "3)窑尾等 去 窑尾取";
+            // 
+            // panel4
+            // 
+            this.panel4.BackColor = System.Drawing.Color.Transparent;
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel4.Controls.Add(this.tabControlEx1);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel4.Location = new System.Drawing.Point(834, 72);
+            this.panel4.Name = "panel4";
+            this.panel4.Padding = new System.Windows.Forms.Padding(3);
+            this.panel4.Size = new System.Drawing.Size(350, 645);
+            this.panel4.TabIndex = 7;
             // 
             // tabControlEx1
             // 
@@ -1791,9 +1772,9 @@
             this.label61.AutoSize = true;
             this.label61.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label61.ForeColor = System.Drawing.Color.White;
-            this.label61.Location = new System.Drawing.Point(3, 531);
+            this.label61.Location = new System.Drawing.Point(3, 529);
             this.label61.Name = "label61";
-            this.label61.Size = new System.Drawing.Size(142, 22);
+            this.label61.Size = new System.Drawing.Size(180, 27);
             this.label61.TabIndex = 45;
             this.label61.Text = "窑尾启动辊台";
             // 
@@ -1803,9 +1784,9 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(3, 52);
+            this.label1.Location = new System.Drawing.Point(3, 50);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(208, 22);
+            this.label1.Size = new System.Drawing.Size(264, 27);
             this.label1.TabIndex = 7;
             this.label1.Text = "窑头等 到 进窑头充";
             // 
@@ -1816,10 +1797,10 @@
             this.enterheadChargeBtn.Checked = false;
             this.enterheadChargeBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.enterheadChargeBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.enterheadChargeBtn.Location = new System.Drawing.Point(234, 54);
+            this.enterheadChargeBtn.Location = new System.Drawing.Point(276, 54);
             this.enterheadChargeBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.enterheadChargeBtn.Name = "enterheadChargeBtn";
-            this.enterheadChargeBtn.Size = new System.Drawing.Size(75, 19);
+            this.enterheadChargeBtn.Size = new System.Drawing.Size(48, 19);
             this.enterheadChargeBtn.TabIndex = 6;
             this.enterheadChargeBtn.TextName = null;
             this.enterheadChargeBtn.TextStartPoint = new System.Drawing.Point(0, 0);
@@ -1831,9 +1812,9 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(3, 81);
+            this.label2.Location = new System.Drawing.Point(3, 79);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(208, 22);
+            this.label2.Size = new System.Drawing.Size(264, 27);
             this.label2.TabIndex = 8;
             this.label2.Text = "窑尾等 到 进窑尾充";
             // 
@@ -1844,10 +1825,10 @@
             this.enterendChargeBtn.Checked = false;
             this.enterendChargeBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.enterendChargeBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.enterendChargeBtn.Location = new System.Drawing.Point(234, 83);
+            this.enterendChargeBtn.Location = new System.Drawing.Point(276, 83);
             this.enterendChargeBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.enterendChargeBtn.Name = "enterendChargeBtn";
-            this.enterendChargeBtn.Size = new System.Drawing.Size(75, 19);
+            this.enterendChargeBtn.Size = new System.Drawing.Size(48, 19);
             this.enterendChargeBtn.TabIndex = 9;
             this.enterendChargeBtn.TextName = null;
             this.enterendChargeBtn.TextStartPoint = new System.Drawing.Point(0, 0);
@@ -1860,10 +1841,10 @@
             this.headUnloadBtn.Checked = false;
             this.headUnloadBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.headUnloadBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.headUnloadBtn.Location = new System.Drawing.Point(234, 326);
+            this.headUnloadBtn.Location = new System.Drawing.Point(276, 326);
             this.headUnloadBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.headUnloadBtn.Name = "headUnloadBtn";
-            this.headUnloadBtn.Size = new System.Drawing.Size(75, 19);
+            this.headUnloadBtn.Size = new System.Drawing.Size(48, 19);
             this.headUnloadBtn.TabIndex = 12;
             this.headUnloadBtn.TextName = null;
             this.headUnloadBtn.TextStartPoint = new System.Drawing.Point(0, 0);
@@ -1876,10 +1857,10 @@
             this.endLoadBtn.Checked = false;
             this.endLoadBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.endLoadBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.endLoadBtn.Location = new System.Drawing.Point(234, 413);
+            this.endLoadBtn.Location = new System.Drawing.Point(276, 413);
             this.endLoadBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.endLoadBtn.Name = "endLoadBtn";
-            this.endLoadBtn.Size = new System.Drawing.Size(75, 19);
+            this.endLoadBtn.Size = new System.Drawing.Size(48, 19);
             this.endLoadBtn.TabIndex = 13;
             this.endLoadBtn.TextName = null;
             this.endLoadBtn.TextStartPoint = new System.Drawing.Point(0, 0);
@@ -1891,9 +1872,9 @@
             this.label21.AutoSize = true;
             this.label21.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label21.ForeColor = System.Drawing.Color.White;
-            this.label21.Location = new System.Drawing.Point(3, 440);
+            this.label21.Location = new System.Drawing.Point(3, 438);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(186, 22);
+            this.label21.Size = new System.Drawing.Size(236, 27);
             this.label21.TabIndex = 14;
             this.label21.Text = "窑尾取 到 窑尾完";
             this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1904,9 +1885,9 @@
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label19.ForeColor = System.Drawing.Color.White;
-            this.label19.Location = new System.Drawing.Point(3, 411);
+            this.label19.Location = new System.Drawing.Point(3, 409);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(186, 22);
+            this.label19.Size = new System.Drawing.Size(236, 27);
             this.label19.TabIndex = 10;
             this.label19.Text = "窑尾等 到 窑尾取";
             // 
@@ -1916,9 +1897,9 @@
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label20.ForeColor = System.Drawing.Color.White;
-            this.label20.Location = new System.Drawing.Point(3, 324);
+            this.label20.Location = new System.Drawing.Point(3, 322);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(186, 22);
+            this.label20.Size = new System.Drawing.Size(236, 27);
             this.label20.TabIndex = 11;
             this.label20.Text = "窑头等 到 窑头卸";
             // 
@@ -1929,10 +1910,10 @@
             this.endSucBtn.Checked = false;
             this.endSucBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.endSucBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.endSucBtn.Location = new System.Drawing.Point(234, 442);
+            this.endSucBtn.Location = new System.Drawing.Point(276, 442);
             this.endSucBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.endSucBtn.Name = "endSucBtn";
-            this.endSucBtn.Size = new System.Drawing.Size(75, 19);
+            this.endSucBtn.Size = new System.Drawing.Size(48, 19);
             this.endSucBtn.TabIndex = 15;
             this.endSucBtn.TextName = null;
             this.endSucBtn.TextStartPoint = new System.Drawing.Point(0, 0);
@@ -1945,10 +1926,10 @@
             this.allOnOffBtn.Checked = false;
             this.allOnOffBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.allOnOffBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.allOnOffBtn.Location = new System.Drawing.Point(234, 5);
+            this.allOnOffBtn.Location = new System.Drawing.Point(276, 5);
             this.allOnOffBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.allOnOffBtn.Name = "allOnOffBtn";
-            this.allOnOffBtn.Size = new System.Drawing.Size(75, 19);
+            this.allOnOffBtn.Size = new System.Drawing.Size(48, 19);
             this.allOnOffBtn.TabIndex = 26;
             this.allOnOffBtn.TextName = null;
             this.allOnOffBtn.TextStartPoint = new System.Drawing.Point(0, 0);
@@ -1960,9 +1941,9 @@
             this.label22.AutoSize = true;
             this.label22.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label22.ForeColor = System.Drawing.Color.White;
-            this.label22.Location = new System.Drawing.Point(3, 353);
+            this.label22.Location = new System.Drawing.Point(3, 351);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(186, 22);
+            this.label22.Size = new System.Drawing.Size(236, 27);
             this.label22.TabIndex = 12;
             this.label22.Text = "窑头卸 到 窑头完";
             // 
@@ -1973,10 +1954,10 @@
             this.headSucBtn.Checked = false;
             this.headSucBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.headSucBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.headSucBtn.Location = new System.Drawing.Point(234, 355);
+            this.headSucBtn.Location = new System.Drawing.Point(276, 355);
             this.headSucBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.headSucBtn.Name = "headSucBtn";
-            this.headSucBtn.Size = new System.Drawing.Size(75, 19);
+            this.headSucBtn.Size = new System.Drawing.Size(48, 19);
             this.headSucBtn.TabIndex = 16;
             this.headSucBtn.TextName = null;
             this.headSucBtn.TextStartPoint = new System.Drawing.Point(0, 0);
@@ -1988,9 +1969,9 @@
             this.label23.AutoSize = true;
             this.label23.Font = new System.Drawing.Font("黑体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label23.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.label23.Location = new System.Drawing.Point(3, 31);
+            this.label23.Location = new System.Drawing.Point(3, 29);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(76, 16);
+            this.label23.Size = new System.Drawing.Size(93, 20);
             this.label23.TabIndex = 27;
             this.label23.Text = "充电逻辑";
             // 
@@ -2000,9 +1981,9 @@
             this.label25.AutoSize = true;
             this.label25.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label25.ForeColor = System.Drawing.Color.White;
-            this.label25.Location = new System.Drawing.Point(3, 188);
+            this.label25.Location = new System.Drawing.Point(3, 186);
             this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(208, 22);
+            this.label25.Size = new System.Drawing.Size(264, 27);
             this.label25.TabIndex = 21;
             this.label25.Text = "进窑头充 到 窑头卸";
             // 
@@ -2013,10 +1994,10 @@
             this.enterheadChargSucBtn.Checked = false;
             this.enterheadChargSucBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.enterheadChargSucBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.enterheadChargSucBtn.Location = new System.Drawing.Point(234, 190);
+            this.enterheadChargSucBtn.Location = new System.Drawing.Point(276, 190);
             this.enterheadChargSucBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.enterheadChargSucBtn.Name = "enterheadChargSucBtn";
-            this.enterheadChargSucBtn.Size = new System.Drawing.Size(75, 19);
+            this.enterheadChargSucBtn.Size = new System.Drawing.Size(48, 19);
             this.enterheadChargSucBtn.TabIndex = 23;
             this.enterheadChargSucBtn.TextName = null;
             this.enterheadChargSucBtn.TextStartPoint = new System.Drawing.Point(0, 0);
@@ -2028,9 +2009,9 @@
             this.label26.AutoSize = true;
             this.label26.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label26.ForeColor = System.Drawing.Color.White;
-            this.label26.Location = new System.Drawing.Point(3, 217);
+            this.label26.Location = new System.Drawing.Point(3, 215);
             this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(208, 22);
+            this.label26.Size = new System.Drawing.Size(264, 27);
             this.label26.TabIndex = 22;
             this.label26.Text = "进窑尾充 到 窑尾取";
             // 
@@ -2041,10 +2022,10 @@
             this.enterendChargSucBtn.Checked = false;
             this.enterendChargSucBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.enterendChargSucBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.enterendChargSucBtn.Location = new System.Drawing.Point(234, 219);
+            this.enterendChargSucBtn.Location = new System.Drawing.Point(276, 219);
             this.enterendChargSucBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.enterendChargSucBtn.Name = "enterendChargSucBtn";
-            this.enterendChargSucBtn.Size = new System.Drawing.Size(75, 19);
+            this.enterendChargSucBtn.Size = new System.Drawing.Size(48, 19);
             this.enterendChargSucBtn.TabIndex = 24;
             this.enterendChargSucBtn.TextName = null;
             this.enterendChargSucBtn.TextStartPoint = new System.Drawing.Point(0, 0);
@@ -2056,9 +2037,9 @@
             this.label46.AutoSize = true;
             this.label46.Font = new System.Drawing.Font("黑体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label46.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.label46.Location = new System.Drawing.Point(3, 303);
+            this.label46.Location = new System.Drawing.Point(3, 301);
             this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(76, 16);
+            this.label46.Size = new System.Drawing.Size(93, 20);
             this.label46.TabIndex = 29;
             this.label46.Text = "正常取卸";
             // 
@@ -2068,9 +2049,9 @@
             this.label24.AutoSize = true;
             this.label24.Font = new System.Drawing.Font("黑体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label24.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.label24.Location = new System.Drawing.Point(3, 167);
+            this.label24.Location = new System.Drawing.Point(3, 165);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(76, 16);
+            this.label24.Size = new System.Drawing.Size(93, 20);
             this.label24.TabIndex = 28;
             this.label24.Text = "充电完成";
             // 
@@ -2080,9 +2061,9 @@
             this.label27.AutoSize = true;
             this.label27.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label27.ForeColor = System.Drawing.Color.White;
-            this.label27.Location = new System.Drawing.Point(3, 3);
+            this.label27.Location = new System.Drawing.Point(3, 1);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(109, 22);
+            this.label27.Size = new System.Drawing.Size(138, 27);
             this.label27.TabIndex = 25;
             this.label27.Text = "全开/全关";
             // 
@@ -2092,9 +2073,9 @@
             this.label47.AutoSize = true;
             this.label47.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label47.ForeColor = System.Drawing.Color.White;
-            this.label47.Location = new System.Drawing.Point(3, 110);
+            this.label47.Location = new System.Drawing.Point(3, 108);
             this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(208, 22);
+            this.label47.Size = new System.Drawing.Size(264, 27);
             this.label47.TabIndex = 30;
             this.label47.Text = "窑头卸 到 出窑头充";
             // 
@@ -2104,9 +2085,9 @@
             this.label48.AutoSize = true;
             this.label48.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label48.ForeColor = System.Drawing.Color.White;
-            this.label48.Location = new System.Drawing.Point(3, 139);
+            this.label48.Location = new System.Drawing.Point(3, 137);
             this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(208, 22);
+            this.label48.Size = new System.Drawing.Size(264, 27);
             this.label48.TabIndex = 31;
             this.label48.Text = "窑尾取 到 出窑尾充";
             // 
@@ -2117,10 +2098,10 @@
             this.exitheadChargeBtn.Checked = false;
             this.exitheadChargeBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.exitheadChargeBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.exitheadChargeBtn.Location = new System.Drawing.Point(234, 112);
+            this.exitheadChargeBtn.Location = new System.Drawing.Point(276, 112);
             this.exitheadChargeBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.exitheadChargeBtn.Name = "exitheadChargeBtn";
-            this.exitheadChargeBtn.Size = new System.Drawing.Size(75, 19);
+            this.exitheadChargeBtn.Size = new System.Drawing.Size(48, 19);
             this.exitheadChargeBtn.TabIndex = 32;
             this.exitheadChargeBtn.TextName = null;
             this.exitheadChargeBtn.TextStartPoint = new System.Drawing.Point(0, 0);
@@ -2133,10 +2114,10 @@
             this.exitendChargeBtn.Checked = false;
             this.exitendChargeBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.exitendChargeBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.exitendChargeBtn.Location = new System.Drawing.Point(234, 142);
+            this.exitendChargeBtn.Location = new System.Drawing.Point(276, 142);
             this.exitendChargeBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.exitendChargeBtn.Name = "exitendChargeBtn";
-            this.exitendChargeBtn.Size = new System.Drawing.Size(75, 16);
+            this.exitendChargeBtn.Size = new System.Drawing.Size(48, 16);
             this.exitendChargeBtn.TabIndex = 33;
             this.exitendChargeBtn.TextName = null;
             this.exitendChargeBtn.TextStartPoint = new System.Drawing.Point(0, 0);
@@ -2148,9 +2129,9 @@
             this.label54.AutoSize = true;
             this.label54.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label54.ForeColor = System.Drawing.Color.White;
-            this.label54.Location = new System.Drawing.Point(3, 246);
+            this.label54.Location = new System.Drawing.Point(3, 244);
             this.label54.Name = "label54";
-            this.label54.Size = new System.Drawing.Size(208, 22);
+            this.label54.Size = new System.Drawing.Size(264, 27);
             this.label54.TabIndex = 34;
             this.label54.Text = "出窑头充 到 窑头完";
             // 
@@ -2160,9 +2141,9 @@
             this.label55.AutoSize = true;
             this.label55.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label55.ForeColor = System.Drawing.Color.White;
-            this.label55.Location = new System.Drawing.Point(3, 275);
+            this.label55.Location = new System.Drawing.Point(3, 273);
             this.label55.Name = "label55";
-            this.label55.Size = new System.Drawing.Size(208, 22);
+            this.label55.Size = new System.Drawing.Size(264, 27);
             this.label55.TabIndex = 35;
             this.label55.Text = "出窑尾充 到 窑尾完";
             // 
@@ -2173,10 +2154,10 @@
             this.exitheadChargSucBtn.Checked = false;
             this.exitheadChargSucBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.exitheadChargSucBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.exitheadChargSucBtn.Location = new System.Drawing.Point(234, 248);
+            this.exitheadChargSucBtn.Location = new System.Drawing.Point(276, 248);
             this.exitheadChargSucBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.exitheadChargSucBtn.Name = "exitheadChargSucBtn";
-            this.exitheadChargSucBtn.Size = new System.Drawing.Size(75, 19);
+            this.exitheadChargSucBtn.Size = new System.Drawing.Size(48, 19);
             this.exitheadChargSucBtn.TabIndex = 36;
             this.exitheadChargSucBtn.TextName = null;
             this.exitheadChargSucBtn.TextStartPoint = new System.Drawing.Point(0, 0);
@@ -2189,10 +2170,10 @@
             this.exitendChargSucBtn.Checked = false;
             this.exitendChargSucBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.exitendChargSucBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.exitendChargSucBtn.Location = new System.Drawing.Point(234, 277);
+            this.exitendChargSucBtn.Location = new System.Drawing.Point(276, 277);
             this.exitendChargSucBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.exitendChargSucBtn.Name = "exitendChargSucBtn";
-            this.exitendChargSucBtn.Size = new System.Drawing.Size(75, 19);
+            this.exitendChargSucBtn.Size = new System.Drawing.Size(48, 19);
             this.exitendChargSucBtn.TabIndex = 37;
             this.exitendChargSucBtn.TextName = null;
             this.exitendChargSucBtn.TextStartPoint = new System.Drawing.Point(0, 0);
@@ -2204,9 +2185,9 @@
             this.label58.AutoSize = true;
             this.label58.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label58.ForeColor = System.Drawing.Color.White;
-            this.label58.Location = new System.Drawing.Point(3, 382);
+            this.label58.Location = new System.Drawing.Point(3, 380);
             this.label58.Name = "label58";
-            this.label58.Size = new System.Drawing.Size(186, 22);
+            this.label58.Size = new System.Drawing.Size(236, 27);
             this.label58.TabIndex = 38;
             this.label58.Text = "窑头完 到 窑尾等";
             // 
@@ -2216,9 +2197,9 @@
             this.label59.AutoSize = true;
             this.label59.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label59.ForeColor = System.Drawing.Color.White;
-            this.label59.Location = new System.Drawing.Point(3, 469);
+            this.label59.Location = new System.Drawing.Point(3, 467);
             this.label59.Name = "label59";
-            this.label59.Size = new System.Drawing.Size(186, 22);
+            this.label59.Size = new System.Drawing.Size(236, 27);
             this.label59.TabIndex = 39;
             this.label59.Text = "窑尾完 到 窑头等";
             // 
@@ -2229,10 +2210,10 @@
             this.headWaitBtn.Checked = false;
             this.headWaitBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.headWaitBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.headWaitBtn.Location = new System.Drawing.Point(234, 471);
+            this.headWaitBtn.Location = new System.Drawing.Point(276, 471);
             this.headWaitBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.headWaitBtn.Name = "headWaitBtn";
-            this.headWaitBtn.Size = new System.Drawing.Size(75, 19);
+            this.headWaitBtn.Size = new System.Drawing.Size(48, 19);
             this.headWaitBtn.TabIndex = 40;
             this.headWaitBtn.TextName = null;
             this.headWaitBtn.TextStartPoint = new System.Drawing.Point(0, 0);
@@ -2245,10 +2226,10 @@
             this.endWaitBtn.Checked = false;
             this.endWaitBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.endWaitBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.endWaitBtn.Location = new System.Drawing.Point(234, 384);
+            this.endWaitBtn.Location = new System.Drawing.Point(276, 384);
             this.endWaitBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.endWaitBtn.Name = "endWaitBtn";
-            this.endWaitBtn.Size = new System.Drawing.Size(75, 19);
+            this.endWaitBtn.Size = new System.Drawing.Size(48, 19);
             this.endWaitBtn.TabIndex = 41;
             this.endWaitBtn.TextName = null;
             this.endWaitBtn.TextStartPoint = new System.Drawing.Point(0, 0);
@@ -2261,10 +2242,10 @@
             this.headPlcUnloadBtn.Checked = false;
             this.headPlcUnloadBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.headPlcUnloadBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.headPlcUnloadBtn.Location = new System.Drawing.Point(234, 500);
+            this.headPlcUnloadBtn.Location = new System.Drawing.Point(276, 500);
             this.headPlcUnloadBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.headPlcUnloadBtn.Name = "headPlcUnloadBtn";
-            this.headPlcUnloadBtn.Size = new System.Drawing.Size(75, 19);
+            this.headPlcUnloadBtn.Size = new System.Drawing.Size(48, 19);
             this.headPlcUnloadBtn.TabIndex = 42;
             this.headPlcUnloadBtn.TextName = null;
             this.headPlcUnloadBtn.TextStartPoint = new System.Drawing.Point(0, 0);
@@ -2277,10 +2258,10 @@
             this.endPlcLoadBtn.Checked = false;
             this.endPlcLoadBtn.CheckStyleX = KEDAClient.CheckStyle.style1;
             this.endPlcLoadBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.endPlcLoadBtn.Location = new System.Drawing.Point(234, 533);
+            this.endPlcLoadBtn.Location = new System.Drawing.Point(276, 533);
             this.endPlcLoadBtn.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.endPlcLoadBtn.Name = "endPlcLoadBtn";
-            this.endPlcLoadBtn.Size = new System.Drawing.Size(75, 19);
+            this.endPlcLoadBtn.Size = new System.Drawing.Size(48, 19);
             this.endPlcLoadBtn.TabIndex = 43;
             this.endPlcLoadBtn.TextName = null;
             this.endPlcLoadBtn.TextStartPoint = new System.Drawing.Point(0, 0);
@@ -2292,11 +2273,23 @@
             this.label60.AutoSize = true;
             this.label60.Font = new System.Drawing.Font("黑体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label60.ForeColor = System.Drawing.Color.White;
-            this.label60.Location = new System.Drawing.Point(3, 498);
+            this.label60.Location = new System.Drawing.Point(3, 496);
             this.label60.Name = "label60";
-            this.label60.Size = new System.Drawing.Size(142, 22);
+            this.label60.Size = new System.Drawing.Size(180, 27);
             this.label60.TabIndex = 44;
             this.label60.Text = "窑头启动辊台";
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.Transparent;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel2.Controls.Add(this.agvList);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel2.Location = new System.Drawing.Point(0, 72);
+            this.panel2.Name = "panel2";
+            this.panel2.Padding = new System.Windows.Forms.Padding(3);
+            this.panel2.Size = new System.Drawing.Size(201, 645);
+            this.panel2.TabIndex = 5;
             // 
             // agvList
             // 
@@ -2317,6 +2310,20 @@
             this.agvList.UseCompatibleStateImageBehavior = false;
             this.agvList.View = System.Windows.Forms.View.Details;
             this.agvList.SelectedIndexChanged += new System.EventHandler(this.agvList_SelectedIndexChanged);
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add(this.AutoGenerateTaskBtn);
+            this.panel1.Controls.Add(this.InitAllBtn);
+            this.panel1.Controls.Add(this.ExecuteTaskBtn);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Padding = new System.Windows.Forms.Padding(3);
+            this.panel1.Size = new System.Drawing.Size(1184, 72);
+            this.panel1.TabIndex = 4;
             // 
             // AutoGenerateTaskBtn
             // 
@@ -2370,9 +2377,33 @@
             this.ExecuteTaskBtn.TextStartPoint = new System.Drawing.Point(6, 10);
             this.ExecuteTaskBtn.Click += new System.EventHandler(this.ExecuteTaskBtn_Click);
             // 
+            // timerForListRefresh
+            // 
+            this.timerForListRefresh.Enabled = true;
+            this.timerForListRefresh.Interval = 500;
+            this.timerForListRefresh.Tick += new System.EventHandler(this.timerForListRefresh_Tick);
+            // 
+            // toolStripContainer1
+            // 
+            // 
+            // toolStripContainer1.ContentPanel
+            // 
+            this.toolStripContainer1.ContentPanel.AutoScroll = true;
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel3);
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel4);
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel2);
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.panel1);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(1184, 717);
+            this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
+            this.toolStripContainer1.Name = "toolStripContainer1";
+            this.toolStripContainer1.Size = new System.Drawing.Size(1184, 742);
+            this.toolStripContainer1.TabIndex = 8;
+            this.toolStripContainer1.Text = "toolStripContainer1";
+            // 
             // ControlForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 21F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.DimGray;
@@ -2385,12 +2416,6 @@
             this.Text = "行车调度工具";
             this.Load += new System.EventHandler(this.ControlForm_Load);
             this.panel3.ResumeLayout(false);
-            this.panel4.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.toolStripContainer1.ContentPanel.ResumeLayout(false);
-            this.toolStripContainer1.ResumeLayout(false);
-            this.toolStripContainer1.PerformLayout();
             this.mainTabControl.ResumeLayout(false);
             this.controlPage.ResumeLayout(false);
             this.controlPage.PerformLayout();
@@ -2421,11 +2446,17 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.panel4.ResumeLayout(false);
             this.tabControlEx1.ResumeLayout(false);
             this.taskPages.ResumeLayout(false);
             this.timeTaskPage.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.toolStripContainer1.ContentPanel.ResumeLayout(false);
+            this.toolStripContainer1.ResumeLayout(false);
+            this.toolStripContainer1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2591,5 +2622,7 @@
         private System.Windows.Forms.Label label61;
         private System.Windows.Forms.Label label62;
         private System.Windows.Forms.Label label63;
+        private System.Windows.Forms.Label label64;
+        private System.Windows.Forms.Label label65;
     }
 }

@@ -41,6 +41,22 @@ namespace KEDAClient
         /// </summary>
         Thread _thread = null;
 
+        /// <summary>
+        /// 电量总和
+        /// </summary>
+        double sumElectricity = 0.0;
+
+        /// <summary>
+        /// 在线车辆
+        /// </summary>
+        double count = 0.0;
+
+        /// <summary>
+        /// 平均电量
+        /// </summary>
+        double avgElectricity = 0.0;
+
+
         private SynchronizationContext mainThreadSynContext;
 
         ListBox listBox;
@@ -270,6 +286,51 @@ namespace KEDAClient
             catch { }
 
             return null;
+        }
+        /// <summary>
+        /// 获取所有正在线上工作的车辆平均电量信息
+        /// </summary>
+        /// <param name="site"></param>
+        /// <returns></returns>
+        public string IGetDevAvgElectricity()
+        {
+            try
+            {
+                //考虑范围只有正在作业的车辆，非作业车辆不纳入考虑
+                List<DeviceBackImf> devs = _devList.FindAll(c =>
+                {
+                    return c.DevType == "Magnet_Basic"
+                    && c.IsAlive
+                    && c.ProtyList[ErrorType.脱轨].RValue == "0"
+                    ;
+                });
+                count = 0.0;
+
+                if (devs != null)
+                {
+                    foreach (DeviceBackImf dev in devs)
+                    {
+                        sumElectricity += (new F_AGV(dev.DevId).Electicity);
+                        count += 1;
+                    }
+
+                }
+
+                avgElectricity = sumElectricity / count;
+
+                if(double.IsNaN(avgElectricity))
+                {
+                    return "0.00";
+                }
+                else
+                {
+                    return Math.Round(avgElectricity, 2).ToString();
+                    
+                }
+            }
+            catch { }
+
+            return "0.0";
         }
 
         /// <summary>
