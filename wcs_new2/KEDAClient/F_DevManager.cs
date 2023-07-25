@@ -308,6 +308,7 @@ namespace KEDAClient
 
                 if (devs != null)
                 {
+                    sumElectricity = 0;
                     foreach (DeviceBackImf dev in devs)
                     {
                         sumElectricity += (new F_AGV(dev.DevId).Electicity);
